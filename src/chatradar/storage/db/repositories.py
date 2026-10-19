@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from sqlalchemy import bindparam, case, delete, func, or_, select, update
+from sqlalchemy import and_, bindparam, case, delete, func, or_, select, update
 
 from chatradar.domain.models import (
     ChatInfo,
@@ -35,7 +35,7 @@ from chatradar.storage.db.rows import (
 from chatradar.storage.db.tables import chats, messages, sync_state, threads
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
+    from collections.abc import AsyncIterator, Sequence
     from datetime import datetime
 
     from sqlalchemy import ColumnElement, Executable, RowMapping
@@ -403,6 +403,41 @@ class SqlRepository:
         async with self._engine.connect() as conn:
             rows = (await conn.execute(stmt)).mappings().all()
         return [to_stored(row) for row in rows]
+
+    async def iter_all(self, batch_size: int = 2000) -> AsyncIterator[list[StoredMessage]]:
+        """Every message in `_MESSAGE_ORDER`, in batches. Keyset pagination: each batch asks
+        for the rows after the last one seen, so a long scan never pays for an OFFSET."""
+        if batch_size < 1:
+            raise ValueError(f"batch_size must be positive, got {batch_size}")
+        c = messages.c
+        after: ColumnElement[bool] | None = None
+        while True:
+            stmt = select(messages).order_by(*_MESSAGE_ORDER).limit(batch_size)
+            if after is not None:
+                stmt = stmt.where(after)
+            async with self._engine.connect() as conn:
+                rows = (await conn.execute(stmt)).mappings().all()
+            if not rows:
+                return
+            yield [to_stored(row) for row in rows]
+            if len(rows) < batch_size:
+                return
+            last = rows[-1]
+            after = or_(
+                c.source > last["source"],
+                and_(c.source == last["source"], c.chat_id > last["chat_id"]),
+                and_(
+                    c.source == last["source"],
+                    c.chat_id == last["chat_id"],
+                    c.date > last["date"],
+                ),
+                and_(
+                    c.source == last["source"],
+                    c.chat_id == last["chat_id"],
+                    c.date == last["date"],
+                    c.msg_id > last["msg_id"],
+                ),
+            )
 
     async def noise_reasons(self) -> dict[str, int]:
         count = func.count().label("n")
