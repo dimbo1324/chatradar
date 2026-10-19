@@ -7,6 +7,7 @@ import pytest
 
 from chatradar.domain.models import MediaType
 from chatradar.pipeline.noise import (
+    NOISE_VERSION,
     REASON_DUPLICATE,
     REASON_EMOJI_ONLY,
     REASON_GRATITUDE,
@@ -110,7 +111,7 @@ async def test_stage_marks_noise_and_uses_reply_targets_and_history() -> None:
         "5": (True, "duplicate"),
         "6": (False, None),
     }
-    assert all(m.versions == {"noise": 1} for m in repo.rows.values())
+    assert all(m.versions == {"noise": NOISE_VERSION} for m in repo.rows.values())
 
 
 async def test_stage_sees_duplicates_from_earlier_processed_batches() -> None:

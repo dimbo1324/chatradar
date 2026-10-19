@@ -1,62 +1,363 @@
 [
-  {"id": "service-join", "text": "", "service": true, "expected": "service"},
-  {"id": "service-with-text", "text": "Пользователь закрепил сообщение о правилах чата", "service": true, "expected": "service"},
-  {"id": "sticker", "text": "", "media": "sticker", "expected": "sticker"},
-  {"id": "sticker-with-emoji-text", "text": "😂", "media": "sticker", "expected": "sticker"},
-  {"id": "emoji-single", "text": "👍", "expected": "emoji_only"},
-  {"id": "emoji-many", "text": "😂😂😂", "expected": "emoji_only"},
-  {"id": "emoji-skin-tone", "text": "👍🏽👍🏽", "expected": "emoji_only"},
-  {"id": "emoji-heart-variation", "text": "❤️", "expected": "emoji_only"},
-  {"id": "emoji-flag-and-punctuation", "text": "🇺🇾 !!!", "expected": "emoji_only"},
-  {"id": "emoji-zwj-family", "text": "👨‍👩‍👧", "expected": "emoji_only"},
-  {"id": "photo-with-emoji-caption", "text": "🔥🔥", "media": "photo", "expected": null},
-  {"id": "gratitude-ru", "text": "Спасибо!", "expected": "gratitude"},
-  {"id": "gratitude-ru-big", "text": "Спасибо большое!!! 🙏", "expected": "gratitude"},
-  {"id": "gratitude-ru-formal", "text": "благодарю вас", "expected": "gratitude"},
-  {"id": "gratitude-es", "text": "Gracias", "expected": "gratitude"},
-  {"id": "gratitude-es-accent", "text": "Muchísimas gracias!", "expected": "gratitude"},
-  {"id": "gratitude-es-everyone", "text": "gracias a todos 🙌", "expected": "gratitude"},
-  {"id": "gratitude-en", "text": "Thank you very much!", "expected": "gratitude"},
-  {"id": "gratitude-en-short", "text": "thx", "expected": "gratitude"},
-  {"id": "gratitude-plus", "text": "+", "expected": "gratitude"},
-  {"id": "gratitude-plus-one", "text": "+1", "expected": "gratitude"},
-  {"id": "gratitude-plus-plus", "text": " ++ ", "expected": "gratitude"},
-  {"id": "gratitude-with-question-is-not", "text": "Спасибо! А где это находится?", "expected": null},
-  {"id": "gratitude-with-detail-is-not", "text": "Gracias, al final fui al consulado de la calle Colonia y me atendieron rápido", "expected": null},
-  {"id": "plus-with-text-is-not-gratitude", "text": "+1 к вопросу, тоже ищу хорошего стоматолога рядом с центром", "expected": null},
-  {"id": "short-yes-flood", "text": "да", "expected": "short"},
-  {"id": "short-yes-to-question", "text": "да", "reply_to_text": "Есть ли автобус до аэропорта ночью?", "expected": null},
-  {"id": "short-no-to-question-word", "text": "нет", "reply_to_text": "Где можно купить сим-карту Antel", "expected": null},
-  {"id": "short-reply-to-statement", "text": "ок", "reply_to_text": "Я завтра буду в центре", "expected": "short"},
-  {"id": "short-es-flood", "text": "jajaja", "expected": "short"},
-  {"id": "short-es-answer", "text": "sí, hay", "reply_to_text": "¿Hay farmacia abierta 24 horas en Pocitos?", "expected": null},
-  {"id": "short-en-lol", "text": "lol", "expected": "short"},
-  {"id": "short-question-itself", "text": "Сколько стоит?", "expected": null},
-  {"id": "short-question-es", "text": "¿Dónde?", "expected": null},
-  {"id": "short-punctuation-only", "text": "...", "expected": "short"},
-  {"id": "short-empty-without-media", "text": "", "expected": "short"},
-  {"id": "short-empty-reply-to-question-stays", "text": "", "reply_to_text": "Where is the nearest pharmacy?", "expected": null},
-  {"id": "short-boundary-14-chars", "text": "abcdefg hijklm", "expected": "short"},
-  {"id": "not-short-15-chars", "text": "abcdefg hijklmn", "expected": null},
-  {"id": "voice-without-text", "text": "", "media": "voice", "expected": null},
-  {"id": "photo-without-text", "text": "", "media": "photo", "expected": null},
-  {"id": "document-without-text", "text": "", "media": "document", "expected": null},
-  {"id": "video-note-without-text", "text": "", "media": "video_note", "expected": null},
-  {"id": "photo-with-short-caption", "text": "вот", "media": "photo", "expected": null},
-  {"id": "duplicate-same-text", "text": "Сдаю квартиру в Pocitos, 2 комнаты, без мебели", "history": [{"text": "Сдаю квартиру в Pocitos, 2 комнаты, без мебели", "days_before": 3}], "expected": "duplicate"},
-  {"id": "duplicate-case-and-punctuation", "text": "Busco trabajo de niñera, zona Centro!!", "history": [{"text": "busco trabajo de niñera zona centro", "days_before": 10}], "expected": "duplicate"},
-  {"id": "duplicate-too-old", "text": "Сдаю квартиру в Pocitos, 2 комнаты, без мебели", "history": [{"text": "Сдаю квартиру в Pocitos, 2 комнаты, без мебели", "days_before": 31}], "expected": null},
-  {"id": "duplicate-only-later-copy", "text": "Looking for a Spanish tutor near Parque Rodó", "history": [{"text": "Looking for a Spanish tutor near Parque Rodó", "days_before": -1}], "expected": null},
-  {"id": "media-without-text-never-duplicate", "text": "", "media": "photo", "history": [{"text": "", "days_before": 1}], "expected": null},
-  {"id": "spam-ru-link", "text": "Заработок от 1000 в день без вложений, подробности https://example.com/earn", "expected": "spam"},
-  {"id": "spam-ru-dm", "text": "Удаленная работа, пассивный доход, пишите в лс", "expected": "spam"},
-  {"id": "spam-es-link", "text": "Querés ganar dinero desde tu celular? Entrá a t.me/example_bot", "expected": "spam"},
-  {"id": "spam-es-dm", "text": "Ingresos extra sin experiencia previa, escribime al privado", "expected": "spam"},
-  {"id": "spam-en-link", "text": "Earn money from home, guaranteed profit: www.example.org", "expected": "spam"},
-  {"id": "spam-offer-without-contact-is-not", "text": "Кто-нибудь пробовал заработать на фрилансе в Уругвае легально?", "expected": null},
-  {"id": "rental-ad-with-dm-is-not-spam", "text": "Сдаю комнату в Cordón на месяц, фото тут https://example.com/room, пишите в лс", "expected": null},
-  {"id": "useful-link", "text": "Расписание автобусов: https://example.com/montevideo/bus", "expected": null},
-  {"id": "useful-ru", "text": "В субботу ярмарка на Tristán Narvaja, там дешевые овощи", "expected": null},
-  {"id": "useful-es", "text": "El trámite de la cédula demora unas dos semanas", "expected": null},
-  {"id": "useful-en", "text": "The bank asked me for proof of address and a payslip", "expected": null}
+  {
+    "id": "service-join",
+    "text": "",
+    "service": true,
+    "expected": "service"
+  },
+  {
+    "id": "service-with-text",
+    "text": "Пользователь закрепил сообщение о правилах чата",
+    "service": true,
+    "expected": "service"
+  },
+  {
+    "id": "sticker",
+    "text": "",
+    "media": "sticker",
+    "expected": "sticker"
+  },
+  {
+    "id": "sticker-with-emoji-text",
+    "text": "😂",
+    "media": "sticker",
+    "expected": "sticker"
+  },
+  {
+    "id": "emoji-single",
+    "text": "👍",
+    "expected": "emoji_only"
+  },
+  {
+    "id": "emoji-many",
+    "text": "😂😂😂",
+    "expected": "emoji_only"
+  },
+  {
+    "id": "emoji-skin-tone",
+    "text": "👍🏽👍🏽",
+    "expected": "emoji_only"
+  },
+  {
+    "id": "emoji-heart-variation",
+    "text": "❤️",
+    "expected": "emoji_only"
+  },
+  {
+    "id": "emoji-flag-and-punctuation",
+    "text": "🇺🇾 !!!",
+    "expected": "emoji_only"
+  },
+  {
+    "id": "emoji-zwj-family",
+    "text": "👨‍👩‍👧",
+    "expected": "emoji_only"
+  },
+  {
+    "id": "photo-with-emoji-caption",
+    "text": "🔥🔥",
+    "media": "photo",
+    "expected": null
+  },
+  {
+    "id": "gratitude-ru",
+    "text": "Спасибо!",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-ru-big",
+    "text": "Спасибо большое!!! 🙏",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-ru-formal",
+    "text": "благодарю вас",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-es",
+    "text": "Gracias",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-es-accent",
+    "text": "Muchísimas gracias!",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-es-everyone",
+    "text": "gracias a todos 🙌",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-en",
+    "text": "Thank you very much!",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-en-short",
+    "text": "thx",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-plus",
+    "text": "+",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-plus-one",
+    "text": "+1",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-plus-plus",
+    "text": " ++ ",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-with-question-is-not",
+    "text": "Спасибо! А где это находится?",
+    "expected": null
+  },
+  {
+    "id": "gratitude-with-detail-is-not",
+    "text": "Gracias, al final fui al consulado de la calle Colonia y me atendieron rápido",
+    "expected": null
+  },
+  {
+    "id": "plus-with-text-is-not-gratitude",
+    "text": "+1 к вопросу, тоже ищу хорошего стоматолога рядом с центром",
+    "expected": null
+  },
+  {
+    "id": "short-yes-flood",
+    "text": "да",
+    "expected": "short"
+  },
+  {
+    "id": "short-yes-to-question",
+    "text": "да",
+    "reply_to_text": "Есть ли автобус до аэропорта ночью?",
+    "expected": null
+  },
+  {
+    "id": "short-no-to-question-word",
+    "text": "нет",
+    "reply_to_text": "Где можно купить сим-карту Antel",
+    "expected": null
+  },
+  {
+    "id": "short-reply-to-statement",
+    "text": "ок",
+    "reply_to_text": "Я завтра буду в центре",
+    "expected": "short"
+  },
+  {
+    "id": "short-es-flood",
+    "text": "jajaja",
+    "expected": "short"
+  },
+  {
+    "id": "short-es-answer",
+    "text": "sí, hay",
+    "reply_to_text": "¿Hay farmacia abierta 24 horas en Pocitos?",
+    "expected": null
+  },
+  {
+    "id": "short-en-lol",
+    "text": "lol",
+    "expected": "short"
+  },
+  {
+    "id": "short-question-itself",
+    "text": "Сколько стоит?",
+    "expected": null
+  },
+  {
+    "id": "short-question-es",
+    "text": "¿Dónde?",
+    "expected": null
+  },
+  {
+    "id": "short-punctuation-only",
+    "text": "...",
+    "expected": "short"
+  },
+  {
+    "id": "short-empty-without-media",
+    "text": "",
+    "expected": "short"
+  },
+  {
+    "id": "short-empty-reply-to-question-stays",
+    "text": "",
+    "reply_to_text": "Where is the nearest pharmacy?",
+    "expected": null
+  },
+  {
+    "id": "short-boundary-14-chars",
+    "text": "abcdefg hijklm",
+    "expected": "short"
+  },
+  {
+    "id": "not-short-15-chars",
+    "text": "abcdefg hijklmn",
+    "expected": null
+  },
+  {
+    "id": "voice-without-text",
+    "text": "",
+    "media": "voice",
+    "expected": null
+  },
+  {
+    "id": "photo-without-text",
+    "text": "",
+    "media": "photo",
+    "expected": null
+  },
+  {
+    "id": "document-without-text",
+    "text": "",
+    "media": "document",
+    "expected": null
+  },
+  {
+    "id": "video-note-without-text",
+    "text": "",
+    "media": "video_note",
+    "expected": null
+  },
+  {
+    "id": "photo-with-short-caption",
+    "text": "вот",
+    "media": "photo",
+    "expected": null
+  },
+  {
+    "id": "duplicate-same-text",
+    "text": "Сдаю квартиру в Pocitos, 2 комнаты, без мебели",
+    "history": [
+      {
+        "text": "Сдаю квартиру в Pocitos, 2 комнаты, без мебели",
+        "days_before": 3
+      }
+    ],
+    "expected": "duplicate"
+  },
+  {
+    "id": "duplicate-case-and-punctuation",
+    "text": "Busco trabajo de niñera, zona Centro!!",
+    "history": [
+      {
+        "text": "busco trabajo de niñera zona centro",
+        "days_before": 10
+      }
+    ],
+    "expected": "duplicate"
+  },
+  {
+    "id": "duplicate-too-old",
+    "text": "Сдаю квартиру в Pocitos, 2 комнаты, без мебели",
+    "history": [
+      {
+        "text": "Сдаю квартиру в Pocitos, 2 комнаты, без мебели",
+        "days_before": 31
+      }
+    ],
+    "expected": null
+  },
+  {
+    "id": "duplicate-only-later-copy",
+    "text": "Looking for a Spanish tutor near Parque Rodó",
+    "history": [
+      {
+        "text": "Looking for a Spanish tutor near Parque Rodó",
+        "days_before": -1
+      }
+    ],
+    "expected": null
+  },
+  {
+    "id": "media-without-text-never-duplicate",
+    "text": "",
+    "media": "photo",
+    "history": [
+      {
+        "text": "",
+        "days_before": 1
+      }
+    ],
+    "expected": null
+  },
+  {
+    "id": "spam-ru-link",
+    "text": "Заработок от 1000 в день без вложений, подробности https://example.com/earn",
+    "expected": "spam"
+  },
+  {
+    "id": "spam-ru-dm",
+    "text": "Удаленная работа, пассивный доход, пишите в лс",
+    "expected": "spam"
+  },
+  {
+    "id": "spam-es-link",
+    "text": "Querés ganar dinero desde tu celular? Entrá a t.me/example_bot",
+    "expected": "spam"
+  },
+  {
+    "id": "spam-es-dm",
+    "text": "Ingresos extra sin experiencia previa, escribime al privado",
+    "expected": "spam"
+  },
+  {
+    "id": "spam-en-link",
+    "text": "Earn money from home, guaranteed profit: www.example.org",
+    "expected": "spam"
+  },
+  {
+    "id": "spam-offer-without-contact-is-not",
+    "text": "Кто-нибудь пробовал заработать на фрилансе в Уругвае легально?",
+    "expected": null
+  },
+  {
+    "id": "rental-ad-with-dm-is-not-spam",
+    "text": "Сдаю комнату в Cordón на месяц, фото тут https://example.com/room, пишите в лс",
+    "expected": null
+  },
+  {
+    "id": "useful-link",
+    "text": "Расписание автобусов: https://example.com/montevideo/bus",
+    "expected": null
+  },
+  {
+    "id": "useful-ru",
+    "text": "В субботу ярмарка на Tristán Narvaja, там дешевые овощи",
+    "expected": null
+  },
+  {
+    "id": "useful-es",
+    "text": "El trámite de la cédula demora unas dos semanas",
+    "expected": null
+  },
+  {
+    "id": "useful-en",
+    "text": "The bank asked me for proof of address and a payslip",
+    "expected": null
+  },
+  {
+    "id": "gratitude-es-sharing",
+    "text": "Gracias por compartir",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-ru-sharing",
+    "text": "Спасибо, что поделились!",
+    "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-en-sharing",
+    "text": "Thanks for sharing!",
+    "expected": "gratitude"
+  }
 ]

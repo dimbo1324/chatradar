@@ -60,7 +60,7 @@ REASON_SPAM = "spam"
 SHORT_LIMIT = 15
 DUPLICATE_WINDOW = timedelta(days=30)
 
-NOISE_VERSION = 1
+NOISE_VERSION = 2  # 2: thanks-for-sharing phrases in the gratitude lexicon
 
 
 @dataclass(frozen=True)

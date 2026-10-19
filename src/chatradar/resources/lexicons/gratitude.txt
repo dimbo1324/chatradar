@@ -9,6 +9,7 @@
 +100500
 # ru
 спасибо
+спасибо что поделились
 спасибо большое
 спасибо огромное
 большое спасибо
@@ -37,12 +38,15 @@ gracias por la info
 gracias por la informacion
 ok gracias
 genial gracias
+gracias por compartir
+gracias por compartirlo
 # en
 thanks
 thank you
 thanks a lot
 thank you very much
 thanks everyone
+thanks for sharing
 thx
 ty
 thanks for the info

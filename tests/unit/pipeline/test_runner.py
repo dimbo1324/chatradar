@@ -6,7 +6,7 @@ import pytest
 from structlog.testing import capture_logs
 
 from chatradar.pipeline.base import STAGE_ORDER
-from chatradar.pipeline.noise import NoiseStage
+from chatradar.pipeline.noise import NOISE_VERSION, NoiseStage
 from chatradar.pipeline.registry import default_stages, stage_versions
 from chatradar.pipeline.runner import run_pipeline
 from chatradar.services.process import process
@@ -29,7 +29,7 @@ def _chat() -> list[StoredMessage]:
 
 
 class NoiseV2(NoiseStage):
-    version = 2
+    version = NOISE_VERSION + 1
 
 
 async def test_full_run_then_nothing_left() -> None:
@@ -59,7 +59,7 @@ async def test_version_bump_reprocesses_that_stage_and_every_later_one() -> None
     counts = await run_pipeline(stages, deps)
 
     assert counts == dict.fromkeys(STAGE_ORDER, 5)
-    assert all(m.versions == {**ALL_DONE, "noise": 2} for m in repo.rows.values())
+    assert all(m.versions == {**ALL_DONE, "noise": NOISE_VERSION + 1} for m in repo.rows.values())
     assert await run_pipeline(stages, deps) == dict.fromkeys(STAGE_ORDER, 0)
 
 
@@ -97,7 +97,7 @@ async def test_only_runs_one_stage() -> None:
     deps, repo, _ = make_deps(_chat())
 
     assert await run_pipeline(default_stages(), deps, only="noise") == {"noise": 5}
-    assert all(m.versions == {"noise": 1} for m in repo.rows.values())
+    assert all(m.versions == {"noise": NOISE_VERSION} for m in repo.rows.values())
 
 
 async def test_unknown_stage_and_bad_batch_size_are_rejected() -> None:
