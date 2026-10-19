@@ -25,6 +25,7 @@ from dataclasses import dataclass, field
 from datetime import timedelta
 from typing import TYPE_CHECKING
 
+from chatradar.domain.lexicon import LexiconKind
 from chatradar.domain.models import MediaType, StageResult
 from chatradar.domain.text import fingerprint
 from chatradar.pipeline.features import (
@@ -34,15 +35,8 @@ from chatradar.pipeline.features import (
     is_emoji_only,
     looks_like_question,
 )
-from chatradar.pipeline.lexicons import (
-    GRATITUDE,
-    SPAM_CONTACTS,
-    SPAM_OFFERS,
-    contains_phrase,
-    fold,
-    folded_entries,
-    raw_entries,
-)
+from chatradar.pipeline.lexicon import Lexicon, load_lexicon
+from chatradar.pipeline.lexicons import contains_phrase, fold
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Mapping, Sequence
@@ -84,6 +78,7 @@ class NoiseContext:
     reply_target: StoredMessage | None = None
     history: Mapping[str, Sequence[ChronoKey]] = field(default_factory=dict[str, list[ChronoKey]])
     """Fingerprint → positions of the chat's messages with that text (any order)."""
+    lexicon: Lexicon = field(default_factory=Lexicon.from_seed)
 
 
 type Rule = Callable[[StoredMessage, NoiseContext], str | None]
@@ -109,16 +104,23 @@ def gratitude(msg: StoredMessage, ctx: NoiseContext) -> str | None:
     text = msg.text.strip()
     if not text:
         return None
-    if text in raw_entries(GRATITUDE) or fold(text) in folded_entries(GRATITUDE):
+    lexicon = ctx.lexicon
+    if text in lexicon.raw(LexiconKind.GRATITUDE) or fold(text) in lexicon.folded(
+        LexiconKind.GRATITUDE
+    ):
         return REASON_GRATITUDE
     return None
 
 
 def short_without_value(msg: StoredMessage, ctx: NoiseContext) -> str | None:
-    if _has_media(msg) or len(msg.text) >= SHORT_LIMIT or looks_like_question(msg.text):
+    if (
+        _has_media(msg)
+        or len(msg.text) >= SHORT_LIMIT
+        or looks_like_question(msg.text, ctx.lexicon)
+    ):
         return None
     target = ctx.reply_target
-    if target is not None and looks_like_question(target.text):
+    if target is not None and looks_like_question(target.text, ctx.lexicon):
         return None
     return REASON_SHORT
 
@@ -136,9 +138,10 @@ def duplicate(msg: StoredMessage, ctx: NoiseContext) -> str | None:
 
 def spam_patterns(msg: StoredMessage, ctx: NoiseContext) -> str | None:
     folded = fold(msg.text)
-    if not contains_phrase(folded, folded_entries(SPAM_OFFERS)):
+    lexicon = ctx.lexicon
+    if not contains_phrase(folded, lexicon.folded(LexiconKind.SPAM_OFFERS)):
         return None
-    if extract_urls(msg.text) or contains_phrase(folded, folded_entries(SPAM_CONTACTS)):
+    if extract_urls(msg.text) or contains_phrase(folded, lexicon.folded(LexiconKind.SPAM_CONTACTS)):
         return REASON_SPAM
     return None
 
@@ -179,6 +182,7 @@ class NoiseStage:
         pending = await deps.messages.pending_for(self.name, self.version, self.depends_on, limit)
         if not pending:
             return 0
+        lexicon = await load_lexicon(deps.lexicon)
         targets = await deps.messages.get_many(
             [(m.source, m.chat_id, m.reply_to) for m in pending if m.reply_to is not None]
         )
@@ -191,7 +195,9 @@ class NoiseStage:
             since = min(m.date for m in msgs) - DUPLICATE_WINDOW
             history = fingerprint_index(await deps.messages.chat_window(source, chat_id, since))
             for msg in msgs:
-                ctx = NoiseContext(reply_target=_target(msg, targets), history=history)
+                ctx = NoiseContext(
+                    reply_target=_target(msg, targets), history=history, lexicon=lexicon
+                )
                 reason = classify(msg, ctx)
                 results.append(
                     StageResult(
