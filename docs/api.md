@@ -19,6 +19,10 @@ All endpoints bind to 127.0.0.1 by default. Errors use FastAPI's `{"detail": ...
 | `GET /api/review` | `noise` (bool, required), `n` (1–200, default 100) | `list[StoredMessage]` — a random sample |
 | `GET /api/noise-reasons` | — | `dict[str, int]` — reason → count |
 
+`ThreadHit.snippet` is plain text with every matched word wrapped in `[[` and `]]`; the
+frontend turns those into `<mark>` elements through DOM nodes, never `innerHTML`.
+Thread messages are chronological; noise messages belong to no thread.
+
 `thread_id` contains a colon (`-100123:42`); clients URL-encode it in the path.
 
 ## Static files

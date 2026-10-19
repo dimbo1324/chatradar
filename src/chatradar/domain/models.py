@@ -209,10 +209,10 @@ class SearchFilters(_Frozen):
 class ThreadHit(_Frozen):
     thread: Thread
     score: float  # higher is better
-    snippet: str  # short excerpt with the matched words
+    snippet: str  # short plain-text excerpt; matched words wrapped in [[ and ]]
     link: str | None = None  # link to the thread's root message
 
 
 class ThreadDetail(_Frozen):
     thread: Thread
-    messages: list[StoredMessage]  # chronological, noise included and marked
+    messages: list[StoredMessage]  # chronological; noise messages belong to no thread
