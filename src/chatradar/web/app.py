@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-import importlib
-import inspect
-from contextlib import AbstractAsyncContextManager, asynccontextmanager
+from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
@@ -12,7 +10,10 @@ from fastapi.staticfiles import StaticFiles
 
 from chatradar import __version__
 from chatradar.config import get_settings
+from chatradar.services.container import open_runtime
 from chatradar.web.api import router
+from chatradar.web.feedback_api import router as feedback_router
+from chatradar.web.guard import write_guard
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator, Awaitable, Callable
@@ -20,6 +21,7 @@ if TYPE_CHECKING:
     from starlette.requests import Request
     from starlette.responses import Response
 
+    from chatradar.services.feedback import FeedbackServices
     from chatradar.services.queries import ReadServices
 
 STATIC_DIR = Path(__file__).parent / "static"
@@ -39,19 +41,10 @@ SECURITY_HEADERS = {
 
 @asynccontextmanager
 async def _real_services(app: FastAPI) -> AsyncGenerator[None]:
-    # Imported lazily: the container wires storage and is only needed outside tests.
-    container = importlib.import_module("chatradar.services.container")
-    built: Any = container.build_read_services(get_settings())
-    if isinstance(built, AbstractAsyncContextManager):
-        manager = cast("AbstractAsyncContextManager[ReadServices]", built)
-        async with manager as read:
-            app.state.read = read
-            yield
-        return
-    if inspect.isawaitable(built):
-        built = await built
-    app.state.read = built
-    yield
+    async with open_runtime(get_settings()) as runtime:
+        app.state.read = runtime.read
+        app.state.feedback = getattr(runtime, "feedback", None)
+        yield
 
 
 async def _security_headers(
@@ -65,7 +58,9 @@ async def _security_headers(
     return response
 
 
-def create_app(read: ReadServices | None = None) -> FastAPI:
+def create_app(
+    read: ReadServices | None = None, feedback: FeedbackServices | None = None
+) -> FastAPI:
     app = FastAPI(
         title="ChatRadar",
         version=__version__,
@@ -75,6 +70,8 @@ def create_app(read: ReadServices | None = None) -> FastAPI:
     )
     if read is not None:
         app.state.read = read
+        app.state.feedback = feedback
+    app.middleware("http")(write_guard)
     app.middleware("http")(_security_headers)
 
     @app.get("/healthz", tags=["service"])
@@ -86,5 +83,6 @@ def create_app(read: ReadServices | None = None) -> FastAPI:
         return FileResponse(STATIC_DIR / "index.html", media_type="text/html")
 
     app.include_router(router)
+    app.include_router(feedback_router)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     return app
