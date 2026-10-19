@@ -1,8 +1,9 @@
 import { api } from "../api.js";
-import { badge, emptyState, externalLink, h, loading, span, timeEl } from "../dom.js";
+import { badge, emptyState, externalLink, h, icon, loading, pageHead, span, timeEl } from "../dom.js";
 import { num, t, tEnum } from "../i18n.js";
+import { labelControls, loadLabelContext } from "../labels.js";
 
-const MAX_INDENT = 8;
+const MAX_INDENT = 6;
 
 // Messages arrive chronologically, so a parent is always seen before its replies.
 function replyDepths(messages) {
@@ -14,26 +15,36 @@ function replyDepths(messages) {
   return depths;
 }
 
-function messageItem(message, depth) {
+function messageItem(message, depth, context) {
   const item = h(
     "li",
-    { className: "thread-msg" },
+    { className: `thread-msg${depth > 0 ? " reply" : ""}`, id: `m-${message.msg_id}` },
     h(
       "div",
-      { className: "meta" },
-      timeEl(message.date),
-      message.is_question ? badge(t("common.question"), "question") : null,
-      message.reply_to
-        ? h("span", { className: "muted small" }, t("thread.reply_to", { id: message.reply_to }))
-        : null,
-      h("span", { className: "muted small" }, `#${message.msg_id}`),
-      externalLink(message.link),
-    ),
-    h(
-      "p",
-      { className: "body" },
-      message.text ||
-        h("span", { className: "muted" }, `[${tEnum("media", message.media_type) || message.media_type}]`),
+      { className: "bubble" },
+      h(
+        "div",
+        { className: "meta" },
+        timeEl(message.date),
+        message.is_question ? badge(t("common.question"), "question", "question") : null,
+        message.reply_to
+          ? h(
+              "span",
+              { className: "muted small reply-ref" },
+              icon("undo", { size: "sm" }),
+              t("thread.reply_to", { id: message.reply_to }),
+            )
+          : null,
+        h("span", { className: "muted small" }, `#${message.msg_id}`),
+        externalLink(message.link),
+      ),
+      h(
+        "p",
+        { className: "body" },
+        message.text ||
+          h("span", { className: "muted" }, `[${tEnum("media", message.media_type) || message.media_type}]`),
+      ),
+      labelControls(message, context),
     ),
   );
   item.style.setProperty("--depth", String(Math.min(depth, MAX_INDENT)));
@@ -43,9 +54,7 @@ function messageItem(message, depth) {
 async function chatTitle(thread, signal) {
   try {
     const chats = await api.chats(signal);
-    const found = chats.find(
-      (s) => s.chat.source === thread.source && s.chat.chat_id === thread.chat_id,
-    );
+    const found = chats.find((s) => s.chat.source === thread.source && s.chat.chat_id === thread.chat_id);
     return found ? found.chat.title : thread.chat_id;
   } catch (error) {
     if (signal.aborted) throw error;
@@ -54,13 +63,13 @@ async function chatTitle(thread, signal) {
 }
 
 export async function renderThread({ root, arg, signal }) {
-  root.append(h("h1", {}, t("thread.title")));
+  root.append(pageHead(t("thread.title")));
   if (!arg) {
     root.append(emptyState(t("thread.none")));
     return;
   }
   const status = root.appendChild(loading());
-  const detail = await api.thread(arg, signal);
+  const [detail, context] = await Promise.all([api.thread(arg, signal), loadLabelContext(signal)]);
   const thread = detail.thread;
   const title = await chatTitle(thread, signal);
   status.remove();
@@ -69,15 +78,27 @@ export async function renderThread({ root, arg, signal }) {
   root.append(
     h(
       "dl",
-      { className: "summary" },
+      { className: "summary card" },
       h("dt", {}, t("thread.chat")),
       h("dd", {}, title),
       h("dt", {}, t("thread.span")),
       h("dd", {}, span(thread.started_at, thread.ended_at)),
       h("dt", {}, t("thread.count")),
-      h("dd", {}, num(thread.msg_count), thread.has_question ? badge(t("common.question"), "question") : null),
+      h(
+        "dd",
+        {},
+        num(thread.msg_count),
+        " ",
+        thread.has_question ? badge(t("common.question"), "question", "question") : null,
+      ),
       h("dt", {}, t("thread.id")),
-      h("dd", {}, h("code", {}, thread.thread_id), " ", h("a", { href: `#/messages?${messagesQuery}` }, t("thread.as_table"))),
+      h(
+        "dd",
+        {},
+        h("code", {}, thread.thread_id),
+        " ",
+        h("a", { href: `#/messages?${messagesQuery}` }, t("thread.as_table")),
+      ),
     ),
   );
   if (detail.messages.length === 0) {
@@ -89,7 +110,7 @@ export async function renderThread({ root, arg, signal }) {
     h(
       "ol",
       { className: "thread" },
-      detail.messages.map((message) => messageItem(message, depths.get(message.msg_id) || 0)),
+      detail.messages.map((message) => messageItem(message, depths.get(message.msg_id) || 0, context)),
     ),
   );
 }

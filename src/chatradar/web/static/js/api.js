@@ -56,6 +56,35 @@ export async function getJson(path, params = {}, signal = undefined) {
   return response.json();
 }
 
+export async function postJson(path, body, signal = undefined) {
+  let response;
+  try {
+    response = await fetch(path, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-Requested-With": "chatradar",
+      },
+      body: JSON.stringify(body),
+      signal,
+    });
+  } catch (error) {
+    if (error.name === "AbortError") throw error;
+    throw new ApiError(t("common.unreachable"), 0);
+  }
+  if (!response.ok) {
+    let detail = response.statusText;
+    try {
+      detail = describe((await response.json()).detail);
+    } catch {
+      // The body is not JSON: keep the status text.
+    }
+    throw new ApiError(explain(response.status, detail), response.status);
+  }
+  return response.json();
+}
+
 export const api = {
   chats: (signal) => getJson("/api/chats", {}, signal),
   pipeline: (signal) => getJson("/api/pipeline", {}, signal),
@@ -64,4 +93,18 @@ export const api = {
   search: (q, filters, signal) => getJson("/api/search", { q, ...filters }, signal),
   review: (noise, n, signal) => getJson("/api/review", { noise, n }, signal),
   noiseReasons: (signal) => getJson("/api/noise-reasons", {}, signal),
+  noiseReasonList: (signal) => getJson("/api/noise-reason-list", {}, signal),
+  message: (source, chatId, msgId, signal) =>
+    getJson(
+      `/api/messages/${encodeURIComponent(source)}/${encodeURIComponent(chatId)}/${encodeURIComponent(msgId)}`,
+      {},
+      signal,
+    ),
+  lexiconSummary: (signal) => getJson("/api/lexicon/summary", {}, signal),
+  lexiconTerms: (filters, signal) => getJson("/api/lexicon/terms", filters, signal),
+  decide: (term, decision) =>
+    postJson("/api/lexicon/decision", { kind: term.kind, lang: term.lang, term: term.term, decision }),
+  labels: (signal) => getJson("/api/labels", {}, signal),
+  saveLabel: (label) => postJson("/api/labels", label),
+  quality: (signal) => getJson("/api/quality", {}, signal),
 };

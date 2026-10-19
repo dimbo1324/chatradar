@@ -1,8 +1,8 @@
 // Filter form pieces shared by the Messages and Search views. Form state lives in the URL
 // hash as plain values (dates as YYYY-MM-DD in local time); the API gets aware ISO instants.
 
-import { dateInput, field, h, select } from "./dom.js";
-import { t } from "./i18n.js";
+import { badge, dateInput, field, h, icon, select } from "./dom.js";
+import { num, t } from "./i18n.js";
 
 export const triState = () => [
   ["", t("common.any")],
@@ -64,7 +64,11 @@ export function apiFilters(params, keys) {
   return out;
 }
 
-export function filterForm(path, controls, submitLabel = t("common.apply")) {
+const WIDE = "(min-width: 1000px)";
+
+// Collapsible filter panel: open on wide screens, folded on narrow ones. `params` only
+// feeds the badge that counts the filters currently applied.
+export function filterForm(path, controls, submitLabel = t("common.apply"), params = null) {
   const form = h(
     "form",
     { className: "filters" },
@@ -72,8 +76,8 @@ export function filterForm(path, controls, submitLabel = t("common.apply")) {
     h(
       "div",
       { className: "actions" },
-      h("button", { type: "submit" }, submitLabel),
-      h("a", { href: `#/${path}`, className: "button secondary" }, t("common.reset")),
+      h("button", { type: "submit" }, icon("check", { size: "sm" }), submitLabel),
+      h("a", { href: `#/${path}`, className: "btn secondary" }, icon("refresh", { size: "sm" }), t("common.reset")),
     ),
   );
   form.addEventListener("submit", (event) => {
@@ -81,5 +85,45 @@ export function filterForm(path, controls, submitLabel = t("common.apply")) {
     const query = formToParams(form).toString();
     location.hash = query ? `#/${path}?${query}` : `#/${path}`;
   });
-  return form;
+  const active = params ? [...params.keys()].filter((k) => !["offset", "limit"].includes(k)).length : 0;
+  const panel = h(
+    "details",
+    { className: "filter-panel" },
+    h(
+      "summary",
+      {},
+      icon("filter"),
+      t("common.filters"),
+      active > 0 ? badge(String(active), "accent") : null,
+      icon("chevron-down", { size: "sm" }),
+    ),
+    form,
+  );
+  panel.querySelector(".icon:last-child").classList.add("chev");
+  panel.open = window.matchMedia(WIDE).matches;
+  return panel;
+}
+
+// Previous / next links over a paged result; `path` is the hash route without the query.
+export function pager(page, params, path) {
+  const link = (offset, label, side) => {
+    const next = new URLSearchParams(params);
+    next.set("offset", String(offset));
+    return h(
+      "a",
+      { href: `#/${path}?${next}`, className: "btn secondary" },
+      side === "left" ? icon("chevron-left", { size: "sm" }) : null,
+      label,
+      side === "right" ? icon("chevron-right", { size: "sm" }) : null,
+    );
+  };
+  const first = page.total === 0 ? 0 : page.offset + 1;
+  const last = page.offset + page.items.length;
+  return h(
+    "nav",
+    { className: "pager", "aria-label": t("messages.pages") },
+    page.offset > 0 ? link(Math.max(0, page.offset - page.limit), t("messages.previous"), "left") : null,
+    h("span", {}, t("messages.range", { first: num(first), last: num(last), total: num(page.total) })),
+    last < page.total ? link(page.offset + page.limit, t("messages.next"), "right") : null,
+  );
 }

@@ -1,48 +1,54 @@
 import { api } from "../api.js";
-import { clear, errorBox, h, loading, table, utcString } from "../dom.js";
+import { bar, badge, clear, errorBox, h, icon, loading, pageHead, tile, utcString } from "../dom.js";
 import { num, t, tEnum } from "../i18n.js";
 
 const REFRESH_MS = 10_000;
+const STAGE_ICONS = { noise: "mute", enrich: "tag", threads: "branch", index: "search" };
 
-function stageRow(stage) {
+function stageCard(stage) {
   const total = stage.done + stage.pending;
-  const percent = total === 0 ? 100 : Math.round((stage.done / total) * 100);
+  const fraction = total === 0 ? 1 : stage.done / total;
+  const percent = Math.round(fraction * 100);
+  const finished = stage.pending === 0;
+  const progress = bar(fraction, finished ? "ok" : "");
+  progress.setAttribute("role", "progressbar");
+  progress.setAttribute("aria-valuemin", "0");
+  progress.setAttribute("aria-valuemax", "100");
+  progress.setAttribute("aria-valuenow", String(percent));
+  progress.setAttribute("aria-label", t("pipeline.progress_label", { stage: tEnum("stage", stage.stage) }));
   return h(
-    "tr",
-    {},
-    h("td", {}, tEnum("stage", stage.stage)),
-    h("td", { className: "num" }, `v${stage.version}`),
-    h("td", { className: "num" }, num(stage.done)),
-    h("td", { className: "num" }, num(stage.pending)),
+    "article",
+    { className: "card stage-card" },
     h(
-      "td",
-      { className: "progress-cell" },
-      h("progress", { max: total || 1, value: stage.done, "aria-label": t("pipeline.progress_label", { stage: tEnum("stage", stage.stage) }) }),
-      h("span", { className: "small" }, ` ${percent}%`),
+      "div",
+      { className: "stage-head" },
+      h("span", { className: "stage-icon" }, icon(STAGE_ICONS[stage.stage] || "pipeline")),
+      h("h2", {}, tEnum("stage", stage.stage)),
+      badge(`v${stage.version}`, "info"),
+    ),
+    progress,
+    h(
+      "div",
+      { className: "stage-stats" },
+      h("span", { className: "num-big" }, `${percent}%`),
+      h("span", { className: "muted small" }, `${t("pipeline.col.done")}: ${num(stage.done)}`),
+      stage.pending > 0
+        ? badge(`${t("pipeline.col.pending")}: ${num(stage.pending)}`, "warn")
+        : badge(t("pipeline.up_to_date"), "ok", "check-circle"),
     ),
   );
 }
 
 export async function renderPipeline({ root, signal }) {
-  root.append(h("h1", {}, t("pipeline.title")));
-  const body = root.appendChild(h("div", { "aria-live": "polite" }, loading()));
+  root.append(pageHead(t("pipeline.title")));
+  const body = root.appendChild(h("div", { className: "stack", "aria-live": "polite" }, loading()));
 
   const refresh = async () => {
     try {
       const stats = await api.pipeline(signal);
       clear(body).append(
-        h("p", {}, t("pipeline.total"), h("strong", {}, num(stats.total_messages))),
-        table(
-          [
-            t("pipeline.col.stage"),
-            t("pipeline.col.version"),
-            t("pipeline.col.done"),
-            t("pipeline.col.pending"),
-            t("pipeline.col.progress"),
-          ],
-          stats.stages.map(stageRow),
-          t("pipeline.caption"),
-        ),
+        h("div", { className: "tiles" }, tile(t("pipeline.total"), num(stats.total_messages), { iconName: "messages" })),
+        h("div", { className: "stage-grid" }, stats.stages.map(stageCard)),
         h(
           "p",
           { className: "muted small" },
