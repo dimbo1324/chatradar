@@ -1,5 +1,5 @@
 import { api } from "../api.js";
-import { emptyState, h, loading, table, timeEl } from "../dom.js";
+import { emptyState, h, icon, loading, pageHead, table, tile, timeEl } from "../dom.js";
 import { num, t, tEnum } from "../i18n.js";
 
 function messagesHref(chat) {
@@ -7,8 +7,13 @@ function messagesHref(chat) {
   return `#/messages?${query}`;
 }
 
+function totals(chats) {
+  const sum = (key) => chats.reduce((acc, summary) => acc + summary[key], 0);
+  return { messages: sum("message_count"), noise: sum("noise_count"), threads: sum("thread_count") };
+}
+
 export async function renderChats({ root, signal }) {
-  root.append(h("h1", {}, t("chats.title")));
+  root.append(pageHead(t("chats.title")));
   const status = root.appendChild(loading());
   const chats = await api.chats(signal);
   status.remove();
@@ -17,6 +22,21 @@ export async function renderChats({ root, signal }) {
     root.append(emptyState(t("chats.empty")));
     return;
   }
+  const sum = totals(chats);
+  const noiseShare = sum.messages === 0 ? 0 : sum.noise / sum.messages;
+  root.append(
+    h(
+      "div",
+      { className: "tiles" },
+      tile(t("chats.tile.chats"), num(chats.length), { iconName: "chats" }),
+      tile(t("chats.tile.messages"), num(sum.messages), { iconName: "messages" }),
+      tile(t("chats.tile.noise"), num(sum.noise), {
+        iconName: "mute",
+        hint: t("chats.tile.noise_share", { share: Math.round(noiseShare * 100) }),
+      }),
+      tile(t("chats.tile.threads"), num(sum.threads), { iconName: "branch" }),
+    ),
+  );
   const rows = chats.map((summary) => {
     const chat = summary.chat;
     return h(
@@ -25,7 +45,7 @@ export async function renderChats({ root, signal }) {
       h(
         "td",
         {},
-        h("a", { href: messagesHref(chat) }, chat.title),
+        h("a", { href: messagesHref(chat) }, h("strong", {}, chat.title), icon("chevron-right", { size: "sm" })),
         chat.username ? h("div", { className: "muted small" }, `@${chat.username}`) : null,
       ),
       h("td", {}, tEnum("source", chat.source)),

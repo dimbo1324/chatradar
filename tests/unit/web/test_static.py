@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 JS_FILES = sorted(STATIC_DIR.rglob("*.js"))
 UNSAFE_SINKS = re.compile(r"\b(innerHTML|outerHTML|insertAdjacentHTML|document\.write)\b|\beval\(")
 IMPORT_PATH = re.compile(r"""^\s*import\b[^"']*["']([^"']+)["']""", re.MULTILINE)
-VIEWS = ("chats", "pipeline", "messages", "thread", "search", "review")
+VIEWS = ("chats", "pipeline", "messages", "thread", "search", "review", "lexicon", "quality")
 
 
 def test_index_is_served_with_a_strict_csp(panel: Panel) -> None:
@@ -50,6 +50,11 @@ def test_api_responses_carry_the_csp(panel: Panel) -> None:
         ("/static/css/app.css", "text/css"),
         ("/static/js/app.js", "text/javascript"),
         ("/static/js/views/thread.js", "text/javascript"),
+        ("/static/js/views/lexicon.js", "text/javascript"),
+        ("/static/js/views/quality.js", "text/javascript"),
+        ("/static/js/theme-init.js", "text/javascript"),
+        ("/static/icons/sprite.svg", "image/svg+xml"),
+        ("/static/icons/favicon.svg", "image/svg+xml"),
     ],
 )
 def test_assets_have_correct_content_types(panel: Panel, path: str, content_type: str) -> None:
@@ -103,3 +108,16 @@ def test_js_parses_as_a_module(path: Path, tmp_path: Path) -> None:
     )
 
     assert result.returncode == 0, result.stderr
+
+
+@pytest.mark.parametrize("name", ["cyrillic", "latin", "latin-ext"])
+def test_fonts_are_served(panel: Panel, name: str) -> None:
+    response = panel.client.get(f"/static/fonts/inter-{name}-wght-normal.woff2")
+
+    assert response.status_code == 200
+    assert response.content[:4] == b"wOF2"
+    # Starlette takes the type from the platform's mimetypes table, which lacks .woff2 on some
+    # systems (Windows); browsers load fonts regardless of the type, nosniff does not apply.
+    served_type = response.headers["content-type"].split(";")[0]
+    assert served_type in {"font/woff2", "application/octet-stream"}
+    assert response.headers["content-security-policy"] == CONTENT_SECURITY_POLICY

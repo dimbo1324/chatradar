@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
     <title>ЧатРадар</title>
+    <link rel="icon" href="/static/icons/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/static/css/app.css" />
+    <script src="/static/js/theme-init.js"></script>
     <script type="module" src="/static/js/app.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#view">К содержимому</a>
     <header class="topbar">
-      <span class="brand">ЧатРадар</span>
-      <nav aria-label="Основное меню">
-        <ul class="nav"></ul>
-      </nav>
+      <a class="brand" href="#/chats">ЧатРадар</a>
+      <div class="nav-panel" id="nav-panel">
+        <div class="nav-panel-head"></div>
+        <nav aria-label="Основное меню">
+          <ul class="nav"></ul>
+        </nav>
+      </div>
+      <div class="scrim"></div>
     </header>
     <main id="view" tabindex="-1">
       <noscript>Для панели ЧатРадар нужен JavaScript.</noscript>

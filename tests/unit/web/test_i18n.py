@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, cast
 
 import pytest
 
+from chatradar.domain.lexicon import LexiconKind, TermSource, TermStatus
 from chatradar.domain.models import MediaType, Source
 from chatradar.pipeline import noise
 from chatradar.pipeline.base import STAGE_ORDER
@@ -97,7 +98,12 @@ def test_backend_values_are_translated() -> None:
         + [f"stage.{stage}" for stage in STAGE_ORDER]
         + [f"media.{media.value}" for media in MediaType]
         + [f"source.{source.value}" for source in Source]
-        + [f"lang.{lang}" for lang in ("ru", "es", "en", "mixed", "unknown")]
+        + [f"lang.{lang}" for lang in ("ru", "es", "en", "mixed", "unknown", "any")]
+        + [f"lexicon_kind.{kind.value}" for kind in LexiconKind]
+        + [f"term_status.{status.value}" for status in TermStatus]
+        + [f"term_source.{source.value}" for source in TermSource]
+        + [f"lexicon_order.{order}" for order in ("score", "occurrences", "recent")]
+        + [f"eval_source.{source}" for source in ("human-labels", "truth-file")]
     )
 
     assert reasons

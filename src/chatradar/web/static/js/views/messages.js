@@ -7,12 +7,13 @@ import {
   field,
   h,
   loading,
+  pageHead,
   select,
   table,
   threadLink,
   timeEl,
 } from "../dom.js";
-import { apiFilters, chatSelect, dateFields, filterForm, triState } from "../filters.js";
+import { apiFilters, chatSelect, dateFields, filterForm, pager, triState } from "../filters.js";
 import { num, t, tEnum } from "../i18n.js";
 
 const API_KEYS = [
@@ -43,7 +44,7 @@ function buildForm(chats, reasons, params) {
   for (const [reason, count] of Object.entries(reasons)) {
     reasonOptions.push([reason, `${tEnum("noise_reason", reason)} (${num(count)})`]);
   }
-  const lang = h("input", { type: "text", name: "lang", size: 4, placeholder: t("messages.language_hint") });
+  const lang = h("input", { type: "text", name: "lang", placeholder: t("messages.language_hint") });
   lang.value = params.get("lang") || "";
   const controls = [
     field(t("common.chat"), chatSelect(chats, params)),
@@ -63,7 +64,7 @@ function buildForm(chats, reasons, params) {
   ];
   const threadId = params.get("thread_id");
   if (threadId) controls.push(h("input", { type: "hidden", name: "thread_id", value: threadId }));
-  return filterForm("messages", controls);
+  return filterForm("messages", controls, undefined, params);
 }
 
 function messageRow(message, titles) {
@@ -75,16 +76,17 @@ function messageRow(message, titles) {
     h(
       "td",
       { className: "text" },
-      message.is_question ? badge("?", "question") : null,
+      message.is_question ? badge(t("common.question"), "question", "question") : null,
+      message.is_question ? " " : null,
       excerpt(message.text) ||
         h("span", { className: "muted" }, `[${tEnum("media", message.media_type) || message.media_type}]`),
     ),
-    h("td", {}, message.lang ? tEnum("lang", message.lang) : "—"),
+    h("td", {}, message.lang ? badge(tEnum("lang", message.lang), "lang") : "—"),
     h(
       "td",
       {},
       message.is_noise
-        ? badge(message.noise_reason ? tEnum("noise_reason", message.noise_reason) : t("common.noise"), "noise")
+        ? badge(message.noise_reason ? tEnum("noise_reason", message.noise_reason) : t("common.noise"), "noise", "mute")
         : "—",
     ),
     h("td", {}, threadLink(message.thread_id)),
@@ -92,25 +94,8 @@ function messageRow(message, titles) {
   );
 }
 
-function pager(page, params) {
-  const pageLink = (offset, label) => {
-    const next = new URLSearchParams(params);
-    next.set("offset", String(offset));
-    return h("a", { href: `#/messages?${next}`, className: "button secondary" }, label);
-  };
-  const first = page.total === 0 ? 0 : page.offset + 1;
-  const last = page.offset + page.items.length;
-  return h(
-    "nav",
-    { className: "pager", "aria-label": t("messages.pages") },
-    page.offset > 0 ? pageLink(Math.max(0, page.offset - page.limit), t("messages.previous")) : null,
-    h("span", {}, t("messages.range", { first: num(first), last: num(last), total: num(page.total) })),
-    last < page.total ? pageLink(page.offset + page.limit, t("messages.next")) : null,
-  );
-}
-
 export async function renderMessages({ root, params, signal }) {
-  root.append(h("h1", {}, t("messages.title")));
+  root.append(pageHead(t("messages.title")));
   const status = root.appendChild(loading());
   const [chats, reasons, page] = await Promise.all([
     api.chats(signal),
@@ -121,14 +106,16 @@ export async function renderMessages({ root, params, signal }) {
 
   root.append(buildForm(chats, reasons, params));
   const threadId = params.get("thread_id");
-  if (threadId) root.append(h("p", {}, t("messages.only_thread"), threadLink(threadId, threadId)));
+  if (threadId) {
+    root.append(h("p", { className: "muted" }, t("messages.only_thread"), threadLink(threadId, threadId)));
+  }
   if (page.items.length === 0) {
     root.append(emptyState(t("messages.empty")));
     return;
   }
   const titles = chatTitles(chats);
   root.append(
-    pager(page, params),
+    pager(page, params, "messages"),
     table(
       [
         t("messages.col.date"),
@@ -142,6 +129,6 @@ export async function renderMessages({ root, params, signal }) {
       page.items.map((message) => messageRow(message, titles)),
       t("messages.caption"),
     ),
-    pager(page, params),
+    pager(page, params, "messages"),
   );
 }

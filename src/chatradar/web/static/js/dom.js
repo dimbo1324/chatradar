@@ -71,7 +71,12 @@ export function safeUrl(url) {
 export function externalLink(url, label = t("common.telegram_link")) {
   const href = safeUrl(url);
   if (!href) return h("span", { className: "muted" }, "—");
-  return h("a", { href, target: "_blank", rel: "noopener noreferrer", className: "ext" }, label);
+  return h(
+    "a",
+    { href, target: "_blank", rel: "noopener noreferrer", className: "ext" },
+    label,
+    icon("external", { size: "sm" }),
+  );
 }
 
 export function threadHref(threadId) {
@@ -99,16 +104,99 @@ export function markedSnippet(snippet) {
   return out;
 }
 
-export function badge(text, kind = "") {
-  return h("span", { className: `badge ${kind}`.trim() }, text);
+const SVG_NS = "http://www.w3.org/2000/svg";
+export const SPRITE = "/static/icons/sprite.svg";
+
+// An icon from the sprite. Decorative by default; a `label` makes it announce itself.
+export function icon(name, { size = "", label = "" } = {}) {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("class", `icon ${size}`.trim());
+  svg.setAttribute("viewBox", "0 0 24 24");
+  if (label) {
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", label);
+  } else svg.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS(SVG_NS, "use");
+  use.setAttribute("href", `${SPRITE}#${name}`);
+  svg.append(use);
+  return svg;
 }
 
-export function loading(text = t("common.loading")) {
-  return h("p", { className: "status", role: "status" }, text);
+// A larger monochrome illustration from the sprite (empty states).
+export function illustration(name) {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("class", "illus");
+  svg.setAttribute("viewBox", "0 0 120 90");
+  svg.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS(SVG_NS, "use");
+  use.setAttribute("href", `${SPRITE}#${name}`);
+  svg.append(use);
+  return svg;
 }
 
-export function emptyState(text) {
-  return h("p", { className: "empty" }, text);
+export function badge(text, kind = "", iconName = "") {
+  return h("span", { className: `chip ${kind}`.trim() }, iconName ? icon(iconName, { size: "sm" }) : null, text);
+}
+
+export const chip = badge;
+
+export function iconButton(iconName, label, onClick, className = "") {
+  return h(
+    "button",
+    { type: "button", className: `icon-btn ${className}`.trim(), "aria-label": label, title: label, onClick },
+    icon(iconName),
+  );
+}
+
+export function button(label, { iconName = "", kind = "", onClick = undefined, type = "button" } = {}) {
+  return h("button", { type, className: kind, onClick }, iconName ? icon(iconName, { size: "sm" }) : null, label);
+}
+
+export function linkButton(href, label, { iconName = "", kind = "secondary" } = {}) {
+  return h("a", { href, className: `btn ${kind}` }, iconName ? icon(iconName, { size: "sm" }) : null, label);
+}
+
+export function pageHead(title, { sub = "", actions = null } = {}) {
+  return h(
+    "div",
+    { className: "page-head" },
+    h("h1", {}, title),
+    actions ? h("div", { className: "actions" }, actions) : null,
+    sub ? h("p", { className: "sub" }, sub) : null,
+  );
+}
+
+export function tile(label, value, { hint = "", iconName = "" } = {}) {
+  return h(
+    "div",
+    { className: "tile" },
+    h("span", { className: "label" }, iconName ? icon(iconName, { size: "sm" }) : null, label),
+    h("span", { className: "value" }, value),
+    hint ? h("span", { className: "hint" }, hint) : null,
+  );
+}
+
+// A horizontal bar; `fraction` is 0..1 and drives the width through a CSS custom property.
+export function bar(fraction, kind = "") {
+  const fill = h("span");
+  const el = h("div", { className: `bar ${kind}`.trim(), role: "presentation" }, fill);
+  el.style.setProperty("--v", String(Math.max(0, Math.min(1, fraction || 0))));
+  return el;
+}
+
+// Skeleton placeholders shown while a view loads.
+export function skeleton(kind = "row-sk", count = 3) {
+  const stack = h("div", { className: "skeleton-stack", role: "status", "aria-label": t("common.loading") });
+  for (let i = 0; i < count; i += 1) stack.append(h("span", { className: `skeleton ${kind}` }));
+  return stack;
+}
+
+export function loading() {
+  return skeleton("row-sk", 3);
+}
+
+export function emptyState(text, { illus = "illus-empty", action = null } = {}) {
+  return h("div", { className: "empty" }, illustration(illus), h("p", {}, text), action);
 }
 
 export function errorBox(error) {
@@ -116,20 +204,34 @@ export function errorBox(error) {
   return h(
     "div",
     { className: "error", role: "alert" },
-    h("strong", {}, label),
-    error && error.message ? error.message : String(error),
+    icon("alert"),
+    h("div", {}, h("strong", {}, label), error && error.message ? error.message : String(error)),
   );
 }
 
+export function banner(text, { kind = "", iconName = "alert" } = {}) {
+  return h("div", { className: `banner ${kind}`.trim(), role: "status" }, icon(iconName), h("p", {}, text));
+}
+
+// Tables become stacked cards on narrow screens: every cell carries its column title.
 export function table(headers, rows, caption) {
+  const first = rows[0];
+  const numeric = first ? Array.from(first.children).map((td) => td.classList.contains("num")) : [];
+  for (const row of rows) {
+    Array.from(row.children).forEach((td, index) => td.setAttribute("data-label", headers[index] ?? ""));
+  }
   return h(
     "div",
     { className: "table-wrap" },
     h(
       "table",
-      {},
+      { className: "data" },
       caption ? h("caption", { className: "visually-hidden" }, caption) : null,
-      h("thead", {}, h("tr", {}, headers.map((title) => h("th", { scope: "col" }, title)))),
+      h(
+        "thead",
+        {},
+        h("tr", {}, headers.map((title, i) => h("th", { scope: "col", className: numeric[i] ? "num" : null }, title))),
+      ),
       h("tbody", {}, rows),
     ),
   );

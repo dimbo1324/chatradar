@@ -6,6 +6,8 @@ const LOCALE = "ru";
 const messages = {};
 const plural = new Intl.PluralRules(LOCALE);
 const numbers = new Intl.NumberFormat(LOCALE);
+const percents = new Intl.NumberFormat(LOCALE, { style: "percent", maximumFractionDigits: 1 });
+const decimals = new Intl.NumberFormat(LOCALE, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
 export async function loadLocale(signal = undefined) {
   const response = await fetch(`/static/i18n/${LOCALE}.json`, { signal });
@@ -16,6 +18,14 @@ export async function loadLocale(signal = undefined) {
 
 export function num(value) {
   return numbers.format(value);
+}
+
+export function pct(value) {
+  return percents.format(value);
+}
+
+export function dec(value) {
+  return decimals.format(value);
 }
 
 function fill(template, vars) {
