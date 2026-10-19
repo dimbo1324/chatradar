@@ -10,7 +10,7 @@ from chatradar.domain.text import thread_id_for
 if TYPE_CHECKING:
     from chatradar.pipeline.base import StageDeps
 
-INDEX_VERSION = 1
+INDEX_VERSION = 2  # 2: Cyrillic yo folded to ie in the search index
 
 
 class IndexStage:

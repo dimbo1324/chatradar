@@ -30,6 +30,9 @@ SNIPPET_TOKENS = 16
 MARK_OPEN, MARK_CLOSE = "[[", "]]"
 
 _WORD = re.compile(r"[^\W_]+")
+# unicode61 strips diacritics only from Latin letters, so the Cyrillic yo is folded to ie
+# by hand on both sides; snippets therefore show ie where the message had yo.
+_YO = str.maketrans("\u0451\u0401", "\u0435\u0415")
 
 threads_fts = table("threads_fts", column("thread_id"), column("chat_id"), column("body"))
 _FTS: ColumnClause[Any] = literal_column("threads_fts")
@@ -38,7 +41,8 @@ _FTS: ColumnClause[Any] = literal_column("threads_fts")
 def query_terms(text: str) -> list[str]:
     """Quoted FTS5 terms for free text; words longer than 4 letters become prefixes."""
     terms: list[str] = []
-    for token in _WORD.findall(unicodedata.normalize("NFKC", text).casefold()):
+    folded = unicodedata.normalize("NFKC", text).casefold().translate(_YO)
+    for token in _WORD.findall(folded):
         term = f'"{token[: max(4, len(token) - 2)]}"*' if len(token) > 4 else f'"{token}"'
         if term not in terms:
             terms.append(term)
@@ -47,7 +51,7 @@ def query_terms(text: str) -> list[str]:
 
 def _body(texts: Sequence[str]) -> str:
     """Joined thread text; marker look-alikes are broken up so snippets stay unambiguous."""
-    joined = "\n".join(t for t in texts if t)
+    joined = "\n".join(t for t in texts if t).translate(_YO)
     return joined.replace(MARK_OPEN, "[ [").replace(MARK_CLOSE, "] ]")
 
 

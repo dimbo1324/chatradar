@@ -15,7 +15,7 @@ from tests.unit.pipeline.fakes import CHAT_ID, make_deps, make_message
 if TYPE_CHECKING:
     from chatradar.domain.models import StoredMessage
 
-ALL_DONE = dict.fromkeys(STAGE_ORDER, 1)
+ALL_DONE = dict(stage_versions())
 
 
 def _chat() -> list[StoredMessage]:

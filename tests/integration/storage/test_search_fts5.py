@@ -222,3 +222,21 @@ def test_needs_sqlite() -> None:
 async def _fts_rows(engine: AsyncEngine) -> int:
     async with engine.connect() as conn:
         return int((await conn.execute(text("SELECT count(*) FROM threads_fts"))).scalar_one())
+
+
+@pytest.mark.parametrize(
+    ("stored", "query"),
+    [
+        ("\u0441\u0447\u0451\u0442 \u0432 BROU", "\u0441\u0447\u0435\u0442"),  # yo stored, ie typed
+        ("\u0441\u0447\u0435\u0442 \u0432 BROU", "\u0441\u0447\u0451\u0442"),  # ie stored, yo typed
+        ("\u0401\u041b\u041a\u0410", "\u0435\u043b\u043a\u0430"),  # capital YO
+    ],
+)
+async def test_cyrillic_yo_and_ie_match_each_other(
+    repo: SqlRepository, index: Fts5SearchIndex, stored: str, query: str
+) -> None:
+    message = make_message(40, stored, minutes=0)
+    threads = await run_pipeline(repo, [message], noise={}, threads=[[message]])
+    await index.index_threads([t.thread_id for t in threads])
+
+    assert await _hits(index, query) == ["40"]
