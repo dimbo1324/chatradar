@@ -1,5 +1,5 @@
 """Pure text features shared by the noise and enrich stages. No I/O apart from the
-lexicons and the language models, both loaded once."""
+seed lexicon and the language models, both loaded once."""
 
 from __future__ import annotations
 
@@ -11,13 +11,9 @@ from typing import TYPE_CHECKING
 
 from lingua import Language, LanguageDetector, LanguageDetectorBuilder
 
-from chatradar.pipeline.lexicons import (
-    QUESTION_PHRASES,
-    QUESTIONS,
-    contains_phrase,
-    fold,
-    folded_entries,
-)
+from chatradar.domain.lexicon import LexiconKind
+from chatradar.pipeline.lexicon import Lexicon
+from chatradar.pipeline.lexicons import contains_phrase, fold
 
 if TYPE_CHECKING:
     from chatradar.domain.models import Message
@@ -65,15 +61,16 @@ def strip_links_and_mentions(text: str) -> str:
     return _MENTION.sub(" ", _URL.sub(" ", text)).strip()
 
 
-def looks_like_question(text: str) -> bool:
+def looks_like_question(text: str, lexicon: Lexicon | None = None) -> bool:
     """A question mark outside links, a request for help anywhere, or a sentence opening
-    with a question word."""
+    with a question word. The words come from `lexicon` (the seed lists by default)."""
+    lexicon = lexicon or Lexicon.from_seed()
     plain = _URL.sub(" ", text)
     if "?" in plain or "¿" in plain:
         return True
-    if contains_phrase(fold(plain), folded_entries(QUESTION_PHRASES)):
+    if contains_phrase(fold(plain), lexicon.folded(LexiconKind.QUESTION_PHRASES)):
         return True
-    starters = folded_entries(QUESTIONS)
+    starters = lexicon.folded(LexiconKind.QUESTIONS)
     for sentence in _SENTENCE_BREAK.split(plain):
         words = fold(sentence)
         if any(words == s or words.startswith(f"{s} ") for s in starters):
