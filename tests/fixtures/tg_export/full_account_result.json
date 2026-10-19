@@ -1,0 +1,131 @@
+{
+ "about": "Synthetic full-account export for tests.",
+ "chats": {
+  "about": "This page lists all chats from this export.",
+  "list": [
+   {
+    "name": "Neighbors Building 12 (synthetic)",
+    "type": "private_group",
+    "id": 4200000001,
+    "messages": [
+     {
+      "id": 1,
+      "type": "message",
+      "date": "2026-09-01T09:07:00",
+      "date_unixtime": "1788264420",
+      "from": "Member 21",
+      "from_id": "user1000021",
+      "text": "Завтра отключат воду с 10 до 14.",
+      "text_entities": [
+       {
+        "type": "plain",
+        "text": "Завтра отключат воду с 10 до 14."
+       }
+      ]
+     },
+     {
+      "id": 2,
+      "type": "message",
+      "date": "2026-09-01T09:14:00",
+      "date_unixtime": "1788264840",
+      "from": "Member 22",
+      "from_id": "user1000022",
+      "reply_to_message_id": 1,
+      "text": "Спасибо, что предупредили!",
+      "text_entities": [
+       {
+        "type": "plain",
+        "text": "Спасибо, что предупредили!"
+       }
+      ]
+     },
+     {
+      "id": 3,
+      "type": "message",
+      "date": "2026-09-01T09:21:00",
+      "date_unixtime": "1788265260",
+      "from": "Member 23",
+      "from_id": "user1000023",
+      "text": "¿Alguien tiene el número del portero?",
+      "text_entities": [
+       {
+        "type": "plain",
+        "text": "¿Alguien tiene el número del portero?"
+       }
+      ]
+     },
+     {
+      "id": 4,
+      "type": "message",
+      "date": "2026-09-01T09:28:00",
+      "date_unixtime": "1788265680",
+      "from": "Member 21",
+      "from_id": "user1000021",
+      "reply_to_message_id": 3,
+      "text": "Está en la cartelera de la entrada.",
+      "text_entities": [
+       {
+        "type": "plain",
+        "text": "Está en la cartelera de la entrada."
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Remote Work LatAm (synthetic)",
+    "type": "private_supergroup",
+    "id": 1700000002,
+    "messages": [
+     {
+      "id": 1,
+      "type": "message",
+      "date": "2026-09-01T09:07:00",
+      "date_unixtime": "1788264420",
+      "from": "Member 24",
+      "from_id": "user1000024",
+      "text": "¿Qué banco usan para cobrar en dólares desde el exterior?",
+      "text_entities": [
+       {
+        "type": "plain",
+        "text": "¿Qué banco usan para cobrar en dólares desde el exterior?"
+       }
+      ]
+     },
+     {
+      "id": 2,
+      "type": "message",
+      "date": "2026-09-01T09:14:00",
+      "date_unixtime": "1788264840",
+      "from": "Member 25",
+      "from_id": "user1000025",
+      "reply_to_message_id": 1,
+      "text": "Yo cobro por transferencia al BROU, sin problemas.",
+      "text_entities": [
+       {
+        "type": "plain",
+        "text": "Yo cobro por transferencia al BROU, sin problemas."
+       }
+      ]
+     },
+     {
+      "id": 3,
+      "type": "message",
+      "date": "2026-09-01T09:21:00",
+      "date_unixtime": "1788265260",
+      "from": "Member 26",
+      "from_id": "user1000026",
+      "reply_to_message_id": 1,
+      "text": "Через Wise быстрее, но комиссия выше.",
+      "text_entities": [
+       {
+        "type": "plain",
+        "text": "Через Wise быстрее, но комиссия выше."
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}
