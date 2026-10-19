@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import asyncio
 from datetime import UTC, datetime
+from enum import StrEnum
 from typing import TYPE_CHECKING, Annotated, Any
 
 import typer
@@ -20,14 +21,21 @@ from chatradar.domain.lexicon import (
     TermSource,
     TermStatus,
 )
-from chatradar.domain.ports import TermOrder  # noqa: TC001 — Typer reads annotations at runtime
 from chatradar.pipeline.lexicons import fold
 from chatradar.services.container import open_runtime
 
 if TYPE_CHECKING:
     from collections.abc import Coroutine
 
+
 HUMAN = "human"
+
+
+class Order(StrEnum):
+    SCORE = "score"
+    OCCURRENCES = "occurrences"
+    RECENT = "recent"
+
 
 lexicon_app = typer.Typer(no_args_is_help=True, help="The learning lexicon.")
 
@@ -54,9 +62,7 @@ def list_terms(
     kind: Annotated[LexiconKind | None, typer.Option("--kind")] = None,
     status: Annotated[TermStatus | None, typer.Option("--status")] = None,
     lang: Annotated[str | None, typer.Option("--lang")] = None,
-    order: Annotated[
-        TermOrder, typer.Option("--order", help="score, occurrences or recent")
-    ] = "score",
+    order: Annotated[Order, typer.Option("--order")] = Order.SCORE,
     limit: Annotated[int, typer.Option("--limit", min=1)] = 50,
 ) -> None:
     """Terms, filtered and ordered."""
@@ -64,7 +70,11 @@ def list_terms(
     async def go() -> None:
         async with open_runtime(get_settings()) as rt:
             page = await rt.lexicon.list_terms(
-                kind=kind, status=status, lang=lang, order=order, limit=limit
+                kind=kind,
+                status=status,
+                lang=lang,
+                order=order.value,
+                limit=limit,
             )
         for term in page.items:
             typer.echo(_line(term))
