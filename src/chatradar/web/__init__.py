@@ -1,1 +1,1 @@
-"""Отладочная веб-панель: FastAPI + Jinja2 + HTMX."""
+"""Debug web panel: FastAPI + Jinja2 + HTMX."""

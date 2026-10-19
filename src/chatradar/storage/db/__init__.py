@@ -1,4 +1,4 @@
-"""SQLAlchemy 2.0: engine, таблицы, репозитории, FTS.
+"""SQLAlchemy 2.0: engine, tables, repositories, FTS.
 
-Единственное место с диалектно-зависимым кодом.
+The only place with dialect-specific code.
 """

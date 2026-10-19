@@ -1,7 +1,7 @@
 [project]
 name = "chatradar"
 version = "0.1.0"
-description = "Сбор, очистка и поиск полезной информации в чатах мессенджеров со ссылками на исходные сообщения."
+description = "Collect, clean and search messenger chats; answers link back to source messages."
 readme = "README.md"
 requires-python = ">=3.13"
 license = "MIT"
@@ -25,7 +25,7 @@ dependencies = [
     "pydantic-settings>=2.16",
     "sqlalchemy[asyncio]>=2.1",
     "structlog>=26.1.0",
-    "telethon>=1.45,<2", # v2 — другой API, переход отдельным решением
+    "telethon>=1.45,<2", # v2 has a different API; moving is a separate decision
     "typer>=0.27.3",
     "tzdata>=2026.5 ; sys_platform == 'win32'",
     "uvicorn[standard]>=0.54.0",
@@ -61,7 +61,7 @@ default-groups = ["dev"]
 [tool.ruff]
 target-version = "py313"
 line-length = 100
-src = ["src", "tests"]
+src = ["src", "tests", "scripts"]
 extend-exclude = ["migrations/versions", "docs"]
 
 [tool.ruff.lint]
@@ -76,14 +76,11 @@ select = [
     "RUF",      # ruff-specific
     "C4",       # comprehensions
     "PTH",      # pathlib
-    "DTZ",      # naive datetimes — в проекте все даты timezone-aware
-    "T20",      # забытые print
-    "S",        # bandit (безопасность)
-    "TC",       # импорты только для типов
+    "DTZ",      # naive datetimes — every date is timezone-aware
+    "T20",      # leftover print
+    "S",        # bandit (security)
+    "TC",       # type-only imports
     "PT",       # pytest style
-]
-ignore = [
-    "RUF001", "RUF002", "RUF003", # кириллица в строках и комментариях — норма для проекта
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -91,7 +88,7 @@ ignore = [
 "migrations/**" = ["INP001"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["chatradar"]
+known-first-party = ["chatradar", "scripts"]
 
 [tool.ruff.lint.flake8-type-checking]
 runtime-evaluated-base-classes = ["pydantic.BaseModel", "pydantic_settings.BaseSettings"]
@@ -101,7 +98,7 @@ docstring-code-format = true
 
 # ---------------------------------------------------------------- pyright
 [tool.pyright]
-include = ["src", "tests"]
+include = ["src", "tests", "scripts"]
 exclude = ["migrations/versions", "**/__pycache__", ".venv"]
 pythonVersion = "3.13"
 typeCheckingMode = "strict"
@@ -114,11 +111,12 @@ reportPrivateUsage = "warning"
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = ["-ra", "--strict-markers", "--strict-config", "--import-mode=importlib"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 markers = [
-    "integration: тесты с реальной БД (in-memory SQLite) и файловой системой",
+    "integration: tests with a real database (in-memory SQLite) and file system",
 ]
 filterwarnings = ["error"]
 

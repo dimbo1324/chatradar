@@ -16,7 +16,7 @@ def _message(**overrides: Any) -> Message:
         "msg_id": "42",
         "author_id": "7",
         "date": datetime(2026, 10, 18, 23, 50, tzinfo=UTC),
-        "text": "Как записаться в Migración?",
+        "text": "How do I book an appointment at Migración?",
         "content_hash": "abc",
     }
     return Message.model_validate(data | overrides)
@@ -33,12 +33,12 @@ def test_message_is_immutable() -> None:
     msg = _message()
 
     with pytest.raises(ValidationError):
-        msg.text = "другое"  # type: ignore[misc]
+        msg.text = "other"  # type: ignore[misc]
 
 
 def test_naive_datetime_is_rejected() -> None:
     with pytest.raises(ValidationError):
-        _message(date=datetime(2026, 10, 18, 23, 50))  # noqa: DTZ001 — проверяем именно naive
+        _message(date=datetime(2026, 10, 18, 23, 50))  # noqa: DTZ001 — naive on purpose
 
 
 def test_unknown_fields_are_rejected() -> None:

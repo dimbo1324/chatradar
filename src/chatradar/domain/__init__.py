@@ -1,1 +1,1 @@
-"""Доменная модель и порты. Ничего не знает о Telethon, SQLite, FastAPI."""
+"""Domain model and ports. Knows nothing about Telethon, SQLite or FastAPI."""

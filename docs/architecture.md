@@ -1,29 +1,37 @@
-# ЧатРадар — архитектура MVP без ИИ
+# ChatRadar — MVP architecture without AI
 
-Версия от 18.10.2026. Стадия: сбор и обработка сообщений («обычный сервис»), ИИ подключается позже.
-Язык MVP: Python. Перед стартом перепроверить актуальные версии библиотек.
+Version of 2026-10-18. Stage: collecting and processing messages (a "plain service"); AI is
+added later. MVP language: Python. Re-check current library versions before each step.
 
 ---
 
-## 0. Как работает автоматический экспорт из Telegram
+## 0. How automatic export from Telegram works
 
-**Принцип.** Ручной экспорт в Telegram Desktop — это обычные запросы к API Telegram (протокол MTProto), только с кнопкой. Для автоматизации пишется собственный клиент, который логинится как пользователь и делает те же запросы. Бот не подходит: он не видит историю до своего добавления. У Telegram Desktop нет командной строки для экспорта, поэтому по расписанию его не запустить.
+**Principle.** A manual export in Telegram Desktop is ordinary requests to the Telegram API
+(the MTProto protocol), just behind a button. To automate it you write your own client that
+logs in as a user and makes the same requests. A bot does not fit: it cannot see history
+from before it was added. Telegram Desktop has no command line for exporting, so it cannot
+be scheduled.
 
-**Инструменты:**
-- **Telethon** (Python) — основной выбор: зрелая библиотека, хорошая документация, сама обрабатывает FloodWait.
-- Pyrogram — оригинал больше не поддерживается, живут только форки. Не брать.
-- TDLib — официальная библиотека Telegram на C++, для MVP избыточна.
-- Готовые CLI (например, `tdl` на Go) — чтобы быстро посмотреть данные.
+**Tools:**
+- **Telethon** (Python) — the main choice: a mature library with good documentation that
+  handles FloodWait itself.
+- Pyrogram — the original is no longer maintained; only forks live on. Do not use.
+- TDLib — Telegram's official C++ library; overkill for the MVP.
+- Ready-made CLIs (for example `tdl` in Go) — to take a quick look at the data.
 
-**Как работает Telethon:**
-1. Регистрируешь приложение на my.telegram.org и получаешь `api_id` и `api_hash`.
-2. Первый вход: номер, код из Telegram, пароль 2FA. Создаётся файл `*.session`, дальше вход без кода. **Файл сессии = полный доступ к аккаунту**: не в git, хранить как пароль.
-3. Чаты: публичные по `@username`, закрытые — через `get_dialogs`, если аккаунт в них состоит.
-4. История: `iter_messages`, библиотека сама листает страницами по 100.
-5. Докачка: хранить `last_id` по каждому чату и запрашивать `min_id=last_id`.
-6. Запуск по расписанию.
+**How Telethon works:**
+1. Register an application at my.telegram.org and get `api_id` and `api_hash`.
+2. First login: phone number, the code from Telegram, the 2FA password. A `*.session` file
+   is created; later logins need no code. **The session file = full access to the
+   account**: not in git, keep it like a password.
+3. Chats: public ones by `@username`, private ones through `get_dialogs` if the account is
+   a member.
+4. History: `iter_messages`; the library pages through it 100 at a time.
+5. Incremental sync: keep `last_id` per chat and request `min_id=last_id`.
+6. Run on a schedule.
 
-Минимальный пример (Telethon 1.x):
+Minimal example (Telethon 1.x):
 
 ```python
 import asyncio
@@ -45,81 +53,99 @@ async def fetch(chat, last_id=0):
     return msgs
 
 async def main():
-    async with client:          # первый запуск спросит телефон и код
+    async with client:          # the first run asks for the phone and the code
         msgs = await fetch("some_public_chat")
         print(len(msgs), msgs[-1] if msgs else None)
 
 asyncio.run(main())
 ```
 
-`reverse=True` — сообщения идут от старых к новым, последнее обработанное имеет максимальный ID.
+`reverse=True` yields messages from oldest to newest, so the last processed one has the
+highest id.
 
-**Нюансы:**
-- Правки и удаления докачка по `min_id` не видит. Простое решение: раз в сутки перекачивать последние 3–7 дней. Полноценное: постоянное подключение и события `NewMessage`, `MessageEdited`, `MessageDeleted`.
-- Ссылки: публичный чат — `t.me/<username>/<id>`; закрытая супергруппа — `t.me/c/<id без -100>/<id сообщения>` (откроется только у участников).
-- В форумах (группы с темами) `reply_to` может указывать на тему, а не на сообщение — проверить на своих чатах.
-- Медиа сначала только отмечать (тип), скачивать (`download_media`) потом и выборочно.
-- `client.takeout(...)` — режим экспорта Desktop с более мягкими лимитами для большой первичной выгрузки. Для 5–10 чатов не нужен.
+**Nuances:**
+- Incremental sync by `min_id` does not see edits and deletions. The simple fix: once a day
+  refetch the last 3–7 days. The full fix: a persistent connection and the `NewMessage`,
+  `MessageEdited`, `MessageDeleted` events.
+- Links: public chat — `t.me/<username>/<id>`; private supergroup —
+  `t.me/c/<id without -100>/<message id>` (opens only for members).
+- In forums (groups with topics) `reply_to` may point at the topic rather than a message —
+  check on your own chats.
+- Media: only mark the type at first; download (`download_media`) later and selectively.
+- `client.takeout(...)` — Desktop's export mode with softer limits for a large initial
+  download. Not needed for 5–10 chats.
 
-**Основной или отдельный аккаунт:**
+**Main or separate account:**
 
-| | Основной аккаунт | Отдельный аккаунт |
+| | Main account | Separate account |
 |---|---|---|
-| Плюсы | Уже во всех чатах, включая закрытые; старый аккаунт вызывает меньше подозрений | Риск изолирован от личного аккаунта |
-| Минусы | Ограничения при перегрузке получит он; сессия = доступ к личному аккаунту | Нужен второй номер; вступать в закрытые чаты заново; новые аккаунты через API банят чаще |
+| Pros | Already in every chat, including private ones; an old account raises less suspicion | The risk is isolated from the personal account |
+| Cons | It gets the restrictions if overloaded; the session = access to the personal account | Needs a second number; private chats must be joined again; new accounts are banned more often through the API |
 
-Для экспериментов и периодической выгрузки 5–10 чатов можно использовать основной аккаунт, без агрессивной нагрузки. Отдельный аккаунт — когда сборщик переедет на сервер и будет работать круглосуточно или бот начнёт обслуживать других людей. Новому аккаунту дать несколько дней «пожить» как обычный, первую выгрузку делать медленно.
+For experiments and periodic export of 5–10 chats the main account is fine, without
+aggressive load. A separate account is for when the collector moves to a server and runs
+around the clock, or when the bot starts serving other people. Let a new account "live" a
+few days as an ordinary one and make the first export slowly.
 
 ---
 
-## 1. Архитектурные принципы
+## 1. Architecture principles
 
-1. **Модульный монолит с портами и адаптерами (hexagonal architecture).** В центре доменная модель (`Message`, `Thread`, `Chat`) и интерфейсы-«порты»: источник сообщений, хранилище сырых данных, репозиторий сообщений, поисковый индекс. Telethon, SQLite, FastAPI — адаптеры. Домен о них не знает. SQLite → Postgres = новый адаптер репозитория, пайплайн не меняется.
-2. **Сырые данные неизменяемы и лежат отдельно от базы.** Telegram → JSONL в `data/raw/`. База — производная: её можно удалить и пересобрать командой `rebuild` без обращения к Telegram.
-3. **Пайплайн из идемпотентных стадий с версиями.** Любую стадию можно перезапускать; смена правил пересчитывает только нужное.
-4. **Граница между модулями — формат данных, а не Python-объекты.** Тогда любую стадию можно переписать на Go/Rust: она будет читать и писать те же таблицы и файлы.
-5. **Конфигурация через переменные окружения**, секреты только в `.env` (не в git).
+1. **A modular monolith with ports and adapters (hexagonal architecture).** At the center
+   are the domain model (`Message`, `Thread`, `Chat`) and "port" interfaces: message source,
+   raw data store, message repository, search index. Telethon, SQLite and FastAPI are
+   adapters; the domain does not know them. SQLite → Postgres = a new repository adapter;
+   the pipeline does not change.
+2. **Raw data is immutable and kept apart from the database.** Telegram → JSONL in
+   `data/raw/`. The database is derived: it can be deleted and rebuilt with `rebuild`
+   without calling Telegram.
+3. **A pipeline of idempotent, versioned stages.** Any stage can be rerun; changed rules
+   recompute only what is needed.
+4. **The boundary between modules is a data format, not Python objects.** Then any stage can
+   be rewritten in Go or Rust: it reads and writes the same tables and files.
+5. **Configuration through environment variables**; secrets only in `.env` (not in git).
 
 ---
 
-## 2. Стек
+## 2. Stack
 
-| Задача | Инструмент | Почему |
+| Task | Tool | Why |
 |---|---|---|
-| Python | 3.13 (3.14, если все зависимости собираются) | |
-| Проект, зависимости, venv | **uv** | Быстрый, lock-файл, удобен в Docker |
-| Линтер и форматтер | **ruff** | Заменяет flake8, isort, black |
-| Типы | **pyright** или **mypy** (strict) | Строгая типизация |
-| Тесты | **pytest**, pytest-asyncio | |
-| Модели и конфиг | **pydantic v2**, **pydantic-settings** | Валидация на границах, конфиг из env |
-| БД | **SQLAlchemy 2.0** (async) + **Alembic** | Одна абстракция для SQLite и Postgres, миграции |
-| Драйверы | `aiosqlite` → позже `asyncpg` | Смена БД = смена `DATABASE_URL` |
-| Telegram | **Telethon 1.x** | Основная стабильная ветка; у v2 другой API — проверить статус перед стартом |
+| Python | 3.13 (3.14 if every dependency builds) | |
+| Project, dependencies, venv | **uv** | Fast, lock file, convenient in Docker |
+| Linter and formatter | **ruff** | Replaces flake8, isort, black |
+| Types | **pyright** or **mypy** (strict) | Strict typing |
+| Tests | **pytest**, pytest-asyncio | |
+| Models and config | **pydantic v2**, **pydantic-settings** | Validation at the edges, config from env |
+| Database | **SQLAlchemy 2.0** (async) + **Alembic** | One abstraction for SQLite and Postgres, migrations |
+| Drivers | `aiosqlite` → later `asyncpg` | Switching databases = changing `DATABASE_URL` |
+| Telegram | **Telethon 1.x** | The stable main branch; v2 has a different API — check its status before starting |
 | CLI | **Typer** | |
-| Веб | **FastAPI** + **Jinja2** + **HTMX** | Простой интерфейс без отдельного фронтенда |
-| Логи | **structlog** | Структурные логи, JSON в Docker |
-| Язык текста | **lingua-py** | Различает ru/es даже на коротких фразах |
-| Контейнеры | Docker + **docker compose** | |
-| Качество | pre-commit, GitHub Actions | |
+| Web | **FastAPI** + **Jinja2** + **HTMX** | A simple interface without a separate frontend |
+| Logs | **structlog** | Structured logs, JSON in Docker |
+| Text language | **lingua-py** | Tells ru from es even on short phrases |
+| Containers | Docker + **docker compose** | |
+| Quality | pre-commit, GitHub Actions | |
 
-**Сознательно не используем на старте:** Celery, Redis, Kafka, React, микросервисы. Архитектура позволит добавить их позже без переписывания ядра.
+**Deliberately not used at the start:** Celery, Redis, Kafka, React, microservices. The
+architecture allows adding them later without rewriting the core.
 
 ---
 
-## 3. Структура репозитория
+## 3. Repository layout
 
 ```
 chatradar/
-├── pyproject.toml          # зависимости, настройки ruff/pyright/pytest
+├── pyproject.toml          # dependencies, ruff/pyright/pytest settings
 ├── uv.lock
-├── .env.example            # шаблон конфига (в git), .env — не в git
+├── .env.example            # config template (in git); .env is not
 ├── .gitignore
 ├── Dockerfile
 ├── compose.yaml
 ├── alembic.ini
-├── justfile                # короткие команды: just test, just sync, just up
+├── justfile                # short commands: just test, just sync, just up
 ├── migrations/             # Alembic
-├── data/                   # ВСЁ в .gitignore
+├── data/                   # ALL of it git-ignored
 │   ├── raw/telegram/<chat_id>/2026-10-18T23-50.jsonl
 │   ├── sessions/collector.session
 │   └── chatradar.db
@@ -127,30 +153,30 @@ chatradar/
 │   ├── config.py           # Settings (pydantic-settings)
 │   ├── domain/
 │   │   ├── models.py       # Message, Thread, Chat, enums
-│   │   └── ports.py        # Protocol-интерфейсы
+│   │   └── ports.py        # Protocol interfaces
 │   ├── connectors/
 │   │   ├── telegram/       # Telethon: client.py, mapper.py
-│   │   └── tg_export/      # импорт JSON из Telegram Desktop
+│   │   └── tg_export/      # Telegram Desktop JSON import
 │   ├── storage/
-│   │   ├── raw_jsonl.py    # RawStore на файлах
+│   │   ├── raw_jsonl.py    # file-based RawStore
 │   │   └── db/             # engine.py, tables.py, repositories.py, search_fts5.py
 │   ├── pipeline/
-│   │   ├── base.py         # интерфейс Stage, runner
+│   │   ├── base.py         # Stage interface, runner
 │   │   ├── normalize.py
 │   │   ├── noise.py
 │   │   ├── enrich.py
 │   │   ├── threads.py
 │   │   └── index.py
-│   ├── services/           # сценарии: sync, process, search, stats
+│   ├── services/           # use cases: sync, process, search, stats
 │   ├── web/                # FastAPI: app.py, routes.py, templates/
-│   └── cli.py              # Typer: точка входа
+│   └── cli.py              # Typer: the entry point
 └── tests/
-    ├── fixtures/           # обезличенные реальные сообщения
+    ├── fixtures/           # anonymized real messages
     ├── unit/
     └── integration/
 ```
 
-`.gitignore` (главное):
+`.gitignore` (the essentials):
 
 ```
 data/
@@ -160,11 +186,12 @@ data/
 .venv/
 ```
 
-Сессия и выгрузки лежат внутри проекта, но не в git. В Docker папка `data/` монтируется как volume.
+The session and the exports live inside the project, but not in git. In Docker the `data/`
+directory is mounted as a volume.
 
 ---
 
-## 4. Доменная модель и порты
+## 4. Domain model and ports
 
 ```python
 # domain/models.py
@@ -183,19 +210,19 @@ class MediaType(StrEnum):
 class Message(BaseModel):
     model_config = ConfigDict(frozen=True)
     source: Source
-    chat_id: str            # строки: у разных мессенджеров разные ID
+    chat_id: str            # strings: messengers use different id types
     msg_id: str
     author_id: str | None
-    date: datetime          # всегда UTC, timezone-aware
+    date: datetime          # always UTC, timezone-aware
     text: str
     reply_to: str | None
-    topic_id: str | None    # тема в форумах Telegram
+    topic_id: str | None    # topic in Telegram forums
     media_type: MediaType
     is_forward: bool
-    is_service: bool        # «вступил в группу» и т. п.
+    is_service: bool        # "joined the group" and similar
     edited_at: datetime | None
     link: str | None
-    content_hash: str       # хэш значимых полей, чтобы ловить правки
+    content_hash: str       # hash of meaningful fields, to catch edits
 ```
 
 ```python
@@ -221,108 +248,130 @@ class SearchIndex(Protocol):
     async def search(self, query: str, filters: SearchFilters) -> list[Hit]: ...
 ```
 
-`Protocol` — структурная типизация: адаптеру не нужно наследоваться, достаточно нужных методов. В тестах вместо SQLite подставляется in-memory класс.
+`Protocol` is structural typing: an adapter does not inherit from it, it only needs the
+methods. In tests an in-memory class replaces SQLite.
 
 ---
 
-## 5. Стадии пайплайна
+## 5. Pipeline stages
 
 ```
-выгрузка → сырые данные → нормализация → фильтр шума → обогащение → склейка в обсуждения → индекс → (ИИ)
+export → raw data → normalization → noise filter → enrichment → thread grouping → index → (AI)
 ```
 
-### Стадия 0. Сбор (sync)
+### Stage 0. Collection (sync)
 
-Задача: докачать новые сообщения в `data/raw/`.
+Task: fetch new messages into `data/raw/`.
 
-Для каждого чата:
-1. Прочитать `last_id` из таблицы `sync_state`.
-2. `iter_messages(chat, min_id=last_id, reverse=True)`, копить пачками по 500.
-3. Каждую пачку дописать в JSONL-файл этого запуска.
-4. **Только после записи файла** обновить `last_id` в базе.
-5. Пауза 2–5 секунд между чатами.
+For each chat:
+1. Read `last_id` from the `sync_state` table.
+2. `iter_messages(chat, min_id=last_id, reverse=True)`, accumulating batches of 500.
+3. Append each batch to this run's JSONL file.
+4. **Only after the file is written** update `last_id` in the database.
+5. Pause 2–5 seconds between chats.
 
-Если процесс упал между шагами 3 и 4, часть сообщений скачается повторно — дублей не будет благодаря upsert на следующей стадии (at-least-once delivery + идемпотентная обработка).
+If the process dies between steps 3 and 4, some messages are fetched again — there are no
+duplicates thanks to the upsert in the next stage (at-least-once delivery + idempotent
+processing).
 
-Правки и удаления: раз в сутки перекачивать последние 7 дней (`offset_date`); изменения поймает `content_hash`.
+Edits and deletions: once a day refetch the last 7 days (`offset_date`); `content_hash`
+catches the changes.
 
-Формат сырой записи:
+Raw record format:
 
 ```json
 {"source":"telegram","chat_id":"-100123","fetched_at":"2026-10-18T23:50:00Z","payload":{"...": "m.to_dict()"}}
 ```
 
-`m.to_dict()` содержит `datetime` и `bytes` — для `json.dumps` нужен свой `default=` (datetime → ISO, bytes → base64).
+`m.to_dict()` contains `datetime` and `bytes` — `json.dumps` needs its own `default=`
+(datetime → ISO, bytes → base64).
 
-Первый логин — отдельная интерактивная команда `chatradar telegram login`, сессия в `data/sessions/`.
+The first login is a separate interactive command `chatradar telegram login`; the session
+lives in `data/sessions/`.
 
-Тот же порт `Connector` реализует импорт JSON из Telegram Desktop — можно отлаживать весь пайплайн без подключения к Telegram.
+The same `Connector` port is implemented by the Telegram Desktop JSON import, so the whole
+pipeline can be debugged without connecting to Telegram.
 
-### Стадия 1. Нормализация (normalize)
+### Stage 1. Normalization (normalize)
 
-Задача: сырые записи → `Message` → upsert в `messages`.
+Task: raw records → `Message` → upsert into `messages`.
 
-- **Маппер — чистая функция** `telethon_dict → Message`, без I/O. Главный кандидат на тесты.
-- Даты → UTC; текст → Unicode NFC, обрезка пробелов, схлопывание повторных переводов строк. Оригинал хранится в `text_raw`.
-- Ссылка: `t.me/<username>/<id>` или `t.me/c/<id без -100>/<id>`.
-- **Upsert с проверкой хэша:** новое — вставить; изменился `content_hash` — обновить и **сбросить версии всех последующих стадий**; хэш тот же — ничего не делать.
+- **The mapper is a pure function** `telethon_dict → Message`, without I/O. The prime
+  candidate for tests.
+- Dates → UTC; text → Unicode NFC, trimmed whitespace, collapsed repeated newlines. The
+  original is kept in `text_raw`.
+- Link: `t.me/<username>/<id>` or `t.me/c/<id without -100>/<id>`.
+- **Upsert with a hash check:** new → insert; `content_hash` changed → update and **reset
+  the versions of every later stage**; same hash → do nothing.
 
-Upsert в SQLAlchemy для SQLite и Postgres — разные функции (`sqlite.insert` / `postgresql.insert` с `on_conflict_do_update`). Это единственное место, где код знает о диалекте, и оно спрятано в репозитории.
+Upsert in SQLAlchemy differs for SQLite and Postgres (`sqlite.insert` /
+`postgresql.insert` with `on_conflict_do_update`). This is the only place where code knows
+the dialect, and it is hidden in the repository.
 
-### Стадия 2. Фильтр шума (noise)
+### Stage 2. Noise filter (noise)
 
-Задача: проставить `is_noise` и `noise_reason`. **Ничего не удалять.**
+Task: set `is_noise` and `noise_reason`. **Delete nothing.**
 
-Список правил, каждое — функция `(msg, context) -> reason | None`, срабатывает первое подходящее:
+A list of rules, each a function `(msg, context) -> reason | None`; the first match wins:
 
 ```python
 RULES: list[Rule] = [
-    service_message,      # служебные события
+    service_message,      # service events
     sticker_or_emoji_only,
-    gratitude,            # «спасибо», «gracias», «+», «👍» — по словарю
-    short_without_value,  # < 15 символов И не ответ на вопрос
-    duplicate,            # хэш нормализованного текста уже был за 30 дней
-    spam_patterns,        # ссылки + «заработок/пиши в лс», сообщения ботов
+    gratitude,            # "thanks", "gracias", "+", "👍" — from a dictionary
+    short_without_value,  # < 15 characters AND not an answer to a question
+    duplicate,            # the normalized text's hash was seen within 30 days
+    spam_patterns,        # links + "easy money / DM me", bot messages
 ]
-NOISE_VERSION = 3          # меняешь правила → увеличиваешь
+NOISE_VERSION = 3          # change the rules → bump it
 ```
 
-- `context` даёт доступ к сообщению, на которое отвечают: «да» как ответ на вопрос ≠ «да» как флуд.
-- Словари и пороги — в конфиге (YAML или константы), не в коде правил.
-- Тесты табличные: «сообщение → ожидаемая причина». Каждый промах, найденный вручную, становится новой строкой теста.
-- В вебе — страница «случайные 100 из шума / из не-шума» для ручной проверки.
+- `context` gives access to the message being replied to: "yes" as an answer to a
+  question ≠ "yes" as flood.
+- Dictionaries and thresholds live in configuration (YAML or constants), not inside rule
+  code.
+- Table-driven tests: "message → expected reason". Every miss found by hand becomes a new
+  test row.
+- On the web — a page "random 100 from noise / from non-noise" for manual review.
 
-### Стадия 3. Обогащение (enrich)
+### Stage 3. Enrichment (enrich)
 
-Дешёвые признаки без ИИ, только для `is_noise = false`:
-- `lang`: ru / es / en / mixed (lingua-py; для текстов короче ~20 символов — `unknown`);
-- `is_question`: «?» или вопросительные слова на ru и es;
-- `urls`: извлечённые ссылки;
-- `has_mention`: упоминания @username.
+Cheap features without AI, only for `is_noise = false`:
+- `lang`: ru / es / en / mixed (lingua-py; texts shorter than ~20 characters → `unknown`);
+- `is_question`: "?" or question words in ru and es;
+- `urls`: extracted links;
+- `has_mention`: @username mentions.
 
-Телефоны и личные данные в отдельные поля не выносить.
+Do not extract phone numbers or personal data into separate fields.
 
-### Стадия 4. Склейка в обсуждения (threads)
+### Stage 4. Thread grouping (threads)
 
-Задача: назначить каждому сообщению `thread_id`.
+Task: assign every message a `thread_id`.
 
-1. **Reply-связи → компоненты связности** (union-find).
-2. **Сообщения без reply** присоединяются к предыдущему обсуждению того же чата (и той же темы форума), если пауза меньше `GAP` (начать с 30 минут). Иначе — новое обсуждение.
-3. **Стабильный ID:** `thread_id = f"{chat_id}:{root_msg_id}"`, корень — самое раннее сообщение.
-4. **Инкрементальность:** пересчитывается только хвост чата — новые сообщения плюс перекрытие в 2 дня.
+1. **Reply links → connected components** (union-find).
+2. **Messages without a reply** join the previous thread of the same chat (and the same
+   forum topic) if the gap is shorter than `GAP` (start with 30 minutes). Otherwise — a new
+   thread.
+3. **Stable id:** `thread_id = f"{chat_id}:{root_msg_id}"`, the root being the earliest
+   message.
+4. **Incremental:** only the tail of the chat is recomputed — new messages plus a 2-day
+   overlap.
 
-Результат: таблица `threads` (id, чат, начало, конец, число сообщений, `has_question`) и `messages.thread_id`.
+Result: the `threads` table (id, chat, start, end, message count, `has_question`) and
+`messages.thread_id`.
 
-Стадия изолирована за интерфейсом — позже можно подставить другой алгоритм (например, с эмбеддингами) и сравнить качество.
+The stage is isolated behind an interface — later another algorithm (for example with
+embeddings) can be plugged in and compared.
 
-### Стадия 5. Индексация (index)
+### Stage 5. Indexing (index)
 
-- SQLite: FTS5 по `messages.text` и по склеенному тексту обсуждения. Для русского без морфологии на старте — поиск по префиксу (`квартир*`).
-- Postgres позже: `tsvector` + GIN-индекс.
-- Обе реализации — за портом `SearchIndex`.
-- Позже: эмбеддинги, `sqlite-vec` → `pgvector`.
+- SQLite: FTS5 over `messages.text` and over the joined thread text. For Russian, without
+  morphology at first — prefix search (`kvartir*`).
+- Postgres later: `tsvector` + a GIN index.
+- Both implementations sit behind the `SearchIndex` port.
+- Later: embeddings, `sqlite-vec` → `pgvector`.
 
-### Оркестрация стадий
+### Stage orchestration
 
 ```python
 class Stage(Protocol):
@@ -335,21 +384,23 @@ class Stage(Protocol):
 Runner:
 
 ```
-для каждой стадии по порядку:
-    пока есть сообщения, где <stage>_v IS NULL или < version
-                         и предыдущая стадия пройдена:
-        взять пачку (500) → process → записать результат и версию одной транзакцией
+for each stage in order:
+    while there are messages where <stage>_v IS NULL or < version
+                         and the previous stage is done:
+        take a batch (500) → process → write the result and the version in one transaction
 ```
 
-В `messages` колонки `normalize_v, noise_v, enrich_v, thread_v, index_v`. Состояние пайплайна видно одним SQL-запросом.
+`messages` has the columns `normalize_v, noise_v, enrich_v, thread_v, index_v`. The
+pipeline state is visible in one SQL query.
 
-При масштабировании runner заменяется очередью (Redis Streams, NATS), интерфейс `Stage` остаётся.
+When scaling, the runner is replaced by a queue (Redis Streams, NATS); the `Stage`
+interface stays.
 
 ---
 
-## 6. База данных и переход SQLite → Postgres
+## 6. Database and the SQLite → Postgres move
 
-Схема для старта:
+Starting schema:
 
 ```
 chats         (source, chat_id, title, username)
@@ -362,58 +413,65 @@ threads       (thread_id, source, chat_id, started_at, ended_at, root_msg_id, ms
 messages_fts  (FTS5)
 ```
 
-- **SQLAlchemy 2.0 Core** для пайплайна (массовые upsert). ORM — в веб-части, где удобнее.
-- **Alembic** с первого дня. Для SQLite — `render_as_batch=True` (иначе не работает `ALTER TABLE`).
-- **PRAGMA для SQLite** при подключении: `journal_mode=WAL; foreign_keys=ON; busy_timeout=5000; synchronous=NORMAL`. WAL позволяет вебу читать, пока воркер пишет.
-- **Пишет в SQLite один процесс** (воркер), веб только читает. В Postgres это ограничение исчезает.
-- Диалектно-зависимый код (upsert, FTS) — только в `storage/db/`.
+- **SQLAlchemy 2.0 Core** for the pipeline (bulk upserts). ORM in the web part, where it is
+  more convenient.
+- **Alembic** from day one. For SQLite — `render_as_batch=True` (otherwise `ALTER TABLE`
+  does not work).
+- **SQLite PRAGMAs** on connect: `journal_mode=WAL; foreign_keys=ON; busy_timeout=5000;
+  synchronous=NORMAL`. WAL lets the web read while the worker writes.
+- **One process writes to SQLite** (the worker); the web only reads. With Postgres this
+  limit goes away.
+- Dialect-dependent code (upsert, FTS) — only in `storage/db/`.
 
-Переход на Postgres:
-1. добавить сервис `db` в compose;
-2. поменять `DATABASE_URL`;
+Moving to Postgres:
+1. add a `db` service to compose;
+2. change `DATABASE_URL`;
 3. `alembic upgrade head`;
-4. `chatradar rebuild` — пересобрать базу из сырых JSONL.
+4. `chatradar rebuild` — rebuild the database from the raw JSONL.
 
 ---
 
-## 7. Веб-интерфейс (FastAPI + HTMX)
+## 7. Web interface (FastAPI + HTMX)
 
-Цель — видеть, что происходит внутри. Это отладочная панель, а не продукт.
+The goal is to see what happens inside. It is a debug panel, not a product.
 
-1. **Чаты:** список, число сообщений, последняя синхронизация, кнопка «синхронизировать».
-2. **Пайплайн:** сколько сообщений на каждой стадии, сколько ждёт обработки, версии правил.
-3. **Сообщения:** таблица с фильтрами (чат, дата, язык, шум, причина шума, вопрос), подгрузка через HTMX.
-4. **Обсуждение:** сообщения треда лентой с отступами по reply и ссылками в Telegram.
-5. **Поиск:** запрос → найденные обсуждения.
-6. **Проверка фильтра:** случайные 100 из шума и из не-шума.
+1. **Chats:** list, message count, last sync, a "sync" button.
+2. **Pipeline:** how many messages are at each stage, how many wait, rule versions.
+3. **Messages:** a table with filters (chat, date, language, noise, noise reason, question),
+   loaded through HTMX.
+4. **Thread:** the thread's messages as a feed indented by reply, with Telegram links.
+5. **Search:** query → found threads.
+6. **Filter review:** random 100 from noise and from non-noise.
 
-HTMX: только Python и HTML-шаблоны, без сборки фронтенда. Будущий веб-кабинет — отдельно на React/Next.js поверх того же FastAPI как JSON API.
+HTMX: only Python and HTML templates, no frontend build. The future web dashboard is
+separate, in React/Next.js, over the same FastAPI as a JSON API.
 
-Будущий Telegram-бот — такой же адаптер интерфейса, как веб: вызывает те же сервисы `search`, `stats`, `digest`. Ядро менять не придётся.
+The future Telegram bot is an interface adapter just like the web: it calls the same
+`search`, `stats` and `digest` services. The core does not have to change.
 
 ---
 
 ## 8. CLI
 
 ```
-chatradar telegram login                  # первый вход, интерактивно
-chatradar chats add @montevideo_ru        # добавить чат в список
+chatradar telegram login                  # first login, interactive
+chatradar chats add @montevideo_ru        # add a chat to the list
 chatradar chats list
-chatradar import tg-export ./result.json  # импорт выгрузки из Desktop
+chatradar import tg-export ./result.json  # import a Desktop export
 chatradar sync [--chat ID] [--recheck-days 7]
 chatradar process [--stage noise] [--reset-stage noise]
-chatradar rebuild                         # база заново из data/raw
+chatradar rebuild                         # the database again from data/raw
 chatradar web                             # uvicorn
-chatradar worker                          # цикл: sync → process → пауза
+chatradar worker                          # loop: sync → process → pause
 ```
 
-Каждая команда — тонкая обёртка над функцией из `services/`. Логики в CLI нет.
+Every command is a thin wrapper over a function in `services/`. There is no logic in the CLI.
 
 ---
 
 ## 9. Docker
 
-**Dockerfile** (multi-stage с uv):
+**Dockerfile** (multi-stage with uv):
 
 ```dockerfile
 FROM python:3.13-slim AS builder
@@ -436,7 +494,8 @@ USER app
 ENTRYPOINT ["chatradar"]
 ```
 
-Тег `uv:latest` в проекте закрепить на конкретной версии.
+Pin the `uv:latest` tag to a concrete version in the project (done: `UV_VERSION` in the
+`Dockerfile`).
 
 **compose.yaml:**
 
@@ -445,7 +504,7 @@ services:
   web:
     build: .
     command: web --host 0.0.0.0 --port 8000
-    ports: ["127.0.0.1:8000:8000"]   # только локально
+    ports: ["127.0.0.1:8000:8000"]   # loopback only
     env_file: .env
     volumes: ["./data:/app/data"]
 
@@ -456,59 +515,68 @@ services:
     volumes: ["./data:/app/data"]
     restart: unless-stopped
 
-  # позже:
+  # later:
   # db:
   #   image: postgres:17
   #   volumes: ["pgdata:/var/lib/postgresql/data"]
 ```
 
-Первый логин в Telegram:
+First Telegram login:
 
 ```
 docker compose run --rm -it worker telegram login
 ```
 
-Сессия появится в `./data/sessions/` и переживёт пересборку контейнеров.
+The session appears in `./data/sessions/` and survives container rebuilds.
 
-`worker` при старте выполняет `alembic upgrade head`, затем бесконечный цикл: синхронизация раз в N часов, обработка после каждой синхронизации. Для MVP хватит `asyncio`-цикла со `sleep`, без отдельного планировщика.
-
----
-
-## 10. Качество кода
-
-- **pyproject.toml:** ruff с правилами `E, F, I, UP, B, SIM, ASYNC, RUF`; pyright в strict-режиме.
-- **pre-commit:** ruff, ruff-format, pyright, запрет коммита `.env` и `*.session`.
-- **Тесты:**
-  - unit — маппер, правила шума, алгоритм склейки, на обезличенных реальных фикстурах;
-  - integration — весь пайплайн на in-memory SQLite;
-  - Telegram в тестах не вызывается никогда, вместо него фейковый `Connector`.
-- **CI** (GitHub Actions): lint → typecheck → tests на каждый push.
-- **Логи:** structlog; в каждом событии `stage`, `chat_id`, `count`, `duration_ms`.
-- **Конфиг:** один класс `Settings` (pydantic-settings); `.env.example` в репозитории, `.env` — нет.
+At start `worker` runs `alembic upgrade head`, then an endless loop: a sync every N hours,
+processing after every sync. For the MVP an `asyncio` loop with `sleep` is enough, without a
+separate scheduler.
 
 ---
 
-## 11. Про Go, C++ и Rust
+## 10. Code quality
 
-Узкие места проекта — **лимиты Telegram API** и **скорость и стоимость LLM**, а не Python. Фильтр на правилах обработает сотни тысяч сообщений за секунды. Переписывать на другой язык — только когда профилирование покажет конкретное горячее место. Кандидаты:
-- локальное вычисление эмбеддингов (но там и так C++/Rust внутри библиотек);
-- высоконагруженный сборщик на тысячи чатов — подходит Go.
-
-Граница между модулями — JSONL и таблицы БД, поэтому стадию можно переписать отдельно. Заранее делать не стоит.
+- **pyproject.toml:** ruff with the rules `E, F, I, UP, B, SIM, ASYNC, RUF` (and more, see
+  the file); pyright in strict mode.
+- **pre-commit:** ruff, ruff-format, pyright, a ban on committing `.env` and `*.session`.
+- **Tests:**
+  - unit — the mapper, noise rules, the grouping algorithm, on anonymized real fixtures;
+  - integration — the whole pipeline on in-memory SQLite;
+  - Telegram is never called in tests; a fake `Connector` replaces it.
+- **CI** (GitHub Actions): lint → typecheck → tests on every push.
+- **Logs:** structlog; every event carries `stage`, `chat_id`, `count`, `duration_ms`.
+- **Config:** one `Settings` class (pydantic-settings); `.env.example` in the repository,
+  `.env` not.
 
 ---
 
-## 12. Порядок реализации
+## 11. About Go, C++ and Rust
 
-| Шаг | Что сделать | Результат |
+The project's bottlenecks are **Telegram API limits** and **LLM speed and cost**, not
+Python. A rule-based filter handles hundreds of thousands of messages in seconds. Rewrite in
+another language only when profiling shows a concrete hot spot. Candidates:
+- local embedding computation (but there is C++/Rust inside the libraries already);
+- a high-load collector for thousands of chats — Go fits.
+
+The boundary between modules is JSONL and database tables, so a stage can be rewritten on
+its own. Not worth doing in advance.
+
+---
+
+## 12. Implementation order
+
+| Step | What to do | Result |
 |---|---|---|
-| 1 | Скелет: uv, ruff, pyright, pytest, pre-commit, структура папок, `Settings` | Пустой проект, проходящий CI |
-| 2 | Домен и порты; импорт JSON из Telegram Desktop; RawStore на JSONL | Данные в `data/raw/` без Telethon |
-| 3 | SQLAlchemy, Alembic, таблицы, нормализация с upsert | Сообщения в SQLite |
-| 4 | Runner стадий; фильтр шума и обогащение с тестами | Размеченные сообщения |
-| 5 | Веб: «чаты», «пайплайн», «сообщения» | Видно, что происходит |
-| 6 | Склейка в обсуждения, FTS5, страница поиска | Работающий поиск |
-| 7 | Telethon-коннектор, `login`, `sync`, worker | Автоматическая докачка |
-| 8 | Docker и compose | `docker compose up` поднимает всё |
+| 1 | Skeleton: uv, ruff, pyright, pytest, pre-commit, folder layout, `Settings` | An empty project passing CI |
+| 2 | Domain and ports; Telegram Desktop JSON import; JSONL RawStore | Data in `data/raw/` without Telethon |
+| 3 | SQLAlchemy, Alembic, tables, normalization with upsert | Messages in SQLite |
+| 4 | Stage runner; noise filter and enrichment with tests | Labelled messages |
+| 5 | Web: "chats", "pipeline", "messages" | Visible internals |
+| 6 | Thread grouping, FTS5, search page | Working search |
+| 7 | Telethon connector, `login`, `sync`, worker | Automatic incremental sync |
+| 8 | Docker and compose | `docker compose up` runs everything |
 
-После шага 8 — полноценный сервис без ИИ. ИИ-стадии (разметка тем, эмбеддинги, ответы) подключаются следующими стадиями по тому же интерфейсу `Stage`.
+After step 8 — a complete service without AI. The AI stages (topic labelling, embeddings,
+answers) plug in as the next stages through the same `Stage` interface. Progress is tracked
+in `docs/ROADMAP.md`.

@@ -1,1 +1,1 @@
-"""Конвейер обработки: normalize → noise → enrich → threads → index."""
+"""Processing pipeline: normalize → noise → enrich → threads → index."""

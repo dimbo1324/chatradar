@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 @pytest.fixture(autouse=True)
 def isolated_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[Path]:
-    """Тесты не читают реальный .env и не пишут в настоящий data/."""
+    """Tests never read the real .env and never write to the real data/."""
     for key in [k for k in os.environ if k.startswith("CHATRADAR_")]:
         monkeypatch.delenv(key)
     monkeypatch.chdir(tmp_path)

@@ -1,5 +1,5 @@
-# docker compose up -d --build        — поднять веб и воркер
-# docker compose run --rm -it worker telegram login   — первый вход в Telegram
+# docker compose up -d --build                      — start web and worker
+# docker compose run --rm -it worker telegram login — first Telegram login
 name: chatradar
 
 x-app: &app
@@ -20,7 +20,7 @@ services:
     <<: *app
     command: ["web", "--host", "0.0.0.0", "--port", "8000"]
     ports:
-      - "127.0.0.1:8000:8000" # только локально; наружу — через reverse proxy
+      - "127.0.0.1:8000:8000" # loopback only; expose through a reverse proxy
     healthcheck:
       test:
         - CMD
@@ -36,7 +36,7 @@ services:
     <<: *app
     command: ["worker"]
 
-  # Шаг «переход на Postgres»: раскомментировать и задать CHATRADAR_DATABASE_URL
+  # Moving to Postgres: uncomment and set CHATRADAR_DATABASE_URL
   # db:
   #   image: pgvector/pgvector:pg17
   #   environment:

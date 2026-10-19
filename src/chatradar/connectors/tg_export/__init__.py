@@ -1,1 +1,1 @@
-"""Импорт JSON-выгрузки Telegram Desktop. Шаг 2 плана."""
+"""Telegram Desktop JSON export import. Roadmap step 2."""

@@ -1,21 +1,22 @@
-# Безопасность
+# Security
 
-## Сообщить об уязвимости
+## Reporting a vulnerability
 
-Не создавайте публичный issue. Используйте
-[приватный отчёт](https://github.com/dimbo1324/chatradar/security/advisories/new).
-Ответ — в течение нескольких дней.
+Do not open a public issue. Use a
+[private report](https://github.com/dimbo1324/chatradar/security/advisories/new).
+Expect an answer within a few days.
 
-## Что в проекте считается секретом
+## What counts as a secret here
 
-| Что | Где лежит | Почему важно |
+| What | Where it lives | Why it matters |
 |---|---|---|
-| `*.session` (Telethon) | `data/sessions/` | **полный доступ к аккаунту Telegram** |
-| `api_id` / `api_hash` | `.env` | идентифицируют ваше приложение в Telegram |
-| ключи LLM API | `.env` | деньги |
-| выгрузки чатов | `data/raw/` | персональные данные участников чатов |
+| `*.session` (Telethon) | `data/sessions/` | **full access to the Telegram account** |
+| `api_id` / `api_hash` | `.env` | identify your application to Telegram |
+| LLM API keys | `.env` | money |
+| chat exports | `data/raw/` | personal data of chat members |
 
-Защита: `.gitignore`, pre-commit-хук `forbid-secrets`, gitleaks локально и в CI.
+Protection: `.gitignore`, the pre-commit hook `forbid-secrets`, gitleaks locally and in CI,
+and deny rules for AI assistants in `.claude/settings.json`.
 
-Если сессия утекла: Telegram → Настройки → Устройства → завершить сеанс, затем заново
-`chatradar telegram login`.
+If a session leaked: Telegram → Settings → Devices → terminate the session, then run
+`chatradar telegram login` again.

@@ -1,1 +1,1 @@
-"""Коннекторы источников. Каждый реализует порт `Connector` и выдаёт `RawRecord`."""
+"""Source connectors. Each implements the `Connector` port and yields `RawRecord`s."""

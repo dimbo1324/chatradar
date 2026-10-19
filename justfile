@@ -1,5 +1,5 @@
-# Короткие команды проекта. Установка just: winget install Casey.Just | brew install just
-# Список: just
+# Project commands. Install just: winget install Casey.Just | brew install just
+# List them: just
 
 set windows-shell := ["powershell.exe", "-NoLogo", "-NoProfile", "-Command"]
 set dotenv-load := false
@@ -7,68 +7,84 @@ set dotenv-load := false
 default:
     @just --list --unsorted
 
-# Установить зависимости и git-хуки
+# Install dependencies and the git hook, once per clone
 setup:
     uv sync
     uv run pre-commit install
 
-# Обновить lock-файл и зависимости
+# Install dependencies exactly as uv.lock says
 sync:
     uv sync
 
-# Отформатировать код
+# Format code and apply safe lint fixes
 fmt:
     uv run ruff format .
     uv run ruff check --fix .
 
-# Линтер без правок
+# Lint and format check without changes
 lint:
     uv run ruff check .
     uv run ruff format --check .
 
-# Строгая проверка типов
+# Strict type check
 typecheck:
     uv run pyright
 
-# Тесты (аргументы пробрасываются в pytest: just test -k noise)
+# Tests; arguments go to pytest: just test -k noise
 test *args:
     uv run pytest {{ args }}
 
-# Тесты с покрытием
+# Tests with coverage
 cov:
     uv run pytest --cov --cov-report=term-missing --cov-report=xml
 
-# Всё, что проверяет CI
-check: lint typecheck test
+# Regenerate AGENTS.md and the .codex mirror from .ai/ and .claude/
+agents:
+    uv run python scripts/sync_agents.py
 
-# Все pre-commit хуки по всему репозиторию
+# Verify AGENTS.md and the .codex mirror are current
+agents-check:
+    uv run python scripts/sync_agents.py --check
+
+# No Cyrillic outside the allowed data paths
+language:
+    uv run python scripts/check_language.py
+
+# The full gate: everything CI checks
+check: lint typecheck test agents-check language
+
+# Read-only toolchain check
+doctor:
+    python scripts/doctor.py
+
+# Every pre-commit hook over the whole repository
 hooks:
     uv run pre-commit run --all-files
 
-# Применить миграции
+# Apply migrations
 migrate:
     uv run alembic upgrade head
 
-# Новая миграция: just revision "add messages table"
+# New migration: just revision "add messages table"
 revision message:
     uv run alembic revision --autogenerate -m "{{ message }}"
 
-# Веб-панель локально
+# Debug panel on 127.0.0.1:8000
 web:
     uv run chatradar web
 
-# Docker: собрать и поднять
+# Docker: build and start
 up:
     docker compose up -d --build
 
-# Docker: остановить
+# Docker: stop
 down:
     docker compose down
 
-# Docker: логи
+# Docker: follow logs
 logs *args:
     docker compose logs -f {{ args }}
 
-# Первый вход в Telegram внутри контейнера
+# First Telegram login inside the container
 login:
     docker compose run --rm -it worker telegram login

@@ -1,30 +1,30 @@
-# ADR-0001. Модульный монолит с портами и адаптерами
+# ADR-0001. Modular monolith with ports and adapters
 
-- Статус: принято
-- Дата: 2026-10-19
+- Status: accepted
+- Date: 2026-10-19
 
-## Контекст
+## Context
 
-Проект начинается как MVP для одного пользователя, но должен вырасти до платформы с несколькими
-мессенджерами, веб-кабинетом, ботом и API. Команда — 1–2 человека. Узкие места — лимиты
-Telegram API и стоимость LLM, а не производительность Python.
+The project starts as an MVP for one user but must grow into a platform with several
+messengers, a web dashboard, a bot and an API. The team is one or two people. The
+bottlenecks are Telegram API limits and LLM cost, not Python performance.
 
-## Решение
+## Decision
 
-- Одно приложение (модульный монолит), пакет `chatradar`.
-- В центре — доменная модель (`Message`, `Thread`, `Chat`) и порты-`Protocol`
+- One application (a modular monolith), the `chatradar` package.
+- At the center: the domain model (`Message`, `Thread`, `Chat`) and `Protocol` ports
   (`Connector`, `RawStore`, `MessageRepository`, `SearchIndex`, `Stage`).
-- Telethon, SQLite/Postgres, FastAPI, aiogram — адаптеры. `domain/` не импортирует их никогда.
-- Граница между модулями — формат данных (JSONL, таблицы БД), а не Python-объекты.
-- Сырые данные неизменяемы и хранятся отдельно (`data/raw/*.jsonl`); БД — производная,
-  пересобирается командой `rebuild`.
-- Пайплайн из идемпотентных версионированных стадий.
+- Telethon, SQLite/Postgres, FastAPI and aiogram are adapters. `domain/` never imports them.
+- The boundary between modules is a data format (JSONL, database tables), not Python objects.
+- Raw data is immutable and stored separately (`data/raw/*.jsonl`); the database is derived
+  and rebuilt by `rebuild`.
+- The pipeline consists of idempotent, versioned stages.
 
-## Последствия
+## Consequences
 
-- Новый мессенджер = новый коннектор, ядро не меняется.
-- SQLite → Postgres = новый адаптер репозитория и смена `DATABASE_URL`.
-- Любую стадию можно вынести в отдельный сервис или переписать на другом языке.
-- Цена: дисциплина импортов (domain → ничего; adapters → domain) — следим на ревью,
-  позже можно добавить `import-linter` в CI.
-- Сознательно не используем на старте: Celery, Redis, Kafka, React, микросервисы.
+- A new messenger is a new connector; the core does not change.
+- SQLite → Postgres is a new repository adapter and a different `DATABASE_URL`.
+- Any stage can move to a separate service or be rewritten in another language.
+- Cost: import discipline (domain → nothing; adapters → domain), checked in review;
+  `import-linter` can enforce it in CI later.
+- Deliberately not used at the start: Celery, Redis, Kafka, React, microservices.

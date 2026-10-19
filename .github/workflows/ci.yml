@@ -78,6 +78,20 @@ jobs:
           path: coverage.xml
           retention-days: 7
 
+  assistants:
+    name: Assistant rules + language
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - name: AGENTS.md and .codex in sync with .ai/ and .claude/
+        run: uv run python scripts/sync_agents.py --check
+      - name: English only
+        run: uv run python scripts/check_language.py
+
   secrets:
     name: Secret scan
     runs-on: ubuntu-latest
@@ -94,7 +108,7 @@ jobs:
     name: Docker build + smoke
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: [lint, typecheck, test]
+    needs: [lint, typecheck, test, assistants]
     steps:
       - uses: actions/checkout@v5
       - uses: docker/setup-buildx-action@v3

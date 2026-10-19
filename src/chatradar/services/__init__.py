@@ -1,1 +1,1 @@
-"""Сценарии приложения (sync, process, search, stats). CLI, веб и бот — тонкие обёртки над ними."""
+"""Use cases (sync, process, search, stats). CLI, web and bot are thin wrappers over them."""

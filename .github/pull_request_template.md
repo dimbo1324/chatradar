@@ -1,15 +1,15 @@
-## Что и зачем
+## What and why
 
-<!-- Коротко: какая проблема решается, какой шаг плана (docs/architecture.md §12). -->
+<!-- In short: the problem solved and the roadmap step (docs/ROADMAP.md). -->
 
-## Как проверено
+## How it was verified
 
-- [ ] `just check` (ruff, pyright strict, pytest) проходит локально
-- [ ] Новые правила/мапперы покрыты табличными тестами
-- [ ] Миграция добавлена и применяется на чистой SQLite (если меняется схема)
+- [ ] `just check` (ruff, pyright strict, pytest, agents sync, language) passes locally
+- [ ] New rules and mappers are covered by table-driven tests
+- [ ] A migration is added and applies on an empty SQLite (if the schema changes)
 
-## Чек-лист безопасности данных
+## Data safety checklist
 
-- [ ] Нет секретов, `.env`, `*.session`, выгрузок чатов
-- [ ] В фикстурах только обезличенные сообщения
-- [ ] Сырые сообщения наружу не выводятся — только выжимки и ссылки
+- [ ] No secrets, `.env`, `*.session` or chat exports
+- [ ] Fixtures contain anonymized messages only
+- [ ] No raw messages leave the machine — only summaries and links

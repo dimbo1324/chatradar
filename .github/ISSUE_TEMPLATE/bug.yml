@@ -1,26 +1,26 @@
-name: Баг
-description: Что-то работает не так
+name: Bug
+description: Something does not work as expected
 labels: [bug]
 body:
   - type: textarea
     id: what
     attributes:
-      label: Что случилось
-      description: Ожидание и реальность. Не вставляйте тексты сообщений из чатов и личные данные.
+      label: What happened
+      description: Expected versus actual. Do not paste chat messages or personal data.
     validations:
       required: true
   - type: textarea
     id: repro
     attributes:
-      label: Как воспроизвести
+      label: How to reproduce
       placeholder: "chatradar sync --chat ..."
   - type: input
     id: version
     attributes:
-      label: Версия
+      label: Version
       placeholder: "chatradar --version"
   - type: textarea
     id: logs
     attributes:
-      label: Логи
+      label: Logs
       render: text

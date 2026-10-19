@@ -1,1 +1,1 @@
-"""Telegram через Telethon (MTProto, пользовательский аккаунт). Шаг 7 плана."""
+"""Telegram through Telethon (MTProto, user account). Roadmap step 7."""

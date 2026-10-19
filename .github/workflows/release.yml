@@ -1,5 +1,5 @@
-# CD: тег vX.Y.Z → образ в GHCR (ghcr.io/<owner>/chatradar) + GitHub Release.
-# Выпуск: git tag v0.1.0 && git push origin v0.1.0
+# CD: tag vX.Y.Z → image in GHCR (ghcr.io/<owner>/chatradar) + GitHub Release.
+# Release: git tag v0.1.0 && git push origin v0.1.0
 name: Release
 
 on:

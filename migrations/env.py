@@ -1,4 +1,4 @@
-"""Alembic env: async-движок, URL из Settings, batch-режим для SQLite (иначе не работает ALTER)."""
+"""Alembic env: async engine, URL from Settings, batch mode on SQLite (ALTER needs it)."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ if config.config_file_name is not None:
 settings = get_settings()
 config.set_main_option("sqlalchemy.url", settings.database_url)
 
-# TODO(шаг 3): from chatradar.storage.db.tables import metadata
+# Roadmap step 3 sets this to chatradar.storage.db.tables.metadata.
 target_metadata: MetaData | None = None
 
 

@@ -1,4 +1,4 @@
-"""Единая модель сообщения. Каждый коннектор приводит свои данные к этому формату."""
+"""The unified message model. Every connector maps its data to this format."""
 
 from __future__ import annotations
 
@@ -37,7 +37,7 @@ class ChatInfo(_Frozen):
 
 
 class RawRecord(_Frozen):
-    """Неизменяемая сырая запись источника, как она лежит в `data/raw/*.jsonl`."""
+    """An immutable raw source record, exactly as stored in `data/raw/*.jsonl`."""
 
     source: Source
     chat_id: str
@@ -47,19 +47,19 @@ class RawRecord(_Frozen):
 
 class Message(_Frozen):
     source: Source
-    chat_id: str  # строки: у разных мессенджеров разные ID
+    chat_id: str  # strings: messengers use different id types
     msg_id: str
     author_id: str | None
-    date: AwareDatetime  # всегда UTC
+    date: AwareDatetime  # always UTC
     text: str
     reply_to: str | None = None
-    topic_id: str | None = None  # тема в форумах Telegram
+    topic_id: str | None = None  # topic in Telegram forum groups
     media_type: MediaType = MediaType.NONE
     is_forward: bool = False
-    is_service: bool = False  # «вступил в группу» и т. п.
+    is_service: bool = False  # "joined the group" and similar
     edited_at: AwareDatetime | None = None
     link: str | None = None
-    content_hash: str = Field(min_length=1)  # хэш значимых полей, ловит правки
+    content_hash: str = Field(min_length=1)  # hash of meaningful fields, detects edits
 
     @property
     def key(self) -> tuple[Source, str, str]:

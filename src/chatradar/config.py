@@ -1,4 +1,4 @@
-"""Конфигурация приложения. Единственный источник настроек — переменные окружения и `.env`."""
+"""Application settings. The only sources are environment variables and `.env`."""
 
 from __future__ import annotations
 
@@ -48,14 +48,14 @@ class Settings(BaseSettings):
         env_nested_delimiter="__",
         env_file=".env",
         env_file_encoding="utf-8",
-        env_ignore_empty=True,  # «CHATRADAR_TELEGRAM__API_ID=» в .env = значение по умолчанию
+        env_ignore_empty=True,  # `CHATRADAR_TELEGRAM__API_ID=` in .env means the default
         extra="ignore",
     )
 
     env: Environment = Environment.DEV
     log_level: LogLevel = "INFO"
     data_dir: Path = Path("data")
-    # Пусто → SQLite в data_dir. Смена БД = смена этой строки.
+    # Empty → SQLite in data_dir. Switching databases = changing this string.
     database_url: str = ""
 
     telegram: TelegramSettings = TelegramSettings()

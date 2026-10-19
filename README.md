@@ -1,4 +1,4 @@
-# ЧатРадар
+# ChatRadar
 
 [![CI](https://github.com/dimbo1324/chatradar/actions/workflows/ci.yml/badge.svg)](https://github.com/dimbo1324/chatradar/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/dimbo1324/chatradar/actions/workflows/codeql.yml/badge.svg)](https://github.com/dimbo1324/chatradar/actions/workflows/codeql.yml)
@@ -7,29 +7,31 @@
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-Собирает сообщения из чатов мессенджеров, отсеивает шум и отвечает на вопросы
-**со ссылками на исходные сообщения и их датами**. Дайджесты горячих тем, «вечные вопросы»,
-подсказки, к кому обратиться.
+Collects messages from messenger chats, filters out noise and answers questions **with links
+to the source messages and their dates**. Digests of hot topics, "evergreen questions",
+hints on whom to ask.
 
-> **Статус:** pre-alpha. Готов скелет проекта (шаг 1 плана), функциональность в разработке.
-> Подробнее — [видение продукта](docs/vision.md) и [архитектура](docs/architecture.md).
+> **Status:** pre-alpha. The project skeleton is ready (roadmap step 1); features are in
+> progress. More: [product vision](docs/vision.md), [architecture](docs/architecture.md),
+> [roadmap](docs/ROADMAP.md).
 
-## Как это устроено
+## How it works
 
 ```
-КОННЕКТОРЫ ──▶ data/raw/*.jsonl ──▶ normalize ─▶ noise ─▶ enrich ─▶ threads ─▶ index ──▶ ИНТЕРФЕЙСЫ
-(Telegram,      (неизменяемый       └──────────── идемпотентные стадии с версиями ────┘   (веб, бот, API)
- импорт файлов)  источник истины)                       БД (SQLite → Postgres)
+CONNECTORS ──▶ data/raw/*.jsonl ──▶ normalize ─▶ noise ─▶ enrich ─▶ threads ─▶ index ──▶ INTERFACES
+(Telegram,      (immutable          └──────────── idempotent versioned stages ───────┘   (web, bot, API)
+ file imports)   source of truth)                    database (SQLite → Postgres)
 ```
 
-- **Модульный монолит с портами и адаптерами** — домен не знает о Telethon, SQLite и FastAPI
-  ([ADR-0001](docs/adr/0001-modular-monolith-hexagonal.md)).
-- **Сырые данные неизменяемы**, база — производная и пересобирается `chatradar rebuild`.
-- **Граница между модулями — формат данных**, поэтому любую стадию можно вынести или переписать.
+- **Modular monolith with ports and adapters** — the domain knows nothing about Telethon,
+  SQLite or FastAPI ([ADR-0001](docs/adr/0001-modular-monolith-hexagonal.md)).
+- **Raw data is immutable**; the database is derived and rebuilt by `chatradar rebuild`.
+- **The boundary between modules is a data format**, so any stage can be moved or rewritten.
 
-## Быстрый старт
+## Quick start
 
-Нужны [uv](https://docs.astral.sh/uv/) и (по желанию) [just](https://just.systems/) и Docker.
+You need [uv](https://docs.astral.sh/uv/), [just](https://just.systems/) and, optionally,
+Docker. `python scripts/doctor.py` checks the toolchain.
 
 ```bash
 git clone https://github.com/dimbo1324/chatradar.git
@@ -40,11 +42,7 @@ cd chatradar
 ```
 
 ```bash
-uv sync
-```
-
-```bash
-uv run pre-commit install
+just setup
 ```
 
 ```bash
@@ -55,16 +53,17 @@ cp .env.example .env
 uv run chatradar --help
 ```
 
-`uv` сам поставит Python 3.13 из `.python-version`.
+`uv` installs Python 3.13 from `.python-version` by itself.
 
 ### Telegram
 
-1. Зарегистрируйте приложение на [my.telegram.org](https://my.telegram.org) → `api_id`, `api_hash`.
-2. Впишите их в `.env` (`CHATRADAR_TELEGRAM__API_ID`, `CHATRADAR_TELEGRAM__API_HASH`).
-3. `chatradar telegram login` — сессия появится в `data/sessions/`.
+1. Register an application at [my.telegram.org](https://my.telegram.org) → `api_id`,
+   `api_hash`.
+2. Put them into `.env` (`CHATRADAR_TELEGRAM__API_ID`, `CHATRADAR_TELEGRAM__API_HASH`).
+3. `chatradar telegram login` — the session appears in `data/sessions/`.
 
-> **Файл `*.session` = полный доступ к аккаунту.** Он в `.gitignore`, pre-commit не даст его закоммитить.
-> Храните его как пароль.
+> **A `*.session` file is full access to the account.** It is git-ignored and pre-commit
+> refuses to commit it. Keep it like a password.
 
 ### Docker
 
@@ -76,79 +75,92 @@ docker compose up -d --build
 docker compose run --rm -it worker telegram login
 ```
 
-Веб-панель: <http://127.0.0.1:8000> (только локально), healthcheck — `/healthz`.
-Каталог `./data` монтируется в контейнеры и переживает пересборку.
+Web panel: <http://127.0.0.1:8000> (loopback only), healthcheck at `/healthz`. The `./data`
+directory is mounted into the containers and survives rebuilds.
 
-## Команды разработки
+## Development commands
 
-| `just …` | Что делает |
+| `just …` | What it does |
 |---|---|
-| `setup` | зависимости + git-хуки |
+| `setup` | dependencies + git hook |
 | `fmt` / `lint` | ruff format / ruff check |
 | `typecheck` | pyright (strict) |
-| `test` / `cov` | pytest / с покрытием |
-| `check` | всё, что проверяет CI |
+| `test` / `cov` | pytest / with coverage |
+| `agents` / `agents-check` | regenerate / verify the AI-assistant files |
+| `language` | English-only check |
+| `check` | everything CI checks |
+| `doctor` | toolchain check |
 | `migrate` / `revision "msg"` | Alembic |
 | `up` / `down` / `logs` / `login` | Docker Compose |
 
-Без `just` — те же команды через `uv run …` (см. [`justfile`](justfile)).
+Without `just`, run the same commands through `uv run …` (see [`justfile`](justfile)).
 
 ## CLI
 
 ```
-chatradar telegram login                  # первый вход, интерактивно
-chatradar chats add @some_chat            # добавить чат
+chatradar telegram login                  # first login, interactive
+chatradar chats add @some_chat            # track a chat
 chatradar chats list
-chatradar import tg-export ./result.json  # импорт выгрузки Telegram Desktop
+chatradar import tg-export ./result.json  # import a Telegram Desktop export
 chatradar sync [--chat ID] [--recheck-days 7]
 chatradar process [--stage noise] [--reset-stage noise]
-chatradar rebuild                         # база заново из data/raw
-chatradar web                             # веб-панель
-chatradar worker                          # цикл: sync → process → пауза
+chatradar rebuild                         # rebuild the database from data/raw
+chatradar web                             # web panel
+chatradar worker                          # loop: sync → process → sleep
 ```
 
-## Структура
+## Layout
 
 ```
 src/chatradar/
-├── config.py        # Settings (pydantic-settings), всё из env
-├── logs.py          # structlog: консоль в dev, JSON в prod
-├── domain/          # Message, Chat, порты-Protocol — без внешних зависимостей
-├── connectors/      # telegram (Telethon), tg_export (JSON из Desktop)
+├── config.py        # Settings (pydantic-settings), everything from env
+├── logs.py          # structlog: console in dev, JSON in prod
+├── domain/          # Message, Chat, Protocol ports — no external dependencies
+├── connectors/      # telegram (Telethon), tg_export (Desktop JSON)
 ├── storage/         # raw JSONL + db (SQLAlchemy 2.0, FTS5)
-├── pipeline/        # стадии: normalize, noise, enrich, threads, index
-├── services/        # сценарии: sync, process, search, stats
+├── pipeline/        # stages: normalize, noise, enrich, threads, index
+├── services/        # use cases: sync, process, search, stats
 ├── web/             # FastAPI + Jinja2 + HTMX
 └── cli.py           # Typer
-migrations/          # Alembic (async, batch-режим для SQLite)
+migrations/          # Alembic (async, batch mode on SQLite)
+scripts/             # repo tooling: sync_agents, check_language, doctor
 tests/{unit,integration,fixtures}
-docs/                # видение, архитектура, ADR
+docs/                # vision, architecture, roadmap, decisions, ADR
 ```
 
-## План
+## Roadmap
 
-| Шаг | Что | Статус |
+| Step | What | Status |
 |---|---|---|
-| 1 | Скелет: uv, ruff, pyright, pytest, pre-commit, CI, `Settings` | ✅ |
-| 2 | Домен и порты, импорт JSON из Telegram Desktop, RawStore на JSONL | ⏳ |
-| 3 | SQLAlchemy, Alembic, таблицы, нормализация с upsert | |
-| 4 | Runner стадий, фильтр шума и обогащение | |
-| 5 | Веб: чаты, пайплайн, сообщения | |
-| 6 | Склейка в обсуждения, FTS5, поиск | |
-| 7 | Telethon-коннектор, `login`, `sync`, worker | |
-| 8 | Docker и compose для всего сервиса | |
+| 1 | Skeleton: uv, ruff, pyright, pytest, pre-commit, CI, `Settings` | ✅ |
+| 2 | Domain and ports, Telegram Desktop JSON import, JSONL RawStore | ⏳ |
+| 3 | SQLAlchemy, Alembic, tables, normalization with upsert | |
+| 4 | Stage runner, noise filter and enrichment | |
+| 5 | Web: chats, pipeline, messages | |
+| 6 | Thread grouping, FTS5, search | |
+| 7 | Telethon connector, `login`, `sync`, worker | |
+| 8 | Docker and Compose for the whole service | |
 
-## Данные и приватность
+Details and status lines: [docs/ROADMAP.md](docs/ROADMAP.md).
 
-- Сообщения хранятся только локально в `data/` (вне git).
-- В тестовых фикстурах — только обезличенные сообщения.
-- Наружу никогда не публикуются сырые сообщения — только выжимки и ссылки.
-- Профили людей не собираются (Ley 18.331 о защите персональных данных, Уругвай).
+## Data and privacy
 
-## Участие
+- Messages are stored only locally in `data/` (outside git).
+- Test fixtures contain anonymized messages only.
+- Raw messages are never published — only summaries and links.
+- No profiles of people are built (Ley 18.331 on personal data protection, Uruguay).
 
-См. [CONTRIBUTING.md](CONTRIBUTING.md). Об уязвимостях — [SECURITY.md](SECURITY.md).
+## AI assistants
 
-## Лицензия
+The repository is set up for AI-assisted development, Claude Code first. Shared rules live
+in [`.ai/`](.ai/README.md); [`CLAUDE.md`](CLAUDE.md) imports them, `AGENTS.md` (Codex) and
+`GEMINI.md` (Gemini CLI) are their other entry points. Every session starts with an
+orientation ritual over the roadmap, the decision log and `task-checklist.md`.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Vulnerabilities: [SECURITY.md](SECURITY.md).
+
+## License
 
 [MIT](LICENSE)

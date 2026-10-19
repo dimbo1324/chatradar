@@ -1,7 +1,7 @@
-"""Порты — структурные интерфейсы (Protocol). Адаптерам не нужно наследоваться от них.
+"""Ports are structural interfaces (Protocol). Adapters do not inherit from them.
 
-Типы `StoredMessage`, `StageResult`, `UpsertResult`, `SearchFilters`, `Hit` появятся
-вместе с хранилищем (шаг 3 плана) и сейчас объявлены как заглушки.
+`StoredMessage`, `StageResult`, `UpsertResult`, `SearchFilters` and `Hit` arrive with
+the storage layer (roadmap step 3); until then they are placeholders.
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
     from chatradar.domain.models import ChatInfo, Message, RawRecord, Source
 
-# TODO(шаг 3): заменить на настоящие модели.
+# Placeholders until roadmap step 3 defines the real models.
 type StoredMessage = Any
 type StageResult = Any
 type UpsertResult = Any

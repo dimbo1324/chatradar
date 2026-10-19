@@ -1,23 +1,23 @@
-name: Идея / задача
-description: Новая возможность или шаг плана
+name: Idea / task
+description: A new capability or a roadmap step
 labels: [enhancement]
 body:
   - type: textarea
     id: problem
     attributes:
-      label: Какую проблему решаем
+      label: Which problem does it solve
     validations:
       required: true
   - type: textarea
     id: solution
     attributes:
-      label: Предлагаемое решение
+      label: Proposed solution
   - type: dropdown
     id: level
     attributes:
-      label: Уровень развития
+      label: Product level
       options:
-        - "0 — MVP для себя"
-        - "1 — для друзей"
-        - "2 — платформа"
-        - "3 — продукт для сообществ"
+        - "0 — MVP for the owner"
+        - "1 — for friends"
+        - "2 — platform"
+        - "3 — product for communities"

@@ -1,70 +1,71 @@
-# ЧатРадар — видение продукта
+# ChatRadar — Product Vision
 
-## Проблема
+## Problem
 
-Полезная информация для мигрантов (документы, ВНЖ, банки, жильё, работа, мастера, врачи)
-разбросана по десяткам чатов Telegram, WhatsApp и других мессенджеров:
+Useful information for migrants (documents, residence permits, banks, housing, jobs,
+tradespeople, doctors) is scattered across dozens of Telegram, WhatsApp and other chats:
 
-- читать всё вручную долго;
-- много шума: флуд, споры, «спасибо» и «+»;
-- трудно найти и сам ответ, и человека, который разбирается в теме;
-- встречи сообществ часто проходят без повестки.
+- reading everything by hand takes too long;
+- there is a lot of noise: flood, arguments, "thanks" and "+";
+- both the answer and the person who knows the topic are hard to find;
+- community meetups often have no agenda.
 
-## Решение
+## Solution
 
-Система сама собирает сообщения, отсеивает шум и:
+The system collects messages itself, filters out noise and:
 
-1. отвечает на вопрос коротко — **со ссылками на исходные сообщения и их датами**;
-2. раз в неделю/месяц выдаёт топ горячих тем и «вечных вопросов» — готовая повестка встречи;
-3. подсказывает, к кому обратиться (кого советовали в чатах);
-4. уведомляет по подпискам на темы.
+1. answers a question briefly — **with links to the source messages and their dates**;
+2. weekly or monthly, lists the hot topics and the "evergreen questions" — a ready meetup
+   agenda;
+3. suggests whom to ask (who was recommended in the chats);
+4. notifies about subscribed topics.
 
-**Главный принцип:** любое утверждение — со ссылкой на сообщение и датой. Информация в чатах
-быстро устаревает. Нет найденных сообщений — ответ «в чатах нет ответа», а не выдумка.
+**The core principle:** every statement carries a link to a message and its date.
+Information in chats goes stale quickly. No messages found → "no answer in the chats", never
+an invented one.
 
-## Интерфейсы
+## Interfaces
 
-Основной — Telegram-бот (`/тема`, `/дайджест`, `/повестка`, `/подписка`). Позже — веб-кабинет
-для длинных отчётов, фильтров и графиков, и API для админов сообществ и партнёров.
+The main one is a Telegram bot (`/topic`, `/digest`, `/agenda`, `/subscribe`). Later: a web
+dashboard for long reports, filters and charts, and an API for community admins and
+partners.
 
-## Уровни развития
+## Product levels
 
-Каждый уровень полезен сам по себе; к следующему переходим, только если предыдущим пользуются.
+Each level is useful on its own; move to the next only if the previous one is actually used.
 
-| Уровень | Суть | Ключевое |
+| Level | Scope | Key items |
 |---|---|---|
-| 0 — MVP | для себя | Telethon, 5–10 чатов, SQLite, фильтр шума, склейка обсуждений, поиск + короткий ответ LLM со ссылками, недельный дайджест |
-| 1 | для друзей | поиск по смыслу, авторазметка тем, база вечных вопросов, подписки, белый список, ru/es/en, расшифровка голосовых |
-| 2 | платформа | коннекторы WhatsApp-импорт и Discord, веб-кабинет, ссылки на официальные источники, оценка ответов, фото/PDF/ссылки |
-| 3 | продукт для сообществ | панель админа чата, автоответы с согласия админа, шаблоны под другие города, открытый API |
+| 0 — MVP | for the owner | Telethon, 5–10 chats, SQLite, noise filter, thread grouping, search plus a short LLM answer with links, weekly digest |
+| 1 | for friends | semantic search, automatic topic labels, evergreen-question base, subscriptions, allowlist of users, ru/es/en, voice transcription |
+| 2 | platform | WhatsApp import and Discord connectors, web dashboard, links to official sources, answer ratings, photos/PDF/links |
+| 3 | product for communities | chat admin panel, auto-answers with admin consent, templates for other cities, public API |
 
-## Источники
+## Sources
 
-| Мессенджер | Путь |
+| Messenger | Path |
 |---|---|
-| Telegram | пользовательский аккаунт через Telethon (MTProto) — вся история |
-| Discord | официальный Bot API, если бота добавил админ |
-| WhatsApp | только импорт файла «Экспорт чата» (неофициальные клиенты рискуют баном) |
-| Любой | универсальный коннектор «импорт файла» |
+| Telegram | a user account through Telethon (MTProto) — the full history |
+| Discord | the official Bot API, if an admin added the bot |
+| WhatsApp | only the "Export chat" file import (unofficial clients risk a ban) |
+| Any | a universal "import a file" connector |
 
-## Риски и правила
+## Risks and rules
 
-- **Ограничения Telegram** → паузы, соблюдение FloodWait, отдельный аккаунт для круглосуточного сбора.
-- **Устаревший или неверный совет** → дата и ссылка в каждом ответе; по документам — официальный источник.
-- **Галлюцинации ИИ** → ответ строится только по найденным сообщениям.
-- **Персональные данные** (Уругвай, Ley 18.331) → не собирать профили людей; справочник специалистов
-  только по согласию; сырые сообщения наружу не публикуются никогда — только выжимки и ссылки.
-- **Админы чатов** → перед публичным запуском договориться, предложить пользу (панель админа).
+- **Telegram limits** → pauses, FloodWait respected, a separate account for round-the-clock
+  collection.
+- **Stale or wrong advice** → a date and a link in every answer; for documents, an official
+  source too.
+- **AI hallucinations** → answers are built only from found messages.
+- **Personal data** (Uruguay, Ley 18.331) → no profiles of people; a specialist directory
+  only by consent; raw messages are never published — only summaries and links.
+- **Chat admins** → agree with them before a public launch and offer value (an admin panel).
 
-## Метрики
+## Metrics
 
-С первого дня считать активных пользователей в неделю и удержание (сколько людей возвращается),
-а не число регистраций.
+From day one, track weekly active users and retention (how many people come back), not the
+number of sign-ups.
 
-## Открытые вопросы
+## Open questions
 
-- Название проекта.
-- Точная схема данных: сообщение, обсуждение, тема, источник.
-- Склейка сообщений в обсуждения без reply.
-- Выбор моделей ИИ для разметки и ответов, контроль расходов.
-- Оценка качества ответов.
+Kept in `docs/decisions.md`.

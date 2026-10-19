@@ -1,16 +1,16 @@
-# ---------------------------------------------------------------- секреты и данные
-# Файл сессии Telegram = полный доступ к аккаунту. Никогда не коммитить.
+# ---------------------------------------------------------------- secrets and data
+# A Telegram session file is full access to the account. Never commit it.
 *.session
 *.session-journal
 .env
 .env.*
 !.env.example
 
-# Сырые выгрузки, сессии, база — всё в data/, всё вне git
+# Raw exports, sessions, database: all in data/, all outside git
 data/*
 !data/.gitkeep
 
-# Выгрузки Telegram Desktop / WhatsApp, случайно положенные в корень
+# Telegram Desktop / WhatsApp exports dropped into the root by accident
 result.json
 ChatExport_*/
 WhatsApp Chat*.txt
@@ -31,7 +31,7 @@ dist/
 .venv/
 venv/
 
-# ---------------------------------------------------------------- инструменты
+# ---------------------------------------------------------------- tools
 .ruff_cache/
 .mypy_cache/
 .pytest_cache/
@@ -42,7 +42,7 @@ coverage.xml
 htmlcov/
 .cache/
 
-# ---------------------------------------------------------------- IDE и ОС
+# ---------------------------------------------------------------- IDE and OS
 .idea/
 .vscode/*
 !.vscode/extensions.json
@@ -52,6 +52,7 @@ htmlcov/
 Thumbs.db
 desktop.ini
 
-# ---------------------------------------------------------------- локальные заметки
+# ---------------------------------------------------------------- local notes and settings
 *.local.md
 .claude/settings.local.json
+.codex/config.local.toml

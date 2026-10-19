@@ -1,9 +1,9 @@
 # Architecture Decision Records
 
-Короткие записи о значимых архитектурных решениях: контекст → решение → последствия.
-Новое решение — новый файл `NNNN-kebab-case.md`. Отменённые не удаляем, а помечаем
-«заменено ADR-XXXX».
+Short records of significant architecture decisions: context → decision → consequences.
+A new decision is a new file `NNNN-kebab-case.md`. Superseded records are not deleted but
+marked "superseded by ADR-XXXX".
 
-| № | Решение | Статус |
+| No. | Decision | Status |
 |---|---|---|
-| [0001](0001-modular-monolith-hexagonal.md) | Модульный монолит с портами и адаптерами | принято |
+| [0001](0001-modular-monolith-hexagonal.md) | Modular monolith with ports and adapters | accepted |

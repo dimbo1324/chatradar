@@ -1,7 +1,7 @@
-"""Контракт стадии пайплайна. Runner появится на шаге 4 плана.
+"""The pipeline stage contract. The runner arrives in roadmap step 4.
 
-Каждая стадия идемпотентна и версионирована: смена правил → `version += 1` →
-runner пересчитает только сообщения, где `<stage>_v IS NULL OR < version`.
+Every stage is idempotent and versioned: changed rules → `version += 1` → the
+runner reprocesses only messages where `<stage>_v IS NULL OR < version`.
 """
 
 from __future__ import annotations

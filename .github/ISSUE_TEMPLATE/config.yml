@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
-  - name: Уязвимость
+  - name: Vulnerability
     url: https://github.com/dimbo1324/chatradar/security/advisories/new
-    about: Об уязвимостях — приватно, не в публичных issue.
+    about: Report vulnerabilities privately, not in public issues.

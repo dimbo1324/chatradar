@@ -1,6 +1,6 @@
-"""Структурные логи (structlog): читаемые в dev, JSON в prod.
+"""Structured logs (structlog): readable in dev, JSON in prod.
 
-Соглашение: в событиях пайплайна всегда `stage`, `chat_id`, `count`, `duration_ms`.
+Convention: pipeline events always carry `stage`, `chat_id`, `count`, `duration_ms`.
 """
 
 from __future__ import annotations

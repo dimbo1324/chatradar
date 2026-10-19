@@ -11,7 +11,7 @@ updates:
         dependency-type: production
         update-types: [minor, patch]
     ignore:
-      # Telethon 2.x — другой API, переход отдельным решением
+      # Telethon 2.x has a different API; moving is a separate decision
       - dependency-name: telethon
         update-types: [version-update:semver-major]
 
