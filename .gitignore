@@ -1,0 +1,57 @@
+# ---------------------------------------------------------------- секреты и данные
+# Файл сессии Telegram = полный доступ к аккаунту. Никогда не коммитить.
+*.session
+*.session-journal
+.env
+.env.*
+!.env.example
+
+# Сырые выгрузки, сессии, база — всё в data/, всё вне git
+data/*
+!data/.gitkeep
+
+# Выгрузки Telegram Desktop / WhatsApp, случайно положенные в корень
+result.json
+ChatExport_*/
+WhatsApp Chat*.txt
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+
+# ---------------------------------------------------------------- Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# ---------------------------------------------------------------- инструменты
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.pyright/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.cache/
+
+# ---------------------------------------------------------------- IDE и ОС
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------------------------------------------------------------- локальные заметки
+*.local.md
+.claude/settings.local.json

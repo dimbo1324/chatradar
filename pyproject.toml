@@ -1,0 +1,136 @@
+[project]
+name = "chatradar"
+version = "0.1.0"
+description = "Сбор, очистка и поиск полезной информации в чатах мессенджеров со ссылками на исходные сообщения."
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [{ name = "dimbo1324" }]
+keywords = ["telegram", "chat", "search", "digest", "telethon"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Typing :: Typed",
+]
+dependencies = [
+    "aiosqlite>=0.22.1",
+    "alembic>=1.20.0",
+    "fastapi>=0.146.0",
+    "jinja2>=3.1.6",
+    "lingua-language-detector>=2.2.0",
+    "pydantic>=2.14",
+    "pydantic-settings>=2.16",
+    "sqlalchemy[asyncio]>=2.1",
+    "structlog>=26.1.0",
+    "telethon>=1.45,<2", # v2 — другой API, переход отдельным решением
+    "typer>=0.27.3",
+    "tzdata>=2026.5 ; sys_platform == 'win32'",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[project.scripts]
+chatradar = "chatradar.cli:run"
+
+[project.urls]
+Repository = "https://github.com/dimbo1324/chatradar"
+Issues = "https://github.com/dimbo1324/chatradar/issues"
+
+[build-system]
+requires = ["uv_build>=0.12,<0.13"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.14.0",
+    "pre-commit>=4.7.0",
+    "pyright[nodejs]>=1.1.414",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.1",
+]
+
+# ---------------------------------------------------------------- uv
+[tool.uv]
+default-groups = ["dev"]
+
+# ---------------------------------------------------------------- ruff
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+src = ["src", "tests"]
+extend-exclude = ["migrations/versions", "docs"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes
+    "I",        # isort
+    "UP",       # pyupgrade
+    "B",        # bugbear
+    "SIM",      # simplify
+    "ASYNC",    # async pitfalls
+    "RUF",      # ruff-specific
+    "C4",       # comprehensions
+    "PTH",      # pathlib
+    "DTZ",      # naive datetimes — в проекте все даты timezone-aware
+    "T20",      # забытые print
+    "S",        # bandit (безопасность)
+    "TC",       # импорты только для типов
+    "PT",       # pytest style
+]
+ignore = [
+    "RUF001", "RUF002", "RUF003", # кириллица в строках и комментариях — норма для проекта
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]
+"migrations/**" = ["INP001"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["chatradar"]
+
+[tool.ruff.lint.flake8-type-checking]
+runtime-evaluated-base-classes = ["pydantic.BaseModel", "pydantic_settings.BaseSettings"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+# ---------------------------------------------------------------- pyright
+[tool.pyright]
+include = ["src", "tests"]
+exclude = ["migrations/versions", "**/__pycache__", ".venv"]
+pythonVersion = "3.13"
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"
+reportMissingTypeStubs = false
+reportPrivateUsage = "warning"
+
+# ---------------------------------------------------------------- pytest
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config", "--import-mode=importlib"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "integration: тесты с реальной БД (in-memory SQLite) и файловой системой",
+]
+filterwarnings = ["error"]
+
+# ---------------------------------------------------------------- coverage
+[tool.coverage.run]
+source = ["chatradar"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = [
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "\\.\\.\\.",
+    "if __name__ == .__main__.:",
+]

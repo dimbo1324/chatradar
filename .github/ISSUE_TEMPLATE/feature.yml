@@ -1,0 +1,23 @@
+name: Идея / задача
+description: Новая возможность или шаг плана
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Какую проблему решаем
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Предлагаемое решение
+  - type: dropdown
+    id: level
+    attributes:
+      label: Уровень развития
+      options:
+        - "0 — MVP для себя"
+        - "1 — для друзей"
+        - "2 — платформа"
+        - "3 — продукт для сообществ"

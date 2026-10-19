@@ -1,0 +1,52 @@
+# docker compose up -d --build        — поднять веб и воркер
+# docker compose run --rm -it worker telegram login   — первый вход в Telegram
+name: chatradar
+
+x-app: &app
+  build: .
+  image: chatradar:local
+  env_file:
+    - path: .env
+      required: false
+  volumes:
+    - ./data:/app/data
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  web:
+    <<: *app
+    command: ["web", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "127.0.0.1:8000:8000" # только локально; наружу — через reverse proxy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=3)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  worker:
+    <<: *app
+    command: ["worker"]
+
+  # Шаг «переход на Postgres»: раскомментировать и задать CHATRADAR_DATABASE_URL
+  # db:
+  #   image: pgvector/pgvector:pg17
+  #   environment:
+  #     POSTGRES_DB: chatradar
+  #     POSTGRES_USER: chatradar
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+  #   volumes: ["pgdata:/var/lib/postgresql/data"]
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U chatradar"]
+  #     interval: 10s
+
+# volumes:
+#   pgdata:

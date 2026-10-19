@@ -1,0 +1,26 @@
+name: Баг
+description: Что-то работает не так
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: Что случилось
+      description: Ожидание и реальность. Не вставляйте тексты сообщений из чатов и личные данные.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Как воспроизвести
+      placeholder: "chatradar sync --chat ..."
+  - type: input
+    id: version
+    attributes:
+      label: Версия
+      placeholder: "chatradar --version"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Логи
+      render: text
