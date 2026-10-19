@@ -18,7 +18,9 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
 - `src/chatradar/logs.py` — structlog setup: console in dev, JSON in prod.
 - `src/chatradar/domain/` — `models.py` (messages, threads, read models), `ports.py`
   (`Connector`, `Mapper`, `RawStore`, `ChatRepository`, `MessageRepository`,
-  `QueryRepository`, `SearchIndex`), `text.py` (normalization, hashes, links).
+  `QueryRepository`, `SearchIndex`, plus `LexiconRepository`, `LabelRepository`,
+  `MessageScanner`), `text.py` (normalization, hashes, links), `lexicon.py` (learning-lexicon
+  models and status rules), `evaluation.py` (labels, truth rows, metrics).
   Imports nothing from adapters.
 - `src/chatradar/connectors/` — `telegram/` (Telethon, MTProto user account) and
   `tg_export/` (Telegram Desktop JSON import). Each yields `RawRecord`s.
@@ -31,6 +33,10 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
   (import, re-map), `sync.py`, `process.py`, `rebuild.py`, `worker.py`, `queries.py`
   (`ReadServices` for the web); `container.py` is the composition root — the only
   module that builds concrete adapters.
+- `src/chatradar/learning/` — corpus statistics that propose lexicon candidates (pure
+  functions: tokenizing, n-grams, log-odds scoring); `services/learning.py` runs them,
+  `services/evaluation.py` measures the filter, `services/feedback.py` is the panel's only
+  write path (ADR-0003, ADR-0004).
 - `src/chatradar/web/` — FastAPI JSON API (`docs/api.md`) and the static panel in
   `web/static/` (plain HTML, CSS, JavaScript modules; ADR-0002).
 - `src/chatradar/cli.py` — Typer entry point `chatradar`; thin wrappers over `services/`.
@@ -42,7 +48,8 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
   `generate_synthetic.py` (deterministic synthetic Telegram Desktop exports).
 - `data/` — runtime data (raw JSONL, Telegram sessions, SQLite). **Never tracked.**
 - `Dockerfile`, `compose.yaml`, `justfile`, `.pre-commit-config.yaml`, `.github/`.
-- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`, `adr/`.
+- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`, `backlog.md`
+  (deferred work), `adr/`.
 - `.ai/`, `.claude/`, `.codex/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` — assistant rules.
 
 ## Language policy

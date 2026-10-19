@@ -6,12 +6,23 @@ pipeline, web). Change it only through the lead, together with every implementat
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Literal, Protocol
 
 if TYPE_CHECKING:
     from collections.abc import AsyncIterator, Sequence
     from datetime import datetime
 
+    from chatradar.domain.evaluation import MessageLabel
+    from chatradar.domain.lexicon import (
+        LexiconKind,
+        LexiconSnapshot,
+        LexiconSummary,
+        LexiconTerm,
+        TermDecision,
+        TermPage,
+        TermSource,
+        TermStatus,
+    )
     from chatradar.domain.models import (
         ChatInfo,
         ChatSummary,
@@ -156,3 +167,98 @@ class SearchIndex(Protocol):
     async def rebuild(self) -> None:
         """Recreate the whole index from the current threads."""
         ...
+
+
+class MessageScanner(Protocol):
+    """Streams the whole corpus in batches, for corpus-level statistics (mining, evaluation)."""
+
+    def iter_all(self, batch_size: int = 2000) -> AsyncIterator[list[StoredMessage]]:
+        """Every stored message, ordered by source, chat_id, date, msg_id."""
+        ...
+
+
+type TermOrder = Literal["score", "occurrences", "recent"]
+
+
+class LexiconRepository(Protocol):
+    """The learning lexicon: the terms the rule stages use, and the candidates around them.
+
+    `revision` moves only when the set of ACTIVE terms changes. Stages that read the lexicon
+    remember the revision they processed with (`applied_revision`), and `process`
+    reprocesses a stage whose revision is behind.
+    """
+
+    async def seed(self, terms: Sequence[LexiconTerm]) -> int:
+        """Insert terms that do not exist yet (any status); never touches existing rows.
+        Returns how many were inserted. The first seeding sets revision 1."""
+        ...
+
+    async def snapshot(self) -> LexiconSnapshot:
+        """The ACTIVE terms and the current revision."""
+        ...
+
+    async def revision(self) -> int: ...
+
+    async def get_term(self, kind: LexiconKind, lang: str, term: str) -> LexiconTerm | None: ...
+
+    async def list_terms(
+        self,
+        *,
+        kind: LexiconKind | None = None,
+        status: TermStatus | None = None,
+        lang: str | None = None,
+        order: TermOrder = "score",
+        limit: int = 100,
+        offset: int = 0,
+    ) -> TermPage: ...
+
+    async def upsert_candidates(self, terms: Sequence[LexiconTerm]) -> tuple[int, int]:
+        """Mining output. A new (kind, lang, term) is inserted as given (status CANDIDATE).
+        An existing term of ANY status gets only its statistics refreshed (occurrences,
+        chats, authors, score, examples, last_seen); status, weight and decisions never change
+        here and the revision does not move. Returns (inserted, refreshed)."""
+        ...
+
+    async def decide(
+        self,
+        kind: LexiconKind,
+        lang: str,
+        term: str,
+        decision: TermDecision,
+        *,
+        by: str,
+        note: str | None = None,
+    ) -> LexiconTerm:
+        """Apply a human decision (`domain.lexicon.next_status`), record who and when, and
+        move the revision when the active set changes. Raises `KeyError` for an unknown term."""
+        ...
+
+    async def add_term(self, term: LexiconTerm) -> LexiconTerm:
+        """Insert a hand-written or AI-proposed term; an existing one is returned unchanged.
+        An ACTIVE term moves the revision."""
+        ...
+
+    async def mark_dormant(
+        self, *, last_seen_before: datetime, sources: Sequence[TermSource]
+    ) -> int:
+        """ACTIVE terms of these sources whose `last_seen` is older than the cutoff become
+        DORMANT (the revision moves when any did). Terms without `last_seen` are left alone."""
+        ...
+
+    async def summary(self) -> LexiconSummary: ...
+
+    async def applied_revision(self, stage: str) -> int:
+        """The revision `stage` last processed with; 0 when it never did."""
+        ...
+
+    async def set_applied_revision(self, stage: str, revision: int) -> None: ...
+
+
+class LabelRepository(Protocol):
+    async def save_label(self, label: MessageLabel) -> None:
+        """Insert or replace the label of this message."""
+        ...
+
+    async def list_labels(self, limit: int | None = None) -> list[MessageLabel]: ...
+
+    async def count_labels(self) -> int: ...

@@ -49,7 +49,7 @@ async def test_upgrade_creates_the_schema_and_is_repeatable(engine: AsyncEngine)
         names = set((await conn.execute(text("SELECT name FROM sqlite_master"))).scalars())
         version = (await conn.execute(text("SELECT version_num FROM alembic_version"))).scalar()
     assert {"chats", "sync_state", "messages", "threads", "threads_fts"} <= names
-    assert version == "0001"
+    assert version == "0002"
 
 
 async def test_upgrade_works_with_a_space_and_percent_in_the_url(tmp_path: Path) -> None:

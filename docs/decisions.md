@@ -5,6 +5,18 @@ decision made in chat is recorded here, or it is invisible to the next session.
 
 ## Decisions
 
+### 2026-10-19 — A learning lexicon with human review, and the panel's narrow write path
+
+The owner asked for a dictionary of experience: count repeating words and phrases before AI,
+let AI give feedback later, keep what recurs, and forget what does not. Decided
+(`docs/adr/0003-learning-lexicon.md`, `docs/adr/0004-panel-write-path.md`): the lexicon is
+data; statistics propose candidates, a human accepts; forgetting is dormancy; quality is
+measured with `chatradar eval` against synthetic truth and human labels; the panel may write
+only term decisions and labels. Scope of this task: evaluation, lexicon as data, candidate
+mining, human decisions, plus a redesigned Russian frontend. Everything deferred is in
+`docs/backlog.md`. The owner also approved downloading the Inter font (OFL, from the npm
+package `@fontsource-variable/inter` via jsDelivr) for self-hosting; icons are drawn inline.
+
 ### 2026-10-19 — The panel speaks Russian
 
 The web panel's interface is in Russian. This is a narrow exception to the English-only

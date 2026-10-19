@@ -42,6 +42,19 @@ class WebSettings(BaseModel):
     port: int = Field(default=8000, ge=1, le=65535)
 
 
+class LearningSettings(BaseModel):
+    """Thresholds for turning corpus statistics into lexicon candidates."""
+
+    min_occurrences: int = Field(default=5, ge=1)
+    min_chats: int = Field(default=1, ge=1)  # raise it once there are many chats
+    min_authors: int = Field(default=3, ge=1)  # one spammer repeating a phrase is not evidence
+    min_score: float = Field(default=2.5, ge=0)  # log-odds z-score
+    max_ngram: int = Field(default=3, ge=1, le=5)
+    max_candidates_per_kind: int = Field(default=200, ge=1)
+    dormant_after_days: int = Field(default=180, ge=1)
+    max_examples: int = Field(default=3, ge=0, le=10)
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_prefix="CHATRADAR_",
@@ -61,6 +74,7 @@ class Settings(BaseSettings):
     telegram: TelegramSettings = TelegramSettings()
     worker: WorkerSettings = WorkerSettings()
     web: WebSettings = WebSettings()
+    learning: LearningSettings = LearningSettings()
 
     @model_validator(mode="after")
     def _default_database_url(self) -> Self:

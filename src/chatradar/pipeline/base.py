@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
-    from chatradar.domain.ports import MessageRepository, SearchIndex
+    from chatradar.domain.ports import LexiconRepository, MessageRepository, SearchIndex
 
 NORMALIZE_VERSION = 1
 """Bump when a mapper changes what it produces; `chatradar rebuild` re-maps everything."""
@@ -41,6 +41,7 @@ def later_stages(stage: str) -> tuple[str, ...]:
 class StageDeps:
     messages: MessageRepository
     search: SearchIndex
+    lexicon: LexiconRepository | None = None  # None → the built-in seed lexicon (tests)
 
 
 class Stage(Protocol):

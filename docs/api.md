@@ -25,6 +25,30 @@ Thread messages are chronological; noise messages belong to no thread.
 
 `thread_id` contains a colon (`-100123:42`); clients URL-encode it in the path.
 
+## Learning lexicon and labels
+
+Models: `src/chatradar/domain/lexicon.py` and `src/chatradar/domain/evaluation.py`. Background:
+`docs/adr/0003-learning-lexicon.md`. Writes are allowed only here (`docs/adr/0004-panel-write-path.md`).
+
+| Method and path | Query / body | Response |
+|---|---|---|
+| `GET /api/lexicon/summary` | — | `LexiconSummary` (`pending_apply` is true while a stage still runs on an older revision) |
+| `GET /api/lexicon/terms` | `kind`, `status`, `lang`, `order` (`score` default, `occurrences`, `recent`), `limit` (1–500, default 100), `offset` | `TermPage` |
+| `POST /api/lexicon/decision` | JSON `{kind, lang, term, decision, note?}`, `decision` is `accept`, `reject` or `reset` | the updated `LexiconTerm`; 404 for an unknown term |
+| `GET /api/labels` | `limit` (1–5000, default 5000) | `list[MessageLabel]`, newest first |
+| `POST /api/labels` | JSON `{source, chat_id, msg_id, is_noise, reason?, is_question?}` | the saved `MessageLabel`; 404 for an unknown message, 422 for a reason without `is_noise` or an unknown reason |
+| `GET /api/quality` | — | `EvalReport` of the current filter against the human labels (`total` is 0 until something is labeled) |
+| `GET /api/noise-reason-list` | — | `list[str]` — the noise reasons a label may carry |
+
+Both POST endpoints require the header `X-Requested-With: chatradar` (403 otherwise) and, when an
+`Origin` header is present, it must equal the request's own origin (403 otherwise).
+
+`LexiconTerm.examples` holds message keys only; the panel opens them through
+`GET /api/messages` filters or `#/threads/...`, never as raw text from the lexicon.
+
+A decision only moves the lexicon revision. The pipeline applies it at the next `process` or
+worker cycle; the panel shows `pending_apply` for that.
+
 ## Interface language
 
 The panel is Russian. Its text is in `static/i18n/ru.json` (flat keys; counted nouns are

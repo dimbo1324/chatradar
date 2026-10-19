@@ -12,6 +12,7 @@ recovery mechanism after a lost conversation.
 | How it is designed, step by step | `docs/architecture.md` |
 | What is planned, in what order, what is done | `docs/ROADMAP.md` |
 | Owner decisions and open questions | `docs/decisions.md` |
+| Work consciously deferred, to come back to | `docs/backlog.md` |
 | Significant architecture decisions | `docs/adr/` |
 | What the current or last task was | `task-checklist.md` |
 | What actually happened recently | `git log -15 --date=iso-strict --pretty=format:"%h %cd %s"` |
@@ -36,6 +37,8 @@ recovery mechanism after a lost conversation.
 - Changed the system's shape (a module, table, command, stage, setting) → update
   `.ai/project/10-project-map.md` and, if the design moved, `docs/architecture.md`.
 - Owner decision that constrains future work → `docs/decisions.md`, not only the chat.
+- Work you chose not to do or could not finish → `docs/backlog.md`, with the reason; never
+  only the chat. Shipped items move to `CHANGELOG.md`.
 - Significant architecture decision → a new ADR in `docs/adr/`.
 - Changed a rule module, agent or skill → `.ai/CHANGELOG.md` and `just agents`.
 - Changed what a user installs, configures or sees → `README.md` and `CHANGELOG.md`.

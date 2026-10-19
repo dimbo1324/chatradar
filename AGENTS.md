@@ -344,7 +344,9 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
 - `src/chatradar/logs.py` — structlog setup: console in dev, JSON in prod.
 - `src/chatradar/domain/` — `models.py` (messages, threads, read models), `ports.py`
   (`Connector`, `Mapper`, `RawStore`, `ChatRepository`, `MessageRepository`,
-  `QueryRepository`, `SearchIndex`), `text.py` (normalization, hashes, links).
+  `QueryRepository`, `SearchIndex`, plus `LexiconRepository`, `LabelRepository`,
+  `MessageScanner`), `text.py` (normalization, hashes, links), `lexicon.py` (learning-lexicon
+  models and status rules), `evaluation.py` (labels, truth rows, metrics).
   Imports nothing from adapters.
 - `src/chatradar/connectors/` — `telegram/` (Telethon, MTProto user account) and
   `tg_export/` (Telegram Desktop JSON import). Each yields `RawRecord`s.
@@ -357,6 +359,10 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
   (import, re-map), `sync.py`, `process.py`, `rebuild.py`, `worker.py`, `queries.py`
   (`ReadServices` for the web); `container.py` is the composition root — the only
   module that builds concrete adapters.
+- `src/chatradar/learning/` — corpus statistics that propose lexicon candidates (pure
+  functions: tokenizing, n-grams, log-odds scoring); `services/learning.py` runs them,
+  `services/evaluation.py` measures the filter, `services/feedback.py` is the panel's only
+  write path (ADR-0003, ADR-0004).
 - `src/chatradar/web/` — FastAPI JSON API (`docs/api.md`) and the static panel in
   `web/static/` (plain HTML, CSS, JavaScript modules; ADR-0002).
 - `src/chatradar/cli.py` — Typer entry point `chatradar`; thin wrappers over `services/`.
@@ -368,7 +374,8 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
   `generate_synthetic.py` (deterministic synthetic Telegram Desktop exports).
 - `data/` — runtime data (raw JSONL, Telegram sessions, SQLite). **Never tracked.**
 - `Dockerfile`, `compose.yaml`, `justfile`, `.pre-commit-config.yaml`, `.github/`.
-- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`, `adr/`.
+- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`, `backlog.md`
+  (deferred work), `adr/`.
 - `.ai/`, `.claude/`, `.codex/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` — assistant rules.
 
 ## Language policy
@@ -495,9 +502,14 @@ These sharpen the universal rules for this codebase. Stricter wins.
 - Pipeline stages are idempotent and versioned. Changing a stage's rules bumps its
   `version`; a changed `content_hash` resets every later stage of that message.
 - Noise is marked (`is_noise`, `noise_reason`), never deleted.
+- The lexicon is data (ADR-0003). Statistics only *propose* terms (CANDIDATE); a human
+  accepts them. Mining never changes the active set. Only a change of the ACTIVE set moves
+  the revision, and a stage whose applied revision is behind is reset by `process`.
+- A lexicon term is a phrase, never a person: no names, handles, phone numbers or message
+  text in it; examples are message keys; author counts are numbers, not ids.
 - All datetimes are timezone-aware UTC (`AwareDatetime`); IDs from sources are strings.
 - Schema changes go through Alembic migrations only; SQLite uses `render_as_batch=True`.
-- Only the worker writes to SQLite; the web panel reads.
+- The worker writes to SQLite; the web panel reads, except term decisions and message labels (ADR-0004).
 
 ## Telegram and privacy
 
@@ -547,6 +559,7 @@ recovery mechanism after a lost conversation.
 | How it is designed, step by step | `docs/architecture.md` |
 | What is planned, in what order, what is done | `docs/ROADMAP.md` |
 | Owner decisions and open questions | `docs/decisions.md` |
+| Work consciously deferred, to come back to | `docs/backlog.md` |
 | Significant architecture decisions | `docs/adr/` |
 | What the current or last task was | `task-checklist.md` |
 | What actually happened recently | `git log -15 --date=iso-strict --pretty=format:"%h %cd %s"` |
@@ -571,6 +584,8 @@ recovery mechanism after a lost conversation.
 - Changed the system's shape (a module, table, command, stage, setting) → update
   `.ai/project/10-project-map.md` and, if the design moved, `docs/architecture.md`.
 - Owner decision that constrains future work → `docs/decisions.md`, not only the chat.
+- Work you chose not to do or could not finish → `docs/backlog.md`, with the reason; never
+  only the chat. Shipped items move to `CHANGELOG.md`.
 - Significant architecture decision → a new ADR in `docs/adr/`.
 - Changed a rule module, agent or skill → `.ai/CHANGELOG.md` and `just agents`.
 - Changed what a user installs, configures or sees → `README.md` and `CHANGELOG.md`.

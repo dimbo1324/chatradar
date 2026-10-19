@@ -57,6 +57,17 @@ REASON_GRATITUDE = "gratitude"
 REASON_SHORT = "short"
 REASON_DUPLICATE = "duplicate"
 REASON_SPAM = "spam"
+NOISE_REASONS = frozenset(
+    {
+        REASON_SERVICE,
+        REASON_STICKER,
+        REASON_EMOJI_ONLY,
+        REASON_GRATITUDE,
+        REASON_SHORT,
+        REASON_DUPLICATE,
+        REASON_SPAM,
+    }
+)
 
 SHORT_LIMIT = 15
 DUPLICATE_WINDOW = timedelta(days=30)

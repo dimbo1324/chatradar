@@ -29,9 +29,14 @@ These sharpen the universal rules for this codebase. Stricter wins.
 - Pipeline stages are idempotent and versioned. Changing a stage's rules bumps its
   `version`; a changed `content_hash` resets every later stage of that message.
 - Noise is marked (`is_noise`, `noise_reason`), never deleted.
+- The lexicon is data (ADR-0003). Statistics only *propose* terms (CANDIDATE); a human
+  accepts them. Mining never changes the active set. Only a change of the ACTIVE set moves
+  the revision, and a stage whose applied revision is behind is reset by `process`.
+- A lexicon term is a phrase, never a person: no names, handles, phone numbers or message
+  text in it; examples are message keys; author counts are numbers, not ids.
 - All datetimes are timezone-aware UTC (`AwareDatetime`); IDs from sources are strings.
 - Schema changes go through Alembic migrations only; SQLite uses `render_as_batch=True`.
-- Only the worker writes to SQLite; the web panel reads.
+- The worker writes to SQLite; the web panel reads, except term decisions and message labels (ADR-0004).
 
 ## Telegram and privacy
 

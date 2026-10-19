@@ -11,6 +11,7 @@ from sqlalchemy import (
     Column,
     DateTime,
     Dialect,
+    Float,
     Index,
     Integer,
     MetaData,
@@ -124,4 +125,49 @@ threads = Table(
     Column("msg_count", Integer, nullable=False),
     Column("has_question", Boolean, nullable=False),
     Index("ix_threads_chat_started", "source", "chat_id", "started_at"),
+)
+
+
+lexicon_terms = Table(
+    "lexicon_terms",
+    metadata,
+    Column("kind", String(32), primary_key=True),
+    Column("lang", String(16), primary_key=True),
+    Column("term", String(200), primary_key=True),
+    Column("status", String(16), nullable=False),
+    Column("source", String(16), nullable=False),
+    Column("weight", Float(), nullable=False),
+    Column("occurrences", Integer, nullable=False),
+    Column("chats", Integer, nullable=False),
+    Column("authors", Integer, nullable=False),
+    Column("score", Float(), nullable=False),
+    Column("examples", JSON),
+    Column("first_seen", UTCDateTime()),
+    Column("last_seen", UTCDateTime()),
+    Column("decided_at", UTCDateTime()),
+    Column("decided_by", String(32)),
+    Column("note", Text),
+    Column("revision", Integer, nullable=False),
+    Index("ix_lexicon_terms_status_kind", "status", "kind"),
+    Index("ix_lexicon_terms_score", "score"),
+)
+
+lexicon_state = Table(
+    "lexicon_state",
+    metadata,
+    Column("name", String(32), primary_key=True),  # "revision", "applied:noise", "applied:enrich"
+    Column("value", Integer, nullable=False),
+)
+
+message_labels = Table(
+    "message_labels",
+    metadata,
+    Column("source", String(32), primary_key=True),
+    Column("chat_id", String(64), primary_key=True),
+    Column("msg_id", String(64), primary_key=True),
+    Column("is_noise", Boolean, nullable=False),
+    Column("reason", String(32)),
+    Column("is_question", Boolean),
+    Column("created_at", UTCDateTime(), nullable=False),
+    Column("by", String(32), nullable=False),
 )
