@@ -1,7 +1,8 @@
 // Hash router: #/<view>[/<arg>][?query]. Each view renders into <main> and stops its work
 // (fetches, timers) when the AbortSignal fires on the next navigation.
 
-import { clear, errorBox } from "./dom.js";
+import { clear, errorBox, h } from "./dom.js";
+import { loadLocale, t } from "./i18n.js";
 import { renderChats } from "./views/chats.js";
 import { renderMessages } from "./views/messages.js";
 import { renderPipeline } from "./views/pipeline.js";
@@ -9,13 +10,14 @@ import { renderReview } from "./views/review.js";
 import { renderSearch } from "./views/search.js";
 import { renderThread } from "./views/thread.js";
 
+// `label` is the i18n key of the page title; routes with `menu` appear in the top menu.
 const routes = {
-  chats: { render: renderChats, title: "Chats" },
-  pipeline: { render: renderPipeline, title: "Pipeline" },
-  messages: { render: renderMessages, title: "Messages" },
-  threads: { render: renderThread, title: "Thread", nav: "messages" },
-  search: { render: renderSearch, title: "Search" },
-  review: { render: renderReview, title: "Review" },
+  chats: { render: renderChats, label: "nav.chats", menu: true },
+  pipeline: { render: renderPipeline, label: "nav.pipeline", menu: true },
+  messages: { render: renderMessages, label: "nav.messages", menu: true },
+  threads: { render: renderThread, label: "nav.thread", nav: "messages" },
+  search: { render: renderSearch, label: "nav.search", menu: true },
+  review: { render: renderReview, label: "nav.review", menu: true },
 };
 
 let controller = null;
@@ -32,6 +34,19 @@ export function parseHash(hash) {
     arg = raw;
   }
   return { name, arg, params: new URLSearchParams(queryPart) };
+}
+
+function buildChrome() {
+  document.querySelector(".brand").textContent = t("app.name");
+  const nav = document.querySelector("nav");
+  nav.setAttribute("aria-label", t("nav.aria"));
+  const list = nav.querySelector(".nav");
+  for (const [name, entry] of Object.entries(routes)) {
+    if (!entry.menu) continue;
+    list.append(
+      h("li", {}, h("a", { href: `#/${name}`, "data-route": name }, t(entry.label))),
+    );
+  }
 }
 
 function markNav(active) {
@@ -55,7 +70,7 @@ async function route() {
 
   const root = document.getElementById("view");
   clear(root);
-  document.title = `${entry.title} · ChatRadar`;
+  document.title = `${t(entry.label)} · ${t("app.name")}`;
   markNav(entry.nav || name);
   try {
     await entry.render({ root, arg, params, signal });
@@ -66,5 +81,16 @@ async function route() {
   }
 }
 
-window.addEventListener("hashchange", route);
-route();
+async function start() {
+  try {
+    await loadLocale();
+  } catch (error) {
+    document.getElementById("view").textContent = String(error.message || error);
+    return;
+  }
+  buildChrome();
+  window.addEventListener("hashchange", route);
+  await route();
+}
+
+start();

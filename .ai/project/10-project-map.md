@@ -51,8 +51,12 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
   modules, commit messages, test names, `task-checklist.md`. Owner decision 2026-10-19.
 - `python scripts/check_language.py` fails on any Cyrillic character in a tracked file,
   except in the data paths listed in `scripts/check_language.py` (`ALLOWED_PREFIXES`):
-  anonymized test fixtures and noise/question lexicons, which are Russian and Spanish by
-  nature. Code that uses them stays English.
+  anonymized test fixtures, noise/question lexicons (Russian and Spanish by nature) and
+  the panel's Russian UI text. Code that uses them stays English.
+- **The web panel speaks Russian** (owner decision 2026-10-19): every user-visible string
+  lives in `web/static/i18n/ru.json` and is reached through `t()`, `tn()` (plurals) or
+  `tEnum()` (server values); the JavaScript contains no UI text. `index.html` holds only
+  the pre-JavaScript shell. CLI, logs, API fields and errors stay English.
 - Reports to the owner in chat are in Russian, short and step by step.
 
 ## Documentation policy

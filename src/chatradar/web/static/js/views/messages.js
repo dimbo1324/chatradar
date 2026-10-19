@@ -12,7 +12,8 @@ import {
   threadLink,
   timeEl,
 } from "../dom.js";
-import { TRI_STATE, apiFilters, chatSelect, dateFields, filterForm } from "../filters.js";
+import { apiFilters, chatSelect, dateFields, filterForm, triState } from "../filters.js";
+import { num, t, tEnum } from "../i18n.js";
 
 const API_KEYS = [
   "source",
@@ -38,21 +39,21 @@ function chatTitles(chats) {
 }
 
 function buildForm(chats, reasons, params) {
-  const reasonOptions = [["", "Any"]];
+  const reasonOptions = [["", t("common.any")]];
   for (const [reason, count] of Object.entries(reasons)) {
-    reasonOptions.push([reason, `${reason} (${count})`]);
+    reasonOptions.push([reason, `${tEnum("noise_reason", reason)} (${num(count)})`]);
   }
-  const lang = h("input", { type: "text", name: "lang", size: 4, placeholder: "e.g. ru" });
+  const lang = h("input", { type: "text", name: "lang", size: 4, placeholder: t("messages.language_hint") });
   lang.value = params.get("lang") || "";
   const controls = [
-    field("Chat", chatSelect(chats, params)),
+    field(t("common.chat"), chatSelect(chats, params)),
     ...dateFields(params),
-    field("Language", lang),
-    field("Noise", select("is_noise", TRI_STATE, params.get("is_noise"))),
-    field("Noise reason", select("noise_reason", reasonOptions, params.get("noise_reason"))),
-    field("Question", select("is_question", TRI_STATE, params.get("is_question"))),
+    field(t("messages.language"), lang),
+    field(t("messages.noise"), select("is_noise", triState(), params.get("is_noise"))),
+    field(t("messages.noise_reason"), select("noise_reason", reasonOptions, params.get("noise_reason"))),
+    field(t("messages.question"), select("is_question", triState(), params.get("is_question"))),
     field(
-      "Per page",
+      t("messages.per_page"),
       select(
         "limit",
         PAGE_SIZES.map((size) => [size, size]),
@@ -75,10 +76,17 @@ function messageRow(message, titles) {
       "td",
       { className: "text" },
       message.is_question ? badge("?", "question") : null,
-      excerpt(message.text) || h("span", { className: "muted" }, `[${message.media_type}]`),
+      excerpt(message.text) ||
+        h("span", { className: "muted" }, `[${tEnum("media", message.media_type) || message.media_type}]`),
     ),
-    h("td", {}, message.lang || "—"),
-    h("td", {}, message.is_noise ? badge(message.noise_reason || "noise", "noise") : "—"),
+    h("td", {}, message.lang ? tEnum("lang", message.lang) : "—"),
+    h(
+      "td",
+      {},
+      message.is_noise
+        ? badge(message.noise_reason ? tEnum("noise_reason", message.noise_reason) : t("common.noise"), "noise")
+        : "—",
+    ),
     h("td", {}, threadLink(message.thread_id)),
     h("td", {}, externalLink(message.link)),
   );
@@ -94,15 +102,15 @@ function pager(page, params) {
   const last = page.offset + page.items.length;
   return h(
     "nav",
-    { className: "pager", "aria-label": "Pages" },
-    page.offset > 0 ? pageLink(Math.max(0, page.offset - page.limit), "← Previous") : null,
-    h("span", {}, `${first}–${last} of ${page.total}`),
-    last < page.total ? pageLink(page.offset + page.limit, "Next →") : null,
+    { className: "pager", "aria-label": t("messages.pages") },
+    page.offset > 0 ? pageLink(Math.max(0, page.offset - page.limit), t("messages.previous")) : null,
+    h("span", {}, t("messages.range", { first: num(first), last: num(last), total: num(page.total) })),
+    last < page.total ? pageLink(page.offset + page.limit, t("messages.next")) : null,
   );
 }
 
 export async function renderMessages({ root, params, signal }) {
-  root.append(h("h1", {}, "Messages"));
+  root.append(h("h1", {}, t("messages.title")));
   const status = root.appendChild(loading());
   const [chats, reasons, page] = await Promise.all([
     api.chats(signal),
@@ -113,18 +121,26 @@ export async function renderMessages({ root, params, signal }) {
 
   root.append(buildForm(chats, reasons, params));
   const threadId = params.get("thread_id");
-  if (threadId) root.append(h("p", {}, "Only thread ", threadLink(threadId, threadId)));
+  if (threadId) root.append(h("p", {}, t("messages.only_thread"), threadLink(threadId, threadId)));
   if (page.items.length === 0) {
-    root.append(emptyState("No messages match these filters."));
+    root.append(emptyState(t("messages.empty")));
     return;
   }
   const titles = chatTitles(chats);
   root.append(
     pager(page, params),
     table(
-      ["Date", "Chat", "Text", "Lang", "Noise", "Thread", "Link"],
+      [
+        t("messages.col.date"),
+        t("messages.col.chat"),
+        t("messages.col.text"),
+        t("messages.col.lang"),
+        t("messages.col.noise"),
+        t("messages.col.thread"),
+        t("messages.col.link"),
+      ],
       page.items.map((message) => messageRow(message, titles)),
-      "Messages",
+      t("messages.caption"),
     ),
     pager(page, params),
   );

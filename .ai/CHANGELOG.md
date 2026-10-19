@@ -6,6 +6,19 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-19 — The panel's interface is Russian
+
+**What changed.** `project/10-project-map.md` (language policy) names the exception: the
+panel's UI strings, kept in `web/static/i18n/ru.json` and the `index.html` shell, are
+Russian. `.claude/agents/chatradar-interfaces.md` (and its generated Codex mirror) tells
+agents to add every new string as a key, never as a literal in JavaScript.
+
+**Why.** Owner instruction of 2026-10-19: the frontend interface in Russian. The language
+policy changes only with owner approval, and this is it; the exception is limited to UI
+text as data, so code, comments, docs and commits stay English.
+
+**Decided by.** Owner, 2026-10-19 (recorded in `docs/decisions.md`).
+
 ## 2026-10-19 — Synthetic data and real exports
 
 **What changed.** `project/12-domain-rules.md` adds the rule that real chat exports are

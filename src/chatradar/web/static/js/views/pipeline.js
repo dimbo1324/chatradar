@@ -1,5 +1,6 @@
 import { api } from "../api.js";
 import { clear, errorBox, h, loading, table, utcString } from "../dom.js";
+import { num, t, tEnum } from "../i18n.js";
 
 const REFRESH_MS = 10_000;
 
@@ -9,33 +10,46 @@ function stageRow(stage) {
   return h(
     "tr",
     {},
-    h("td", {}, stage.stage),
+    h("td", {}, tEnum("stage", stage.stage)),
     h("td", { className: "num" }, `v${stage.version}`),
-    h("td", { className: "num" }, stage.done),
-    h("td", { className: "num" }, stage.pending),
+    h("td", { className: "num" }, num(stage.done)),
+    h("td", { className: "num" }, num(stage.pending)),
     h(
       "td",
       { className: "progress-cell" },
-      h("progress", { max: total || 1, value: stage.done, "aria-label": `${stage.stage} progress` }),
+      h("progress", { max: total || 1, value: stage.done, "aria-label": t("pipeline.progress_label", { stage: tEnum("stage", stage.stage) }) }),
       h("span", { className: "small" }, ` ${percent}%`),
     ),
   );
 }
 
 export async function renderPipeline({ root, signal }) {
-  root.append(h("h1", {}, "Pipeline"));
+  root.append(h("h1", {}, t("pipeline.title")));
   const body = root.appendChild(h("div", { "aria-live": "polite" }, loading()));
 
   const refresh = async () => {
     try {
       const stats = await api.pipeline(signal);
       clear(body).append(
-        h("p", {}, "Total messages: ", h("strong", {}, stats.total_messages)),
-        table(["Stage", "Version", "Done", "Pending", "Progress"], stats.stages.map(stageRow), "Stages"),
+        h("p", {}, t("pipeline.total"), h("strong", {}, num(stats.total_messages))),
+        table(
+          [
+            t("pipeline.col.stage"),
+            t("pipeline.col.version"),
+            t("pipeline.col.done"),
+            t("pipeline.col.pending"),
+            t("pipeline.col.progress"),
+          ],
+          stats.stages.map(stageRow),
+          t("pipeline.caption"),
+        ),
         h(
           "p",
           { className: "muted small" },
-          `Updated ${utcString(new Date().toISOString())}; refreshes every ${REFRESH_MS / 1000} s.`,
+          t("pipeline.updated", {
+            time: utcString(new Date().toISOString()),
+            seconds: REFRESH_MS / 1000,
+          }),
         ),
       );
     } catch (error) {

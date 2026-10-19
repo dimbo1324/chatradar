@@ -75,8 +75,8 @@ uv run chatradar import tg-export path/to/result.json
 uv run chatradar web
 ```
 
-Open <http://127.0.0.1:8000>: chats, pipeline state, messages with filters, threads,
-search and the noise review page.
+Open <http://127.0.0.1:8000> (the interface is in Russian): chats, pipeline state,
+messages with filters, threads, search and the noise review page.
 
 ### Telegram
 

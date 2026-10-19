@@ -1,5 +1,6 @@
 import { api } from "../api.js";
 import { badge, emptyState, externalLink, h, loading, span, timeEl } from "../dom.js";
+import { num, t, tEnum } from "../i18n.js";
 
 const MAX_INDENT = 8;
 
@@ -21,15 +22,18 @@ function messageItem(message, depth) {
       "div",
       { className: "meta" },
       timeEl(message.date),
-      message.is_question ? badge("question", "question") : null,
-      message.reply_to ? h("span", { className: "muted small" }, `reply to #${message.reply_to}`) : null,
+      message.is_question ? badge(t("common.question"), "question") : null,
+      message.reply_to
+        ? h("span", { className: "muted small" }, t("thread.reply_to", { id: message.reply_to }))
+        : null,
       h("span", { className: "muted small" }, `#${message.msg_id}`),
       externalLink(message.link),
     ),
     h(
       "p",
       { className: "body" },
-      message.text || h("span", { className: "muted" }, `[${message.media_type}]`),
+      message.text ||
+        h("span", { className: "muted" }, `[${tEnum("media", message.media_type) || message.media_type}]`),
     ),
   );
   item.style.setProperty("--depth", String(Math.min(depth, MAX_INDENT)));
@@ -50,9 +54,9 @@ async function chatTitle(thread, signal) {
 }
 
 export async function renderThread({ root, arg, signal }) {
-  root.append(h("h1", {}, "Thread"));
+  root.append(h("h1", {}, t("thread.title")));
   if (!arg) {
-    root.append(emptyState("No thread selected."));
+    root.append(emptyState(t("thread.none")));
     return;
   }
   const status = root.appendChild(loading());
@@ -66,18 +70,18 @@ export async function renderThread({ root, arg, signal }) {
     h(
       "dl",
       { className: "summary" },
-      h("dt", {}, "Chat"),
+      h("dt", {}, t("thread.chat")),
       h("dd", {}, title),
-      h("dt", {}, "Time span"),
+      h("dt", {}, t("thread.span")),
       h("dd", {}, span(thread.started_at, thread.ended_at)),
-      h("dt", {}, "Messages"),
-      h("dd", {}, String(thread.msg_count), thread.has_question ? badge("question", "question") : null),
-      h("dt", {}, "Thread id"),
-      h("dd", {}, h("code", {}, thread.thread_id), " ", h("a", { href: `#/messages?${messagesQuery}` }, "as table")),
+      h("dt", {}, t("thread.count")),
+      h("dd", {}, num(thread.msg_count), thread.has_question ? badge(t("common.question"), "question") : null),
+      h("dt", {}, t("thread.id")),
+      h("dd", {}, h("code", {}, thread.thread_id), " ", h("a", { href: `#/messages?${messagesQuery}` }, t("thread.as_table"))),
     ),
   );
   if (detail.messages.length === 0) {
-    root.append(emptyState("This thread has no messages."));
+    root.append(emptyState(t("thread.no_messages")));
     return;
   }
   const depths = replyDepths(detail.messages);

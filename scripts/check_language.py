@@ -2,7 +2,7 @@
 
 Fails on any Cyrillic character in a tracked or new (not ignored) text file, except under
 ``ALLOWED_PREFIXES``: data that is Russian or Spanish by nature (anonymized test fixtures,
-noise and question lexicons). Code that reads that data stays English.
+noise and question lexicons, the Russian UI strings). Code that reads that data stays English.
 
 Usage: uv run python scripts/check_language.py
 """
@@ -19,6 +19,8 @@ ROOT = Path(__file__).resolve().parent.parent
 ALLOWED_PREFIXES: tuple[str, ...] = (
     "tests/fixtures/",
     "src/chatradar/resources/lexicons/",
+    "src/chatradar/web/static/i18n/",  # UI strings; the code only refers to keys
+    "src/chatradar/web/static/index.html",  # static shell text before JavaScript runs
 )
 BINARY_SUFFIXES = frozenset(
     {".png", ".jpg", ".jpeg", ".gif", ".ico", ".pdf", ".zip", ".gz", ".woff", ".woff2", ".db"}

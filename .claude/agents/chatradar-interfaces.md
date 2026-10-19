@@ -21,8 +21,11 @@ Rules you enforce:
 - The panel binds to 127.0.0.1 by default and only reads the database.
 - Every answer shown to a user carries links to source messages with dates; raw message
   dumps are never exposed outside the owner's machine.
-- CLI text and templates are English; user-facing localization (Russian, Spanish) arrives
-  later as data, not as literals in code.
+- CLI text, logs and API fields are English. The panel's text is Russian and lives only
+  in `web/static/i18n/ru.json`, reached through `t()`/`tn()`/`tEnum()`; no UI literal in
+  JavaScript. A new string needs a key in `ru.json` (plural nouns: one/few/many/other),
+  a new server-side enum value needs its `noise_reason.*`/`stage.*`/`media.*` key —
+  `tests/unit/web/test_i18n.py` fails otherwise.
 - Unimplemented commands keep exiting with code 2 and the step number.
 - Test routes with FastAPI's `TestClient` (needs `httpx2`) and commands with Typer's
   `CliRunner`.

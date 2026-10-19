@@ -32,6 +32,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 
 ### Changed
 
+- The web panel's interface is Russian: text in `static/i18n/ru.json`, plural forms,
+  translated noise reasons, stages and media types, day.month.year dates; tests keep the
+  locale complete.
 - Everything in the repository is English.
 - The web panel is a static plain-JavaScript app over a JSON API; Jinja2 is removed
   (ADR-0002).

@@ -5,6 +5,15 @@ decision made in chat is recorded here, or it is invisible to the next session.
 
 ## Decisions
 
+### 2026-10-19 — The panel speaks Russian
+
+The web panel's interface is in Russian. This is a narrow exception to the English-only
+policy: UI text is data (`web/static/i18n/ru.json`, plus the pre-JavaScript shell in
+`index.html`), both on the `check_language.py` allowlist; the code stays English and only
+refers to keys. Plural forms follow `Intl.PluralRules`; server values (noise reasons,
+stages, media types) are translated through `tEnum` and shown raw when unknown. More
+languages later mean more files beside `ru.json`, not code changes.
+
 ### 2026-10-19 — Synthetic data modelled on real chats
 
 The owner's real exports (8 chats, ~177k messages, 2022–2026) were profiled locally as

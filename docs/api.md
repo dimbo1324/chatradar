@@ -25,12 +25,19 @@ Thread messages are chronological; noise messages belong to no thread.
 
 `thread_id` contains a colon (`-100123:42`); clients URL-encode it in the path.
 
+## Interface language
+
+The panel is Russian. Its text is in `static/i18n/ru.json` (flat keys; counted nouns are
+objects with the plural forms `one`, `few`, `many`, `other`). The API itself is language-neutral:
+field names, enum values (`noise_reason`, `media_type`, stage names) and error `detail` texts
+stay English; the panel translates enum values and explains errors by HTTP status.
+
 ## Static files
 
 | Path | Content |
 |---|---|
 | `GET /` | `src/chatradar/web/static/index.html` |
-| `GET /static/...` | everything under `src/chatradar/web/static/` |
+| `GET /static/...` | everything under `src/chatradar/web/static/`, including `i18n/ru.json` |
 
 The app uses hash routing (`#/chats`, `#/pipeline`, `#/messages`, `#/threads/<id>`,
 `#/search`, `#/review`), so the server never needs to know client routes.

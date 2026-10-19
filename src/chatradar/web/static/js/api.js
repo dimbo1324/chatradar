@@ -1,5 +1,7 @@
 // Fetch wrapper for the JSON API (docs/api.md). Errors carry the HTTP status and detail.
 
+import { t } from "./i18n.js";
+
 export class ApiError extends Error {
   constructor(message, status) {
     super(message);
@@ -12,10 +14,18 @@ function describe(detail) {
   if (typeof detail === "string") return detail;
   if (Array.isArray(detail)) {
     return detail
-      .map((item) => `${(item.loc || []).slice(1).join(".") || "request"}: ${item.msg}`)
+      .map((item) => `${(item.loc || []).slice(1).join(".") || t("common.request")}: ${item.msg}`)
       .join("; ");
   }
-  return "Unexpected response";
+  return t("common.unexpected");
+}
+
+// The server's detail text is English; what the user reads depends on the status class.
+function explain(status, detail) {
+  if (status === 404) return t("common.not_found");
+  if (status === 422) return `${t("common.bad_request")} ${detail}`;
+  if (status >= 500) return t("common.server_error");
+  return detail;
 }
 
 export async function getJson(path, params = {}, signal = undefined) {
@@ -32,7 +42,7 @@ export async function getJson(path, params = {}, signal = undefined) {
     });
   } catch (error) {
     if (error.name === "AbortError") throw error;
-    throw new ApiError("The server is not reachable", 0);
+    throw new ApiError(t("common.unreachable"), 0);
   }
   if (!response.ok) {
     let detail = response.statusText;
@@ -41,7 +51,7 @@ export async function getJson(path, params = {}, signal = undefined) {
     } catch {
       // The body is not JSON: keep the status text.
     }
-    throw new ApiError(detail, response.status);
+    throw new ApiError(explain(response.status, detail), response.status);
   }
   return response.json();
 }

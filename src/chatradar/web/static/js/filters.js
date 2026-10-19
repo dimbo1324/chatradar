@@ -2,11 +2,12 @@
 // hash as plain values (dates as YYYY-MM-DD in local time); the API gets aware ISO instants.
 
 import { dateInput, field, h, select } from "./dom.js";
+import { t } from "./i18n.js";
 
-export const TRI_STATE = [
-  ["", "Any"],
-  ["true", "Yes"],
-  ["false", "No"],
+export const triState = () => [
+  ["", t("common.any")],
+  ["true", t("common.yes")],
+  ["false", t("common.no")],
 ];
 
 export function chatKey(source, chatId) {
@@ -14,7 +15,7 @@ export function chatKey(source, chatId) {
 }
 
 export function chatSelect(chats, params) {
-  const options = [["", "All chats"]];
+  const options = [["", t("common.all_chats")]];
   for (const summary of chats) {
     options.push([chatKey(summary.chat.source, summary.chat.chat_id), summary.chat.title]);
   }
@@ -23,8 +24,8 @@ export function chatSelect(chats, params) {
 
 export function dateFields(params) {
   return [
-    field("From", dateInput("date_from", params.get("date_from"))),
-    field("To", dateInput("date_to", params.get("date_to"))),
+    field(t("common.from"), dateInput("date_from", params.get("date_from"))),
+    field(t("common.to"), dateInput("date_to", params.get("date_to"))),
   ];
 }
 
@@ -63,7 +64,7 @@ export function apiFilters(params, keys) {
   return out;
 }
 
-export function filterForm(path, controls, submitLabel = "Apply") {
+export function filterForm(path, controls, submitLabel = t("common.apply")) {
   const form = h(
     "form",
     { className: "filters" },
@@ -72,7 +73,7 @@ export function filterForm(path, controls, submitLabel = "Apply") {
       "div",
       { className: "actions" },
       h("button", { type: "submit" }, submitLabel),
-      h("a", { href: `#/${path}`, className: "button secondary" }, "Reset"),
+      h("a", { href: `#/${path}`, className: "button secondary" }, t("common.reset")),
     ),
   );
   form.addEventListener("submit", (event) => {

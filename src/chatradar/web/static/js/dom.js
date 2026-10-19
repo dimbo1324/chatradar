@@ -1,5 +1,7 @@
 // Safe DOM helpers. User content only ever becomes text nodes: nothing here parses HTML.
 
+import { t } from "./i18n.js";
+
 export function h(tag, attrs = {}, ...children) {
   const el = document.createElement(tag);
   for (const [name, value] of Object.entries(attrs)) {
@@ -28,18 +30,19 @@ export function clear(el) {
 
 const pad = (n) => String(n).padStart(2, "0");
 
+// Dates are written day.month.year, the Russian convention.
 export function utcString(iso) {
   const d = new Date(iso);
   return (
-    `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ` +
-    `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`
+    `${pad(d.getUTCDate())}.${pad(d.getUTCMonth() + 1)}.${d.getUTCFullYear()} ` +
+    `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} ${t("common.utc")}`
   );
 }
 
 export function localString(iso) {
   const d = new Date(iso);
   return (
-    `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ` +
+    `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ` +
     `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
   );
 }
@@ -65,7 +68,7 @@ export function safeUrl(url) {
   }
 }
 
-export function externalLink(url, label = "Telegram") {
+export function externalLink(url, label = t("common.telegram_link")) {
   const href = safeUrl(url);
   if (!href) return h("span", { className: "muted" }, "—");
   return h("a", { href, target: "_blank", rel: "noopener noreferrer", className: "ext" }, label);
@@ -75,7 +78,7 @@ export function threadHref(threadId) {
   return `#/threads/${encodeURIComponent(threadId)}`;
 }
 
-export function threadLink(threadId, label = "Thread") {
+export function threadLink(threadId, label = t("messages.open_thread")) {
   if (!threadId) return h("span", { className: "muted" }, "—");
   return h("a", { href: threadHref(threadId) }, label);
 }
@@ -100,7 +103,7 @@ export function badge(text, kind = "") {
   return h("span", { className: `badge ${kind}`.trim() }, text);
 }
 
-export function loading(text = "Loading…") {
+export function loading(text = t("common.loading")) {
   return h("p", { className: "status", role: "status" }, text);
 }
 
@@ -109,11 +112,11 @@ export function emptyState(text) {
 }
 
 export function errorBox(error) {
-  const status = error && error.status ? ` (HTTP ${error.status})` : "";
+  const label = error && error.status ? t("common.error_http", { status: error.status }) : `${t("common.error")}: `;
   return h(
     "div",
     { className: "error", role: "alert" },
-    h("strong", {}, `Error${status}: `),
+    h("strong", {}, label),
     error && error.message ? error.message : String(error),
   );
 }
