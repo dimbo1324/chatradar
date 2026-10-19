@@ -7,6 +7,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 
 ### Added
 
+- Synthetic chat exports in Russian, Spanish and English (`just synthetic`, `just demo`),
+  generated deterministically and calibrated on aggregate statistics of real chats.
 - MVP without AI (roadmap steps 2–8): Telegram Desktop export import, Telethon
   connector with login, tracked chats and incremental sync, append-only JSONL raw store,
   SQLite storage with migrations, noise filter (ru/es/en), enrichment, thread grouping,
@@ -36,4 +38,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 
 ### Fixed
 
+- Noise filter: repeated short replies ("why?", "yes") are no longer duplicates; spam is
+  recognised before duplicates and in English "working from home" offers; more gratitude
+  phrases. Existing data is re-checked (noise stage version 3).
+- Search matches the Cyrillic yo and ie spellings (index stage version 2).
 - The Docker build includes `LICENSE`, which `uv_build` needs.

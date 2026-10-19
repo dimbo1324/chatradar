@@ -5,6 +5,16 @@ decision made in chat is recorded here, or it is invisible to the next session.
 
 ## Decisions
 
+### 2026-10-19 — Synthetic data modelled on real chats
+
+The owner's real exports (8 chats, ~177k messages, 2022–2026) were profiled locally as
+aggregates only. `scripts/generate_synthetic.py` turns those rates (replies ~60%, edits
+~28%, short replies ~7%, media, joins, forwards, spam, reposts) and an invented phrase bank
+into four deterministic chats in Russian, Spanish and English. Nothing real is stored in
+the repository. Findings from running them: four noise-filter defects (fixed, noise v3)
+and English prefix search matching longer words ("account" → "accountant"), left for
+level 1.
+
 ### 2026-10-19 — MVP scope and how it is built
 
 - **Scope:** roadmap steps 2–8, without AI (the complete non-AI service of

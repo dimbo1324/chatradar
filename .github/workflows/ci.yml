@@ -79,7 +79,7 @@ jobs:
           retention-days: 7
 
   assistants:
-    name: Assistant rules + language
+    name: Assistant rules, language, synthetic data
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -91,6 +91,8 @@ jobs:
         run: uv run python scripts/sync_agents.py --check
       - name: English only
         run: uv run python scripts/check_language.py
+      - name: Synthetic fixtures match the generator
+        run: uv run python scripts/generate_synthetic.py --check
 
   secrets:
     name: Secret scan

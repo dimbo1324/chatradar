@@ -59,6 +59,13 @@ repos:
         files: '^(\.ai/|\.claude/(agents|skills)/|\.codex/(agents|skills)/|AGENTS\.md$|scripts/sync_agents\.py$)'
         pass_filenames: false
 
+      - id: synthetic
+        name: synthetic fixtures match the generator
+        language: system
+        entry: uv run --frozen python scripts/generate_synthetic.py --check
+        files: '^(scripts/generate_synthetic\.py|tests/fixtures/synthetic/.*)$'
+        pass_filenames: false
+
       - id: language
         name: English only
         language: system

@@ -10,9 +10,10 @@ of the data format, so an existing value is never renamed.
 - `gratitude`  — only thanks or agreement: "thanks!", "gracias", "+", "+1".
 - `short`      — under `SHORT_LIMIT` characters, without media, not a question and not a
                  reply to a question ("yes" after "is there a bus?" stays).
-- `duplicate`  — the same text (`domain.text.fingerprint`) appeared in the same chat within
-                 `DUPLICATE_WINDOW` before it.
 - `spam`       — an easy-money offer together with a link or a write-me-privately phrase.
+- `duplicate`  — the same text (`domain.text.fingerprint`) appeared in the same chat within
+                 `DUPLICATE_WINDOW` before it; only for texts of at least
+                 `DUPLICATE_MIN_CHARS` ("why?" or "yes" repeat naturally).
 
 Voice messages, photos, videos and documents without text are not noise.
 """
@@ -59,8 +60,10 @@ REASON_SPAM = "spam"
 
 SHORT_LIMIT = 15
 DUPLICATE_WINDOW = timedelta(days=30)
+DUPLICATE_MIN_CHARS = 20
 
-NOISE_VERSION = 2  # 2: thanks-for-sharing phrases in the gratitude lexicon
+NOISE_VERSION = 3  # 2: thanks-for-sharing gratitude; 3: no duplicates for short texts,
+# spam before duplicate, more en spam and ru gratitude phrases
 
 
 @dataclass(frozen=True)
@@ -110,7 +113,7 @@ def short_without_value(msg: StoredMessage, ctx: NoiseContext) -> str | None:
 
 
 def duplicate(msg: StoredMessage, ctx: NoiseContext) -> str | None:
-    if not fold(msg.text):
+    if len(fold(msg.text)) < DUPLICATE_MIN_CHARS:
         return None
     here = chrono_key(msg)
     start = msg.date - DUPLICATE_WINDOW
@@ -134,8 +137,8 @@ RULES: tuple[Rule, ...] = (
     sticker_or_emoji_only,
     gratitude,
     short_without_value,
-    duplicate,
     spam_patterns,
+    duplicate,
 )
 
 

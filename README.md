@@ -57,11 +57,18 @@ uv run chatradar --help
 
 ### Try it without Telegram
 
-Export a chat in Telegram Desktop (chat menu → Export chat history → format JSON), or use
-the synthetic one from the tests:
+Load four synthetic chats (Russian, Spanish, English; about 1 700 messages modelled on
+real migrant chats — no real messages inside):
 
 ```bash
-uv run chatradar import tg-export tests/fixtures/tg_export/supergroup_result.json --username demo
+just demo
+```
+
+Or export your own chat in Telegram Desktop (chat menu → Export chat history → format
+JSON) and import it:
+
+```bash
+uv run chatradar import tg-export path/to/result.json
 ```
 
 ```bash
@@ -104,6 +111,8 @@ directory is mounted into the containers and survives rebuilds.
 | `test` / `cov` | pytest / with coverage |
 | `agents` / `agents-check` | regenerate / verify the AI-assistant files |
 | `language` | English-only check |
+| `synthetic` / `synthetic-check` | regenerate / verify the synthetic chat exports |
+| `demo` | import every synthetic chat into the local database |
 | `check` | everything CI checks |
 | `doctor` | toolchain check |
 | `migrate` / `revision "msg"` | Alembic |

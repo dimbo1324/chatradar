@@ -1,0 +1,4970 @@
+{
+ "name": "Comunidad de Extranjeros en Montevideo (sintético)",
+ "type": "public_supergroup",
+ "id": 1800000003,
+ "messages": [
+  {
+   "id": 1,
+   "type": "service",
+   "date": "2026-09-01T09:00:00",
+   "date_unixtime": "1788264000",
+   "actor": "Carolina V.",
+   "actor_id": "user180000000325",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 2,
+   "type": "message",
+   "date": "2026-09-01T22:30:47",
+   "date_unixtime": "1788312647",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "text": "Una pregunta: ¿Dónde consigo traductor público que no sea tan caro?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Una pregunta: ¿Dónde consigo traductor público que no sea tan caro?"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "type": "message",
+   "date": "2026-09-01T22:30:57",
+   "date_unixtime": "1788312657",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "text": "A nosotros nos pasó que sí, tiene que venir apostillado, si no te lo rechazan. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que sí, tiene que venir apostillado, si no te lo rechazan. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "type": "message",
+   "date": "2026-09-01T22:32:47",
+   "date_unixtime": "1788312767",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "reply_to_message_id": 3,
+   "text": "¿Te pidieron originales o alcanza con copias?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Te pidieron originales o alcanza con copias?"
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "type": "message",
+   "date": "2026-09-01T22:35:36",
+   "date_unixtime": "1788312936",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "text": "A nosotros nos pasó que sí, tiene que venir apostillado, si no te lo rechazan. Primero sacá el carné de salud, sin eso no avanza el trámite",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que sí, tiene que venir apostillado, si no te lo rechazan. Primero sacá el carné de salud, sin eso no avanza el trámite"
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "type": "message",
+   "date": "2026-09-01T22:36:07",
+   "date_unixtime": "1788312967",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "reply_to_message_id": 5,
+   "text": "La provisoria se renueva en DNIC con el número de expediente de Migración. Yo fui con una traductora pública, tardó dos semanas y cobra por página",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "La provisoria se renueva en DNIC con el número de expediente de Migración. Yo fui con una traductora pública, tardó dos semanas y cobra por página"
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "type": "message",
+   "date": "2026-09-01T22:38:15",
+   "date_unixtime": "1788313095",
+   "from": "Gonzalo P.",
+   "from_id": "user180000000318",
+   "edited": "2026-09-01T22:39:18",
+   "edited_unixtime": "1788313158",
+   "text": "Igual, sí, tiene que venir apostillado, si no te lo rechazan. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, sí, tiene que venir apostillado, si no te lo rechazan. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "type": "message",
+   "date": "2026-09-01T23:00:34",
+   "date_unixtime": "1788314434",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000315",
+   "reply_to_message_id": 7,
+   "text": "Creo que la provisoria se renueva en DNIC con el número de expediente de Migración. Primero sacá el carné de salud, sin eso no avanza el trámite",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que la provisoria se renueva en DNIC con el número de expediente de Migración. Primero sacá el carné de salud, sin eso no avanza el trámite"
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "type": "message",
+   "date": "2026-09-01T23:02:01",
+   "date_unixtime": "1788314521",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000315",
+   "reply_to_message_id": 8,
+   "edited": "2026-09-01T23:03:10",
+   "edited_unixtime": "1788314590",
+   "text": "Te cuento: a mí la residencia me salió en unos 8 meses. La provisoria se renueva en DNIC con el número de expediente de Migración. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Te cuento: a mí la residencia me salió en unos 8 meses. La provisoria se renueva en DNIC con el número de expediente de Migración. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "type": "message",
+   "date": "2026-09-02T15:38:31",
+   "date_unixtime": "1788374311",
+   "from": "Santiago O.",
+   "from_id": "user180000000327",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    ", escribime al privado ",
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    {
+     "type": "plain",
+     "text": ", escribime al privado "
+    },
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "type": "message",
+   "date": "2026-09-02T17:00:31",
+   "date_unixtime": "1788379231",
+   "from": "Дарья А.",
+   "from_id": "user180000000348",
+   "edited": "2026-09-02T17:02:21",
+   "edited_unixtime": "1788379341",
+   "text": "Срочно: где смотреть объявления кроме Mercado Libre?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Срочно: где смотреть объявления кроме Mercado Libre?"
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "type": "message",
+   "date": "2026-09-02T17:00:41",
+   "date_unixtime": "1788379241",
+   "from": "Светлана Н.",
+   "from_id": "user180000000349",
+   "reply_to_message_id": 11,
+   "text": "да",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "да"
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "type": "message",
+   "date": "2026-09-02T17:00:45",
+   "date_unixtime": "1788379245",
+   "from": "Елена Д.",
+   "from_id": "user180000000350",
+   "text": "Из того, что видел, мы снимали через seguro de alquiler, это примерно месяц аренды в год. Собственники обычно просят 2-3 месяца депозита, если нет гарантии. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, мы снимали через seguro de alquiler, это примерно месяц аренды в год. Собственники обычно просят 2-3 месяца депозита, если нет гарантии. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "type": "message",
+   "date": "2026-09-02T17:07:47",
+   "date_unixtime": "1788379667",
+   "from": "Светлана Н.",
+   "from_id": "user180000000346",
+   "reply_to_message_id": 11,
+   "text": "Мы снимали через seguro de alquiler, это примерно месяц аренды в год. Мы в итоге нашли через знакомых, по объявлениям всё быстро уходит. Ещё смотрят Gallito и InfoCasas, но там много дублей. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы снимали через seguro de alquiler, это примерно месяц аренды в год. Мы в итоге нашли через знакомых, по объявлениям всё быстро уходит. Ещё смотрят Gallito и InfoCasas, но там много дублей. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "type": "message",
+   "date": "2026-09-02T17:07:52",
+   "date_unixtime": "1788379672",
+   "from": "Елена Д.",
+   "from_id": "user180000000350",
+   "reply_to_message_id": 14,
+   "edited": "2026-09-02T17:20:54",
+   "edited_unixtime": "1788380454",
+   "text": "Как вариант, pocitos спокойный, рядом школы и парки, нам нравится. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, pocitos спокойный, рядом школы и парки, нам нравится. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "type": "message",
+   "date": "2026-09-03T13:06:26",
+   "date_unixtime": "1788451586",
+   "from": "Joaquín P.",
+   "from_id": "user180000000332",
+   "text": "¿Alguien vio el partido de ayer?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Alguien vio el partido de ayer?"
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "type": "message",
+   "date": "2026-09-03T13:06:40",
+   "date_unixtime": "1788451600",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "reply_to_message_id": 16,
+   "text": "tal cual",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "tal cual"
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "type": "message",
+   "date": "2026-09-03T13:55:26",
+   "date_unixtime": "1788454526",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "text": "Consulta: ¿Sirve la garantía de ANDA para alquilar con inmobiliaria?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Consulta: ¿Sirve la garantía de ANDA para alquilar con inmobiliaria?"
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "type": "message",
+   "date": "2026-09-03T13:56:38",
+   "date_unixtime": "1788454598",
+   "from": "Martina S.",
+   "from_id": "user180000000335",
+   "text": "Yo hice así: pedí que el contrato pase por escribano y no pagues nada antes de firmar",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: pedí que el contrato pase por escribano y no pagues nada antes de firmar"
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "type": "message",
+   "date": "2026-09-03T14:03:33",
+   "date_unixtime": "1788455013",
+   "from": "Camila P.",
+   "from_id": "user180000000336",
+   "edited": "2026-09-03T14:17:11",
+   "edited_unixtime": "1788455831",
+   "text": "Por experiencia, en Punta Carretas un dos dormitorios arranca en 30 000 pesos más gastos comunes. Depende mucho del caso.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, en Punta Carretas un dos dormitorios arranca en 30 000 pesos más gastos comunes. Depende mucho del caso."
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "type": "message",
+   "date": "2026-09-03T21:23:00",
+   "date_unixtime": "1788481380",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "text": "¿Cómo saco hora para la carné de salud en Abitab? No aparecen fechas disponibles",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Cómo saco hora para la carné de salud en Abitab? No aparecen fechas disponibles"
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "type": "message",
+   "date": "2026-09-03T21:23:26",
+   "date_unixtime": "1788481406",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "reply_to_message_id": 21,
+   "text": "Yo fui con una traductora pública, tardó dos semanas y cobra por página. A mí la residencia me salió en unos 3 meses. La provisoria se renueva en DNIC con el número de expediente de Migración. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo fui con una traductora pública, tardó dos semanas y cobra por página. A mí la residencia me salió en unos 3 meses. La provisoria se renueva en DNIC con el número de expediente de Migración. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "type": "message",
+   "date": "2026-09-03T21:25:11",
+   "date_unixtime": "1788481511",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "text": "Hasta donde sé, a mí la residencia me salió en unos 4 meses. Primero sacá el carné de salud, sin eso no avanza el trámite",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, a mí la residencia me salió en unos 4 meses. Primero sacá el carné de salud, sin eso no avanza el trámite"
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "type": "message",
+   "date": "2026-09-03T21:32:08",
+   "date_unixtime": "1788481928",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "reply_to_message_id": 21,
+   "edited": "2026-09-03T21:34:27",
+   "edited_unixtime": "1788482067",
+   "text": "Yo hice así: primero sacá el carné de salud, sin eso no avanza el trámite. La provisoria se renueva en DNIC con el número de expediente de Migración",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: primero sacá el carné de salud, sin eso no avanza el trámite. La provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "type": "message",
+   "date": "2026-09-03T21:32:30",
+   "date_unixtime": "1788481950",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "text": "Igual, a mí la residencia me salió en unos 3 meses. Yo fui con una traductora pública, tardó dos semanas y cobra por página. Sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, a mí la residencia me salió en unos 3 meses. Yo fui con una traductora pública, tardó dos semanas y cobra por página. Sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "type": "message",
+   "date": "2026-09-03T21:43:39",
+   "date_unixtime": "1788482619",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "text": "Sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "type": "message",
+   "date": "2026-09-03T21:48:12",
+   "date_unixtime": "1788482892",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "reply_to_message_id": 25,
+   "text": "Gente, ¿Te pidieron originales o alcanza con copias?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿Te pidieron originales o alcanza con copias?"
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "type": "message",
+   "date": "2026-09-03T21:48:25",
+   "date_unixtime": "1788482905",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000322",
+   "reply_to_message_id": 22,
+   "text": "Hasta donde sé, yo fui con una traductora pública, tardó dos semanas y cobra por página. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, yo fui con una traductora pública, tardó dos semanas y cobra por página. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 29,
+   "type": "message",
+   "date": "2026-09-03T21:49:21",
+   "date_unixtime": "1788482961",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "reply_to_message_id": 24,
+   "text": "¡Hola! ¿Cuánto salió el trámite?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¡Hola! ¿Cuánto salió el trámite?"
+    }
+   ]
+  },
+  {
+   "id": 30,
+   "type": "message",
+   "date": "2026-09-03T21:52:07",
+   "date_unixtime": "1788483127",
+   "from": "Rodrigo P.",
+   "from_id": "user180000000329",
+   "reply_to_message_id": 25,
+   "file": "round_video_messages/round_30.mp4",
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 9,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 31,
+   "type": "message",
+   "date": "2026-09-03T21:52:37",
+   "date_unixtime": "1788483157",
+   "from": "Rodrigo P.",
+   "from_id": "user180000000329",
+   "reply_to_message_id": 25,
+   "text": "dale",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "dale"
+    }
+   ]
+  },
+  {
+   "id": 32,
+   "type": "message",
+   "date": "2026-09-03T21:53:42",
+   "date_unixtime": "1788483222",
+   "from": "Federico D.",
+   "from_id": "user180000000343",
+   "reply_to_message_id": 31,
+   "edited": "2026-09-03T22:08:17",
+   "edited_unixtime": "1788484097",
+   "text": "Igual, sí, tiene que venir apostillado, si no te lo rechazan. Yo fui con una traductora pública, tardó dos semanas y cobra por página. A mí la residencia me salió en unos 2 meses. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, sí, tiene que venir apostillado, si no te lo rechazan. Yo fui con una traductora pública, tardó dos semanas y cobra por página. A mí la residencia me salió en unos 2 meses. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 33,
+   "type": "message",
+   "date": "2026-09-05T08:59:50",
+   "date_unixtime": "1788609590",
+   "from": "Carolina V.",
+   "from_id": "user180000000341",
+   "text": "Buenas, ¿Qué precio razonable hay para un apartamento de dos dormitorios en Centro?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Buenas, ¿Qué precio razonable hay para un apartamento de dos dormitorios en Centro?"
+    }
+   ]
+  },
+  {
+   "id": 34,
+   "type": "message",
+   "date": "2026-09-05T09:03:59",
+   "date_unixtime": "1788609839",
+   "from": "Camila G.",
+   "from_id": "user180000000345",
+   "text": "Te cuento: en Cordón un dos dormitorios arranca en 25 000 pesos más gastos comunes. Capaz que ya cambió.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Te cuento: en Cordón un dos dormitorios arranca en 25 000 pesos más gastos comunes. Capaz que ya cambió."
+    }
+   ]
+  },
+  {
+   "id": 35,
+   "type": "message",
+   "date": "2026-09-05T09:04:02",
+   "date_unixtime": "1788609842",
+   "from": "Carolina V.",
+   "from_id": "user180000000325",
+   "reply_to_message_id": 34,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "👍",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 36,
+   "type": "message",
+   "date": "2026-09-05T09:04:46",
+   "date_unixtime": "1788609886",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "reply_to_message_id": 35,
+   "text": "Yo hice así: en Buceo un dos dormitorios arranca en 25 000 pesos más gastos comunes. Capaz que ya cambió.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: en Buceo un dos dormitorios arranca en 25 000 pesos más gastos comunes. Capaz que ya cambió."
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "type": "message",
+   "date": "2026-09-05T09:29:50",
+   "date_unixtime": "1788611390",
+   "from": "Joaquín P.",
+   "from_id": "user180000000332",
+   "reply_to_message_id": 34,
+   "text": "Igual, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Depende, suele ser un mes de alquiler más IVA por año",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Depende, suele ser un mes de alquiler más IVA por año"
+    }
+   ]
+  },
+  {
+   "id": 38,
+   "type": "message",
+   "date": "2026-09-05T09:30:05",
+   "date_unixtime": "1788611405",
+   "from": "Carolina V.",
+   "from_id": "user180000000341",
+   "reply_to_message_id": 34,
+   "text": "¿Los gastos comunes suelen ser altos?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Los gastos comunes suelen ser altos?"
+    }
+   ]
+  },
+  {
+   "id": 39,
+   "type": "message",
+   "date": "2026-09-05T22:58:10",
+   "date_unixtime": "1788659890",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "text": "¿Cómo saco hora para la carné de salud en Registro Civil? No aparecen fechas disponibles",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Cómo saco hora para la carné de salud en Registro Civil? No aparecen fechas disponibles"
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "type": "message",
+   "date": "2026-09-05T22:58:18",
+   "date_unixtime": "1788659898",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 39,
+   "file": "round_video_messages/round_40.mp4",
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 18,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 41,
+   "type": "message",
+   "date": "2026-09-05T22:59:28",
+   "date_unixtime": "1788659968",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "reply_to_message_id": 40,
+   "text": "A nosotros nos pasó que yo fui con una traductora pública, tardó dos semanas y cobra por página. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que yo fui con una traductora pública, tardó dos semanas y cobra por página. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 42,
+   "type": "message",
+   "date": "2026-09-05T22:59:36",
+   "date_unixtime": "1788659976",
+   "from": "Camila V.",
+   "from_id": "user180000000319",
+   "reply_to_message_id": 41,
+   "text": "Ojo, a mí la residencia me salió en unos 3 meses. ¡Suerte!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, a mí la residencia me salió en unos 3 meses. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 43,
+   "type": "message",
+   "date": "2026-09-05T23:01:06",
+   "date_unixtime": "1788660066",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "reply_to_message_id": 42,
+   "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. Capaz que ya cambió.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. Capaz que ya cambió."
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "type": "message",
+   "date": "2026-09-05T23:02:18",
+   "date_unixtime": "1788660138",
+   "from": "Federico G.",
+   "from_id": "user180000000338",
+   "text": "Por experiencia, yo fui con una traductora pública, tardó dos semanas y cobra por página",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, yo fui con una traductora pública, tardó dos semanas y cobra por página"
+    }
+   ]
+  },
+  {
+   "id": 45,
+   "type": "message",
+   "date": "2026-09-05T23:10:25",
+   "date_unixtime": "1788660625",
+   "from": "Joaquín P.",
+   "from_id": "user180000000332",
+   "reply_to_message_id": 43,
+   "edited": "2026-09-05T23:23:06",
+   "edited_unixtime": "1788661386",
+   "text": "Yo hice así: primero sacá el carné de salud, sin eso no avanza el trámite. La provisoria se renueva en DNIC con el número de expediente de Migración",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: primero sacá el carné de salud, sin eso no avanza el trámite. La provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 46,
+   "type": "message",
+   "date": "2026-09-05T23:13:44",
+   "date_unixtime": "1788660824",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "reply_to_message_id": 41,
+   "text": "¡Hola! ¿Cuánto salió el trámite?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¡Hola! ¿Cuánto salió el trámite?"
+    }
+   ]
+  },
+  {
+   "id": 47,
+   "type": "message",
+   "date": "2026-09-07T08:22:24",
+   "date_unixtime": "1788780144",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "photo": "photos/photo_47.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "Me llegó este mail de DGI, ¿qué significa?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Me llegó este mail de DGI, ¿qué significa?"
+    }
+   ]
+  },
+  {
+   "id": 48,
+   "type": "message",
+   "date": "2026-09-07T08:24:28",
+   "date_unixtime": "1788780268",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000315",
+   "reply_to_message_id": 47,
+   "file": "voice_messages/audio_48.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 83,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 49,
+   "type": "message",
+   "date": "2026-09-07T08:28:59",
+   "date_unixtime": "1788780539",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "reply_to_message_id": 48,
+   "text": "¿Vienen amueblados normalmente?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Vienen amueblados normalmente?"
+    }
+   ]
+  },
+  {
+   "id": 50,
+   "type": "message",
+   "date": "2026-09-07T08:29:40",
+   "date_unixtime": "1788780580",
+   "from": "Martina G.",
+   "from_id": "user180000000342",
+   "edited": "2026-09-07T08:36:22",
+   "edited_unixtime": "1788780982",
+   "text": "Te cuento: depende, suele ser un mes de alquiler más IVA por año. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Te cuento: depende, suele ser un mes de alquiler más IVA por año. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 51,
+   "type": "message",
+   "date": "2026-09-07T08:30:07",
+   "date_unixtime": "1788780607",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "reply_to_message_id": 47,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "🔥",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 52,
+   "type": "message",
+   "date": "2026-09-07T08:34:27",
+   "date_unixtime": "1788780867",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "text": "Carrasco es tranquilo y tiene buenas escuelas cerca",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Carrasco es tranquilo y tiene buenas escuelas cerca"
+    }
+   ]
+  },
+  {
+   "id": 53,
+   "type": "message",
+   "date": "2026-09-07T08:38:47",
+   "date_unixtime": "1788781127",
+   "from": "Camila G.",
+   "from_id": "user180000000345",
+   "reply_to_message_id": 52,
+   "file": "voice_messages/audio_53.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 37,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 54,
+   "type": "message",
+   "date": "2026-09-07T08:39:25",
+   "date_unixtime": "1788781165",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "reply_to_message_id": 50,
+   "text": "Muchas gracias!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Muchas gracias!"
+    }
+   ]
+  },
+  {
+   "id": 55,
+   "type": "message",
+   "date": "2026-09-07T08:39:40",
+   "date_unixtime": "1788781180",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 54,
+   "text": "Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 56,
+   "type": "message",
+   "date": "2026-09-07T08:40:57",
+   "date_unixtime": "1788781257",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "reply_to_message_id": 50,
+   "edited": "2026-09-07T08:45:51",
+   "edited_unixtime": "1788781551",
+   "text": "Muchas gracias!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Muchas gracias!"
+    }
+   ]
+  },
+  {
+   "id": 57,
+   "type": "message",
+   "date": "2026-09-07T09:44:10",
+   "date_unixtime": "1788785050",
+   "from": "Joaquín O.",
+   "from_id": "user180000000321",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "animation",
+   "mime_type": "video/mp4",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 58,
+   "type": "message",
+   "date": "2026-09-07T10:57:10",
+   "date_unixtime": "1788789430",
+   "from": "Santiago N.",
+   "from_id": "user180000000310",
+   "text": "Gente, ¿Recomiendan Parque Rodó para vivir con niños?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿Recomiendan Parque Rodó para vivir con niños?"
+    }
+   ]
+  },
+  {
+   "id": 59,
+   "type": "message",
+   "date": "2026-09-07T11:15:44",
+   "date_unixtime": "1788790544",
+   "from": "Rodrigo T.",
+   "from_id": "user180000000320",
+   "reply_to_message_id": 58,
+   "text": [
+    "Por experiencia, te dejo esta guía que está buena: ",
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    ". Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler"
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, te dejo esta guía que está buena: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    {
+     "type": "plain",
+     "text": ". Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler"
+    }
+   ]
+  },
+  {
+   "id": 60,
+   "type": "message",
+   "date": "2026-09-07T11:19:31",
+   "date_unixtime": "1788790771",
+   "from": "Federico R.",
+   "from_id": "user180000000311",
+   "text": "A nosotros nos pasó que pedí que el contrato pase por escribano y no pagues nada antes de firmar. Depende, suele ser un mes de alquiler más IVA por año",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que pedí que el contrato pase por escribano y no pagues nada antes de firmar. Depende, suele ser un mes de alquiler más IVA por año"
+    }
+   ]
+  },
+  {
+   "id": 61,
+   "type": "message",
+   "date": "2026-09-07T11:19:43",
+   "date_unixtime": "1788790783",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "reply_to_message_id": 59,
+   "text": "Hasta donde sé, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler"
+    }
+   ]
+  },
+  {
+   "id": 62,
+   "type": "message",
+   "date": "2026-09-07T11:20:58",
+   "date_unixtime": "1788790858",
+   "from": "Rodrigo T.",
+   "from_id": "user180000000320",
+   "reply_to_message_id": 60,
+   "text": "Hasta donde sé, punta Carretas es tranquilo y tiene buenas escuelas cerca. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, punta Carretas es tranquilo y tiene buenas escuelas cerca. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 63,
+   "type": "message",
+   "date": "2026-09-07T11:21:56",
+   "date_unixtime": "1788790916",
+   "from": "Federico D.",
+   "from_id": "user180000000343",
+   "reply_to_message_id": 62,
+   "text": "Creo que depende, suele ser un mes de alquiler más IVA por año. Depende mucho del caso.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que depende, suele ser un mes de alquiler más IVA por año. Depende mucho del caso."
+    }
+   ]
+  },
+  {
+   "id": 64,
+   "type": "message",
+   "date": "2026-09-08T16:59:56",
+   "date_unixtime": "1788897596",
+   "from": "Sofía T.",
+   "from_id": "user180000000328",
+   "text": "¿Cómo renuevo la cédula provisoria si todavía no salió la residencia?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Cómo renuevo la cédula provisoria si todavía no salió la residencia?"
+    }
+   ]
+  },
+  {
+   "id": 65,
+   "type": "message",
+   "date": "2026-09-08T17:01:22",
+   "date_unixtime": "1788897682",
+   "from": "Federico C.",
+   "from_id": "user180000000326",
+   "reply_to_message_id": 64,
+   "text": "Igual, primero sacá el carné de salud, sin eso no avanza el trámite. La provisoria se renueva en DNIC con el número de expediente de Migración. Sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, primero sacá el carné de salud, sin eso no avanza el trámite. La provisoria se renueva en DNIC con el número de expediente de Migración. Sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 66,
+   "type": "message",
+   "date": "2026-09-08T17:02:02",
+   "date_unixtime": "1788897722",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000315",
+   "reply_to_message_id": 65,
+   "photo": "photos/photo_66.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 67,
+   "type": "message",
+   "date": "2026-09-08T17:02:30",
+   "date_unixtime": "1788897750",
+   "from": "Joaquín P.",
+   "from_id": "user180000000332",
+   "reply_to_message_id": 66,
+   "text": "Yo hice así: la provisoria se renueva en DNIC con el número de expediente de Migración",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: la provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 68,
+   "type": "message",
+   "date": "2026-09-08T17:05:29",
+   "date_unixtime": "1788897929",
+   "from": "Rodrigo T.",
+   "from_id": "user180000000320",
+   "reply_to_message_id": 64,
+   "edited": "2026-09-08T17:12:02",
+   "edited_unixtime": "1788898322",
+   "text": "Mirá, primero sacá el carné de salud, sin eso no avanza el trámite",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, primero sacá el carné de salud, sin eso no avanza el trámite"
+    }
+   ]
+  },
+  {
+   "id": 69,
+   "type": "message",
+   "date": "2026-09-08T17:08:04",
+   "date_unixtime": "1788898084",
+   "from": "Federico D.",
+   "from_id": "user180000000343",
+   "reply_to_message_id": 68,
+   "text": "Por experiencia, a mí la residencia me salió en unos 6 meses. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, a mí la residencia me salió en unos 6 meses. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 70,
+   "type": "message",
+   "date": "2026-09-08T17:08:38",
+   "date_unixtime": "1788898118",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "reply_to_message_id": 64,
+   "file": "round_video_messages/round_70.mp4",
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 3,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 71,
+   "type": "message",
+   "date": "2026-09-08T17:09:29",
+   "date_unixtime": "1788898169",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "reply_to_message_id": 70,
+   "text": "Igual, la provisoria se renueva en DNIC con el número de expediente de Migración",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, la provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 72,
+   "type": "message",
+   "date": "2026-09-09T11:29:49",
+   "date_unixtime": "1788964189",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "text": "¿Cómo renuevo la cédula provisoria si todavía no salió la residencia?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Cómo renuevo la cédula provisoria si todavía no salió la residencia?"
+    }
+   ]
+  },
+  {
+   "id": 73,
+   "type": "message",
+   "date": "2026-09-09T11:30:29",
+   "date_unixtime": "1788964229",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "reply_to_message_id": 72,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_010"
+    },
+    " ¿vos sabés?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_010"
+    },
+    {
+     "type": "plain",
+     "text": " ¿vos sabés?"
+    }
+   ]
+  },
+  {
+   "id": 74,
+   "type": "message",
+   "date": "2026-09-10T11:35:30",
+   "date_unixtime": "1789050930",
+   "from": "Santiago O.",
+   "from_id": "user180000000327",
+   "edited": "2026-09-10T11:49:20",
+   "edited_unixtime": "1789051760",
+   "text": "Gente, ¿El certificado de antecedentes tiene que estar apostillado?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿El certificado de antecedentes tiene que estar apostillado?"
+    }
+   ]
+  },
+  {
+   "id": 75,
+   "type": "message",
+   "date": "2026-09-10T15:36:37",
+   "date_unixtime": "1789065397",
+   "from": "Carolina V.",
+   "from_id": "user180000000341",
+   "edited": "2026-09-10T15:46:47",
+   "edited_unixtime": "1789066007",
+   "text": "¿Cómo renuevo la cédula provisoria si todavía no salió la residencia?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Cómo renuevo la cédula provisoria si todavía no salió la residencia?"
+    }
+   ]
+  },
+  {
+   "id": 76,
+   "type": "message",
+   "date": "2026-09-10T15:41:54",
+   "date_unixtime": "1789065714",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "reply_to_message_id": 75,
+   "text": "A mí la residencia me salió en unos 2 meses. ¡Suerte!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A mí la residencia me salió en unos 2 meses. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 77,
+   "type": "message",
+   "date": "2026-09-11T09:41:22",
+   "date_unixtime": "1789130482",
+   "from": "Joaquín P.",
+   "from_id": "user180000000332",
+   "text": "¿Quién se suma al encuentro del sábado en Punta Carretas?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Quién se suma al encuentro del sábado en Punta Carretas?"
+    }
+   ]
+  },
+  {
+   "id": 78,
+   "type": "message",
+   "date": "2026-09-11T09:42:20",
+   "date_unixtime": "1789130540",
+   "from": "Camila V.",
+   "from_id": "user180000000319",
+   "reply_to_message_id": 77,
+   "text": "Por experiencia, yo voy, nos juntamos a las 11 cerca de la rambla. ¡Suerte!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, yo voy, nos juntamos a las 11 cerca de la rambla. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 79,
+   "type": "message",
+   "date": "2026-09-11T09:42:39",
+   "date_unixtime": "1789130559",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 78,
+   "text": "Mirá, me prendo, avisen dónde. ¡Suerte!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, me prendo, avisen dónde. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 80,
+   "type": "message",
+   "date": "2026-09-12T23:43:29",
+   "date_unixtime": "1789267409",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "edited": "2026-09-12T23:49:51",
+   "edited_unixtime": "1789267791",
+   "text": "Consulta: ¿Qué vacunas piden para inscribir a los chicos en la escuela?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Consulta: ¿Qué vacunas piden para inscribir a los chicos en la escuela?"
+    }
+   ]
+  },
+  {
+   "id": 81,
+   "type": "message",
+   "date": "2026-09-12T23:50:15",
+   "date_unixtime": "1789267815",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "reply_to_message_id": 80,
+   "photo": "photos/photo_81.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 82,
+   "type": "message",
+   "date": "2026-09-12T23:52:53",
+   "date_unixtime": "1789267973",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "reply_to_message_id": 80,
+   "text": "Ojo, una vez que estás en BPS te habilita FONASA y elegís la mutualista. Piden el carné de vacunas al día, lo revisan en el centro de salud. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, una vez que estás en BPS te habilita FONASA y elegís la mutualista. Piden el carné de vacunas al día, lo revisan en el centro de salud. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 83,
+   "type": "message",
+   "date": "2026-09-13T14:13:39",
+   "date_unixtime": "1789319619",
+   "from": "Rodrigo P.",
+   "from_id": "user180000000329",
+   "text": "Gente, ¿Cómo renuevo la cédula provisoria si todavía no salió la residencia?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿Cómo renuevo la cédula provisoria si todavía no salió la residencia?"
+    }
+   ]
+  },
+  {
+   "id": 84,
+   "type": "message",
+   "date": "2026-09-13T14:13:45",
+   "date_unixtime": "1789319625",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000322",
+   "text": "Por experiencia, la provisoria se renueva en DNIC con el número de expediente de Migración. Yo fui con una traductora pública, tardó dos semanas y cobra por página. A mí la residencia me salió en unos 3 meses. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, la provisoria se renueva en DNIC con el número de expediente de Migración. Yo fui con una traductora pública, tardó dos semanas y cobra por página. A mí la residencia me salió en unos 3 meses. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 85,
+   "type": "message",
+   "date": "2026-09-13T14:14:56",
+   "date_unixtime": "1789319696",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "reply_to_message_id": 83,
+   "text": [
+    "Por experiencia, a mí la residencia me salió en unos 8 meses. Las agendas abren los lunes temprano, hay que estar actualizando: ",
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    ". Yo fui con una traductora pública, tardó dos semanas y cobra por página. ¡Suerte!"
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, a mí la residencia me salió en unos 8 meses. Las agendas abren los lunes temprano, hay que estar actualizando: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    {
+     "type": "plain",
+     "text": ". Yo fui con una traductora pública, tardó dos semanas y cobra por página. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 86,
+   "type": "message",
+   "date": "2026-09-13T14:15:28",
+   "date_unixtime": "1789319728",
+   "from": "Federico C.",
+   "from_id": "user180000000326",
+   "reply_to_message_id": 83,
+   "edited": "2026-09-13T14:16:48",
+   "edited_unixtime": "1789319808",
+   "text": "Yo hice así: sí, tiene que venir apostillado, si no te lo rechazan. Depende mucho del caso.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: sí, tiene que venir apostillado, si no te lo rechazan. Depende mucho del caso."
+    }
+   ]
+  },
+  {
+   "id": 87,
+   "type": "message",
+   "date": "2026-09-13T14:15:46",
+   "date_unixtime": "1789319746",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "text": "Yo hice así: la provisoria se renueva en DNIC con el número de expediente de Migración",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: la provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 88,
+   "type": "message",
+   "date": "2026-09-13T21:56:12",
+   "date_unixtime": "1789347372",
+   "from": "Liam J.",
+   "from_id": "user180000000305",
+   "photo": "photos/photo_88.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "Got this letter from DGI, what does it mean?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Got this letter from DGI, what does it mean?"
+    }
+   ]
+  },
+  {
+   "id": 89,
+   "type": "message",
+   "date": "2026-09-13T22:14:12",
+   "date_unixtime": "1789348452",
+   "from": "Daniel A.",
+   "from_id": "user180000000304",
+   "reply_to_message_id": 88,
+   "edited": "2026-09-13T22:20:41",
+   "edited_unixtime": "1789348841",
+   "text": [
+    "We did it like this: this guide covers most banks: ",
+    {
+     "type": "link",
+     "text": "https://www.gub.uy/tramites/cedula-identidad"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "We did it like this: this guide covers most banks: "
+    },
+    {
+     "type": "link",
+     "text": "https://www.gub.uy/tramites/cedula-identidad"
+    }
+   ]
+  },
+  {
+   "id": 90,
+   "type": "message",
+   "date": "2026-09-13T22:18:11",
+   "date_unixtime": "1789348691",
+   "from": "Daniel A.",
+   "from_id": "user180000000303",
+   "reply_to_message_id": 89,
+   "edited": "2026-09-13T22:29:10",
+   "edited_unixtime": "1789349350",
+   "text": "In our case i've been using DolarApp for a year, verification took a few days. Might have changed since.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case i've been using DolarApp for a year, verification took a few days. Might have changed since."
+    }
+   ]
+  },
+  {
+   "id": 91,
+   "type": "message",
+   "date": "2026-09-13T22:18:55",
+   "date_unixtime": "1789348735",
+   "from": "Liam J.",
+   "from_id": "user180000000305",
+   "reply_to_message_id": 88,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_037"
+    },
+    " didn't you do this recently?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_037"
+    },
+    {
+     "type": "plain",
+     "text": " didn't you do this recently?"
+    }
+   ]
+  },
+  {
+   "id": 92,
+   "type": "message",
+   "date": "2026-09-15T09:54:14",
+   "date_unixtime": "1789476854",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "text": "Consulta: ¿Alguien abrió cuenta en BROU siendo extranjero sin cédula? ¿Qué documentos les pidieron?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Consulta: ¿Alguien abrió cuenta en BROU siendo extranjero sin cédula? ¿Qué documentos les pidieron?"
+    }
+   ]
+  },
+  {
+   "id": 93,
+   "type": "message",
+   "date": "2026-09-15T09:54:20",
+   "date_unixtime": "1789476860",
+   "from": "Sofía T.",
+   "from_id": "user180000000328",
+   "reply_to_message_id": 92,
+   "text": "Mirá, con Deel podés retirar en Redpagos, pero el límite diario es bajo. ¡Suerte!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, con Deel podés retirar en Redpagos, pero el límite diario es bajo. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 94,
+   "type": "message",
+   "date": "2026-09-15T09:54:55",
+   "date_unixtime": "1789476895",
+   "from": "Santiago N.",
+   "from_id": "user180000000310",
+   "text": "Te piden justificar el origen de los fondos, llevá el contrato de trabajo. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Te piden justificar el origen de los fondos, llevá el contrato de trabajo. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 95,
+   "type": "message",
+   "date": "2026-09-15T09:56:22",
+   "date_unixtime": "1789476982",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "reply_to_message_id": 93,
+   "text": "¿Eso fue en la sucursal del Centro?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Eso fue en la sucursal del Centro?"
+    }
+   ]
+  },
+  {
+   "id": 96,
+   "type": "message",
+   "date": "2026-09-15T09:57:56",
+   "date_unixtime": "1789477076",
+   "from": "Camila P.",
+   "from_id": "user180000000336",
+   "edited": "2026-09-15T09:58:29",
+   "edited_unixtime": "1789477109",
+   "text": [
+    "Mirá, fijate acá que está bien explicado: ",
+    {
+     "type": "link",
+     "text": "https://www.gub.uy/tramites/residencia-legal"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, fijate acá que está bien explicado: "
+    },
+    {
+     "type": "link",
+     "text": "https://www.gub.uy/tramites/residencia-legal"
+    }
+   ]
+  },
+  {
+   "id": 97,
+   "type": "message",
+   "date": "2026-09-15T09:58:30",
+   "date_unixtime": "1789477110",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "reply_to_message_id": 92,
+   "text": "Creo que te piden justificar el origen de los fondos, llevá el contrato de trabajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que te piden justificar el origen de los fondos, llevá el contrato de trabajo"
+    }
+   ]
+  },
+  {
+   "id": 98,
+   "type": "message",
+   "date": "2026-09-15T10:00:31",
+   "date_unixtime": "1789477231",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "reply_to_message_id": 97,
+   "text": "Por experiencia, te piden justificar el origen de los fondos, llevá el contrato de trabajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, te piden justificar el origen de los fondos, llevá el contrato de trabajo"
+    }
+   ]
+  },
+  {
+   "id": 99,
+   "type": "message",
+   "date": "2026-09-15T19:54:05",
+   "date_unixtime": "1789512845",
+   "from": "Carolina V.",
+   "from_id": "user180000000325",
+   "text": "Consulta: ¿Cuánto cobra BROU por mantener la cuenta en dólares?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Consulta: ¿Cuánto cobra BROU por mantener la cuenta en dólares?"
+    }
+   ]
+  },
+  {
+   "id": 100,
+   "type": "message",
+   "date": "2026-09-15T19:55:47",
+   "date_unixtime": "1789512947",
+   "from": "Santiago O.",
+   "from_id": "user180000000327",
+   "text": "Igual, te piden justificar el origen de los fondos, llevá el contrato de trabajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, te piden justificar el origen de los fondos, llevá el contrato de trabajo"
+    }
+   ]
+  },
+  {
+   "id": 101,
+   "type": "message",
+   "date": "2026-09-15T19:56:11",
+   "date_unixtime": "1789512971",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 99,
+   "edited": "2026-09-15T20:05:24",
+   "edited_unixtime": "1789513524",
+   "text": "Mirá, en Santander me pidieron pasaporte, constancia de domicilio y comprobante de ingresos",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, en Santander me pidieron pasaporte, constancia de domicilio y comprobante de ingresos"
+    }
+   ]
+  },
+  {
+   "id": 102,
+   "type": "message",
+   "date": "2026-09-15T19:57:35",
+   "date_unixtime": "1789513055",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "reply_to_message_id": 99,
+   "edited": "2026-09-15T19:59:31",
+   "edited_unixtime": "1789513171",
+   "text": "Creo que la cuenta en dólares sirve si pagás el alquiler en dólares. Con Midinero podés retirar en Redpagos, pero el límite diario es bajo. En Itaú me pidieron pasaporte, constancia de domicilio y comprobante de ingresos. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que la cuenta en dólares sirve si pagás el alquiler en dólares. Con Midinero podés retirar en Redpagos, pero el límite diario es bajo. En Itaú me pidieron pasaporte, constancia de domicilio y comprobante de ingresos. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 103,
+   "type": "message",
+   "date": "2026-09-16T22:57:03",
+   "date_unixtime": "1789610223",
+   "from": "Rodrigo T.",
+   "from_id": "user180000000320",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    ", escribime al privado ",
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    {
+     "type": "plain",
+     "text": ", escribime al privado "
+    },
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ]
+  },
+  {
+   "id": 104,
+   "type": "message",
+   "date": "2026-09-16T23:42:03",
+   "date_unixtime": "1789612923",
+   "from": "Martina S.",
+   "from_id": "user180000000335",
+   "text": "¿Qué precio razonable hay para un apartamento de dos dormitorios en Buceo?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Qué precio razonable hay para un apartamento de dos dormitorios en Buceo?"
+    }
+   ]
+  },
+  {
+   "id": 105,
+   "type": "message",
+   "date": "2026-09-16T23:42:19",
+   "date_unixtime": "1789612939",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "edited": "2026-09-16T23:49:17",
+   "edited_unixtime": "1789613357",
+   "text": "Hasta donde sé, malvín es tranquilo y tiene buenas escuelas cerca. En Parque Rodó un dos dormitorios arranca en 42 000 pesos más gastos comunes",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, malvín es tranquilo y tiene buenas escuelas cerca. En Parque Rodó un dos dormitorios arranca en 42 000 pesos más gastos comunes"
+    }
+   ]
+  },
+  {
+   "id": 106,
+   "type": "message",
+   "date": "2026-09-16T23:43:00",
+   "date_unixtime": "1789612980",
+   "from": "Camila F.",
+   "from_id": "user180000000312",
+   "reply_to_message_id": 105,
+   "text": "Pedí que el contrato pase por escribano y no pagues nada antes de firmar",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Pedí que el contrato pase por escribano y no pagues nada antes de firmar"
+    }
+   ]
+  },
+  {
+   "id": 107,
+   "type": "message",
+   "date": "2026-09-17T00:03:59",
+   "date_unixtime": "1789614239",
+   "from": "Diego C.",
+   "from_id": "user180000000340",
+   "reply_to_message_id": 106,
+   "text": "Por experiencia, en Cordón un dos dormitorios arranca en 42 000 pesos más gastos comunes. Parque Rodó es tranquilo y tiene buenas escuelas cerca",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, en Cordón un dos dormitorios arranca en 42 000 pesos más gastos comunes. Parque Rodó es tranquilo y tiene buenas escuelas cerca"
+    }
+   ]
+  },
+  {
+   "id": 108,
+   "type": "message",
+   "date": "2026-09-17T16:35:07",
+   "date_unixtime": "1789673707",
+   "from": "Daniel A.",
+   "from_id": "user180000000303",
+   "text": "Good morning all",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Good morning all"
+    }
+   ]
+  },
+  {
+   "id": 109,
+   "type": "message",
+   "date": "2026-09-17T17:24:07",
+   "date_unixtime": "1789676647",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "photo": "photos/photo_109.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "Me llegó este mail de Registro Civil, ¿qué significa?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Me llegó este mail de Registro Civil, ¿qué significa?"
+    }
+   ]
+  },
+  {
+   "id": 110,
+   "type": "message",
+   "date": "2026-09-17T17:24:14",
+   "date_unixtime": "1789676654",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "reply_to_message_id": 109,
+   "text": "Yo hice así: una vez que estás en BPS te habilita FONASA y elegís la mutualista. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: una vez que estás en BPS te habilita FONASA y elegís la mutualista. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 111,
+   "type": "message",
+   "date": "2026-09-17T17:24:26",
+   "date_unixtime": "1789676666",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "edited": "2026-09-17T17:31:16",
+   "edited_unixtime": "1789677076",
+   "text": "Por experiencia, lo saqué en una clínica privada en un par de horas, sin agenda",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, lo saqué en una clínica privada en un par de horas, sin agenda"
+    }
+   ]
+  },
+  {
+   "id": 112,
+   "type": "message",
+   "date": "2026-09-17T17:25:42",
+   "date_unixtime": "1789676742",
+   "from": "Martina S.",
+   "from_id": "user180000000335",
+   "reply_to_message_id": 110,
+   "text": [
+    "Igual, acá está explicado paso a paso: ",
+    {
+     "type": "link",
+     "text": "https://example.org/alquiler-sin-garantia"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, acá está explicado paso a paso: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/alquiler-sin-garantia"
+    }
+   ]
+  },
+  {
+   "id": 113,
+   "type": "message",
+   "date": "2026-09-17T17:29:39",
+   "date_unixtime": "1789676979",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000322",
+   "reply_to_message_id": 109,
+   "text": "Piden el carné de vacunas al día, lo revisan en el centro de salud. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Piden el carné de vacunas al día, lo revisan en el centro de salud. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 114,
+   "type": "message",
+   "date": "2026-09-18T16:12:28",
+   "date_unixtime": "1789758748",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "text": "¿Va a llover hoy? ¿Alguien en Punta Carretas?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Va a llover hoy? ¿Alguien en Punta Carretas?"
+    }
+   ]
+  },
+  {
+   "id": 115,
+   "type": "message",
+   "date": "2026-09-18T16:13:59",
+   "date_unixtime": "1789758839",
+   "from": "Agustina V.",
+   "from_id": "user180000000333",
+   "reply_to_message_id": 114,
+   "text": "tal cual",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "tal cual"
+    }
+   ]
+  },
+  {
+   "id": 116,
+   "type": "message",
+   "date": "2026-09-18T17:23:28",
+   "date_unixtime": "1789763008",
+   "from": "Camila P.",
+   "from_id": "user180000000336",
+   "edited": "2026-09-18T17:24:46",
+   "edited_unixtime": "1789763086",
+   "text": "¿Recomiendan Punta Carretas para vivir con niños?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Recomiendan Punta Carretas para vivir con niños?"
+    }
+   ]
+  },
+  {
+   "id": 117,
+   "type": "message",
+   "date": "2026-09-18T17:57:03",
+   "date_unixtime": "1789765023",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "reply_to_message_id": 116,
+   "text": "Cordón es tranquilo y tiene buenas escuelas cerca",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Cordón es tranquilo y tiene buenas escuelas cerca"
+    }
+   ]
+  },
+  {
+   "id": 118,
+   "type": "message",
+   "date": "2026-09-18T17:57:29",
+   "date_unixtime": "1789765049",
+   "from": "Camila P.",
+   "from_id": "user180000000336",
+   "reply_to_message_id": 117,
+   "text": "gracias",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "gracias"
+    }
+   ]
+  },
+  {
+   "id": 119,
+   "type": "message",
+   "date": "2026-09-18T18:07:57",
+   "date_unixtime": "1789765677",
+   "from": "Camila V.",
+   "from_id": "user180000000319",
+   "edited": "2026-09-18T18:16:24",
+   "edited_unixtime": "1789766184",
+   "text": "Creo que pedí que el contrato pase por escribano y no pagues nada antes de firmar. En Carrasco un dos dormitorios arranca en 42 000 pesos más gastos comunes. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que pedí que el contrato pase por escribano y no pagues nada antes de firmar. En Carrasco un dos dormitorios arranca en 42 000 pesos más gastos comunes. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 120,
+   "type": "message",
+   "date": "2026-09-19T08:51:29",
+   "date_unixtime": "1789818689",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "text": "Buenas, ¿Cómo saco hora para la cédula en BPS? No aparecen fechas disponibles",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Buenas, ¿Cómo saco hora para la cédula en BPS? No aparecen fechas disponibles"
+    }
+   ]
+  },
+  {
+   "id": 121,
+   "type": "message",
+   "date": "2026-09-19T08:54:38",
+   "date_unixtime": "1789818878",
+   "from": "Santiago N.",
+   "from_id": "user180000000310",
+   "reply_to_message_id": 120,
+   "text": "A mí la residencia me salió en unos 2 meses. Yo fui con una traductora pública, tardó dos semanas y cobra por página",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A mí la residencia me salió en unos 2 meses. Yo fui con una traductora pública, tardó dos semanas y cobra por página"
+    }
+   ]
+  },
+  {
+   "id": 122,
+   "type": "message",
+   "date": "2026-09-19T08:59:10",
+   "date_unixtime": "1789819150",
+   "from": "Martina V.",
+   "from_id": "user180000000344",
+   "reply_to_message_id": 121,
+   "edited": "2026-09-19T09:03:10",
+   "edited_unixtime": "1789819390",
+   "text": "¿Se paga en Abitab antes de ir?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Se paga en Abitab antes de ir?"
+    }
+   ]
+  },
+  {
+   "id": 123,
+   "type": "message",
+   "date": "2026-09-19T09:02:18",
+   "date_unixtime": "1789819338",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "reply_to_message_id": 120,
+   "edited": "2026-09-19T09:14:35",
+   "edited_unixtime": "1789820075",
+   "text": "Yo fui con una traductora pública, tardó dos semanas y cobra por página. La provisoria se renueva en DNIC con el número de expediente de Migración. Fue el mes pasado.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo fui con una traductora pública, tardó dos semanas y cobra por página. La provisoria se renueva en DNIC con el número de expediente de Migración. Fue el mes pasado."
+    }
+   ]
+  },
+  {
+   "id": 124,
+   "type": "message",
+   "date": "2026-09-19T09:02:30",
+   "date_unixtime": "1789819350",
+   "from": "Federico G.",
+   "from_id": "user180000000338",
+   "text": [
+    "Las agendas abren los lunes temprano, hay que estar actualizando: ",
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    },
+    ". La provisoria se renueva en DNIC con el número de expediente de Migración"
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Las agendas abren los lunes temprano, hay que estar actualizando: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    },
+    {
+     "type": "plain",
+     "text": ". La provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 125,
+   "type": "message",
+   "date": "2026-09-20T11:24:28",
+   "date_unixtime": "1789914268",
+   "from": "Carolina V.",
+   "from_id": "user180000000325",
+   "text": "¿Recomiendan Parque Rodó para vivir con niños?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Recomiendan Parque Rodó para vivir con niños?"
+    }
+   ]
+  },
+  {
+   "id": 126,
+   "type": "message",
+   "date": "2026-09-20T11:25:52",
+   "date_unixtime": "1789914352",
+   "from": "Santiago N.",
+   "from_id": "user180000000310",
+   "reply_to_message_id": 125,
+   "text": "Igual, depende, suele ser un mes de alquiler más IVA por año. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Carrasco es tranquilo y tiene buenas escuelas cerca. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, depende, suele ser un mes de alquiler más IVA por año. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Carrasco es tranquilo y tiene buenas escuelas cerca. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 127,
+   "type": "message",
+   "date": "2026-09-20T11:29:00",
+   "date_unixtime": "1789914540",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 126,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "😢",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 128,
+   "type": "message",
+   "date": "2026-09-20T11:30:07",
+   "date_unixtime": "1789914607",
+   "from": "Carolina V.",
+   "from_id": "user180000000325",
+   "reply_to_message_id": 126,
+   "text": "¡Gracias!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¡Gracias!"
+    }
+   ]
+  },
+  {
+   "id": 129,
+   "type": "message",
+   "date": "2026-09-20T11:38:34",
+   "date_unixtime": "1789915114",
+   "from": "Rodrigo P.",
+   "from_id": "user180000000329",
+   "reply_to_message_id": 125,
+   "text": "Igual, en Cordón un dos dormitorios arranca en 30 000 pesos más gastos comunes. Pedí que el contrato pase por escribano y no pagues nada antes de firmar. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, en Cordón un dos dormitorios arranca en 30 000 pesos más gastos comunes. Pedí que el contrato pase por escribano y no pagues nada antes de firmar. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 130,
+   "type": "message",
+   "date": "2026-09-20T11:38:44",
+   "date_unixtime": "1789915124",
+   "from": "Carolina V.",
+   "from_id": "user180000000325",
+   "reply_to_message_id": 129,
+   "text": "¡Hola! ¿Los gastos comunes suelen ser altos?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¡Hola! ¿Los gastos comunes suelen ser altos?"
+    }
+   ]
+  },
+  {
+   "id": 131,
+   "type": "message",
+   "date": "2026-09-20T12:03:22",
+   "date_unixtime": "1789916602",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "reply_to_message_id": 126,
+   "text": "Mirá, pedí que el contrato pase por escribano y no pagues nada antes de firmar",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, pedí que el contrato pase por escribano y no pagues nada antes de firmar"
+    }
+   ]
+  },
+  {
+   "id": 132,
+   "type": "message",
+   "date": "2026-09-20T12:03:33",
+   "date_unixtime": "1789916613",
+   "from": "Federico G.",
+   "from_id": "user180000000338",
+   "reply_to_message_id": 125,
+   "text": "Creo que depende, suele ser un mes de alquiler más IVA por año. Pocitos es tranquilo y tiene buenas escuelas cerca. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Capaz que ya cambió.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que depende, suele ser un mes de alquiler más IVA por año. Pocitos es tranquilo y tiene buenas escuelas cerca. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Capaz que ya cambió."
+    }
+   ]
+  },
+  {
+   "id": 133,
+   "type": "message",
+   "date": "2026-09-20T12:04:12",
+   "date_unixtime": "1789916652",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "reply_to_message_id": 125,
+   "text": "Mirá, punta Carretas es tranquilo y tiene buenas escuelas cerca",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, punta Carretas es tranquilo y tiene buenas escuelas cerca"
+    }
+   ]
+  },
+  {
+   "id": 134,
+   "type": "message",
+   "date": "2026-09-21T11:09:47",
+   "date_unixtime": "1789999787",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "text": "¿Cuánto está demorando la residencia? Presenté hace 4 meses",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Cuánto está demorando la residencia? Presenté hace 4 meses"
+    }
+   ]
+  },
+  {
+   "id": 135,
+   "type": "message",
+   "date": "2026-09-21T11:10:40",
+   "date_unixtime": "1789999840",
+   "from": "Federico G.",
+   "from_id": "user180000000338",
+   "reply_to_message_id": 134,
+   "text": "A nosotros nos pasó que la provisoria se renueva en DNIC con el número de expediente de Migración. Sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que la provisoria se renueva en DNIC con el número de expediente de Migración. Sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 136,
+   "type": "message",
+   "date": "2026-09-21T11:13:51",
+   "date_unixtime": "1790000031",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "reply_to_message_id": 135,
+   "text": "¿Se paga en Abitab antes de ir?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Se paga en Abitab antes de ir?"
+    }
+   ]
+  },
+  {
+   "id": 137,
+   "type": "message",
+   "date": "2026-09-21T11:22:45",
+   "date_unixtime": "1790000565",
+   "from": "Martina G.",
+   "from_id": "user180000000342",
+   "reply_to_message_id": 135,
+   "edited": "2026-09-21T11:23:18",
+   "edited_unixtime": "1790000598",
+   "text": "Creo que la provisoria se renueva en DNIC con el número de expediente de Migración",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que la provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 138,
+   "type": "message",
+   "date": "2026-09-21T11:29:59",
+   "date_unixtime": "1790000999",
+   "from": "Camila G.",
+   "from_id": "user180000000345",
+   "text": "Ojo, yo fui con una traductora pública, tardó dos semanas y cobra por página. Capaz que ya cambió.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, yo fui con una traductora pública, tardó dos semanas y cobra por página. Capaz que ya cambió."
+    }
+   ]
+  },
+  {
+   "id": 139,
+   "type": "message",
+   "date": "2026-09-21T11:30:04",
+   "date_unixtime": "1790001004",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 140,
+   "type": "message",
+   "date": "2026-09-21T11:30:15",
+   "date_unixtime": "1790001015",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "reply_to_message_id": 138,
+   "text": "Una pregunta: ¿Se paga en Abitab antes de ir?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Una pregunta: ¿Se paga en Abitab antes de ir?"
+    }
+   ]
+  },
+  {
+   "id": 141,
+   "type": "message",
+   "date": "2026-09-21T11:31:19",
+   "date_unixtime": "1790001079",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "reply_to_message_id": 134,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_008"
+    },
+    " ¿vos sabés?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_008"
+    },
+    {
+     "type": "plain",
+     "text": " ¿vos sabés?"
+    }
+   ]
+  },
+  {
+   "id": 142,
+   "type": "message",
+   "date": "2026-09-21T11:31:27",
+   "date_unixtime": "1790001087",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "edited": "2026-09-21T11:43:51",
+   "edited_unixtime": "1790001831",
+   "text": "Mirá, yo fui con una traductora pública, tardó dos semanas y cobra por página. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, yo fui con una traductora pública, tardó dos semanas y cobra por página. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 143,
+   "type": "message",
+   "date": "2026-09-21T11:31:39",
+   "date_unixtime": "1790001099",
+   "from": "Sofía T.",
+   "from_id": "user180000000328",
+   "reply_to_message_id": 134,
+   "text": "Sí, tiene que venir apostillado, si no te lo rechazan. A mí la residencia me salió en unos 2 meses",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Sí, tiene que venir apostillado, si no te lo rechazan. A mí la residencia me salió en unos 2 meses"
+    }
+   ]
+  },
+  {
+   "id": 144,
+   "type": "message",
+   "date": "2026-09-21T11:31:53",
+   "date_unixtime": "1790001113",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "reply_to_message_id": 134,
+   "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 145,
+   "type": "message",
+   "date": "2026-09-21T11:32:39",
+   "date_unixtime": "1790001159",
+   "from": "Carolina V.",
+   "from_id": "user180000000341",
+   "reply_to_message_id": 137,
+   "text": "Por experiencia, a mí la residencia me salió en unos 4 meses. Yo fui con una traductora pública, tardó dos semanas y cobra por página. Primero sacá el carné de salud, sin eso no avanza el trámite. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, a mí la residencia me salió en unos 4 meses. Yo fui con una traductora pública, tardó dos semanas y cobra por página. Primero sacá el carné de salud, sin eso no avanza el trámite. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 146,
+   "type": "message",
+   "date": "2026-09-21T11:32:46",
+   "date_unixtime": "1790001166",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 145,
+   "file": "round_video_messages/round_146.mp4",
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 17,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 147,
+   "type": "message",
+   "date": "2026-09-21T11:33:29",
+   "date_unixtime": "1790001209",
+   "from": "Federico G.",
+   "from_id": "user180000000338",
+   "text": "Hasta donde sé, yo fui con una traductora pública, tardó dos semanas y cobra por página. A mí la residencia me salió en unos 8 meses. Sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, yo fui con una traductora pública, tardó dos semanas y cobra por página. A mí la residencia me salió en unos 8 meses. Sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 148,
+   "type": "message",
+   "date": "2026-09-21T11:33:51",
+   "date_unixtime": "1790001231",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "text": "Te cuento: yo fui con una traductora pública, tardó dos semanas y cobra por página",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Te cuento: yo fui con una traductora pública, tardó dos semanas y cobra por página"
+    }
+   ]
+  },
+  {
+   "id": 149,
+   "type": "message",
+   "date": "2026-09-21T18:33:40",
+   "date_unixtime": "1790026420",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "text": "Buen día gente",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Buen día gente"
+    }
+   ]
+  },
+  {
+   "id": 150,
+   "type": "message",
+   "date": "2026-09-21T20:02:40",
+   "date_unixtime": "1790031760",
+   "from": "Santiago N.",
+   "from_id": "user180000000310",
+   "text": "Me bloquearon una transferencia de 800 USD en HSBC, ¿a alguien le pasó?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Me bloquearon una transferencia de 800 USD en HSBC, ¿a alguien le pasó?"
+    }
+   ]
+  },
+  {
+   "id": 151,
+   "type": "message",
+   "date": "2026-09-21T20:02:43",
+   "date_unixtime": "1790031763",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000315",
+   "reply_to_message_id": 150,
+   "text": "tal cual",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "tal cual"
+    }
+   ]
+  },
+  {
+   "id": 152,
+   "type": "message",
+   "date": "2026-09-21T20:06:00",
+   "date_unixtime": "1790031960",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "reply_to_message_id": 150,
+   "text": "Ojo, la cuenta en dólares sirve si pagás el alquiler en dólares",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, la cuenta en dólares sirve si pagás el alquiler en dólares"
+    }
+   ]
+  },
+  {
+   "id": 153,
+   "type": "message",
+   "date": "2026-09-21T20:10:52",
+   "date_unixtime": "1790032252",
+   "from": "Santiago N.",
+   "from_id": "user180000000310",
+   "reply_to_message_id": 152,
+   "text": "gracias",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "gracias"
+    }
+   ]
+  },
+  {
+   "id": 154,
+   "type": "message",
+   "date": "2026-09-21T20:10:55",
+   "date_unixtime": "1790032255",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "reply_to_message_id": 152,
+   "text": "Mirá, te piden justificar el origen de los fondos, llevá el contrato de trabajo. Con Payoneer podés retirar en Redpagos, pero el límite diario es bajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, te piden justificar el origen de los fondos, llevá el contrato de trabajo. Con Payoneer podés retirar en Redpagos, pero el límite diario es bajo"
+    }
+   ]
+  },
+  {
+   "id": 155,
+   "type": "message",
+   "date": "2026-09-21T20:10:58",
+   "date_unixtime": "1790032258",
+   "from": "Rodrigo T.",
+   "from_id": "user180000000320",
+   "reply_to_message_id": 150,
+   "text": "Creo que la cuenta en dólares sirve si pagás el alquiler en dólares",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que la cuenta en dólares sirve si pagás el alquiler en dólares"
+    }
+   ]
+  },
+  {
+   "id": 156,
+   "type": "message",
+   "date": "2026-09-21T20:12:33",
+   "date_unixtime": "1790032353",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "reply_to_message_id": 152,
+   "text": "Yo hice así: te piden justificar el origen de los fondos, llevá el contrato de trabajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: te piden justificar el origen de los fondos, llevá el contrato de trabajo"
+    }
+   ]
+  },
+  {
+   "id": 157,
+   "type": "message",
+   "date": "2026-09-21T20:12:49",
+   "date_unixtime": "1790032369",
+   "from": "Rodrigo T.",
+   "from_id": "user180000000320",
+   "reply_to_message_id": 150,
+   "text": "Ojo, la cuenta en dólares sirve si pagás el alquiler en dólares",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, la cuenta en dólares sirve si pagás el alquiler en dólares"
+    }
+   ]
+  },
+  {
+   "id": 158,
+   "type": "message",
+   "date": "2026-09-22T11:10:19",
+   "date_unixtime": "1790086219",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    ", escribime al privado ",
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    {
+     "type": "plain",
+     "text": ", escribime al privado "
+    },
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ]
+  },
+  {
+   "id": 159,
+   "type": "message",
+   "date": "2026-09-22T12:34:19",
+   "date_unixtime": "1790091259",
+   "from": "Daniel A.",
+   "from_id": "user180000000303",
+   "text": "Where can I withdraw cash with Prex without fees?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Where can I withdraw cash with Prex without fees?"
+    }
+   ]
+  },
+  {
+   "id": 160,
+   "type": "message",
+   "date": "2026-09-22T12:35:13",
+   "date_unixtime": "1790091313",
+   "from": "Liam J.",
+   "from_id": "user180000000305",
+   "text": "They want to know where the money comes from, bring your work contract",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "They want to know where the money comes from, bring your work contract"
+    }
+   ]
+  },
+  {
+   "id": 161,
+   "type": "message",
+   "date": "2026-09-22T12:46:31",
+   "date_unixtime": "1790091991",
+   "from": "Daniel A.",
+   "from_id": "user180000000303",
+   "reply_to_message_id": 160,
+   "text": "Thanks a lot!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Thanks a lot!"
+    }
+   ]
+  },
+  {
+   "id": 162,
+   "type": "message",
+   "date": "2026-09-23T08:56:29",
+   "date_unixtime": "1790164589",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "edited": "2026-09-23T09:04:13",
+   "edited_unixtime": "1790165053",
+   "text": "Buenas, ¿Alguien sabe cuánto piden de garantía para alquilar en Punta Carretas?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Buenas, ¿Alguien sabe cuánto piden de garantía para alquilar en Punta Carretas?"
+    }
+   ]
+  },
+  {
+   "id": 163,
+   "type": "message",
+   "date": "2026-09-23T08:59:40",
+   "date_unixtime": "1790164780",
+   "from": "Gonzalo P.",
+   "from_id": "user180000000318",
+   "reply_to_message_id": 162,
+   "edited": "2026-09-23T09:12:58",
+   "edited_unixtime": "1790165578",
+   "text": [
+    "Igual, te dejo esta guía que está buena: ",
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    },
+    ". Ojalá te sirva."
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, te dejo esta guía que está buena: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    },
+    {
+     "type": "plain",
+     "text": ". Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 164,
+   "type": "message",
+   "date": "2026-09-23T08:59:52",
+   "date_unixtime": "1790164792",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "reply_to_message_id": 163,
+   "text": "¿Vienen amueblados normalmente?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Vienen amueblados normalmente?"
+    }
+   ]
+  },
+  {
+   "id": 165,
+   "type": "message",
+   "date": "2026-09-23T09:04:57",
+   "date_unixtime": "1790165097",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "text": "Yo hice así: en Cordón un dos dormitorios arranca en 42 000 pesos más gastos comunes",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: en Cordón un dos dormitorios arranca en 42 000 pesos más gastos comunes"
+    }
+   ]
+  },
+  {
+   "id": 166,
+   "type": "message",
+   "date": "2026-09-23T09:07:46",
+   "date_unixtime": "1790165266",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "reply_to_message_id": 162,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_010"
+    },
+    " ¿vos sabés?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_010"
+    },
+    {
+     "type": "plain",
+     "text": " ¿vos sabés?"
+    }
+   ]
+  },
+  {
+   "id": 167,
+   "type": "message",
+   "date": "2026-09-23T09:09:20",
+   "date_unixtime": "1790165360",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "reply_to_message_id": 162,
+   "edited": "2026-09-23T09:10:25",
+   "edited_unixtime": "1790165425",
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_050"
+    },
+    " ¿vos sabés?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_050"
+    },
+    {
+     "type": "plain",
+     "text": " ¿vos sabés?"
+    }
+   ]
+  },
+  {
+   "id": 168,
+   "type": "message",
+   "date": "2026-09-23T09:11:50",
+   "date_unixtime": "1790165510",
+   "from": "Carolina V.",
+   "from_id": "user180000000325",
+   "reply_to_message_id": 167,
+   "text": [
+    "Depende, suele ser un mes de alquiler más IVA por año. Te dejo esta guía que está buena: ",
+    {
+     "type": "link",
+     "text": "https://example.org/alquiler-sin-garantia"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Depende, suele ser un mes de alquiler más IVA por año. Te dejo esta guía que está buena: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/alquiler-sin-garantia"
+    }
+   ]
+  },
+  {
+   "id": 169,
+   "type": "message",
+   "date": "2026-09-24T12:53:28",
+   "date_unixtime": "1790265208",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "edited": "2026-09-24T13:01:03",
+   "edited_unixtime": "1790265663",
+   "text": "¿Cómo saben si una inmobiliaria es confiable?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Cómo saben si una inmobiliaria es confiable?"
+    }
+   ]
+  },
+  {
+   "id": 170,
+   "type": "message",
+   "date": "2026-09-24T12:56:23",
+   "date_unixtime": "1790265383",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "reply_to_message_id": 169,
+   "edited": "2026-09-24T12:59:30",
+   "edited_unixtime": "1790265570",
+   "text": "Creo que sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler"
+    }
+   ]
+  },
+  {
+   "id": 171,
+   "type": "message",
+   "date": "2026-09-24T12:56:39",
+   "date_unixtime": "1790265399",
+   "from": "Camila V.",
+   "from_id": "user180000000319",
+   "text": "Yo hice así: punta Carretas es tranquilo y tiene buenas escuelas cerca. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: punta Carretas es tranquilo y tiene buenas escuelas cerca. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler"
+    }
+   ]
+  },
+  {
+   "id": 172,
+   "type": "message",
+   "date": "2026-09-24T12:56:45",
+   "date_unixtime": "1790265405",
+   "from": "Martina S.",
+   "from_id": "user180000000335",
+   "text": "Hasta donde sé, depende, suele ser un mes de alquiler más IVA por año. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, depende, suele ser un mes de alquiler más IVA por año. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler"
+    }
+   ]
+  },
+  {
+   "id": 173,
+   "type": "message",
+   "date": "2026-09-24T12:56:51",
+   "date_unixtime": "1790265411",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "reply_to_message_id": 170,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "🔥",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 174,
+   "type": "message",
+   "date": "2026-09-24T12:57:15",
+   "date_unixtime": "1790265435",
+   "from": "Gonzalo P.",
+   "from_id": "user180000000318",
+   "text": "Mirá, en Buceo un dos dormitorios arranca en 35 000 pesos más gastos comunes",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, en Buceo un dos dormitorios arranca en 35 000 pesos más gastos comunes"
+    }
+   ]
+  },
+  {
+   "id": 175,
+   "type": "message",
+   "date": "2026-09-24T12:58:36",
+   "date_unixtime": "1790265516",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "reply_to_message_id": 170,
+   "text": "gracias",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "gracias"
+    }
+   ]
+  },
+  {
+   "id": 176,
+   "type": "message",
+   "date": "2026-09-24T13:14:37",
+   "date_unixtime": "1790266477",
+   "from": "Rodrigo T.",
+   "from_id": "user180000000320",
+   "reply_to_message_id": 169,
+   "photo": "photos/photo_176.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 177,
+   "type": "message",
+   "date": "2026-09-25T08:13:06",
+   "date_unixtime": "1790334786",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000322",
+   "text": "¿Alguien sabe cuánto piden de garantía para alquilar en Centro?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Alguien sabe cuánto piden de garantía para alquilar en Centro?"
+    }
+   ]
+  },
+  {
+   "id": 178,
+   "type": "message",
+   "date": "2026-09-25T08:14:10",
+   "date_unixtime": "1790334850",
+   "from": "Joaquín P.",
+   "from_id": "user180000000332",
+   "text": "Yo hice así: sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Depende, suele ser un mes de alquiler más IVA por año",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Depende, suele ser un mes de alquiler más IVA por año"
+    }
+   ]
+  },
+  {
+   "id": 179,
+   "type": "message",
+   "date": "2026-09-25T08:15:35",
+   "date_unixtime": "1790334935",
+   "from": "Agustina V.",
+   "from_id": "user180000000333",
+   "reply_to_message_id": 177,
+   "file": "voice_messages/audio_179.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 30,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 180,
+   "type": "message",
+   "date": "2026-09-25T08:15:38",
+   "date_unixtime": "1790334938",
+   "from": "Diego B.",
+   "from_id": "user180000000307",
+   "reply_to_message_id": 179,
+   "text": "Ojo, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler"
+    }
+   ]
+  },
+  {
+   "id": 181,
+   "type": "message",
+   "date": "2026-09-25T08:19:00",
+   "date_unixtime": "1790335140",
+   "from": "Federico A.",
+   "from_id": "user180000000330",
+   "text": "Creo que centro es tranquilo y tiene buenas escuelas cerca. En Pocitos un dos dormitorios arranca en 42 000 pesos más gastos comunes",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Creo que centro es tranquilo y tiene buenas escuelas cerca. En Pocitos un dos dormitorios arranca en 42 000 pesos más gastos comunes"
+    }
+   ]
+  },
+  {
+   "id": 182,
+   "type": "message",
+   "date": "2026-09-25T08:19:05",
+   "date_unixtime": "1790335145",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "reply_to_message_id": 177,
+   "text": "Te cuento: pedí que el contrato pase por escribano y no pagues nada antes de firmar",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Te cuento: pedí que el contrato pase por escribano y no pagues nada antes de firmar"
+    }
+   ]
+  },
+  {
+   "id": 183,
+   "type": "message",
+   "date": "2026-09-26T08:51:52",
+   "date_unixtime": "1790423512",
+   "from": "Federico R.",
+   "from_id": "user180000000311",
+   "text": "Una pregunta: ¿Alguien sabe cuánto piden de garantía para alquilar en Malvín?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Una pregunta: ¿Alguien sabe cuánto piden de garantía para alquilar en Malvín?"
+    }
+   ]
+  },
+  {
+   "id": 184,
+   "type": "message",
+   "date": "2026-09-26T08:52:20",
+   "date_unixtime": "1790423540",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "text": "Yo hice así: depende, suele ser un mes de alquiler más IVA por año. Pedí que el contrato pase por escribano y no pagues nada antes de firmar",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: depende, suele ser un mes de alquiler más IVA por año. Pedí que el contrato pase por escribano y no pagues nada antes de firmar"
+    }
+   ]
+  },
+  {
+   "id": 185,
+   "type": "message",
+   "date": "2026-09-26T18:38:11",
+   "date_unixtime": "1790458691",
+   "from": "Federico A.",
+   "from_id": "user180000000330",
+   "text": "¿Alguien vio el partido de ayer?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Alguien vio el partido de ayer?"
+    }
+   ]
+  },
+  {
+   "id": 186,
+   "type": "message",
+   "date": "2026-09-26T18:40:33",
+   "date_unixtime": "1790458833",
+   "from": "Rodrigo P.",
+   "from_id": "user180000000329",
+   "reply_to_message_id": 185,
+   "text": "dale",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "dale"
+    }
+   ]
+  },
+  {
+   "id": 187,
+   "type": "message",
+   "date": "2026-09-26T19:25:11",
+   "date_unixtime": "1790461511",
+   "from": "Carolina V.",
+   "from_id": "user180000000341",
+   "edited": "2026-09-26T19:37:56",
+   "edited_unixtime": "1790462276",
+   "text": "¿Hacemos un café esta semana?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Hacemos un café esta semana?"
+    }
+   ]
+  },
+  {
+   "id": 188,
+   "type": "message",
+   "date": "2026-09-26T19:25:32",
+   "date_unixtime": "1790461532",
+   "from": "Carolina V.",
+   "from_id": "user180000000341",
+   "reply_to_message_id": 187,
+   "edited": "2026-09-26T19:32:35",
+   "edited_unixtime": "1790461955",
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_044"
+    },
+    " ¿vos sabés?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_044"
+    },
+    {
+     "type": "plain",
+     "text": " ¿vos sabés?"
+    }
+   ]
+  },
+  {
+   "id": 189,
+   "type": "message",
+   "date": "2026-09-26T19:25:37",
+   "date_unixtime": "1790461537",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "reply_to_message_id": 188,
+   "text": "Igual, me prendo, avisen dónde. Yo voy, nos juntamos a las 11 cerca de la rambla. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, me prendo, avisen dónde. Yo voy, nos juntamos a las 11 cerca de la rambla. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 190,
+   "type": "message",
+   "date": "2026-09-26T19:25:47",
+   "date_unixtime": "1790461547",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "text": "Por experiencia, me prendo, avisen dónde. Yo voy, nos juntamos a las 11 cerca de la rambla. Depende mucho del caso.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, me prendo, avisen dónde. Yo voy, nos juntamos a las 11 cerca de la rambla. Depende mucho del caso."
+    }
+   ]
+  },
+  {
+   "id": 191,
+   "type": "message",
+   "date": "2026-09-26T19:25:52",
+   "date_unixtime": "1790461552",
+   "from": "Santiago N.",
+   "from_id": "user180000000310",
+   "reply_to_message_id": 190,
+   "edited": "2026-09-26T19:31:03",
+   "edited_unixtime": "1790461863",
+   "text": "Por experiencia, me prendo, avisen dónde. Yo voy, nos juntamos a las 11 cerca de la rambla. ¡Suerte!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, me prendo, avisen dónde. Yo voy, nos juntamos a las 11 cerca de la rambla. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 192,
+   "type": "message",
+   "date": "2026-09-27T10:02:49",
+   "date_unixtime": "1790514169",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "text": "¿Sirve la garantía de ANDA para alquilar con inmobiliaria?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Sirve la garantía de ANDA para alquilar con inmobiliaria?"
+    }
+   ]
+  },
+  {
+   "id": 193,
+   "type": "message",
+   "date": "2026-09-27T10:04:47",
+   "date_unixtime": "1790514287",
+   "from": "Matías D.",
+   "from_id": "user180000000314",
+   "reply_to_message_id": 192,
+   "file": "voice_messages/audio_193.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 85,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 194,
+   "type": "message",
+   "date": "2026-09-27T10:05:12",
+   "date_unixtime": "1790514312",
+   "from": "Sofía T.",
+   "from_id": "user180000000328",
+   "reply_to_message_id": 192,
+   "text": "Ojo, en Buceo un dos dormitorios arranca en 25 000 pesos más gastos comunes. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, en Buceo un dos dormitorios arranca en 25 000 pesos más gastos comunes. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 195,
+   "type": "message",
+   "date": "2026-09-27T10:05:15",
+   "date_unixtime": "1790514315",
+   "from": "Diego C.",
+   "from_id": "user180000000340",
+   "reply_to_message_id": 192,
+   "photo": "photos/photo_195.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 196,
+   "type": "message",
+   "date": "2026-09-27T10:05:34",
+   "date_unixtime": "1790514334",
+   "from": "Carolina V.",
+   "from_id": "user180000000341",
+   "reply_to_message_id": 195,
+   "text": "Por experiencia, pedí que el contrato pase por escribano y no pagues nada antes de firmar. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, pedí que el contrato pase por escribano y no pagues nada antes de firmar. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 197,
+   "type": "message",
+   "date": "2026-09-27T10:06:25",
+   "date_unixtime": "1790514385",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 195,
+   "text": "Consulta: ¿Los gastos comunes suelen ser altos?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Consulta: ¿Los gastos comunes suelen ser altos?"
+    }
+   ]
+  },
+  {
+   "id": 198,
+   "type": "message",
+   "date": "2026-09-28T12:10:09",
+   "date_unixtime": "1790608209",
+   "from": "Santiago O.",
+   "from_id": "user180000000327",
+   "forwarded_from": "Synthetic News Channel",
+   "text": "Cambian los requisitos para la residencia legal desde el mes próximo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Cambian los requisitos para la residencia legal desde el mes próximo"
+    }
+   ]
+  },
+  {
+   "id": 199,
+   "type": "message",
+   "date": "2026-09-28T12:43:09",
+   "date_unixtime": "1790610189",
+   "from": "Federico A.",
+   "from_id": "user180000000330",
+   "text": "Gente, ¿Alguien abrió cuenta en Scotiabank siendo extranjero sin cédula? ¿Qué documentos les pidieron?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿Alguien abrió cuenta en Scotiabank siendo extranjero sin cédula? ¿Qué documentos les pidieron?"
+    }
+   ]
+  },
+  {
+   "id": 200,
+   "type": "message",
+   "date": "2026-09-28T12:44:04",
+   "date_unixtime": "1790610244",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "reply_to_message_id": 199,
+   "text": "Igual, yo uso Prex hace un año y sin problemas, la verificación demora unos días. Te piden justificar el origen de los fondos, llevá el contrato de trabajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, yo uso Prex hace un año y sin problemas, la verificación demora unos días. Te piden justificar el origen de los fondos, llevá el contrato de trabajo"
+    }
+   ]
+  },
+  {
+   "id": 201,
+   "type": "message",
+   "date": "2026-09-28T12:45:58",
+   "date_unixtime": "1790610358",
+   "from": "Sofía B.",
+   "from_id": "user180000000331",
+   "reply_to_message_id": 199,
+   "text": "En BBVA me pidieron pasaporte, constancia de domicilio y comprobante de ingresos",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "En BBVA me pidieron pasaporte, constancia de domicilio y comprobante de ingresos"
+    }
+   ]
+  },
+  {
+   "id": 202,
+   "type": "message",
+   "date": "2026-09-29T08:34:00",
+   "date_unixtime": "1790681640",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000322",
+   "text": "¿Dónde consigo traductor público que no sea tan caro?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Dónde consigo traductor público que no sea tan caro?"
+    }
+   ]
+  },
+  {
+   "id": 203,
+   "type": "message",
+   "date": "2026-09-29T08:34:26",
+   "date_unixtime": "1790681666",
+   "from": "Martina S.",
+   "from_id": "user180000000335",
+   "reply_to_message_id": 202,
+   "text": "Yo hice así: primero sacá el carné de salud, sin eso no avanza el trámite. Sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: primero sacá el carné de salud, sin eso no avanza el trámite. Sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 204,
+   "type": "message",
+   "date": "2026-09-29T08:41:56",
+   "date_unixtime": "1790682116",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "reply_to_message_id": 203,
+   "text": "Yo hice así: primero sacá el carné de salud, sin eso no avanza el trámite. A mí la residencia me salió en unos 4 meses. Sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: primero sacá el carné de salud, sin eso no avanza el trámite. A mí la residencia me salió en unos 4 meses. Sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 205,
+   "type": "message",
+   "date": "2026-09-29T08:42:44",
+   "date_unixtime": "1790682164",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "text": "Yo hice así: yo fui con una traductora pública, tardó dos semanas y cobra por página. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: yo fui con una traductora pública, tardó dos semanas y cobra por página. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 206,
+   "type": "message",
+   "date": "2026-09-29T08:55:45",
+   "date_unixtime": "1790682945",
+   "from": "Federico C.",
+   "from_id": "user180000000326",
+   "reply_to_message_id": 205,
+   "edited": "2026-09-29T09:07:30",
+   "edited_unixtime": "1790683650",
+   "text": "Mirá, sí, tiene que venir apostillado, si no te lo rechazan. ¡Suerte!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, sí, tiene que venir apostillado, si no te lo rechazan. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 207,
+   "type": "message",
+   "date": "2026-09-29T08:55:49",
+   "date_unixtime": "1790682949",
+   "from": "Camila P.",
+   "from_id": "user180000000336",
+   "text": "Primero sacá el carné de salud, sin eso no avanza el trámite",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Primero sacá el carné de salud, sin eso no avanza el trámite"
+    }
+   ]
+  },
+  {
+   "id": 208,
+   "type": "message",
+   "date": "2026-09-29T08:57:03",
+   "date_unixtime": "1790683023",
+   "from": "Carolina D.",
+   "from_id": "user180000000334",
+   "reply_to_message_id": 203,
+   "photo": "photos/photo_208.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 209,
+   "type": "message",
+   "date": "2026-09-29T08:57:06",
+   "date_unixtime": "1790683026",
+   "from": "Carolina D.",
+   "from_id": "user180000000334",
+   "edited": "2026-09-29T09:06:39",
+   "edited_unixtime": "1790683599",
+   "text": "A mí la residencia me salió en unos 3 meses",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A mí la residencia me salió en unos 3 meses"
+    }
+   ]
+  },
+  {
+   "id": 210,
+   "type": "message",
+   "date": "2026-09-29T09:02:00",
+   "date_unixtime": "1790683320",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "text": "Igual, yo fui con una traductora pública, tardó dos semanas y cobra por página",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, yo fui con una traductora pública, tardó dos semanas y cobra por página"
+    }
+   ]
+  },
+  {
+   "id": 211,
+   "type": "message",
+   "date": "2026-09-29T09:02:09",
+   "date_unixtime": "1790683329",
+   "from": "Carolina D.",
+   "from_id": "user180000000334",
+   "reply_to_message_id": 208,
+   "text": "Yo hice así: sí, tiene que venir apostillado, si no te lo rechazan. La provisoria se renueva en DNIC con el número de expediente de Migración",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: sí, tiene que venir apostillado, si no te lo rechazan. La provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 212,
+   "type": "message",
+   "date": "2026-09-29T09:03:01",
+   "date_unixtime": "1790683381",
+   "from": "Diego C.",
+   "from_id": "user180000000340",
+   "reply_to_message_id": 204,
+   "text": "Hasta donde sé, a mí la residencia me salió en unos 6 meses. Yo fui con una traductora pública, tardó dos semanas y cobra por página",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, a mí la residencia me salió en unos 6 meses. Yo fui con una traductora pública, tardó dos semanas y cobra por página"
+    }
+   ]
+  },
+  {
+   "id": 213,
+   "type": "message",
+   "date": "2026-09-29T09:09:14",
+   "date_unixtime": "1790683754",
+   "from": "Federico M.",
+   "from_id": "user180000000337",
+   "reply_to_message_id": 212,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "😂",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 214,
+   "type": "message",
+   "date": "2026-09-30T08:21:41",
+   "date_unixtime": "1790767301",
+   "from": "Camila V.",
+   "from_id": "user180000000319",
+   "edited": "2026-09-30T08:28:59",
+   "edited_unixtime": "1790767739",
+   "text": "Gente, ¿Cuánto está demorando la residencia? Presenté hace 6 meses",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿Cuánto está demorando la residencia? Presenté hace 6 meses"
+    }
+   ]
+  },
+  {
+   "id": 215,
+   "type": "message",
+   "date": "2026-09-30T08:25:44",
+   "date_unixtime": "1790767544",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 214,
+   "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. Capaz que ya cambió.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. Capaz que ya cambió."
+    }
+   ]
+  },
+  {
+   "id": 216,
+   "type": "message",
+   "date": "2026-09-30T08:28:13",
+   "date_unixtime": "1790767693",
+   "from": "Camila V.",
+   "from_id": "user180000000319",
+   "reply_to_message_id": 215,
+   "text": "gracias",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "gracias"
+    }
+   ]
+  },
+  {
+   "id": 217,
+   "type": "message",
+   "date": "2026-09-30T22:09:29",
+   "date_unixtime": "1790816969",
+   "from": "Lucas K.",
+   "from_id": "user180000000301",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Earn $500 a week"
+    },
+    " working from home, DM me ",
+    {
+     "type": "mention",
+     "text": "@income_demo"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Earn $500 a week"
+    },
+    {
+     "type": "plain",
+     "text": " working from home, DM me "
+    },
+    {
+     "type": "mention",
+     "text": "@income_demo"
+    }
+   ]
+  },
+  {
+   "id": 218,
+   "type": "message",
+   "date": "2026-09-30T23:36:29",
+   "date_unixtime": "1790822189",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "text": "Gente, ¿Dónde conviene sacar efectivo sin comisión con Deel?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿Dónde conviene sacar efectivo sin comisión con Deel?"
+    }
+   ]
+  },
+  {
+   "id": 219,
+   "type": "message",
+   "date": "2026-09-30T23:36:38",
+   "date_unixtime": "1790822198",
+   "from": "Gonzalo P.",
+   "from_id": "user180000000318",
+   "reply_to_message_id": 218,
+   "text": "Ojo, yo uso Deel hace un año y sin problemas, la verificación demora unos días. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, yo uso Deel hace un año y sin problemas, la verificación demora unos días. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 220,
+   "type": "message",
+   "date": "2026-09-30T23:37:04",
+   "date_unixtime": "1790822224",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "edited": "2026-09-30T23:50:51",
+   "edited_unixtime": "1790823051",
+   "text": "A nosotros nos pasó que yo uso Wise hace un año y sin problemas, la verificación demora unos días. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que yo uso Wise hace un año y sin problemas, la verificación demora unos días. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 221,
+   "type": "message",
+   "date": "2026-09-30T23:40:26",
+   "date_unixtime": "1790822426",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "reply_to_message_id": 218,
+   "edited": "2026-09-30T23:51:45",
+   "edited_unixtime": "1790823105",
+   "text": "A nosotros nos pasó que la cuenta en dólares sirve si pagás el alquiler en dólares",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que la cuenta en dólares sirve si pagás el alquiler en dólares"
+    }
+   ]
+  },
+  {
+   "id": 222,
+   "type": "message",
+   "date": "2026-09-30T23:40:55",
+   "date_unixtime": "1790822455",
+   "from": "Federico A.",
+   "from_id": "user180000000330",
+   "reply_to_message_id": 218,
+   "text": "En Itaú me pidieron pasaporte, constancia de domicilio y comprobante de ingresos",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "En Itaú me pidieron pasaporte, constancia de domicilio y comprobante de ingresos"
+    }
+   ]
+  },
+  {
+   "id": 223,
+   "type": "message",
+   "date": "2026-09-30T23:41:13",
+   "date_unixtime": "1790822473",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "reply_to_message_id": 219,
+   "text": "¿Eso fue en la sucursal del Centro?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Eso fue en la sucursal del Centro?"
+    }
+   ]
+  },
+  {
+   "id": 224,
+   "type": "message",
+   "date": "2026-09-30T23:43:15",
+   "date_unixtime": "1790822595",
+   "from": "Carolina V.",
+   "from_id": "user180000000341",
+   "reply_to_message_id": 218,
+   "text": [
+    "Mirá, fijate acá que está bien explicado: ",
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    ". En BBVA me pidieron pasaporte, constancia de domicilio y comprobante de ingresos"
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, fijate acá que está bien explicado: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    {
+     "type": "plain",
+     "text": ". En BBVA me pidieron pasaporte, constancia de domicilio y comprobante de ingresos"
+    }
+   ]
+  },
+  {
+   "id": 225,
+   "type": "message",
+   "date": "2026-09-30T23:59:08",
+   "date_unixtime": "1790823548",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "reply_to_message_id": 218,
+   "edited": "2026-10-01T00:13:33",
+   "edited_unixtime": "1790824413",
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_036"
+    },
+    " ¿vos sabés?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_036"
+    },
+    {
+     "type": "plain",
+     "text": " ¿vos sabés?"
+    }
+   ]
+  },
+  {
+   "id": 226,
+   "type": "message",
+   "date": "2026-09-30T23:59:23",
+   "date_unixtime": "1790823563",
+   "from": "Federico R.",
+   "from_id": "user180000000311",
+   "reply_to_message_id": 225,
+   "text": "no",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "no"
+    }
+   ]
+  },
+  {
+   "id": 227,
+   "type": "message",
+   "date": "2026-09-30T23:59:34",
+   "date_unixtime": "1790823574",
+   "from": "Carolina V.",
+   "from_id": "user180000000325",
+   "text": "Yo hice así: con DolarApp podés retirar en Redpagos, pero el límite diario es bajo. Te piden justificar el origen de los fondos, llevá el contrato de trabajo. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: con DolarApp podés retirar en Redpagos, pero el límite diario es bajo. Te piden justificar el origen de los fondos, llevá el contrato de trabajo. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 228,
+   "type": "message",
+   "date": "2026-10-01T20:52:24",
+   "date_unixtime": "1790898744",
+   "from": "Carolina D.",
+   "from_id": "user180000000334",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    ", escribime al privado ",
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    {
+     "type": "plain",
+     "text": ", escribime al privado "
+    },
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ]
+  },
+  {
+   "id": 229,
+   "type": "message",
+   "date": "2026-10-01T21:12:24",
+   "date_unixtime": "1790899944",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "text": "¿Sirve la garantía de ANDA para alquilar con inmobiliaria?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Sirve la garantía de ANDA para alquilar con inmobiliaria?"
+    }
+   ]
+  },
+  {
+   "id": 230,
+   "type": "message",
+   "date": "2026-10-02T16:33:13",
+   "date_unixtime": "1790969593",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "text": "¡Hola! ¿Alguien abrió cuenta en Santander siendo extranjero sin cédula? ¿Qué documentos les pidieron?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¡Hola! ¿Alguien abrió cuenta en Santander siendo extranjero sin cédula? ¿Qué documentos les pidieron?"
+    }
+   ]
+  },
+  {
+   "id": 231,
+   "type": "message",
+   "date": "2026-10-02T16:34:16",
+   "date_unixtime": "1790969656",
+   "from": "Federico G.",
+   "from_id": "user180000000338",
+   "reply_to_message_id": 230,
+   "text": "Igual, con Wise podés retirar en Redpagos, pero el límite diario es bajo. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, con Wise podés retirar en Redpagos, pero el límite diario es bajo. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 232,
+   "type": "message",
+   "date": "2026-10-02T16:34:35",
+   "date_unixtime": "1790969675",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "reply_to_message_id": 231,
+   "edited": "2026-10-02T16:35:58",
+   "edited_unixtime": "1790969758",
+   "text": "Ojo, con DolarApp podés retirar en Redpagos, pero el límite diario es bajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, con DolarApp podés retirar en Redpagos, pero el límite diario es bajo"
+    }
+   ]
+  },
+  {
+   "id": 233,
+   "type": "message",
+   "date": "2026-10-02T16:34:38",
+   "date_unixtime": "1790969678",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000322",
+   "edited": "2026-10-02T16:41:06",
+   "edited_unixtime": "1790970066",
+   "text": "Con Prex podés retirar en Redpagos, pero el límite diario es bajo. La cuenta en dólares sirve si pagás el alquiler en dólares",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Con Prex podés retirar en Redpagos, pero el límite diario es bajo. La cuenta en dólares sirve si pagás el alquiler en dólares"
+    }
+   ]
+  },
+  {
+   "id": 234,
+   "type": "message",
+   "date": "2026-10-02T16:37:02",
+   "date_unixtime": "1790969822",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "reply_to_message_id": 232,
+   "text": "dale",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "dale"
+    }
+   ]
+  },
+  {
+   "id": 235,
+   "type": "message",
+   "date": "2026-10-02T17:11:24",
+   "date_unixtime": "1790971884",
+   "from": "Camila P.",
+   "from_id": "user180000000336",
+   "reply_to_message_id": 230,
+   "photo": "photos/photo_235.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 236,
+   "type": "message",
+   "date": "2026-10-03T12:41:05",
+   "date_unixtime": "1791042065",
+   "from": "Santiago O.",
+   "from_id": "user180000000327",
+   "text": "¡Hola! ¿Alguien sabe cuánto piden de garantía para alquilar en Parque Rodó?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¡Hola! ¿Alguien sabe cuánto piden de garantía para alquilar en Parque Rodó?"
+    }
+   ]
+  },
+  {
+   "id": 237,
+   "type": "message",
+   "date": "2026-10-03T12:47:32",
+   "date_unixtime": "1791042452",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "reply_to_message_id": 236,
+   "text": "Igual, depende, suele ser un mes de alquiler más IVA por año",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, depende, suele ser un mes de alquiler más IVA por año"
+    }
+   ]
+  },
+  {
+   "id": 238,
+   "type": "message",
+   "date": "2026-10-03T12:48:17",
+   "date_unixtime": "1791042497",
+   "from": "Federico G.",
+   "from_id": "user180000000338",
+   "reply_to_message_id": 237,
+   "text": "A nosotros nos pasó que parque Rodó es tranquilo y tiene buenas escuelas cerca",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que parque Rodó es tranquilo y tiene buenas escuelas cerca"
+    }
+   ]
+  },
+  {
+   "id": 239,
+   "type": "message",
+   "date": "2026-10-03T12:48:20",
+   "date_unixtime": "1791042500",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "reply_to_message_id": 238,
+   "text": "Igual, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Pocitos es tranquilo y tiene buenas escuelas cerca. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Pocitos es tranquilo y tiene buenas escuelas cerca. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 240,
+   "type": "message",
+   "date": "2026-10-03T12:49:04",
+   "date_unixtime": "1791042544",
+   "from": "Rodrigo P.",
+   "from_id": "user180000000329",
+   "reply_to_message_id": 239,
+   "text": "Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 241,
+   "type": "message",
+   "date": "2026-10-03T12:50:16",
+   "date_unixtime": "1791042616",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "text": [
+    "Depende, suele ser un mes de alquiler más IVA por año. Pedí que el contrato pase por escribano y no pagues nada antes de firmar. Te dejo esta guía que está buena: ",
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    },
+    ". Pero confirmalo allá."
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Depende, suele ser un mes de alquiler más IVA por año. Pedí que el contrato pase por escribano y no pagues nada antes de firmar. Te dejo esta guía que está buena: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    },
+    {
+     "type": "plain",
+     "text": ". Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 242,
+   "type": "message",
+   "date": "2026-10-03T12:56:48",
+   "date_unixtime": "1791043008",
+   "from": "Diego C.",
+   "from_id": "user180000000340",
+   "reply_to_message_id": 236,
+   "text": "Yo hice así: pedí que el contrato pase por escribano y no pagues nada antes de firmar",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: pedí que el contrato pase por escribano y no pagues nada antes de firmar"
+    }
+   ]
+  },
+  {
+   "id": 243,
+   "type": "message",
+   "date": "2026-10-03T12:57:08",
+   "date_unixtime": "1791043028",
+   "from": "Federico M.",
+   "from_id": "user180000000337",
+   "reply_to_message_id": 237,
+   "edited": "2026-10-03T13:09:23",
+   "edited_unixtime": "1791043763",
+   "text": "A nosotros nos pasó que depende, suele ser un mes de alquiler más IVA por año. En Buceo un dos dormitorios arranca en 25 000 pesos más gastos comunes",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que depende, suele ser un mes de alquiler más IVA por año. En Buceo un dos dormitorios arranca en 25 000 pesos más gastos comunes"
+    }
+   ]
+  },
+  {
+   "id": 244,
+   "type": "message",
+   "date": "2026-10-03T12:57:11",
+   "date_unixtime": "1791043031",
+   "from": "Gonzalo P.",
+   "from_id": "user180000000318",
+   "reply_to_message_id": 243,
+   "text": "Hasta donde sé, depende, suele ser un mes de alquiler más IVA por año",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, depende, suele ser un mes de alquiler más IVA por año"
+    }
+   ]
+  },
+  {
+   "id": 245,
+   "type": "message",
+   "date": "2026-10-04T12:41:33",
+   "date_unixtime": "1791128493",
+   "from": "Santiago N.",
+   "from_id": "user180000000310",
+   "text": "¿Qué precio razonable hay para un apartamento de dos dormitorios en Buceo?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Qué precio razonable hay para un apartamento de dos dormitorios en Buceo?"
+    }
+   ]
+  },
+  {
+   "id": 246,
+   "type": "message",
+   "date": "2026-10-04T12:46:37",
+   "date_unixtime": "1791128797",
+   "from": "Federico B.",
+   "from_id": "user180000000316",
+   "edited": "2026-10-04T12:51:29",
+   "edited_unixtime": "1791129089",
+   "text": "Ojo, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Buceo es tranquilo y tiene buenas escuelas cerca. Pedí que el contrato pase por escribano y no pagues nada antes de firmar",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ojo, sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler. Buceo es tranquilo y tiene buenas escuelas cerca. Pedí que el contrato pase por escribano y no pagues nada antes de firmar"
+    }
+   ]
+  },
+  {
+   "id": 247,
+   "type": "message",
+   "date": "2026-10-04T12:47:05",
+   "date_unixtime": "1791128825",
+   "from": "Federico A.",
+   "from_id": "user180000000330",
+   "reply_to_message_id": 246,
+   "text": "Yo hice así: depende, suele ser un mes de alquiler más IVA por año",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: depende, suele ser un mes de alquiler más IVA por año"
+    }
+   ]
+  },
+  {
+   "id": 248,
+   "type": "message",
+   "date": "2026-10-04T12:47:26",
+   "date_unixtime": "1791128846",
+   "from": "Diego N.",
+   "from_id": "user180000000313",
+   "reply_to_message_id": 247,
+   "text": "Igual, pedí que el contrato pase por escribano y no pagues nada antes de firmar. Pero confirmalo allá.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, pedí que el contrato pase por escribano y no pagues nada antes de firmar. Pero confirmalo allá."
+    }
+   ]
+  },
+  {
+   "id": 249,
+   "type": "message",
+   "date": "2026-10-04T12:47:29",
+   "date_unixtime": "1791128849",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "reply_to_message_id": 245,
+   "file": "round_video_messages/round_249.mp4",
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 250,
+   "type": "message",
+   "date": "2026-10-04T12:47:49",
+   "date_unixtime": "1791128869",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "reply_to_message_id": 249,
+   "text": "Por experiencia, buceo es tranquilo y tiene buenas escuelas cerca. Depende, suele ser un mes de alquiler más IVA por año. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, buceo es tranquilo y tiene buenas escuelas cerca. Depende, suele ser un mes de alquiler más IVA por año. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 251,
+   "type": "message",
+   "date": "2026-10-05T10:51:19",
+   "date_unixtime": "1791208279",
+   "from": "Gonzalo P.",
+   "from_id": "user180000000318",
+   "text": "Una pregunta: ¿Hacemos un café esta semana?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Una pregunta: ¿Hacemos un café esta semana?"
+    }
+   ]
+  },
+  {
+   "id": 252,
+   "type": "message",
+   "date": "2026-10-05T10:53:25",
+   "date_unixtime": "1791208405",
+   "from": "Joaquín P.",
+   "from_id": "user180000000332",
+   "reply_to_message_id": 251,
+   "text": "Yo hice así: me prendo, avisen dónde",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: me prendo, avisen dónde"
+    }
+   ]
+  },
+  {
+   "id": 253,
+   "type": "message",
+   "date": "2026-10-05T10:54:01",
+   "date_unixtime": "1791208441",
+   "from": "Rodrigo T.",
+   "from_id": "user180000000320",
+   "reply_to_message_id": 252,
+   "text": "dale",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "dale"
+    }
+   ]
+  },
+  {
+   "id": 254,
+   "type": "message",
+   "date": "2026-10-06T08:59:38",
+   "date_unixtime": "1791287978",
+   "from": "Joaquín O.",
+   "from_id": "user180000000321",
+   "text": "¿Midinero funciona bien para cobrar del exterior?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Midinero funciona bien para cobrar del exterior?"
+    }
+   ]
+  },
+  {
+   "id": 255,
+   "type": "message",
+   "date": "2026-10-06T09:00:27",
+   "date_unixtime": "1791288027",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "reply_to_message_id": 254,
+   "text": "Con Deel podés retirar en Redpagos, pero el límite diario es bajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Con Deel podés retirar en Redpagos, pero el límite diario es bajo"
+    }
+   ]
+  },
+  {
+   "id": 256,
+   "type": "message",
+   "date": "2026-10-06T09:01:55",
+   "date_unixtime": "1791288115",
+   "from": "Carolina D.",
+   "from_id": "user180000000334",
+   "reply_to_message_id": 255,
+   "text": "Mirá, con DolarApp podés retirar en Redpagos, pero el límite diario es bajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, con DolarApp podés retirar en Redpagos, pero el límite diario es bajo"
+    }
+   ]
+  },
+  {
+   "id": 257,
+   "type": "message",
+   "date": "2026-10-06T09:03:15",
+   "date_unixtime": "1791288195",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000315",
+   "reply_to_message_id": 256,
+   "text": [
+    "Te cuento: fijate acá que está bien explicado: ",
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    ". Depende mucho del caso."
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Te cuento: fijate acá que está bien explicado: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    {
+     "type": "plain",
+     "text": ". Depende mucho del caso."
+    }
+   ]
+  },
+  {
+   "id": 258,
+   "type": "message",
+   "date": "2026-10-06T17:41:39",
+   "date_unixtime": "1791319299",
+   "from": "Camila P.",
+   "from_id": "user180000000336",
+   "text": "Buenas, ¿Dónde consigo traductor público que no sea tan caro?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Buenas, ¿Dónde consigo traductor público que no sea tan caro?"
+    }
+   ]
+  },
+  {
+   "id": 259,
+   "type": "message",
+   "date": "2026-10-06T17:43:18",
+   "date_unixtime": "1791319398",
+   "from": "Camila F.",
+   "from_id": "user180000000312",
+   "reply_to_message_id": 258,
+   "text": "Mirá, sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 260,
+   "type": "message",
+   "date": "2026-10-06T17:44:23",
+   "date_unixtime": "1791319463",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "edited": "2026-10-06T17:46:48",
+   "edited_unixtime": "1791319608",
+   "text": "Hasta donde sé, la provisoria se renueva en DNIC con el número de expediente de Migración. Sí, tiene que venir apostillado, si no te lo rechazan",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, la provisoria se renueva en DNIC con el número de expediente de Migración. Sí, tiene que venir apostillado, si no te lo rechazan"
+    }
+   ]
+  },
+  {
+   "id": 261,
+   "type": "message",
+   "date": "2026-10-06T17:49:20",
+   "date_unixtime": "1791319760",
+   "from": "Agustina T.",
+   "from_id": "user180000000308",
+   "reply_to_message_id": 259,
+   "edited": "2026-10-06T17:50:48",
+   "edited_unixtime": "1791319848",
+   "text": "Hasta donde sé, sí, tiene que venir apostillado, si no te lo rechazan. Depende mucho del caso.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, sí, tiene que venir apostillado, si no te lo rechazan. Depende mucho del caso."
+    }
+   ]
+  },
+  {
+   "id": 262,
+   "type": "message",
+   "date": "2026-10-07T08:56:24",
+   "date_unixtime": "1791374184",
+   "from": "Sofía T.",
+   "from_id": "user180000000328",
+   "text": "Gente, ¿Cuánto cobra HSBC por mantener la cuenta en dólares?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿Cuánto cobra HSBC por mantener la cuenta en dólares?"
+    }
+   ]
+  },
+  {
+   "id": 263,
+   "type": "message",
+   "date": "2026-10-07T08:57:28",
+   "date_unixtime": "1791374248",
+   "from": "Matías T.",
+   "from_id": "user180000000317",
+   "text": "Hasta donde sé, la cuenta en dólares sirve si pagás el alquiler en dólares",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, la cuenta en dólares sirve si pagás el alquiler en dólares"
+    }
+   ]
+  },
+  {
+   "id": 264,
+   "type": "message",
+   "date": "2026-10-07T09:00:51",
+   "date_unixtime": "1791374451",
+   "from": "Sofía T.",
+   "from_id": "user180000000328",
+   "reply_to_message_id": 262,
+   "edited": "2026-10-07T09:07:28",
+   "edited_unixtime": "1791374848",
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_037"
+    },
+    " ¿vos sabés?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_037"
+    },
+    {
+     "type": "plain",
+     "text": " ¿vos sabés?"
+    }
+   ]
+  },
+  {
+   "id": 265,
+   "type": "message",
+   "date": "2026-10-07T09:02:31",
+   "date_unixtime": "1791374551",
+   "from": "Martina G.",
+   "from_id": "user180000000342",
+   "reply_to_message_id": 264,
+   "text": "Por experiencia, yo uso Payoneer hace un año y sin problemas, la verificación demora unos días",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, yo uso Payoneer hace un año y sin problemas, la verificación demora unos días"
+    }
+   ]
+  },
+  {
+   "id": 266,
+   "type": "message",
+   "date": "2026-10-07T09:02:59",
+   "date_unixtime": "1791374579",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000322",
+   "reply_to_message_id": 265,
+   "edited": "2026-10-07T09:10:16",
+   "edited_unixtime": "1791375016",
+   "text": "Igual, en Itaú me pidieron pasaporte, constancia de domicilio y comprobante de ingresos. Con Midinero podés retirar en Redpagos, pero el límite diario es bajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, en Itaú me pidieron pasaporte, constancia de domicilio y comprobante de ingresos. Con Midinero podés retirar en Redpagos, pero el límite diario es bajo"
+    }
+   ]
+  },
+  {
+   "id": 267,
+   "type": "message",
+   "date": "2026-10-07T09:03:07",
+   "date_unixtime": "1791374587",
+   "from": "Federico D.",
+   "from_id": "user180000000343",
+   "reply_to_message_id": 262,
+   "text": "Mirá, en Itaú me pidieron pasaporte, constancia de domicilio y comprobante de ingresos",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, en Itaú me pidieron pasaporte, constancia de domicilio y comprobante de ingresos"
+    }
+   ]
+  },
+  {
+   "id": 268,
+   "type": "message",
+   "date": "2026-10-07T09:06:14",
+   "date_unixtime": "1791374774",
+   "from": "Nicolás A.",
+   "from_id": "user180000000323",
+   "text": "Con Deel podés retirar en Redpagos, pero el límite diario es bajo",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Con Deel podés retirar en Redpagos, pero el límite diario es bajo"
+    }
+   ]
+  },
+  {
+   "id": 269,
+   "type": "message",
+   "date": "2026-10-07T09:06:35",
+   "date_unixtime": "1791374795",
+   "from": "Gonzalo P.",
+   "from_id": "user180000000318",
+   "reply_to_message_id": 262,
+   "photo": "photos/photo_269.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 270,
+   "type": "message",
+   "date": "2026-10-07T09:11:09",
+   "date_unixtime": "1791375069",
+   "from": "Gonzalo P.",
+   "from_id": "user180000000318",
+   "reply_to_message_id": 266,
+   "text": "Yo hice así: te piden justificar el origen de los fondos, llevá el contrato de trabajo. Capaz que ya cambió.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yo hice así: te piden justificar el origen de los fondos, llevá el contrato de trabajo. Capaz que ya cambió."
+    }
+   ]
+  },
+  {
+   "id": 271,
+   "type": "message",
+   "date": "2026-10-08T09:16:20",
+   "date_unixtime": "1791461780",
+   "from": "Liam J.",
+   "from_id": "user180000000305",
+   "text": "We're looking for a long-term rental in Parque Rodó, what's a realistic price for two bedrooms?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "We're looking for a long-term rental in Parque Rodó, what's a realistic price for two bedrooms?"
+    }
+   ]
+  },
+  {
+   "id": 272,
+   "type": "message",
+   "date": "2026-10-08T09:17:54",
+   "date_unixtime": "1791461874",
+   "from": "Daniel A.",
+   "from_id": "user180000000303",
+   "reply_to_message_id": 271,
+   "text": "As far as I know, we used a rental insurance (seguro de alquiler), roughly one month of rent per year. Make sure an escribano handles the contract and don't pay before signing. Also check Gallito and InfoCasas, but there are many duplicates. That was last month.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "As far as I know, we used a rental insurance (seguro de alquiler), roughly one month of rent per year. Make sure an escribano handles the contract and don't pay before signing. Also check Gallito and InfoCasas, but there are many duplicates. That was last month."
+    }
+   ]
+  },
+  {
+   "id": 273,
+   "type": "message",
+   "date": "2026-10-08T09:54:52",
+   "date_unixtime": "1791464092",
+   "from": "Daniel A.",
+   "from_id": "user180000000303",
+   "reply_to_message_id": 272,
+   "text": "We did it like this: make sure an escribano handles the contract and don't pay before signing. Good luck!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "We did it like this: make sure an escribano handles the contract and don't pay before signing. Good luck!"
+    }
+   ]
+  },
+  {
+   "id": 274,
+   "type": "message",
+   "date": "2026-10-08T09:55:04",
+   "date_unixtime": "1791464104",
+   "from": "Liam J.",
+   "from_id": "user180000000305",
+   "reply_to_message_id": 272,
+   "text": "Do apartments usually come furnished?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Do apartments usually come furnished?"
+    }
+   ]
+  },
+  {
+   "id": 275,
+   "type": "message",
+   "date": "2026-10-08T09:55:32",
+   "date_unixtime": "1791464132",
+   "from": "Lucas K.",
+   "from_id": "user180000000301",
+   "reply_to_message_id": 274,
+   "text": "Pocitos is quiet, lots of parks and schools nearby",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Pocitos is quiet, lots of parks and schools nearby"
+    }
+   ]
+  },
+  {
+   "id": 276,
+   "type": "message",
+   "date": "2026-10-08T09:55:58",
+   "date_unixtime": "1791464158",
+   "from": "Liam J.",
+   "from_id": "user180000000305",
+   "reply_to_message_id": 275,
+   "edited": "2026-10-08T10:05:03",
+   "edited_unixtime": "1791464703",
+   "text": "Do agencies accept ANDA as a guarantee?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Do agencies accept ANDA as a guarantee?"
+    }
+   ]
+  },
+  {
+   "id": 277,
+   "type": "message",
+   "date": "2026-10-08T22:52:29",
+   "date_unixtime": "1791510749",
+   "from": "Federico A.",
+   "from_id": "user180000000330",
+   "text": "¿Alguien sabe cuánto piden de garantía para alquilar en Malvín?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¿Alguien sabe cuánto piden de garantía para alquilar en Malvín?"
+    }
+   ]
+  },
+  {
+   "id": 278,
+   "type": "message",
+   "date": "2026-10-08T22:52:57",
+   "date_unixtime": "1791510777",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "reply_to_message_id": 277,
+   "text": "A nosotros nos pasó que en Punta Carretas un dos dormitorios arranca en 30 000 pesos más gastos comunes. Depende, suele ser un mes de alquiler más IVA por año",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A nosotros nos pasó que en Punta Carretas un dos dormitorios arranca en 30 000 pesos más gastos comunes. Depende, suele ser un mes de alquiler más IVA por año"
+    }
+   ]
+  },
+  {
+   "id": 279,
+   "type": "message",
+   "date": "2026-10-08T22:53:03",
+   "date_unixtime": "1791510783",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "reply_to_message_id": 277,
+   "edited": "2026-10-08T23:06:13",
+   "edited_unixtime": "1791511573",
+   "text": "no",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "no"
+    }
+   ]
+  },
+  {
+   "id": 280,
+   "type": "message",
+   "date": "2026-10-08T22:56:45",
+   "date_unixtime": "1791511005",
+   "from": "Joaquín P.",
+   "from_id": "user180000000332",
+   "reply_to_message_id": 279,
+   "text": "Punta Carretas es tranquilo y tiene buenas escuelas cerca",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Punta Carretas es tranquilo y tiene buenas escuelas cerca"
+    }
+   ]
+  },
+  {
+   "id": 281,
+   "type": "message",
+   "date": "2026-10-08T22:57:17",
+   "date_unixtime": "1791511037",
+   "from": "Santiago O.",
+   "from_id": "user180000000327",
+   "reply_to_message_id": 280,
+   "text": "Por experiencia, pedí que el contrato pase por escribano y no pagues nada antes de firmar. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Por experiencia, pedí que el contrato pase por escribano y no pagues nada antes de firmar. Sí, ANDA funciona en la mayoría de las inmobiliarias. También podés usar seguro de alquiler"
+    }
+   ]
+  },
+  {
+   "id": 282,
+   "type": "message",
+   "date": "2026-10-10T10:18:13",
+   "date_unixtime": "1791638293",
+   "from": "Gonzalo G.",
+   "from_id": "user180000000324",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    ", escribime al privado ",
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Ganá dinero desde casa"
+    },
+    {
+     "type": "plain",
+     "text": ", escribime al privado "
+    },
+    {
+     "type": "mention",
+     "text": "@ganancias_demo"
+    }
+   ]
+  },
+  {
+   "id": 283,
+   "type": "message",
+   "date": "2026-10-10T11:44:13",
+   "date_unixtime": "1791643453",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "text": "Gente, ¿El certificado de antecedentes tiene que estar apostillado?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Gente, ¿El certificado de antecedentes tiene que estar apostillado?"
+    }
+   ]
+  },
+  {
+   "id": 284,
+   "type": "message",
+   "date": "2026-10-10T12:00:40",
+   "date_unixtime": "1791644440",
+   "from": "Gonzalo O.",
+   "from_id": "user180000000322",
+   "reply_to_message_id": 283,
+   "text": "Hasta donde sé, la provisoria se renueva en DNIC con el número de expediente de Migración",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hasta donde sé, la provisoria se renueva en DNIC con el número de expediente de Migración"
+    }
+   ]
+  },
+  {
+   "id": 285,
+   "type": "message",
+   "date": "2026-10-10T12:03:07",
+   "date_unixtime": "1791644587",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "reply_to_message_id": 284,
+   "edited": "2026-10-10T12:11:46",
+   "edited_unixtime": "1791645106",
+   "text": "¡Hola! ¿Se paga en Abitab antes de ir?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "¡Hola! ¿Se paga en Abitab antes de ir?"
+    }
+   ]
+  },
+  {
+   "id": 286,
+   "type": "message",
+   "date": "2026-10-10T12:03:28",
+   "date_unixtime": "1791644608",
+   "from": "Rodrigo L.",
+   "from_id": "user180000000339",
+   "reply_to_message_id": 283,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_3_012"
+    },
+    " ¿vos sabés?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_3_012"
+    },
+    {
+     "type": "plain",
+     "text": " ¿vos sabés?"
+    }
+   ]
+  },
+  {
+   "id": 287,
+   "type": "message",
+   "date": "2026-10-10T12:04:11",
+   "date_unixtime": "1791644651",
+   "from": "Federico G.",
+   "from_id": "user180000000338",
+   "reply_to_message_id": 283,
+   "edited": "2026-10-10T12:17:45",
+   "edited_unixtime": "1791645465",
+   "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. A mí la residencia me salió en unos 6 meses. Sí, tiene que venir apostillado, si no te lo rechazan. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Primero sacá el carné de salud, sin eso no avanza el trámite. A mí la residencia me salió en unos 6 meses. Sí, tiene que venir apostillado, si no te lo rechazan. Ojalá te sirva."
+    }
+   ]
+  },
+  {
+   "id": 288,
+   "type": "message",
+   "date": "2026-10-10T12:04:24",
+   "date_unixtime": "1791644664",
+   "from": "Santiago S.",
+   "from_id": "user180000000306",
+   "reply_to_message_id": 287,
+   "text": "Igual, primero sacá el carné de salud, sin eso no avanza el trámite. ¡Suerte!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Igual, primero sacá el carné de salud, sin eso no avanza el trámite. ¡Suerte!"
+    }
+   ]
+  },
+  {
+   "id": 289,
+   "type": "message",
+   "date": "2026-10-11T09:36:06",
+   "date_unixtime": "1791722166",
+   "from": "Carolina D.",
+   "from_id": "user180000000334",
+   "text": "Buenas, ¿Dónde conviene sacar efectivo sin comisión con Midinero?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Buenas, ¿Dónde conviene sacar efectivo sin comisión con Midinero?"
+    }
+   ]
+  },
+  {
+   "id": 290,
+   "type": "message",
+   "date": "2026-10-11T09:47:30",
+   "date_unixtime": "1791722850",
+   "from": "Sofía L.",
+   "from_id": "user180000000309",
+   "edited": "2026-10-11T09:59:04",
+   "edited_unixtime": "1791723544",
+   "text": "Mirá, yo uso DolarApp hace un año y sin problemas, la verificación demora unos días. Ojalá te sirva.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Mirá, yo uso DolarApp hace un año y sin problemas, la verificación demora unos días. Ojalá te sirva."
+    }
+   ]
+  }
+ ]
+}

@@ -1,71 +1,57 @@
-# Task: MVP without AI — roadmap steps 2–8, built by parallel agent sessions
+# Task: synthetic chat data modelled on the owner's real chats (ru, es, en)
 
-Owner instruction of 2026-10-19: build the MVP with a multi-agent setup; frontend in plain
-JavaScript, CSS and HTML; ask questions first. Owner answers: steps 2–8 without AI;
-parallel sessions in git worktrees; static frontend over a JSON API; synthetic data only
-(`docs/decisions.md`, 2026-10-19).
+Owner instruction of 2026-10-19: study the chat exports in the owner's local folder and build
+synthetic messages based on them, with Russian, Spanish and English.
 
-Synchronisation: integration branch `feat/mvp`. Wave 0 — the lead commits the contracts.
-Wave 1 — one session and one branch per work package, disjoint file zones, no dependency
-changes (`pyproject.toml` and `uv.lock` belong to the lead). Wave 2 — the lead merges each
-branch into `feat/mvp`, runs the gate after each merge, wires services, CLI, worker and
-Docker, and runs the end-to-end check.
+Privacy constraint (applied throughout): the real exports are personal data of chat
+members. They are extracted only into the session's temporary folder, studied only as
+aggregates, and nothing real (message, name, username) reaches the repository or a report.
 
 Marks: `[ ]` open, `+` done, `-` not done or partially done (with a note).
 
-## 1. Wave 0 — contracts (lead)
+## 1. Preparation
 
-+ Owner decisions recorded; ADR-0002 (static frontend); `jinja2` removed
-+ `domain/models.py`, `domain/ports.py`, `domain/text.py`
-+ `pipeline/base.py` (`Stage`, `STAGE_ORDER`, `STAGE_COLUMNS`, `NORMALIZE_VERSION`)
-+ `storage/db/tables.py`, migration 0001 (with `threads_fts`), `migrations/env.py`
-+ `services/normalize.py`, `services/queries.py`, `docs/api.md`
-+ Contract tests; `just check` green; committed on `feat/mvp`
++ Two RAR5 archives extracted with WinRAR's UnRAR into the session scratchpad (the built-in
+  tar cannot read RAR5 or Cyrillic paths)
++ Profile of 8 unique chats (~177k messages, 2022-07 → 2026-10; two exports were exact
+  duplicates): languages, reply/edit/question/short/media/service/forward rates, length and
+  gap distributions, reply depth, topic vocabulary, Spanish terms inside Russian text,
+  generic short replies used by at least 15 authors
+- This checklist was not committed before the work started (small task, one sitting)
 
-## 2. Wave 1 — work packages (parallel sessions)
+## 2. Implementation
 
-File zones (a package touches nothing outside its zone; tests live in its test folder):
++ `tests/fixtures/synthetic/phrasebank.json`: invented phrases in ru/es/en for banks,
+  documents, housing, health, work, telecom, meetups, IT; short replies, gratitude,
+  greetings, flood, spam, forwards, openers and closers for variety
++ `scripts/generate_synthetic.py`: deterministic generator (stdlib only), four chats —
+  ru banks and documents, ru IT with English, es community, en expats — with interleaved
+  threads, reply chains, unlinked answers, edits, photos, voice, video notes, stickers,
+  animations, joins, forwards, spam and reposts
++ Calibration against the profile: replies 60–65 % (real 53–72 %), edits 21–28 % (~28 %),
+  links 2–4 % (2–3.5 %), short 5–10 % (~7.5 %); questions 22–27 % (real ~18 %, kept higher
+  on purpose for search tests)
++ `just synthetic`, `just synthetic-check` (in `just check`, CI and pre-commit), `just demo`
 
-| Package | Zone |
-|---|---|
-| A connectors | `src/chatradar/connectors/**`, `src/chatradar/storage/raw_jsonl.py`, `src/chatradar/services/ingest.py`, `src/chatradar/services/sync.py`, `tests/unit/connectors/**`, `tests/fixtures/tg_export/**` |
-| B storage | `src/chatradar/storage/db/**` except `tables.py`, `tests/integration/storage/**` |
-| C pipeline | `src/chatradar/pipeline/**` except `base.py`, `src/chatradar/resources/lexicons/**`, `src/chatradar/services/process.py`, `tests/unit/pipeline/**`, `tests/fixtures/pipeline/**` |
-| D web | `src/chatradar/web/**`, `tests/unit/web/**`, `tests/unit/test_web.py` |
+## 3. Findings fixed in the product (found by running the synthetic chats)
 
-+ A: Desktop export parser and mapper, Telethon mapper and connector, JSONL raw store
-    with a chat catalog, import and sync services, synthetic fixtures (branch
-    `claude/mvp-connectors-0596b3`, 183 tests in the branch)
-+ B: engine with pragmas and programmatic migrations, `SqlRepository`, FTS5 index
-    (`claude/mvp-storage-0890e9`, 94 integration tests)
-+ C: noise, enrich, threads, index stages, runner, registry, lexicons, process service
-    (`claude/mvp-pipeline-d26ace`)
-+ D: JSON API per `docs/api.md`, static SPA with six pages, CSP
-    (`claude/mvp-web-305522`, checked in a browser by the session)
++ Duplicate rule flagged repeated short replies ("why?", "yes") — now only texts of 20+
+  characters
++ Repeated spam was labelled `duplicate` — spam now runs before duplicate
++ English "Earn $500 a week working from home, DM me" was not spam — lexicon fixed
++ A Russian "thanks, you really helped" was not gratitude — lexicon fixed
++ Noise stage version 3; regression rows and a stage test added
+- English prefix search matches longer words ("account" → "accountant"): a trade-off of the
+  prefix rule that helps Russian and Spanish inflection; left for level 1 (recorded in
+  `docs/decisions.md`)
 
-## 3. Wave 2 — integration (lead)
+## 4. Verification and completion
 
-+ Merge A, B, C, D into `feat/mvp` (no conflicts; 470 tests green after the merges)
-+ `services/container.py`, `services/rebuild.py`, `services/worker.py`, CLI wiring;
-  `ChatCatalog` and `DerivedDataStore` added to the ports
-+ Integration defects found and fixed: `SqlRepository` parameter names did not match the
-  ports; a cached structlog logger wrote to a closed stream; `process` turned any
-  `ValueError` into "unknown stage"
-+ Docker image built and run: import into a volume, process, web panel and API, version
-  bumps reindex existing data
-- `docker compose up` itself was not run (the image and both commands were run directly)
-+ End-to-end on synthetic data: import → process → search → rebuild → web API (test), and
-  every page checked in the browser against the Docker container
-+ Fixes from the manual check: Cyrillic yo/ie in search (index v2), "thanks for sharing"
-  as gratitude (noise v2)
-- Live Telegram login and sync: not run — synthetic data only (owner decision); the
-  owner's next step
-- CI on GitHub for `4c48369`: result unknown — the anonymous API rate limit was spent
-
-## 4. Completion
-
-+ `docs/ROADMAP.md` status lines for steps 2–8, project map, command reference, README,
-  CHANGELOG, `.ai/CHANGELOG.md`
-+ `just check` green
-- Fast-forward of `main` and push: not done — waits for the owner
++ Generator tests: determinism, committed files in sync, every message parses and maps,
+  rates inside realistic bounds, all three languages present
++ Whole pipeline on the four chats: ~1 680 messages, ~14 % noise, 240+ threads, search in
+  three languages
++ `just check` green (499 tests); hooks green
++ Docs: README, project map, commands, domain rules, decisions, changelogs
+- Real exports remain extracted in the session's temporary folder, outside the repository
 + Final report to the owner

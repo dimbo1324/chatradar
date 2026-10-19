@@ -359,5 +359,20 @@
     "id": "gratitude-en-sharing",
     "text": "Thanks for sharing!",
     "expected": "gratitude"
+  },
+  {
+    "id": "gratitude-ru-helped",
+    "text": "Спасибо, очень помогли",
+    "expected": "gratitude"
+  },
+  {
+    "id": "spam-en-working-from-home",
+    "text": "Earn $500 a week working from home, DM me @income_demo",
+    "expected": "spam"
+  },
+  {
+    "id": "not-spam-en-salary-question",
+    "text": "How much do senior developers earn here working from an office?",
+    "expected": null
   }
 ]

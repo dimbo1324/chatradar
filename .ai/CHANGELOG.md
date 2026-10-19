@@ -6,6 +6,20 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-19 — Synthetic data and real exports
+
+**What changed.** `project/12-domain-rules.md` adds the rule that real chat exports are
+studied only locally and as aggregates, and that realistic test data goes through
+`scripts/generate_synthetic.py`. `project/10-project-map.md` and `project/11-commands.md`
+list the generator, its fixtures and the `synthetic`, `synthetic-check` and `demo` recipes;
+`just check` now includes `synthetic-check`.
+
+**Why.** The owner asked for synthetic data based on their real chats; the privacy
+constraint must survive into later sessions. A new constraint the owner's request
+implies and a new gate section, both additions, not loosenings.
+
+**Decided by.** Owner (task), agent (wording), 2026-10-19.
+
 ## 2026-10-19 — Project modules follow the built MVP
 
 **What changed.** `project/10-project-map.md` states the stage (MVP steps 1–8 built, live

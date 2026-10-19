@@ -35,8 +35,11 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
   `web/static/` (plain HTML, CSS, JavaScript modules; ADR-0002).
 - `src/chatradar/cli.py` — Typer entry point `chatradar`; thin wrappers over `services/`.
 - `migrations/` — Alembic (async, batch mode on SQLite); `alembic.ini` stays ASCII-only.
-- `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only).
-- `scripts/` — stdlib-only repo tooling: `sync_agents.py`, `check_language.py`, `doctor.py`.
+- `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only);
+  `tests/fixtures/synthetic/` holds four generated chat exports (ru, es, en) and the
+  phrase bank they are built from.
+- `scripts/` — stdlib-only repo tooling: `sync_agents.py`, `check_language.py`, `doctor.py`,
+  `generate_synthetic.py` (deterministic synthetic Telegram Desktop exports).
 - `data/` — runtime data (raw JSONL, Telegram sessions, SQLite). **Never tracked.**
 - `Dockerfile`, `compose.yaml`, `justfile`, `.pre-commit-config.yaml`, `.github/`.
 - `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`, `adr/`.

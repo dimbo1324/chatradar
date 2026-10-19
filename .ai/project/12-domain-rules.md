@@ -50,6 +50,10 @@ These sharpen the universal rules for this codebase. Stricter wins.
 - Mappers, noise rules and thread grouping are pure functions with table-driven tests;
   every misclassification found by hand becomes a new row.
 - Fixtures in `tests/fixtures/` are anonymized: no real names, usernames or phone numbers.
+- Real chat exports may be studied only locally and only as aggregates (rates, lengths,
+  topics); no real message, name or username is ever copied into the repository or a
+  transcript. New realistic data goes through `scripts/generate_synthetic.py` and its
+  invented phrase bank.
 
 ## Assistant workspaces
 

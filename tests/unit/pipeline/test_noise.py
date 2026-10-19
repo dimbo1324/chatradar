@@ -59,8 +59,8 @@ def test_rules_run_in_the_documented_order() -> None:
         "sticker_or_emoji_only",
         "gratitude",
         "short_without_value",
-        "duplicate",
         "spam_patterns",
+        "duplicate",
     ]
 
 
@@ -132,3 +132,23 @@ async def test_stage_respects_the_limit() -> None:
 
     assert await stage.run(deps, limit=2) == 2
     assert sum(1 for m in repo.rows.values() if "noise" in m.versions) == 2
+
+
+async def test_short_replies_that_repeat_naturally_are_not_duplicates() -> None:
+    """Regression: on realistic data "why?" and "yes" repeat across a chat every day; the
+    duplicate rule flagged answers that the short rule deliberately keeps."""
+    deps, repo, _ = make_deps(
+        [
+            make_message(1, "Is the market open on Sunday?", minutes=0),
+            make_message(2, "yes", minutes=1, reply_to=1),
+            make_message(3, "Does the bank open on Saturday?", minutes=60),
+            make_message(4, "yes", minutes=61, reply_to=3),
+            make_message(5, "why?", minutes=62, reply_to=4),
+            make_message(6, "why?", minutes=63, reply_to=2),
+        ]
+    )
+    await NoiseStage().run(deps, limit=100)
+
+    assert {m.msg_id: m.noise_reason for m in repo.rows.values()} == dict.fromkeys(
+        ("1", "2", "3", "4", "5", "6")
+    )

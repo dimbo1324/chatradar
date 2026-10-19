@@ -1,0 +1,6374 @@
+{
+ "name": "IT in Uruguay (synthetic)",
+ "type": "public_supergroup",
+ "id": 1800000002,
+ "messages": [
+  {
+   "id": 1,
+   "type": "service",
+   "date": "2026-08-25T09:00:00",
+   "date_unixtime": "1787659200",
+   "actor": "Daniel P.",
+   "actor_id": "user180000000203",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 2,
+   "type": "message",
+   "date": "2026-08-25T15:32:54",
+   "date_unixtime": "1787682774",
+   "from": "Никита И.",
+   "from_id": "user180000000229",
+   "forwarded_from": "Synthetic News Channel",
+   "text": "Новые лимиты на снятие наличных в банках с 1 числа",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Новые лимиты на снятие наличных в банках с 1 числа"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "type": "message",
+   "date": "2026-08-25T16:27:54",
+   "date_unixtime": "1787686074",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "edited": "2026-08-25T16:37:43",
+   "edited_unixtime": "1787686663",
+   "text": "Всем привет! Какой оператор лучше, Antel или Claro? Нужен нормальный интернет в Malvín",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Всем привет! Какой оператор лучше, Antel или Claro? Нужен нормальный интернет в Malvín"
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "type": "message",
+   "date": "2026-08-25T16:30:30",
+   "date_unixtime": "1787686230",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000213",
+   "reply_to_message_id": 3,
+   "edited": "2026-08-25T16:38:32",
+   "edited_unixtime": "1787686712",
+   "text": "Слышал, что домашний интернет выходит около 42 000 песо в год, если пересчитать",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что домашний интернет выходит около 42 000 песо в год, если пересчитать"
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "type": "message",
+   "date": "2026-08-25T16:37:21",
+   "date_unixtime": "1787686641",
+   "from": "Никита С.",
+   "from_id": "user180000000255",
+   "reply_to_message_id": 3,
+   "text": "Недавно проходили: eSIM с паспортом сделали в офисе за 15 минут. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: eSIM с паспортом сделали в офисе за 15 минут. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "type": "message",
+   "date": "2026-08-25T16:46:07",
+   "date_unixtime": "1787687167",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000213",
+   "edited": "2026-08-25T16:48:17",
+   "edited_unixtime": "1787687297",
+   "text": "Из того, что видел, у Claro оптика почти везде, в Cordón работает стабильно. Домашний интернет выходит около 30 000 песо в год, если пересчитать",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, у Claro оптика почти везде, в Cordón работает стабильно. Домашний интернет выходит около 30 000 песо в год, если пересчитать"
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "type": "message",
+   "date": "2026-08-25T16:48:34",
+   "date_unixtime": "1787687314",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "reply_to_message_id": 4,
+   "file": "voice_messages/audio_7.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 86,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 8,
+   "type": "message",
+   "date": "2026-08-25T16:53:42",
+   "date_unixtime": "1787687622",
+   "from": "Светлана П.",
+   "from_id": "user180000000234",
+   "reply_to_message_id": 7,
+   "edited": "2026-08-25T17:06:05",
+   "edited_unixtime": "1787688365",
+   "text": "По опыту, домашний интернет выходит около 22 000 песо в год, если пересчитать",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, домашний интернет выходит около 22 000 песо в год, если пересчитать"
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "type": "message",
+   "date": "2026-08-25T16:57:46",
+   "date_unixtime": "1787687866",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "reply_to_message_id": 3,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_054"
+    },
+    " ты же недавно делал"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_054"
+    },
+    {
+     "type": "plain",
+     "text": " ты же недавно делал"
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "type": "message",
+   "date": "2026-08-26T08:13:31",
+   "date_unixtime": "1787742811",
+   "from": "Сергей В.",
+   "from_id": "user180000000233",
+   "text": "🙏",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "🙏"
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "type": "message",
+   "date": "2026-08-26T09:20:31",
+   "date_unixtime": "1787746831",
+   "from": "Роман К.",
+   "from_id": "user180000000208",
+   "text": "Можно ли сделать eSIM у Claro без cédula?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Можно ли сделать eSIM у Claro без cédula?"
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "type": "message",
+   "date": "2026-08-26T09:24:59",
+   "date_unixtime": "1787747099",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "reply_to_message_id": 11,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "😢",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 13,
+   "type": "message",
+   "date": "2026-08-26T09:29:24",
+   "date_unixtime": "1787747364",
+   "from": "Ирина Д.",
+   "from_id": "user180000000217",
+   "reply_to_message_id": 11,
+   "text": "Мы делали так: у Claro оптика почти везде, в Buceo работает стабильно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: у Claro оптика почти везде, в Buceo работает стабильно"
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "type": "message",
+   "date": "2026-08-26T09:29:32",
+   "date_unixtime": "1787747372",
+   "from": "Владимир Т.",
+   "from_id": "user180000000248",
+   "reply_to_message_id": 11,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "😂",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 15,
+   "type": "message",
+   "date": "2026-08-26T09:29:53",
+   "date_unixtime": "1787747393",
+   "from": "Наталья И.",
+   "from_id": "user180000000243",
+   "text": "У Antel оптика почти везде, в Buceo работает стабильно. Но лучше уточнить на месте.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У Antel оптика почти везде, в Buceo работает стабильно. Но лучше уточнить на месте."
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "type": "message",
+   "date": "2026-08-27T10:19:05",
+   "date_unixtime": "1787836745",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "text": "Question for the group: what are senior backend salaries like at local companies?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Question for the group: what are senior backend salaries like at local companies?"
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "type": "message",
+   "date": "2026-08-27T10:20:44",
+   "date_unixtime": "1787836844",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "edited": "2026-08-27T10:27:51",
+   "edited_unixtime": "1787837271",
+   "text": [
+    "In our case good FAQ on unipersonal: ",
+    {
+     "type": "link",
+     "text": "https://example.org/guia-bancos-uy"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case good FAQ on unipersonal: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/guia-bancos-uy"
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "type": "message",
+   "date": "2026-08-27T10:24:39",
+   "date_unixtime": "1787837079",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "edited": "2026-08-27T10:34:56",
+   "edited_unixtime": "1787837696",
+   "text": "In our case accountants start at about 1 200 USD a month for a unipersonal. Local companies pay around 800 USD for senior backend, foreign ones much more",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case accountants start at about 1 200 USD a month for a unipersonal. Local companies pay around 800 USD for senior backend, foreign ones much more"
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "type": "message",
+   "date": "2026-08-27T10:24:43",
+   "date_unixtime": "1787837083",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "reply_to_message_id": 18,
+   "text": "I heard that local companies pay around 1 200 USD for senior backend, foreign ones much more",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "I heard that local companies pay around 1 200 USD for senior backend, foreign ones much more"
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "type": "message",
+   "date": "2026-08-28T08:06:11",
+   "date_unixtime": "1787915171",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "text": "Есть ли тут митапы по Python или Go?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Есть ли тут митапы по Python или Go?"
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "type": "message",
+   "date": "2026-08-28T08:06:15",
+   "date_unixtime": "1787915175",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "text": "Из того, что видел, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Использую обычный VPN на своём VPS, проблем не было. Может, уже поменялось.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Использую обычный VPN на своём VPS, проблем не было. Может, уже поменялось."
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "type": "message",
+   "date": "2026-08-28T08:07:14",
+   "date_unixtime": "1787915234",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 20,
+   "text": "Честно говоря, b2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, b2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "type": "message",
+   "date": "2026-08-28T08:14:38",
+   "date_unixtime": "1787915678",
+   "from": "Роман Ш.",
+   "from_id": "user180000000226",
+   "reply_to_message_id": 22,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "😂",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 24,
+   "type": "message",
+   "date": "2026-08-28T08:16:34",
+   "date_unixtime": "1787915794",
+   "from": "Ольга Н.",
+   "from_id": "user180000000240",
+   "reply_to_message_id": 22,
+   "edited": "2026-08-28T08:29:02",
+   "edited_unixtime": "1787916542",
+   "text": "Из того, что видел, b2 хватает, на созвонах все говорят медленно и понятно. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, b2 хватает, на созвонах все говорят медленно и понятно. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "type": "message",
+   "date": "2026-08-28T08:16:40",
+   "date_unixtime": "1787915800",
+   "from": "Павел Ф.",
+   "from_id": "user180000000250",
+   "text": "Кстати, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Митапы бывают раз в месяц, анонсы в LinkedIn и Meetup",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Митапы бывают раз в месяц, анонсы в LinkedIn и Meetup"
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "type": "message",
+   "date": "2026-08-28T08:16:53",
+   "date_unixtime": "1787915813",
+   "from": "Дмитрий Ф.",
+   "from_id": "user180000000237",
+   "reply_to_message_id": 20,
+   "edited": "2026-08-28T08:27:40",
+   "edited_unixtime": "1787916460",
+   "text": "Слышал, что b2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что b2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "type": "message",
+   "date": "2026-08-28T08:17:33",
+   "date_unixtime": "1787915853",
+   "from": "Светлана П.",
+   "from_id": "user180000000234",
+   "reply_to_message_id": 20,
+   "edited": "2026-08-28T08:18:17",
+   "edited_unixtime": "1787915897",
+   "text": "Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Может, уже поменялось.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Может, уже поменялось."
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "type": "message",
+   "date": "2026-08-28T17:14:58",
+   "date_unixtime": "1787948098",
+   "from": "Ксения Ф.",
+   "from_id": "user180000000235",
+   "text": "Всем привет! Как у вас с английским на работе, хватает B2?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Всем привет! Как у вас с английским на работе, хватает B2?"
+    }
+   ]
+  },
+  {
+   "id": 29,
+   "type": "message",
+   "date": "2026-08-28T17:15:18",
+   "date_unixtime": "1787948118",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "text": "Если что, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Использую обычный VPN на своём VPS, проблем не было. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Использую обычный VPN на своём VPS, проблем не было. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина"
+    }
+   ]
+  },
+  {
+   "id": 30,
+   "type": "message",
+   "date": "2026-08-28T17:15:44",
+   "date_unixtime": "1787948144",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "reply_to_message_id": 28,
+   "text": "Насколько я знаю, было 3 этапа: HR, техническое и встреча с командой, заняло около 10 дней. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, было 3 этапа: HR, техническое и встреча с командой, заняло около 10 дней. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 31,
+   "type": "message",
+   "date": "2026-08-28T17:15:51",
+   "date_unixtime": "1787948151",
+   "from": "Ольга Н.",
+   "from_id": "user180000000240",
+   "edited": "2026-08-28T17:25:13",
+   "edited_unixtime": "1787948713",
+   "text": "Как вариант, b2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, b2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 32,
+   "type": "message",
+   "date": "2026-08-28T17:17:27",
+   "date_unixtime": "1787948247",
+   "from": "Роман Ш.",
+   "from_id": "user180000000226",
+   "reply_to_message_id": 30,
+   "edited": "2026-08-28T17:32:08",
+   "edited_unixtime": "1787949128",
+   "text": "У нас было так: было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней"
+    }
+   ]
+  },
+  {
+   "id": 33,
+   "type": "message",
+   "date": "2026-08-28T17:18:12",
+   "date_unixtime": "1787948292",
+   "from": "Владимир А.",
+   "from_id": "user180000000225",
+   "text": "Мы делали так: митапы бывают раз в месяц, анонсы в LinkedIn и Meetup",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: митапы бывают раз в месяц, анонсы в LinkedIn и Meetup"
+    }
+   ]
+  },
+  {
+   "id": 34,
+   "type": "message",
+   "date": "2026-08-29T14:48:39",
+   "date_unixtime": "1788025719",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "text": "Сколько стоит домашний интернет 300 Мбит?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Сколько стоит домашний интернет 300 Мбит?"
+    }
+   ]
+  },
+  {
+   "id": 35,
+   "type": "message",
+   "date": "2026-08-29T22:32:53",
+   "date_unixtime": "1788053573",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "text": "Any accountant who handles a unipersonal in English?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Any accountant who handles a unipersonal in English?"
+    }
+   ]
+  },
+  {
+   "id": 36,
+   "type": "message",
+   "date": "2026-08-29T22:33:21",
+   "date_unixtime": "1788053601",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "text": "Just went through this: accountants start at about 800 USD a month for a unipersonal. Hope it helps.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Just went through this: accountants start at about 800 USD a month for a unipersonal. Hope it helps."
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "type": "message",
+   "date": "2026-08-29T22:34:08",
+   "date_unixtime": "1788053648",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "edited": "2026-08-29T22:40:38",
+   "edited_unixtime": "1788054038",
+   "text": "In our case i get paid via DolarApp, my contador handles taxes, foreign income has a tax holiday for a few years. Accountants start at about 1 200 USD a month for a unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case i get paid via DolarApp, my contador handles taxes, foreign income has a tax holiday for a few years. Accountants start at about 1 200 USD a month for a unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 38,
+   "type": "message",
+   "date": "2026-08-31T06:45:36",
+   "date_unixtime": "1788169536",
+   "from": "Татьяна Р.",
+   "from_id": "user180000000215",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Продаю"
+    },
+    " велосипед, почти новый, пишите в личку"
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Продаю"
+    },
+    {
+     "type": "plain",
+     "text": " велосипед, почти новый, пишите в личку"
+    }
+   ]
+  },
+  {
+   "id": 39,
+   "type": "message",
+   "date": "2026-08-31T08:10:36",
+   "date_unixtime": "1788174636",
+   "from": "Алексей Ф.",
+   "from_id": "user180000000249",
+   "text": "Срочно: где купить нормальный ноутбук, тут всё дороже в два раза?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Срочно: где купить нормальный ноутбук, тут всё дороже в два раза?"
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "type": "message",
+   "date": "2026-08-31T08:12:21",
+   "date_unixtime": "1788174741",
+   "from": "Владимир Т.",
+   "from_id": "user180000000248",
+   "reply_to_message_id": 39,
+   "text": "Мне сказали, что использую обычный VPN на своём VPS, проблем не было. B2 хватает, на созвонах все говорят медленно и понятно. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что использую обычный VPN на своём VPS, проблем не было. B2 хватает, на созвонах все говорят медленно и понятно. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 41,
+   "type": "message",
+   "date": "2026-08-31T08:12:58",
+   "date_unixtime": "1788174778",
+   "from": "Ирина С.",
+   "from_id": "user180000000247",
+   "reply_to_message_id": 39,
+   "edited": "2026-08-31T08:25:40",
+   "edited_unixtime": "1788175540",
+   "text": "По опыту, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина"
+    }
+   ]
+  },
+  {
+   "id": 42,
+   "type": "message",
+   "date": "2026-08-31T08:15:11",
+   "date_unixtime": "1788174911",
+   "from": "Алексей Ф.",
+   "from_id": "user180000000249",
+   "reply_to_message_id": 40,
+   "edited": "2026-08-31T08:27:11",
+   "edited_unixtime": "1788175631",
+   "text": "Спасибо!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо!"
+    }
+   ]
+  },
+  {
+   "id": 43,
+   "type": "message",
+   "date": "2026-08-31T08:17:00",
+   "date_unixtime": "1788175020",
+   "from": "Дарья И.",
+   "from_id": "user180000000212",
+   "reply_to_message_id": 39,
+   "text": "Мне сказали, что митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. B2 хватает, на созвонах все говорят медленно и понятно. Нам повезло, наверное.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. B2 хватает, на созвонах все говорят медленно и понятно. Нам повезло, наверное."
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "type": "message",
+   "date": "2026-08-31T08:17:03",
+   "date_unixtime": "1788175023",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "reply_to_message_id": 43,
+   "edited": "2026-08-31T08:19:53",
+   "edited_unixtime": "1788175193",
+   "text": "Насколько я знаю, b2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, b2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 45,
+   "type": "message",
+   "date": "2026-08-31T08:21:58",
+   "date_unixtime": "1788175318",
+   "from": "Артём О.",
+   "from_id": "user180000000210",
+   "reply_to_message_id": 39,
+   "text": "Из того, что видел, использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 46,
+   "type": "message",
+   "date": "2026-08-31T18:46:50",
+   "date_unixtime": "1788212810",
+   "from": "Андрей И.",
+   "from_id": "user180000000223",
+   "text": "Какая сегодня погода, кто в Cordón? Дождь будет?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Какая сегодня погода, кто в Cordón? Дождь будет?"
+    }
+   ]
+  },
+  {
+   "id": 47,
+   "type": "message",
+   "date": "2026-08-31T18:47:12",
+   "date_unixtime": "1788212832",
+   "from": "Никита И.",
+   "from_id": "user180000000229",
+   "reply_to_message_id": 46,
+   "text": "конечно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "конечно"
+    }
+   ]
+  },
+  {
+   "id": 48,
+   "type": "message",
+   "date": "2026-08-31T18:52:50",
+   "date_unixtime": "1788213170",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "text": "Есть смысл открывать unipersonal или лучше SAS?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Есть смысл открывать unipersonal или лучше SAS?"
+    }
+   ]
+  },
+  {
+   "id": 49,
+   "type": "message",
+   "date": "2026-08-31T18:56:30",
+   "date_unixtime": "1788213390",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "reply_to_message_id": 48,
+   "text": "Насколько я знаю, через DolarApp получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, через DolarApp получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы"
+    }
+   ]
+  },
+  {
+   "id": 50,
+   "type": "message",
+   "date": "2026-08-31T18:57:42",
+   "date_unixtime": "1788213462",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "reply_to_message_id": 49,
+   "text": "Срочно: это до вычета налогов?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Срочно: это до вычета налогов?"
+    }
+   ]
+  },
+  {
+   "id": 51,
+   "type": "message",
+   "date": "2026-08-31T18:57:45",
+   "date_unixtime": "1788213465",
+   "from": "Михаил М.",
+   "from_id": "user180000000209",
+   "reply_to_message_id": 48,
+   "edited": "2026-08-31T19:01:19",
+   "edited_unixtime": "1788213679",
+   "text": [
+    "Насколько я знаю, хорошая подборка вопросов по unipersonal: ",
+    {
+     "type": "link",
+     "text": "https://www.gub.uy/tramites/residencia-legal"
+    },
+    ". Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn"
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, хорошая подборка вопросов по unipersonal: "
+    },
+    {
+     "type": "link",
+     "text": "https://www.gub.uy/tramites/residencia-legal"
+    },
+    {
+     "type": "plain",
+     "text": ". Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn"
+    }
+   ]
+  },
+  {
+   "id": 52,
+   "type": "message",
+   "date": "2026-08-31T19:02:31",
+   "date_unixtime": "1788213751",
+   "from": "Ирина З.",
+   "from_id": "user180000000241",
+   "text": "Если что, unipersonal проще на старте, SAS имеет смысл, если оборот большой",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, unipersonal проще на старте, SAS имеет смысл, если оборот большой"
+    }
+   ]
+  },
+  {
+   "id": 53,
+   "type": "message",
+   "date": "2026-08-31T19:02:34",
+   "date_unixtime": "1788213754",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "text": "У нас было так: senior backend в местных компаниях около 300 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: senior backend в местных компаниях около 300 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 54,
+   "type": "message",
+   "date": "2026-09-01T14:26:55",
+   "date_unixtime": "1788283615",
+   "from": "Михаил Ш.",
+   "from_id": "user180000000254",
+   "text": "Какая сегодня погода, кто в Cordón? Дождь будет?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Какая сегодня погода, кто в Cordón? Дождь будет?"
+    }
+   ]
+  },
+  {
+   "id": 55,
+   "type": "message",
+   "date": "2026-09-01T14:27:36",
+   "date_unixtime": "1788283656",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "reply_to_message_id": 54,
+   "text": "есть",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "есть"
+    }
+   ]
+  },
+  {
+   "id": 56,
+   "type": "message",
+   "date": "2026-09-01T15:43:55",
+   "date_unixtime": "1788288235",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "text": "Anyone working for a foreign company and getting paid through Wise? How do taxes work here?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Anyone working for a foreign company and getting paid through Wise? How do taxes work here?"
+    }
+   ]
+  },
+  {
+   "id": 57,
+   "type": "message",
+   "date": "2026-09-01T15:51:46",
+   "date_unixtime": "1788288706",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "text": "Just went through this: a unipersonal is simpler to start, SAS if your revenue is high. Accountants start at about 300 USD a month for a unipersonal. I get paid via Prex, my contador handles taxes, foreign income has a tax holiday for a few years",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Just went through this: a unipersonal is simpler to start, SAS if your revenue is high. Accountants start at about 300 USD a month for a unipersonal. I get paid via Prex, my contador handles taxes, foreign income has a tax holiday for a few years"
+    }
+   ]
+  },
+  {
+   "id": 58,
+   "type": "message",
+   "date": "2026-09-01T15:52:37",
+   "date_unixtime": "1788288757",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 56,
+   "text": "Heads up: a unipersonal is simpler to start, SAS if your revenue is high. Your mileage may vary.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Heads up: a unipersonal is simpler to start, SAS if your revenue is high. Your mileage may vary."
+    }
+   ]
+  },
+  {
+   "id": 59,
+   "type": "message",
+   "date": "2026-09-01T15:52:40",
+   "date_unixtime": "1788288760",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 56,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "🔥",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 60,
+   "type": "message",
+   "date": "2026-09-01T15:59:02",
+   "date_unixtime": "1788289142",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 56,
+   "text": "As far as I know, accountants start at about 300 USD a month for a unipersonal. A unipersonal is simpler to start, SAS if your revenue is high. I get paid via Deel, my contador handles taxes, foreign income has a tax holiday for a few years",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "As far as I know, accountants start at about 300 USD a month for a unipersonal. A unipersonal is simpler to start, SAS if your revenue is high. I get paid via Deel, my contador handles taxes, foreign income has a tax holiday for a few years"
+    }
+   ]
+  },
+  {
+   "id": 61,
+   "type": "message",
+   "date": "2026-09-02T08:36:54",
+   "date_unixtime": "1788349014",
+   "from": "Дарья И.",
+   "from_id": "user180000000212",
+   "text": "Давайте соберёмся на кофе, кто в Carrasco живёт?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Давайте соберёмся на кофе, кто в Carrasco живёт?"
+    }
+   ]
+  },
+  {
+   "id": 62,
+   "type": "message",
+   "date": "2026-09-02T08:42:11",
+   "date_unixtime": "1788349331",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "edited": "2026-09-02T08:48:49",
+   "edited_unixtime": "1788349729",
+   "text": "Честно говоря, я в Cordón, могу в выходные. Это было в прошлом месяце.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, я в Cordón, могу в выходные. Это было в прошлом месяце."
+    }
+   ]
+  },
+  {
+   "id": 63,
+   "type": "message",
+   "date": "2026-09-02T08:42:25",
+   "date_unixtime": "1788349345",
+   "from": "Игорь Д.",
+   "from_id": "user180000000246",
+   "reply_to_message_id": 62,
+   "edited": "2026-09-02T08:55:58",
+   "edited_unixtime": "1788350158",
+   "text": "почему?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "почему?"
+    }
+   ]
+  },
+  {
+   "id": 64,
+   "type": "message",
+   "date": "2026-09-02T08:42:40",
+   "date_unixtime": "1788349360",
+   "from": "Екатерина Г.",
+   "from_id": "user180000000239",
+   "reply_to_message_id": 61,
+   "text": "Кстати, я в Pocitos, могу в выходные. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, я в Pocitos, могу в выходные. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 65,
+   "type": "message",
+   "date": "2026-09-02T08:42:53",
+   "date_unixtime": "1788349373",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "reply_to_message_id": 61,
+   "text": "Клуб в четверг в 19:00, тема про налоги для фрилансеров. Я в Centro, могу в выходные",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Клуб в четверг в 19:00, тема про налоги для фрилансеров. Я в Centro, могу в выходные"
+    }
+   ]
+  },
+  {
+   "id": 66,
+   "type": "message",
+   "date": "2026-09-02T16:05:54",
+   "date_unixtime": "1788375954",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "text": "Anyone working for a foreign company and getting paid through Wise? How do taxes work here?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Anyone working for a foreign company and getting paid through Wise? How do taxes work here?"
+    }
+   ]
+  },
+  {
+   "id": 67,
+   "type": "message",
+   "date": "2026-09-03T10:21:16",
+   "date_unixtime": "1788441676",
+   "from": "Екатерина Г.",
+   "from_id": "user180000000239",
+   "edited": "2026-09-03T10:28:59",
+   "edited_unixtime": "1788442139",
+   "text": "Будет ли английский клуб на этой неделе?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Будет ли английский клуб на этой неделе?"
+    }
+   ]
+  },
+  {
+   "id": 68,
+   "type": "message",
+   "date": "2026-09-03T10:25:00",
+   "date_unixtime": "1788441900",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000253",
+   "reply_to_message_id": 67,
+   "text": "Как вариант, я в Buceo, могу в выходные. Клуб в четверг в 19:00, тема про налоги для фрилансеров",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, я в Buceo, могу в выходные. Клуб в четверг в 19:00, тема про налоги для фрилансеров"
+    }
+   ]
+  },
+  {
+   "id": 69,
+   "type": "message",
+   "date": "2026-09-03T10:52:34",
+   "date_unixtime": "1788443554",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "reply_to_message_id": 68,
+   "text": "У нас было так: я в Malvín, могу в выходные. Клуб в четверг в 19:00, тема про налоги для фрилансеров. Я буду, собираемся к 11, кафе возле рамблы",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: я в Malvín, могу в выходные. Клуб в четверг в 19:00, тема про налоги для фрилансеров. Я буду, собираемся к 11, кафе возле рамблы"
+    }
+   ]
+  },
+  {
+   "id": 70,
+   "type": "message",
+   "date": "2026-09-03T10:53:10",
+   "date_unixtime": "1788443590",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 69,
+   "edited": "2026-09-03T10:56:15",
+   "edited_unixtime": "1788443775",
+   "text": "Кстати, клуб в четверг в 19:00, тема про налоги для фрилансеров",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, клуб в четверг в 19:00, тема про налоги для фрилансеров"
+    }
+   ]
+  },
+  {
+   "id": 71,
+   "type": "service",
+   "date": "2026-09-04T07:41:28",
+   "date_unixtime": "1788518488",
+   "actor": "Михаил З.",
+   "actor_id": "user180000000218",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 72,
+   "type": "message",
+   "date": "2026-09-04T09:08:28",
+   "date_unixtime": "1788523708",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "text": "Hey folks, anyone up for coffee this week?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hey folks, anyone up for coffee this week?"
+    }
+   ]
+  },
+  {
+   "id": 73,
+   "type": "message",
+   "date": "2026-09-04T09:10:05",
+   "date_unixtime": "1788523805",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "reply_to_message_id": 72,
+   "file": "voice_messages/audio_73.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 53,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 74,
+   "type": "message",
+   "date": "2026-09-04T09:10:15",
+   "date_unixtime": "1788523815",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 72,
+   "text": "In our case i'll be there, we meet at 11 near the rambla",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case i'll be there, we meet at 11 near the rambla"
+    }
+   ]
+  },
+  {
+   "id": 75,
+   "type": "message",
+   "date": "2026-09-04T09:21:44",
+   "date_unixtime": "1788524504",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "animation",
+   "mime_type": "video/mp4",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 76,
+   "type": "message",
+   "date": "2026-09-04T09:54:44",
+   "date_unixtime": "1788526484",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "photo": "photos/photo_76.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "Скрин из приложения Scotiabank, у всех так?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Скрин из приложения Scotiabank, у всех так?"
+    }
+   ]
+  },
+  {
+   "id": 77,
+   "type": "message",
+   "date": "2026-09-04T09:54:53",
+   "date_unixtime": "1788526493",
+   "from": "Владимир С.",
+   "from_id": "user180000000214",
+   "reply_to_message_id": 76,
+   "text": "Как вариант, у Antel оптика почти везде, в Buceo работает стабильно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, у Antel оптика почти везде, в Buceo работает стабильно"
+    }
+   ]
+  },
+  {
+   "id": 78,
+   "type": "message",
+   "date": "2026-09-04T10:08:34",
+   "date_unixtime": "1788527314",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "reply_to_message_id": 77,
+   "text": "Договор на год обязательно?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Договор на год обязательно?"
+    }
+   ]
+  },
+  {
+   "id": 79,
+   "type": "message",
+   "date": "2026-09-04T10:13:13",
+   "date_unixtime": "1788527593",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "reply_to_message_id": 76,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_048"
+    },
+    " подскажешь?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_048"
+    },
+    {
+     "type": "plain",
+     "text": " подскажешь?"
+    }
+   ]
+  },
+  {
+   "id": 80,
+   "type": "message",
+   "date": "2026-09-04T10:13:38",
+   "date_unixtime": "1788527618",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000253",
+   "reply_to_message_id": 79,
+   "text": "Домашний интернет выходит около 42 000 песо в год, если пересчитать. eSIM с паспортом сделали в офисе за 15 минут",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Домашний интернет выходит около 42 000 песо в год, если пересчитать. eSIM с паспортом сделали в офисе за 15 минут"
+    }
+   ]
+  },
+  {
+   "id": 81,
+   "type": "message",
+   "date": "2026-09-04T10:13:41",
+   "date_unixtime": "1788527621",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "reply_to_message_id": 76,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_011"
+    },
+    " ты же недавно делал"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_011"
+    },
+    {
+     "type": "plain",
+     "text": " ты же недавно делал"
+    }
+   ]
+  },
+  {
+   "id": 82,
+   "type": "message",
+   "date": "2026-09-04T10:14:09",
+   "date_unixtime": "1788527649",
+   "from": "Ирина С.",
+   "from_id": "user180000000247",
+   "reply_to_message_id": 76,
+   "text": "Мне сказали, что у Movistar оптика почти везде, в Cordón работает стабильно. Домашний интернет выходит около 30 000 песо в год, если пересчитать",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что у Movistar оптика почти везде, в Cordón работает стабильно. Домашний интернет выходит около 30 000 песо в год, если пересчитать"
+    }
+   ]
+  },
+  {
+   "id": 83,
+   "type": "message",
+   "date": "2026-09-04T10:14:34",
+   "date_unixtime": "1788527674",
+   "from": "Алексей Ф.",
+   "from_id": "user180000000249",
+   "reply_to_message_id": 82,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "👍",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 84,
+   "type": "message",
+   "date": "2026-09-04T10:15:51",
+   "date_unixtime": "1788527751",
+   "from": "Алексей Ф.",
+   "from_id": "user180000000249",
+   "edited": "2026-09-04T10:23:06",
+   "edited_unixtime": "1788528186",
+   "text": "Кстати, домашний интернет выходит около 22 000 песо в год, если пересчитать",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, домашний интернет выходит около 22 000 песо в год, если пересчитать"
+    }
+   ]
+  },
+  {
+   "id": 85,
+   "type": "message",
+   "date": "2026-09-04T10:16:00",
+   "date_unixtime": "1788527760",
+   "from": "Ирина З.",
+   "from_id": "user180000000241",
+   "text": "Честно говоря, eSIM с паспортом сделали в офисе за 15 минут. У Movistar оптика почти везде, в Centro работает стабильно. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, eSIM с паспортом сделали в офисе за 15 минут. У Movistar оптика почти везде, в Centro работает стабильно. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 86,
+   "type": "message",
+   "date": "2026-09-04T10:16:45",
+   "date_unixtime": "1788527805",
+   "from": "Ирина С.",
+   "from_id": "user180000000247",
+   "reply_to_message_id": 76,
+   "text": "Недавно проходили: eSIM с паспортом сделали в офисе за 15 минут. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: eSIM с паспортом сделали в офисе за 15 минут. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 87,
+   "type": "message",
+   "date": "2026-09-04T10:17:01",
+   "date_unixtime": "1788527821",
+   "from": "Владимир Т.",
+   "from_id": "user180000000248",
+   "reply_to_message_id": 76,
+   "text": "Слышал, что eSIM с паспортом сделали в офисе за 15 минут. Домашний интернет выходит около 18 000 песо в год, если пересчитать. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что eSIM с паспортом сделали в офисе за 15 минут. Домашний интернет выходит около 18 000 песо в год, если пересчитать. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 88,
+   "type": "message",
+   "date": "2026-09-04T10:17:28",
+   "date_unixtime": "1788527848",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "reply_to_message_id": 81,
+   "text": "Договор на год обязательно?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Договор на год обязательно?"
+    }
+   ]
+  },
+  {
+   "id": 89,
+   "type": "message",
+   "date": "2026-09-04T10:20:03",
+   "date_unixtime": "1788528003",
+   "from": "Дарья И.",
+   "from_id": "user180000000212",
+   "reply_to_message_id": 81,
+   "text": "У Antel оптика почти везде, в Pocitos работает стабильно. eSIM с паспортом сделали в офисе за 15 минут. Нам повезло, наверное.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У Antel оптика почти везде, в Pocitos работает стабильно. eSIM с паспортом сделали в офисе за 15 минут. Нам повезло, наверное."
+    }
+   ]
+  },
+  {
+   "id": 90,
+   "type": "message",
+   "date": "2026-09-04T10:21:02",
+   "date_unixtime": "1788528062",
+   "from": "Владимир С.",
+   "from_id": "user180000000214",
+   "reply_to_message_id": 81,
+   "text": "По опыту, у Movistar оптика почти везде, в Cordón работает стабильно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, у Movistar оптика почти везде, в Cordón работает стабильно"
+    }
+   ]
+  },
+  {
+   "id": 91,
+   "type": "message",
+   "date": "2026-09-05T08:42:01",
+   "date_unixtime": "1788608521",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "text": "Any Python or Go meetups in Montevideo?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Any Python or Go meetups in Montevideo?"
+    }
+   ]
+  },
+  {
+   "id": 92,
+   "type": "message",
+   "date": "2026-09-05T08:42:28",
+   "date_unixtime": "1788608548",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "edited": "2026-09-05T08:47:57",
+   "edited_unixtime": "1788608877",
+   "text": "Honestly, there's a monthly meetup, announced on LinkedIn. Three rounds: HR, a technical interview and a team call",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Honestly, there's a monthly meetup, announced on LinkedIn. Three rounds: HR, a technical interview and a team call"
+    }
+   ]
+  },
+  {
+   "id": 93,
+   "type": "message",
+   "date": "2026-09-05T08:52:29",
+   "date_unixtime": "1788609149",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 91,
+   "text": "As far as I know, three rounds: HR, a technical interview and a team call. B2 is fine, people speak slowly on calls. That was last month.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "As far as I know, three rounds: HR, a technical interview and a team call. B2 is fine, people speak slowly on calls. That was last month."
+    }
+   ]
+  },
+  {
+   "id": 94,
+   "type": "message",
+   "date": "2026-09-05T08:52:32",
+   "date_unixtime": "1788609152",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 93,
+   "edited": "2026-09-05T09:04:34",
+   "edited_unixtime": "1788609874",
+   "text": "B2 is fine, people speak slowly on calls",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "B2 is fine, people speak slowly on calls"
+    }
+   ]
+  },
+  {
+   "id": 95,
+   "type": "message",
+   "date": "2026-09-05T08:53:50",
+   "date_unixtime": "1788609230",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 93,
+   "text": "Did they give a take-home task?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Did they give a take-home task?"
+    }
+   ]
+  },
+  {
+   "id": 96,
+   "type": "message",
+   "date": "2026-09-05T08:55:44",
+   "date_unixtime": "1788609344",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "reply_to_message_id": 94,
+   "text": "In our case there's a monthly meetup, announced on LinkedIn",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case there's a monthly meetup, announced on LinkedIn"
+    }
+   ]
+  },
+  {
+   "id": 97,
+   "type": "message",
+   "date": "2026-09-05T21:39:05",
+   "date_unixtime": "1788655145",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "text": "Кто смотрел вчера матч Пеньяроля?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кто смотрел вчера матч Пеньяроля?"
+    }
+   ]
+  },
+  {
+   "id": 98,
+   "type": "message",
+   "date": "2026-09-05T21:43:36",
+   "date_unixtime": "1788655416",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 97,
+   "text": "так и есть",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "так и есть"
+    }
+   ]
+  },
+  {
+   "id": 99,
+   "type": "message",
+   "date": "2026-09-05T22:44:05",
+   "date_unixtime": "1788659045",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "text": "Можно ли снимать наличку с Midinero без комиссии где-нибудь в Монтевидео?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Можно ли снимать наличку с Midinero без комиссии где-нибудь в Монтевидео?"
+    }
+   ]
+  },
+  {
+   "id": 100,
+   "type": "message",
+   "date": "2026-09-05T22:50:15",
+   "date_unixtime": "1788659415",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "reply_to_message_id": 99,
+   "text": "Слышал, что у меня карта BROU пришла через 15 дней, забирал в отделении. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что у меня карта BROU пришла через 15 дней, забирал в отделении. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 101,
+   "type": "message",
+   "date": "2026-09-05T22:50:26",
+   "date_unixtime": "1788659426",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 100,
+   "text": "Это для резидентов или для туристов тоже?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Это для резидентов или для туристов тоже?"
+    }
+   ]
+  },
+  {
+   "id": 102,
+   "type": "message",
+   "date": "2026-09-06T22:26:58",
+   "date_unixtime": "1788744418",
+   "from": "Ирина З.",
+   "from_id": "user180000000241",
+   "text": "Где тут нормальная гречка продаётся?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Где тут нормальная гречка продаётся?"
+    }
+   ]
+  },
+  {
+   "id": 103,
+   "type": "message",
+   "date": "2026-09-06T22:30:23",
+   "date_unixtime": "1788744623",
+   "from": "Ирина Д.",
+   "from_id": "user180000000217",
+   "reply_to_message_id": 102,
+   "text": "так и есть",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "так и есть"
+    }
+   ]
+  },
+  {
+   "id": 104,
+   "type": "message",
+   "date": "2026-09-06T23:26:58",
+   "date_unixtime": "1788748018",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000253",
+   "text": "Есть ли смысл держать счёт в долларах или сразу всё в песо?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Есть ли смысл держать счёт в долларах или сразу всё в песо?"
+    }
+   ]
+  },
+  {
+   "id": 105,
+   "type": "message",
+   "date": "2026-09-06T23:27:01",
+   "date_unixtime": "1788748021",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "text": "Prex работает, но верификация заняла неделю, фото документа просили переснять дважды",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Prex работает, но верификация заняла неделю, фото документа просили переснять дважды"
+    }
+   ]
+  },
+  {
+   "id": 106,
+   "type": "message",
+   "date": "2026-09-07T12:43:12",
+   "date_unixtime": "1788795792",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "text": "Hi all! Has anyone interviewed with a local startup? How many rounds?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hi all! Has anyone interviewed with a local startup? How many rounds?"
+    }
+   ]
+  },
+  {
+   "id": 107,
+   "type": "message",
+   "date": "2026-09-07T12:53:19",
+   "date_unixtime": "1788796399",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "text": "As far as I know, three rounds: HR, a technical interview and a team call. B2 is fine, people speak slowly on calls",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "As far as I know, three rounds: HR, a technical interview and a team call. B2 is fine, people speak slowly on calls"
+    }
+   ]
+  },
+  {
+   "id": 108,
+   "type": "message",
+   "date": "2026-09-07T13:03:59",
+   "date_unixtime": "1788797039",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "edited": "2026-09-07T13:18:35",
+   "edited_unixtime": "1788797915",
+   "text": "As far as I know, b2 is fine, people speak slowly on calls. There's a monthly meetup, announced on LinkedIn",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "As far as I know, b2 is fine, people speak slowly on calls. There's a monthly meetup, announced on LinkedIn"
+    }
+   ]
+  },
+  {
+   "id": 109,
+   "type": "message",
+   "date": "2026-09-07T13:04:06",
+   "date_unixtime": "1788797046",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 108,
+   "text": "Hi all! Did they give a take-home task?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hi all! Did they give a take-home task?"
+    }
+   ]
+  },
+  {
+   "id": 110,
+   "type": "service",
+   "date": "2026-09-08T09:27:08",
+   "date_unixtime": "1788870428",
+   "actor": "Михаил Ш.",
+   "actor_id": "user180000000254",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 111,
+   "type": "message",
+   "date": "2026-09-08T09:32:51",
+   "date_unixtime": "1788870771",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "text": "Any Python or Go meetups in Montevideo?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Any Python or Go meetups in Montevideo?"
+    }
+   ]
+  },
+  {
+   "id": 112,
+   "type": "message",
+   "date": "2026-09-08T10:34:08",
+   "date_unixtime": "1788874448",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "text": "Срочно: нужен ли IRPF, если доход из-за границы?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Срочно: нужен ли IRPF, если доход из-за границы?"
+    }
+   ]
+  },
+  {
+   "id": 113,
+   "type": "message",
+   "date": "2026-09-08T10:44:17",
+   "date_unixtime": "1788875057",
+   "from": "Владимир А.",
+   "from_id": "user180000000225",
+   "reply_to_message_id": 112,
+   "edited": "2026-09-08T10:56:16",
+   "edited_unixtime": "1788875776",
+   "text": "У нас было так: senior backend в местных компаниях около 2 000 USD, у зарубежных сильно больше. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: senior backend в местных компаниях около 2 000 USD, у зарубежных сильно больше. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 114,
+   "type": "message",
+   "date": "2026-09-08T10:44:23",
+   "date_unixtime": "1788875063",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000253",
+   "text": "Мы делали так: senior backend в местных компаниях около 300 USD, у зарубежных сильно больше. Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: senior backend в местных компаниях около 300 USD, у зарубежных сильно больше. Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn"
+    }
+   ]
+  },
+  {
+   "id": 115,
+   "type": "message",
+   "date": "2026-09-08T10:45:32",
+   "date_unixtime": "1788875132",
+   "from": "Светлана П.",
+   "from_id": "user180000000234",
+   "reply_to_message_id": 114,
+   "text": "Честно говоря, есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Это было в прошлом месяце.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Это было в прошлом месяце."
+    }
+   ]
+  },
+  {
+   "id": 116,
+   "type": "message",
+   "date": "2026-09-08T10:47:00",
+   "date_unixtime": "1788875220",
+   "from": "Артём Ч.",
+   "from_id": "user180000000245",
+   "text": "Мне сказали, что есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Senior backend в местных компаниях около 300 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Senior backend в местных компаниях около 300 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 117,
+   "type": "message",
+   "date": "2026-09-08T19:04:44",
+   "date_unixtime": "1788905084",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "edited": "2026-09-08T19:17:28",
+   "edited_unixtime": "1788905848",
+   "text": "Has anyone opened a HSBC account without residency? What documents did they ask for?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Has anyone opened a HSBC account without residency? What documents did they ask for?"
+    }
+   ]
+  },
+  {
+   "id": 118,
+   "type": "message",
+   "date": "2026-09-08T19:04:47",
+   "date_unixtime": "1788905087",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "reply_to_message_id": 117,
+   "text": "BBVA asked me for my passport, proof of address and proof of income",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "BBVA asked me for my passport, proof of address and proof of income"
+    }
+   ]
+  },
+  {
+   "id": 119,
+   "type": "message",
+   "date": "2026-09-08T19:07:35",
+   "date_unixtime": "1788905255",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 118,
+   "edited": "2026-09-08T19:14:49",
+   "edited_unixtime": "1788905689",
+   "text": "Question for the group: did they need the proof of income translated?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Question for the group: did they need the proof of income translated?"
+    }
+   ]
+  },
+  {
+   "id": 120,
+   "type": "message",
+   "date": "2026-09-08T19:08:21",
+   "date_unixtime": "1788905301",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "text": "From experience, i've been using Prex for a year, verification took a few days. A USD account makes sense if your rent is in dollars",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "From experience, i've been using Prex for a year, verification took a few days. A USD account makes sense if your rent is in dollars"
+    }
+   ]
+  },
+  {
+   "id": 121,
+   "type": "message",
+   "date": "2026-09-08T19:09:27",
+   "date_unixtime": "1788905367",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 118,
+   "text": "BROU asked me for my passport, proof of address and proof of income",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "BROU asked me for my passport, proof of address and proof of income"
+    }
+   ]
+  },
+  {
+   "id": 122,
+   "type": "message",
+   "date": "2026-09-08T19:09:35",
+   "date_unixtime": "1788905375",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 118,
+   "text": "In our case you can withdraw at Redpagos with Midinero, but the daily limit is low. I've been using Deel for a year, verification took a few days. Double-check on site though.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case you can withdraw at Redpagos with Midinero, but the daily limit is low. I've been using Deel for a year, verification took a few days. Double-check on site though."
+    }
+   ]
+  },
+  {
+   "id": 123,
+   "type": "message",
+   "date": "2026-09-10T08:19:38",
+   "date_unixtime": "1789039178",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000213",
+   "text": "Друзья, кто пользуется VPN для доступа к сервисам? Что работает стабильно?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Друзья, кто пользуется VPN для доступа к сервисам? Что работает стабильно?"
+    }
+   ]
+  },
+  {
+   "id": 124,
+   "type": "message",
+   "date": "2026-09-10T08:22:35",
+   "date_unixtime": "1789039355",
+   "from": "Игорь Д.",
+   "from_id": "user180000000246",
+   "reply_to_message_id": 123,
+   "edited": "2026-09-10T08:29:12",
+   "edited_unixtime": "1789039752",
+   "text": "Недавно проходили: использую обычный VPN на своём VPS, проблем не было. Было 3 этапа: HR, техническое и встреча с командой, заняло около 10 дней",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: использую обычный VPN на своём VPS, проблем не было. Было 3 этапа: HR, техническое и встреча с командой, заняло около 10 дней"
+    }
+   ]
+  },
+  {
+   "id": 125,
+   "type": "message",
+   "date": "2026-09-10T19:52:18",
+   "date_unixtime": "1789080738",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "text": "HSBC put a hold on my 1 200 USD transfer, did this happen to anyone?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "HSBC put a hold on my 1 200 USD transfer, did this happen to anyone?"
+    }
+   ]
+  },
+  {
+   "id": 126,
+   "type": "message",
+   "date": "2026-09-11T08:16:34",
+   "date_unixtime": "1789125394",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "edited": "2026-09-11T08:26:13",
+   "edited_unixtime": "1789125973",
+   "text": "Should I open a unipersonal or a SAS to invoice abroad?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Should I open a unipersonal or a SAS to invoice abroad?"
+    }
+   ]
+  },
+  {
+   "id": 127,
+   "type": "message",
+   "date": "2026-09-11T08:24:27",
+   "date_unixtime": "1789125867",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 126,
+   "text": "In our case local companies pay around 800 USD for senior backend, foreign ones much more. A unipersonal is simpler to start, SAS if your revenue is high",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case local companies pay around 800 USD for senior backend, foreign ones much more. A unipersonal is simpler to start, SAS if your revenue is high"
+    }
+   ]
+  },
+  {
+   "id": 128,
+   "type": "message",
+   "date": "2026-09-11T08:43:45",
+   "date_unixtime": "1789127025",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "reply_to_message_id": 127,
+   "text": "We did it like this: i get paid via Deel, my contador handles taxes, foreign income has a tax holiday for a few years. Accountants start at about 2 000 USD a month for a unipersonal. Hope it helps.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "We did it like this: i get paid via Deel, my contador handles taxes, foreign income has a tax holiday for a few years. Accountants start at about 2 000 USD a month for a unipersonal. Hope it helps."
+    }
+   ]
+  },
+  {
+   "id": 129,
+   "type": "message",
+   "date": "2026-09-11T08:44:44",
+   "date_unixtime": "1789127084",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "text": "I heard that accountants start at about 800 USD a month for a unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "I heard that accountants start at about 800 USD a month for a unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 130,
+   "type": "message",
+   "date": "2026-09-11T08:46:33",
+   "date_unixtime": "1789127193",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "edited": "2026-09-11T08:54:18",
+   "edited_unixtime": "1789127658",
+   "text": "In our case local companies pay around 1 200 USD for senior backend, foreign ones much more",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case local companies pay around 1 200 USD for senior backend, foreign ones much more"
+    }
+   ]
+  },
+  {
+   "id": 131,
+   "type": "message",
+   "date": "2026-09-11T08:58:21",
+   "date_unixtime": "1789127901",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 127,
+   "text": "Is that before taxes?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Is that before taxes?"
+    }
+   ]
+  },
+  {
+   "id": 132,
+   "type": "message",
+   "date": "2026-09-12T08:36:24",
+   "date_unixtime": "1789212984",
+   "from": "Роман К.",
+   "from_id": "user180000000208",
+   "edited": "2026-09-12T08:41:51",
+   "edited_unixtime": "1789213311",
+   "text": "У кого Santander заблокировал перевод на 1 200 USD? Что они хотели в итоге?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У кого Santander заблокировал перевод на 1 200 USD? Что они хотели в итоге?"
+    }
+   ]
+  },
+  {
+   "id": 133,
+   "type": "message",
+   "date": "2026-09-12T08:36:27",
+   "date_unixtime": "1789212987",
+   "from": "Дарья И.",
+   "from_id": "user180000000212",
+   "reply_to_message_id": 132,
+   "edited": "2026-09-12T08:47:02",
+   "edited_unixtime": "1789213622",
+   "text": "По опыту, мне в Santander открыли с паспортом и справкой о доходах, ждал примерно 10 дней. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, мне в Santander открыли с паспортом и справкой о доходах, ждал примерно 10 дней. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 134,
+   "type": "message",
+   "date": "2026-09-12T08:50:53",
+   "date_unixtime": "1789213853",
+   "from": "Никита И.",
+   "from_id": "user180000000229",
+   "reply_to_message_id": 133,
+   "file": "round_video_messages/round_134.mp4",
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 23,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 135,
+   "type": "message",
+   "date": "2026-09-12T08:51:08",
+   "date_unixtime": "1789213868",
+   "from": "Никита И.",
+   "from_id": "user180000000229",
+   "reply_to_message_id": 133,
+   "edited": "2026-09-12T09:04:18",
+   "edited_unixtime": "1789214658",
+   "text": "Кстати, просили подтверждение источника средств: договор и выписку за 3 месяца. Deel работает, но верификация заняла неделю, фото документа просили переснять дважды",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, просили подтверждение источника средств: договор и выписку за 3 месяца. Deel работает, но верификация заняла неделю, фото документа просили переснять дважды"
+    }
+   ]
+  },
+  {
+   "id": 136,
+   "type": "message",
+   "date": "2026-09-12T08:51:30",
+   "date_unixtime": "1789213890",
+   "from": "Роман К.",
+   "from_id": "user180000000208",
+   "reply_to_message_id": 135,
+   "text": "Это для резидентов или для туристов тоже?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Это для резидентов или для туристов тоже?"
+    }
+   ]
+  },
+  {
+   "id": 137,
+   "type": "message",
+   "date": "2026-09-12T08:51:34",
+   "date_unixtime": "1789213894",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "reply_to_message_id": 132,
+   "text": "Насколько я знаю, через Redpagos и Abitab снимать можно, но лимиты маленькие",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, через Redpagos и Abitab снимать можно, но лимиты маленькие"
+    }
+   ]
+  },
+  {
+   "id": 138,
+   "type": "message",
+   "date": "2026-09-12T10:50:04",
+   "date_unixtime": "1789221004",
+   "from": "Дмитрий Ф.",
+   "from_id": "user180000000237",
+   "text": "Какая сегодня погода, кто в Pocitos? Дождь будет?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Какая сегодня погода, кто в Pocitos? Дождь будет?"
+    }
+   ]
+  },
+  {
+   "id": 139,
+   "type": "message",
+   "date": "2026-09-12T10:50:14",
+   "date_unixtime": "1789221014",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "reply_to_message_id": 138,
+   "text": "понял",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "понял"
+    }
+   ]
+  },
+  {
+   "id": 140,
+   "type": "message",
+   "date": "2026-09-12T12:04:04",
+   "date_unixtime": "1789225444",
+   "from": "Артём О.",
+   "from_id": "user180000000210",
+   "text": "Срочно: какие сейчас зарплаты у senior backend в местных компаниях?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Срочно: какие сейчас зарплаты у senior backend в местных компаниях?"
+    }
+   ]
+  },
+  {
+   "id": 141,
+   "type": "message",
+   "date": "2026-09-12T12:05:56",
+   "date_unixtime": "1789225556",
+   "from": "Артём О.",
+   "from_id": "user180000000210",
+   "reply_to_message_id": 140,
+   "edited": "2026-09-12T12:18:31",
+   "edited_unixtime": "1789226311",
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_024"
+    },
+    " ты же недавно делал"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_024"
+    },
+    {
+     "type": "plain",
+     "text": " ты же недавно делал"
+    }
+   ]
+  },
+  {
+   "id": 142,
+   "type": "message",
+   "date": "2026-09-12T12:08:03",
+   "date_unixtime": "1789225683",
+   "from": "Андрей И.",
+   "from_id": "user180000000223",
+   "reply_to_message_id": 141,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "👍",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 143,
+   "type": "message",
+   "date": "2026-09-12T12:08:23",
+   "date_unixtime": "1789225703",
+   "from": "Мария Ч.",
+   "from_id": "user180000000256",
+   "text": "Насколько я знаю, senior backend в местных компаниях около 2 000 USD, у зарубежных сильно больше. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, senior backend в местных компаниях около 2 000 USD, у зарубежных сильно больше. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 144,
+   "type": "message",
+   "date": "2026-09-12T12:09:00",
+   "date_unixtime": "1789225740",
+   "from": "Артём О.",
+   "from_id": "user180000000210",
+   "reply_to_message_id": 141,
+   "text": "Всем привет! А BPS платить всё равно надо?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Всем привет! А BPS платить всё равно надо?"
+    }
+   ]
+  },
+  {
+   "id": 145,
+   "type": "message",
+   "date": "2026-09-12T12:09:07",
+   "date_unixtime": "1789225747",
+   "from": "Елена В.",
+   "from_id": "user180000000224",
+   "reply_to_message_id": 141,
+   "text": "Бухгалтер берёт от 2 000 USD в месяц за unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Бухгалтер берёт от 2 000 USD в месяц за unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 146,
+   "type": "service",
+   "date": "2026-09-13T10:04:32",
+   "date_unixtime": "1789304672",
+   "actor": "Никита Г.",
+   "actor_id": "user180000000227",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 147,
+   "type": "message",
+   "date": "2026-09-13T11:09:32",
+   "date_unixtime": "1789308572",
+   "from": "Роман Ш.",
+   "from_id": "user180000000226",
+   "edited": "2026-09-13T11:11:15",
+   "edited_unixtime": "1789308675",
+   "text": "Где искать работу, кроме LinkedIn? Местные job boards есть?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Где искать работу, кроме LinkedIn? Местные job boards есть?"
+    }
+   ]
+  },
+  {
+   "id": 148,
+   "type": "message",
+   "date": "2026-09-13T11:10:00",
+   "date_unixtime": "1789308600",
+   "from": "Ксения К.",
+   "from_id": "user180000000222",
+   "reply_to_message_id": 147,
+   "text": "У нас было так: иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Unipersonal проще на старте, SAS имеет смысл, если оборот большой",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Unipersonal проще на старте, SAS имеет смысл, если оборот большой"
+    }
+   ]
+  },
+  {
+   "id": 149,
+   "type": "message",
+   "date": "2026-09-13T11:16:28",
+   "date_unixtime": "1789308988",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "reply_to_message_id": 148,
+   "text": "Бухгалтер берёт от 300 USD в месяц за unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Бухгалтер берёт от 300 USD в месяц за unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 150,
+   "type": "message",
+   "date": "2026-09-13T11:17:10",
+   "date_unixtime": "1789309030",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000253",
+   "reply_to_message_id": 149,
+   "text": "Мне сказали, что бухгалтер берёт от 1 200 USD в месяц за unipersonal. Senior backend в местных компаниях около 300 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что бухгалтер берёт от 1 200 USD в месяц за unipersonal. Senior backend в местных компаниях около 300 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 151,
+   "type": "message",
+   "date": "2026-09-13T11:22:53",
+   "date_unixtime": "1789309373",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "reply_to_message_id": 147,
+   "text": "+",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "+"
+    }
+   ]
+  },
+  {
+   "id": 152,
+   "type": "message",
+   "date": "2026-09-13T11:23:16",
+   "date_unixtime": "1789309396",
+   "from": "Никита И.",
+   "from_id": "user180000000229",
+   "text": "У нас было так: senior backend в местных компаниях около 1 200 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: senior backend в местных компаниях около 1 200 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 153,
+   "type": "message",
+   "date": "2026-09-13T11:23:54",
+   "date_unixtime": "1789309434",
+   "from": "Ксения Ф.",
+   "from_id": "user180000000235",
+   "reply_to_message_id": 147,
+   "edited": "2026-09-13T11:29:56",
+   "edited_unixtime": "1789309796",
+   "text": "конечно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "конечно"
+    }
+   ]
+  },
+  {
+   "id": 154,
+   "type": "message",
+   "date": "2026-09-13T11:29:36",
+   "date_unixtime": "1789309776",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "edited": "2026-09-13T11:37:55",
+   "edited_unixtime": "1789310275",
+   "text": "Кстати, senior backend в местных компаниях около 800 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, senior backend в местных компаниях около 800 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 155,
+   "type": "message",
+   "date": "2026-09-13T11:29:44",
+   "date_unixtime": "1789309784",
+   "from": "Ксения К.",
+   "from_id": "user180000000222",
+   "reply_to_message_id": 149,
+   "text": "Кстати, бухгалтер берёт от 1 200 USD в месяц за unipersonal. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, бухгалтер берёт от 1 200 USD в месяц за unipersonal. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 156,
+   "type": "message",
+   "date": "2026-09-13T11:29:47",
+   "date_unixtime": "1789309787",
+   "from": "Дарья И.",
+   "from_id": "user180000000212",
+   "reply_to_message_id": 155,
+   "text": "Бухгалтер берёт от 2 000 USD в месяц за unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Бухгалтер берёт от 2 000 USD в месяц за unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 157,
+   "type": "message",
+   "date": "2026-09-13T21:06:30",
+   "date_unixtime": "1789344390",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "edited": "2026-09-13T21:14:51",
+   "edited_unixtime": "1789344891",
+   "text": "Вопрос к знающим: кто идёт на встречу в субботу в Pocitos? Во сколько собираемся?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вопрос к знающим: кто идёт на встречу в субботу в Pocitos? Во сколько собираемся?"
+    }
+   ]
+  },
+  {
+   "id": 158,
+   "type": "message",
+   "date": "2026-09-13T21:06:33",
+   "date_unixtime": "1789344393",
+   "from": "Сергей В.",
+   "from_id": "user180000000233",
+   "reply_to_message_id": 157,
+   "edited": "2026-09-13T21:20:13",
+   "edited_unixtime": "1789345213",
+   "text": "У нас было так: клуб в четверг в 19:00, тема про налоги для фрилансеров",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: клуб в четверг в 19:00, тема про налоги для фрилансеров"
+    }
+   ]
+  },
+  {
+   "id": 159,
+   "type": "message",
+   "date": "2026-09-13T21:10:44",
+   "date_unixtime": "1789344644",
+   "from": "Андрей И.",
+   "from_id": "user180000000223",
+   "reply_to_message_id": 158,
+   "edited": "2026-09-13T21:12:43",
+   "edited_unixtime": "1789344763",
+   "text": "Я буду, собираемся к 11, кафе возле рамблы",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Я буду, собираемся к 11, кафе возле рамблы"
+    }
+   ]
+  },
+  {
+   "id": 160,
+   "type": "message",
+   "date": "2026-09-13T21:11:06",
+   "date_unixtime": "1789344666",
+   "from": "Мария Д.",
+   "from_id": "user180000000244",
+   "reply_to_message_id": 157,
+   "text": "Если что, клуб в четверг в 19:00, тема про налоги для фрилансеров. Нам повезло, наверное.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, клуб в четверг в 19:00, тема про налоги для фрилансеров. Нам повезло, наверное."
+    }
+   ]
+  },
+  {
+   "id": 161,
+   "type": "message",
+   "date": "2026-09-13T21:11:29",
+   "date_unixtime": "1789344689",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "reply_to_message_id": 157,
+   "text": "Мы делали так: я в Parque Rodó, могу в выходные. Клуб в четверг в 19:00, тема про налоги для фрилансеров. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: я в Parque Rodó, могу в выходные. Клуб в четверг в 19:00, тема про налоги для фрилансеров. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 162,
+   "type": "message",
+   "date": "2026-09-13T21:12:48",
+   "date_unixtime": "1789344768",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "text": "Из того, что видел, я в Pocitos, могу в выходные. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, я в Pocitos, могу в выходные. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 163,
+   "type": "message",
+   "date": "2026-09-13T21:15:56",
+   "date_unixtime": "1789344956",
+   "from": "Светлана П.",
+   "from_id": "user180000000234",
+   "reply_to_message_id": 162,
+   "text": "Недавно проходили: клуб в четверг в 19:00, тема про налоги для фрилансеров. Это было в прошлом месяце.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: клуб в четверг в 19:00, тема про налоги для фрилансеров. Это было в прошлом месяце."
+    }
+   ]
+  },
+  {
+   "id": 164,
+   "type": "message",
+   "date": "2026-09-13T21:17:53",
+   "date_unixtime": "1789345073",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "reply_to_message_id": 157,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_035"
+    },
+    " ты же недавно делал"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_035"
+    },
+    {
+     "type": "plain",
+     "text": " ты же недавно делал"
+    }
+   ]
+  },
+  {
+   "id": 165,
+   "type": "message",
+   "date": "2026-09-13T21:18:02",
+   "date_unixtime": "1789345082",
+   "from": "Владимир Т.",
+   "from_id": "user180000000248",
+   "reply_to_message_id": 162,
+   "text": "Честно говоря, я в Buceo, могу в выходные. Я буду, собираемся к 11, кафе возле рамблы. Но лучше уточнить на месте.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, я в Buceo, могу в выходные. Я буду, собираемся к 11, кафе возле рамблы. Но лучше уточнить на месте."
+    }
+   ]
+  },
+  {
+   "id": 166,
+   "type": "message",
+   "date": "2026-09-13T21:18:26",
+   "date_unixtime": "1789345106",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "reply_to_message_id": 165,
+   "edited": "2026-09-13T21:33:08",
+   "edited_unixtime": "1789345988",
+   "text": "почему?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "почему?"
+    }
+   ]
+  },
+  {
+   "id": 167,
+   "type": "message",
+   "date": "2026-09-15T07:07:38",
+   "date_unixtime": "1789466858",
+   "from": "Ольга Н.",
+   "from_id": "user180000000240",
+   "text": "👍",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "👍"
+    }
+   ]
+  },
+  {
+   "id": 168,
+   "type": "message",
+   "date": "2026-09-15T08:37:38",
+   "date_unixtime": "1789472258",
+   "from": "Екатерина Г.",
+   "from_id": "user180000000239",
+   "text": "Можно ли снимать наличку с Payoneer без комиссии где-нибудь в Монтевидео?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Можно ли снимать наличку с Payoneer без комиссии где-нибудь в Монтевидео?"
+    }
+   ]
+  },
+  {
+   "id": 169,
+   "type": "message",
+   "date": "2026-09-15T08:39:00",
+   "date_unixtime": "1789472340",
+   "from": "Елена Т.",
+   "from_id": "user180000000228",
+   "reply_to_message_id": 168,
+   "text": "Слышал, что через Redpagos и Abitab снимать можно, но лимиты маленькие. Wise работает, но верификация заняла неделю, фото документа просили переснять дважды. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что через Redpagos и Abitab снимать можно, но лимиты маленькие. Wise работает, но верификация заняла неделю, фото документа просили переснять дважды. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 170,
+   "type": "message",
+   "date": "2026-09-15T08:42:07",
+   "date_unixtime": "1789472527",
+   "from": "Екатерина Г.",
+   "from_id": "user180000000239",
+   "reply_to_message_id": 169,
+   "text": "Срочно: а справку о доходах переводили на испанский?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Срочно: а справку о доходах переводили на испанский?"
+    }
+   ]
+  },
+  {
+   "id": 171,
+   "type": "message",
+   "date": "2026-09-15T09:21:52",
+   "date_unixtime": "1789474912",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "text": "Есть ли тут митапы по Python или Go?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Есть ли тут митапы по Python или Go?"
+    }
+   ]
+  },
+  {
+   "id": 172,
+   "type": "message",
+   "date": "2026-09-15T09:22:15",
+   "date_unixtime": "1789474935",
+   "from": "Игорь Д.",
+   "from_id": "user180000000246",
+   "reply_to_message_id": 171,
+   "file": "voice_messages/audio_172.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 46,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 173,
+   "type": "message",
+   "date": "2026-09-15T09:23:03",
+   "date_unixtime": "1789474983",
+   "from": "Никита С.",
+   "from_id": "user180000000255",
+   "reply_to_message_id": 171,
+   "text": "Использую обычный VPN на своём VPS, проблем не было. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Использую обычный VPN на своём VPS, проблем не было. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 174,
+   "type": "message",
+   "date": "2026-09-15T09:25:24",
+   "date_unixtime": "1789475124",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "reply_to_message_id": 173,
+   "text": "Митапы на английском или испанском?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Митапы на английском или испанском?"
+    }
+   ]
+  },
+  {
+   "id": 175,
+   "type": "message",
+   "date": "2026-09-15T09:25:29",
+   "date_unixtime": "1789475129",
+   "from": "Наталья И.",
+   "from_id": "user180000000243",
+   "reply_to_message_id": 174,
+   "photo": "photos/photo_175.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 176,
+   "type": "message",
+   "date": "2026-09-15T09:25:34",
+   "date_unixtime": "1789475134",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000213",
+   "reply_to_message_id": 175,
+   "file": "voice_messages/audio_176.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 32,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 177,
+   "type": "message",
+   "date": "2026-09-15T09:30:08",
+   "date_unixtime": "1789475408",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 169,
+   "file": "round_video_messages/round_177.mp4",
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 39,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 178,
+   "type": "message",
+   "date": "2026-09-16T09:15:40",
+   "date_unixtime": "1789560940",
+   "from": "Сергей В.",
+   "from_id": "user180000000233",
+   "text": "Какие сейчас зарплаты у senior backend в местных компаниях?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Какие сейчас зарплаты у senior backend в местных компаниях?"
+    }
+   ]
+  },
+  {
+   "id": 179,
+   "type": "message",
+   "date": "2026-09-16T09:19:52",
+   "date_unixtime": "1789561192",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "reply_to_message_id": 178,
+   "text": "да",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "да"
+    }
+   ]
+  },
+  {
+   "id": 180,
+   "type": "message",
+   "date": "2026-09-16T09:25:31",
+   "date_unixtime": "1789561531",
+   "from": "Ирина О.",
+   "from_id": "user180000000231",
+   "reply_to_message_id": 179,
+   "text": "Честно говоря, есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Бухгалтер берёт от 2 000 USD в месяц за unipersonal. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Бухгалтер берёт от 2 000 USD в месяц за unipersonal. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 181,
+   "type": "message",
+   "date": "2026-09-16T09:25:48",
+   "date_unixtime": "1789561548",
+   "from": "Павел Ф.",
+   "from_id": "user180000000250",
+   "reply_to_message_id": 180,
+   "text": "Если что, через DolarApp получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Может, уже поменялось.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, через DolarApp получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Может, уже поменялось."
+    }
+   ]
+  },
+  {
+   "id": 182,
+   "type": "message",
+   "date": "2026-09-17T09:55:29",
+   "date_unixtime": "1789649729",
+   "from": "Анна Д.",
+   "from_id": "user180000000230",
+   "text": "Всем привет! Недавно переехали в Монтевидео, рады быть здесь",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Всем привет! Недавно переехали в Монтевидео, рады быть здесь"
+    }
+   ]
+  },
+  {
+   "id": 183,
+   "type": "message",
+   "date": "2026-09-17T11:03:29",
+   "date_unixtime": "1789653809",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "edited": "2026-09-17T11:11:43",
+   "edited_unixtime": "1789654303",
+   "text": "Quick question: has anyone interviewed with a local startup? How many rounds?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Quick question: has anyone interviewed with a local startup? How many rounds?"
+    }
+   ]
+  },
+  {
+   "id": 184,
+   "type": "message",
+   "date": "2026-09-17T11:03:58",
+   "date_unixtime": "1789653838",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "reply_to_message_id": 183,
+   "edited": "2026-09-17T11:17:34",
+   "edited_unixtime": "1789654654",
+   "text": "There's a monthly meetup, announced on LinkedIn",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "There's a monthly meetup, announced on LinkedIn"
+    }
+   ]
+  },
+  {
+   "id": 185,
+   "type": "message",
+   "date": "2026-09-17T11:04:15",
+   "date_unixtime": "1789653855",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "reply_to_message_id": 183,
+   "file": "voice_messages/audio_185.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 59,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 186,
+   "type": "message",
+   "date": "2026-09-17T11:05:53",
+   "date_unixtime": "1789653953",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "reply_to_message_id": 183,
+   "text": "FWIW, b2 is fine, people speak slowly on calls. Three rounds: HR, a technical interview and a team call",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "FWIW, b2 is fine, people speak slowly on calls. Three rounds: HR, a technical interview and a team call"
+    }
+   ]
+  },
+  {
+   "id": 187,
+   "type": "message",
+   "date": "2026-09-17T11:06:18",
+   "date_unixtime": "1789653978",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "text": "In our case b2 is fine, people speak slowly on calls. There's a monthly meetup, announced on LinkedIn. That was last month.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case b2 is fine, people speak slowly on calls. There's a monthly meetup, announced on LinkedIn. That was last month."
+    }
+   ]
+  },
+  {
+   "id": 188,
+   "type": "message",
+   "date": "2026-09-17T15:35:54",
+   "date_unixtime": "1789670154",
+   "from": "Сергей В.",
+   "from_id": "user180000000233",
+   "edited": "2026-09-17T15:47:48",
+   "edited_unixtime": "1789670868",
+   "text": "Всем привет! Кто пользуется VPN для доступа к сервисам? Что работает стабильно?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Всем привет! Кто пользуется VPN для доступа к сервисам? Что работает стабильно?"
+    }
+   ]
+  },
+  {
+   "id": 189,
+   "type": "message",
+   "date": "2026-09-17T15:37:31",
+   "date_unixtime": "1789670251",
+   "from": "Мария Д.",
+   "from_id": "user180000000244",
+   "reply_to_message_id": 188,
+   "text": "Слышал, что использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 190,
+   "type": "message",
+   "date": "2026-09-17T15:37:40",
+   "date_unixtime": "1789670260",
+   "from": "Роман К.",
+   "from_id": "user180000000208",
+   "reply_to_message_id": 188,
+   "text": "Недавно проходили: использую обычный VPN на своём VPS, проблем не было. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: использую обычный VPN на своём VPS, проблем не было. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 191,
+   "type": "message",
+   "date": "2026-09-17T15:40:36",
+   "date_unixtime": "1789670436",
+   "from": "Ксения К.",
+   "from_id": "user180000000222",
+   "edited": "2026-09-17T15:51:33",
+   "edited_unixtime": "1789671093",
+   "text": "Как вариант, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 192,
+   "type": "message",
+   "date": "2026-09-17T15:42:26",
+   "date_unixtime": "1789670546",
+   "from": "Сергей В.",
+   "from_id": "user180000000233",
+   "reply_to_message_id": 191,
+   "edited": "2026-09-17T15:48:22",
+   "edited_unixtime": "1789670902",
+   "text": "Спасибо, очень помогли",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо, очень помогли"
+    }
+   ]
+  },
+  {
+   "id": 193,
+   "type": "message",
+   "date": "2026-09-17T15:42:55",
+   "date_unixtime": "1789670575",
+   "from": "Светлана П.",
+   "from_id": "user180000000234",
+   "text": "Если что, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней. Может, уже поменялось.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней. Может, уже поменялось."
+    }
+   ]
+  },
+  {
+   "id": 194,
+   "type": "service",
+   "date": "2026-09-18T07:42:02",
+   "date_unixtime": "1789728122",
+   "actor": "Павел Ф.",
+   "actor_id": "user180000000250",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 195,
+   "type": "message",
+   "date": "2026-09-18T09:09:02",
+   "date_unixtime": "1789733342",
+   "from": "Роман К.",
+   "from_id": "user180000000208",
+   "text": "Можно ли сделать eSIM у Movistar без cédula?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Можно ли сделать eSIM у Movistar без cédula?"
+    }
+   ]
+  },
+  {
+   "id": 196,
+   "type": "message",
+   "date": "2026-09-18T09:09:10",
+   "date_unixtime": "1789733350",
+   "from": "Артём Ч.",
+   "from_id": "user180000000245",
+   "text": "По опыту, eSIM с паспортом сделали в офисе за 15 минут. Нам повезло, наверное.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, eSIM с паспортом сделали в офисе за 15 минут. Нам повезло, наверное."
+    }
+   ]
+  },
+  {
+   "id": 197,
+   "type": "message",
+   "date": "2026-09-19T09:07:12",
+   "date_unixtime": "1789819632",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "edited": "2026-09-19T09:19:35",
+   "edited_unixtime": "1789820375",
+   "text": "Может, кто знает: кто идёт на встречу в субботу в Centro? Во сколько собираемся?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Может, кто знает: кто идёт на встречу в субботу в Centro? Во сколько собираемся?"
+    }
+   ]
+  },
+  {
+   "id": 198,
+   "type": "message",
+   "date": "2026-09-19T09:08:34",
+   "date_unixtime": "1789819714",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "reply_to_message_id": 197,
+   "text": "По опыту, клуб в четверг в 19:00, тема про налоги для фрилансеров. Я в Punta Carretas, могу в выходные. Нам повезло, наверное.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, клуб в четверг в 19:00, тема про налоги для фрилансеров. Я в Punta Carretas, могу в выходные. Нам повезло, наверное."
+    }
+   ]
+  },
+  {
+   "id": 199,
+   "type": "message",
+   "date": "2026-09-19T09:11:44",
+   "date_unixtime": "1789819904",
+   "from": "Ирина Д.",
+   "from_id": "user180000000217",
+   "reply_to_message_id": 198,
+   "text": "Слышал, что я буду, собираемся к 11, кафе возле рамблы. Это было в прошлом месяце.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что я буду, собираемся к 11, кафе возле рамблы. Это было в прошлом месяце."
+    }
+   ]
+  },
+  {
+   "id": 200,
+   "type": "message",
+   "date": "2026-09-19T09:12:23",
+   "date_unixtime": "1789819943",
+   "from": "Ирина Д.",
+   "from_id": "user180000000217",
+   "reply_to_message_id": 199,
+   "text": "Слышал, что я буду, собираемся к 11, кафе возле рамблы. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что я буду, собираемся к 11, кафе возле рамблы. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 201,
+   "type": "message",
+   "date": "2026-09-19T09:12:37",
+   "date_unixtime": "1789819957",
+   "from": "Игорь Д.",
+   "from_id": "user180000000246",
+   "reply_to_message_id": 197,
+   "edited": "2026-09-19T09:20:53",
+   "edited_unixtime": "1789820453",
+   "text": "У нас было так: я буду, собираемся к 11, кафе возле рамблы",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: я буду, собираемся к 11, кафе возле рамблы"
+    }
+   ]
+  },
+  {
+   "id": 202,
+   "type": "message",
+   "date": "2026-09-19T09:15:57",
+   "date_unixtime": "1789820157",
+   "from": "Дмитрий Ф.",
+   "from_id": "user180000000237",
+   "text": "У нас было так: я в Centro, могу в выходные. Клуб в четверг в 19:00, тема про налоги для фрилансеров",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: я в Centro, могу в выходные. Клуб в четверг в 19:00, тема про налоги для фрилансеров"
+    }
+   ]
+  },
+  {
+   "id": 203,
+   "type": "message",
+   "date": "2026-09-19T09:18:14",
+   "date_unixtime": "1789820294",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "reply_to_message_id": 202,
+   "edited": "2026-09-19T09:27:02",
+   "edited_unixtime": "1789820822",
+   "text": "Спасибо большое!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо большое!"
+    }
+   ]
+  },
+  {
+   "id": 204,
+   "type": "message",
+   "date": "2026-09-19T09:22:03",
+   "date_unixtime": "1789820523",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "reply_to_message_id": 200,
+   "edited": "2026-09-19T09:24:36",
+   "edited_unixtime": "1789820676",
+   "text": "Спасибо, очень помогли",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо, очень помогли"
+    }
+   ]
+  },
+  {
+   "id": 205,
+   "type": "message",
+   "date": "2026-09-19T09:22:43",
+   "date_unixtime": "1789820563",
+   "from": "Дарья И.",
+   "from_id": "user180000000212",
+   "text": "Из того, что видел, я в Malvín, могу в выходные. Я буду, собираемся к 11, кафе возле рамблы. Нам повезло, наверное.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, я в Malvín, могу в выходные. Я буду, собираемся к 11, кафе возле рамблы. Нам повезло, наверное."
+    }
+   ]
+  },
+  {
+   "id": 206,
+   "type": "message",
+   "date": "2026-09-19T09:41:32",
+   "date_unixtime": "1789821692",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "reply_to_message_id": 202,
+   "text": "Срочно: нужна регистрация?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Срочно: нужна регистрация?"
+    }
+   ]
+  },
+  {
+   "id": 207,
+   "type": "message",
+   "date": "2026-09-19T09:44:38",
+   "date_unixtime": "1789821878",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "reply_to_message_id": 200,
+   "text": "Как вариант, я буду, собираемся к 11, кафе возле рамблы",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, я буду, собираемся к 11, кафе возле рамблы"
+    }
+   ]
+  },
+  {
+   "id": 208,
+   "type": "message",
+   "date": "2026-09-19T09:45:10",
+   "date_unixtime": "1789821910",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "reply_to_message_id": 197,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_032"
+    },
+    " ты же недавно делал"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_032"
+    },
+    {
+     "type": "plain",
+     "text": " ты же недавно делал"
+    }
+   ]
+  },
+  {
+   "id": 209,
+   "type": "message",
+   "date": "2026-09-20T11:41:06",
+   "date_unixtime": "1789915266",
+   "from": "Елена Т.",
+   "from_id": "user180000000228",
+   "text": "Подскажите бухгалтера, который ведёт unipersonal на английском или русском",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Подскажите бухгалтера, который ведёт unipersonal на английском или русском"
+    }
+   ]
+  },
+  {
+   "id": 210,
+   "type": "message",
+   "date": "2026-09-20T11:41:40",
+   "date_unixtime": "1789915300",
+   "from": "Владимир А.",
+   "from_id": "user180000000225",
+   "text": "Если что, senior backend в местных компаниях около 2 000 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, senior backend в местных компаниях около 2 000 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 211,
+   "type": "message",
+   "date": "2026-09-20T11:42:05",
+   "date_unixtime": "1789915325",
+   "from": "Елена Т.",
+   "from_id": "user180000000228",
+   "reply_to_message_id": 210,
+   "edited": "2026-09-20T11:56:29",
+   "edited_unixtime": "1789916189",
+   "text": "Спасибо, очень помогли",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо, очень помогли"
+    }
+   ]
+  },
+  {
+   "id": 212,
+   "type": "message",
+   "date": "2026-09-20T11:45:53",
+   "date_unixtime": "1789915553",
+   "from": "Татьяна И.",
+   "from_id": "user180000000251",
+   "reply_to_message_id": 211,
+   "edited": "2026-09-20T11:59:05",
+   "edited_unixtime": "1789916345",
+   "text": "Как вариант, иностранный доход первые годы может не облагаться, но лучше уточнить у contador. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, иностранный доход первые годы может не облагаться, но лучше уточнить у contador. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 213,
+   "type": "message",
+   "date": "2026-09-20T11:48:29",
+   "date_unixtime": "1789915709",
+   "from": "Татьяна Е.",
+   "from_id": "user180000000221",
+   "reply_to_message_id": 212,
+   "text": "По опыту, иностранный доход первые годы может не облагаться, но лучше уточнить у contador",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, иностранный доход первые годы может не облагаться, но лучше уточнить у contador"
+    }
+   ]
+  },
+  {
+   "id": 214,
+   "type": "message",
+   "date": "2026-09-20T11:49:03",
+   "date_unixtime": "1789915743",
+   "from": "Артём Ч.",
+   "from_id": "user180000000245",
+   "reply_to_message_id": 213,
+   "text": "У нас было так: иностранный доход первые годы может не облагаться, но лучше уточнить у contador",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: иностранный доход первые годы может не облагаться, но лучше уточнить у contador"
+    }
+   ]
+  },
+  {
+   "id": 215,
+   "type": "message",
+   "date": "2026-09-21T08:14:07",
+   "date_unixtime": "1789989247",
+   "from": "Андрей И.",
+   "from_id": "user180000000223",
+   "text": "Может, кто знает: где купить нормальный ноутбук, тут всё дороже в два раза?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Может, кто знает: где купить нормальный ноутбук, тут всё дороже в два раза?"
+    }
+   ]
+  },
+  {
+   "id": 216,
+   "type": "message",
+   "date": "2026-09-21T08:15:04",
+   "date_unixtime": "1789989304",
+   "from": "Анна Д.",
+   "from_id": "user180000000230",
+   "reply_to_message_id": 215,
+   "edited": "2026-09-21T08:23:16",
+   "edited_unixtime": "1789989796",
+   "text": "B2 хватает, на созвонах все говорят медленно и понятно. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "B2 хватает, на созвонах все говорят медленно и понятно. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 217,
+   "type": "message",
+   "date": "2026-09-21T08:17:46",
+   "date_unixtime": "1789989466",
+   "from": "Ирина С.",
+   "from_id": "user180000000247",
+   "reply_to_message_id": 216,
+   "text": "Если что, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Использую обычный VPN на своём VPS, проблем не было. Митапы бывают раз в месяц, анонсы в LinkedIn и Meetup",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Использую обычный VPN на своём VPS, проблем не было. Митапы бывают раз в месяц, анонсы в LinkedIn и Meetup"
+    }
+   ]
+  },
+  {
+   "id": 218,
+   "type": "message",
+   "date": "2026-09-21T08:22:08",
+   "date_unixtime": "1789989728",
+   "from": "Ксения Ф.",
+   "from_id": "user180000000235",
+   "reply_to_message_id": 215,
+   "text": "Если что, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Может, уже поменялось.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Может, уже поменялось."
+    }
+   ]
+  },
+  {
+   "id": 219,
+   "type": "message",
+   "date": "2026-09-21T08:22:41",
+   "date_unixtime": "1789989761",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "reply_to_message_id": 215,
+   "text": "Если что, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 220,
+   "type": "message",
+   "date": "2026-09-21T08:22:50",
+   "date_unixtime": "1789989770",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "reply_to_message_id": 215,
+   "edited": "2026-09-21T08:34:28",
+   "edited_unixtime": "1789990468",
+   "text": "Из того, что видел, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup"
+    }
+   ]
+  },
+  {
+   "id": 221,
+   "type": "message",
+   "date": "2026-09-21T08:35:54",
+   "date_unixtime": "1789990554",
+   "from": "Артём О.",
+   "from_id": "user180000000210",
+   "reply_to_message_id": 215,
+   "text": "Как вариант, b2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, b2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 222,
+   "type": "message",
+   "date": "2026-09-21T08:41:42",
+   "date_unixtime": "1789990902",
+   "from": "Татьяна Р.",
+   "from_id": "user180000000215",
+   "reply_to_message_id": 215,
+   "edited": "2026-09-21T08:49:09",
+   "edited_unixtime": "1789991349",
+   "text": "Честно говоря, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup"
+    }
+   ]
+  },
+  {
+   "id": 223,
+   "type": "message",
+   "date": "2026-09-21T08:41:58",
+   "date_unixtime": "1789990918",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "text": [
+    "Из того, что видел, посмотрите тут, есть список: ",
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    },
+    ". Использую обычный VPN на своём VPS, проблем не было. B2 хватает, на созвонах все говорят медленно и понятно"
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, посмотрите тут, есть список: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    },
+    {
+     "type": "plain",
+     "text": ". Использую обычный VPN на своём VPS, проблем не было. B2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 224,
+   "type": "message",
+   "date": "2026-09-21T08:50:18",
+   "date_unixtime": "1789991418",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "text": "Мне сказали, что ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Использую обычный VPN на своём VPS, проблем не было. B2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Использую обычный VPN на своём VPS, проблем не было. B2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 225,
+   "type": "message",
+   "date": "2026-09-21T08:58:03",
+   "date_unixtime": "1789991883",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "text": "Если что, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. B2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. B2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 226,
+   "type": "message",
+   "date": "2026-09-21T08:58:54",
+   "date_unixtime": "1789991934",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000213",
+   "reply_to_message_id": 225,
+   "text": "Из того, что видел, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Это было в прошлом месяце.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Это было в прошлом месяце."
+    }
+   ]
+  },
+  {
+   "id": 227,
+   "type": "message",
+   "date": "2026-09-21T08:59:26",
+   "date_unixtime": "1789991966",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "edited": "2026-09-21T09:04:21",
+   "edited_unixtime": "1789992261",
+   "text": [
+    "Слышал, что посмотрите тут, есть список: ",
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что посмотрите тут, есть список: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    }
+   ]
+  },
+  {
+   "id": 228,
+   "type": "message",
+   "date": "2026-09-21T08:59:41",
+   "date_unixtime": "1789991981",
+   "from": "Ирина С.",
+   "from_id": "user180000000247",
+   "reply_to_message_id": 223,
+   "text": "Недавно проходили: использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 229,
+   "type": "message",
+   "date": "2026-09-21T20:44:02",
+   "date_unixtime": "1790034242",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "animation",
+   "mime_type": "video/mp4",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 230,
+   "type": "message",
+   "date": "2026-09-21T21:56:02",
+   "date_unixtime": "1790038562",
+   "from": "Мария Ч.",
+   "from_id": "user180000000256",
+   "edited": "2026-09-21T22:07:51",
+   "edited_unixtime": "1790039271",
+   "text": "Вопрос к знающим: кто открывал счёт в Scotiabank без резиденции? Какие документы просили?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вопрос к знающим: кто открывал счёт в Scotiabank без резиденции? Какие документы просили?"
+    }
+   ]
+  },
+  {
+   "id": 231,
+   "type": "message",
+   "date": "2026-09-21T22:00:07",
+   "date_unixtime": "1790038807",
+   "from": "Игорь Д.",
+   "from_id": "user180000000246",
+   "reply_to_message_id": 230,
+   "edited": "2026-09-21T22:07:52",
+   "edited_unixtime": "1790039272",
+   "text": "Недавно проходили: счёт в долларах удобен, если платите аренду в долларах, у многих так. Через Redpagos и Abitab снимать можно, но лимиты маленькие",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: счёт в долларах удобен, если платите аренду в долларах, у многих так. Через Redpagos и Abitab снимать можно, но лимиты маленькие"
+    }
+   ]
+  },
+  {
+   "id": 232,
+   "type": "service",
+   "date": "2026-09-22T10:03:18",
+   "date_unixtime": "1790082198",
+   "actor": "Мария Д.",
+   "actor_id": "user180000000244",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 233,
+   "type": "message",
+   "date": "2026-09-22T11:08:18",
+   "date_unixtime": "1790086098",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "text": "Anyone working for a foreign company and getting paid through DolarApp? How do taxes work here?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Anyone working for a foreign company and getting paid through DolarApp? How do taxes work here?"
+    }
+   ]
+  },
+  {
+   "id": 234,
+   "type": "message",
+   "date": "2026-09-22T11:10:27",
+   "date_unixtime": "1790086227",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "reply_to_message_id": 233,
+   "text": "I get paid via Deel, my contador handles taxes, foreign income has a tax holiday for a few years",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "I get paid via Deel, my contador handles taxes, foreign income has a tax holiday for a few years"
+    }
+   ]
+  },
+  {
+   "id": 235,
+   "type": "message",
+   "date": "2026-09-22T11:13:30",
+   "date_unixtime": "1790086410",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 234,
+   "text": "Heads up: local companies pay around 150 USD for senior backend, foreign ones much more. A unipersonal is simpler to start, SAS if your revenue is high. Your mileage may vary.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Heads up: local companies pay around 150 USD for senior backend, foreign ones much more. A unipersonal is simpler to start, SAS if your revenue is high. Your mileage may vary."
+    }
+   ]
+  },
+  {
+   "id": 236,
+   "type": "message",
+   "date": "2026-09-22T11:15:18",
+   "date_unixtime": "1790086518",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 233,
+   "edited": "2026-09-22T11:20:16",
+   "edited_unixtime": "1790086816",
+   "text": "Accountants start at about 1 200 USD a month for a unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Accountants start at about 1 200 USD a month for a unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 237,
+   "type": "message",
+   "date": "2026-09-22T11:30:19",
+   "date_unixtime": "1790087419",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 234,
+   "text": "Hi all! Is that before taxes?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Hi all! Is that before taxes?"
+    }
+   ]
+  },
+  {
+   "id": 238,
+   "type": "message",
+   "date": "2026-09-22T11:52:55",
+   "date_unixtime": "1790088775",
+   "from": "Grace W.",
+   "from_id": "user180000000204",
+   "reply_to_message_id": 237,
+   "text": "Heads up: a unipersonal is simpler to start, SAS if your revenue is high. I get paid via Payoneer, my contador handles taxes, foreign income has a tax holiday for a few years. Double-check on site though.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Heads up: a unipersonal is simpler to start, SAS if your revenue is high. I get paid via Payoneer, my contador handles taxes, foreign income has a tax holiday for a few years. Double-check on site though."
+    }
+   ]
+  },
+  {
+   "id": 239,
+   "type": "message",
+   "date": "2026-09-22T11:53:13",
+   "date_unixtime": "1790088793",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 234,
+   "text": "Quick question: do you still pay BPS contributions?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Quick question: do you still pay BPS contributions?"
+    }
+   ]
+  },
+  {
+   "id": 240,
+   "type": "message",
+   "date": "2026-09-22T11:54:24",
+   "date_unixtime": "1790088864",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 239,
+   "text": "We did it like this: accountants start at about 500 USD a month for a unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "We did it like this: accountants start at about 500 USD a month for a unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 241,
+   "type": "message",
+   "date": "2026-09-22T11:54:33",
+   "date_unixtime": "1790088873",
+   "from": "Daniel P.",
+   "from_id": "user180000000203",
+   "reply_to_message_id": 238,
+   "text": "why?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "why?"
+    }
+   ]
+  },
+  {
+   "id": 242,
+   "type": "message",
+   "date": "2026-09-22T11:55:37",
+   "date_unixtime": "1790088937",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 241,
+   "text": "A unipersonal is simpler to start, SAS if your revenue is high. Your mileage may vary.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "A unipersonal is simpler to start, SAS if your revenue is high. Your mileage may vary."
+    }
+   ]
+  },
+  {
+   "id": 243,
+   "type": "message",
+   "date": "2026-09-22T11:58:08",
+   "date_unixtime": "1790089088",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 234,
+   "text": "Is that before taxes?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Is that before taxes?"
+    }
+   ]
+  },
+  {
+   "id": 244,
+   "type": "message",
+   "date": "2026-09-22T11:58:13",
+   "date_unixtime": "1790089093",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 243,
+   "text": "As far as I know, local companies pay around 300 USD for senior backend, foreign ones much more. A unipersonal is simpler to start, SAS if your revenue is high. Accountants start at about 500 USD a month for a unipersonal. Your mileage may vary.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "As far as I know, local companies pay around 300 USD for senior backend, foreign ones much more. A unipersonal is simpler to start, SAS if your revenue is high. Accountants start at about 500 USD a month for a unipersonal. Your mileage may vary."
+    }
+   ]
+  },
+  {
+   "id": 245,
+   "type": "message",
+   "date": "2026-09-23T12:47:19",
+   "date_unixtime": "1790178439",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "text": "Where do you buy decent coffee beans?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Where do you buy decent coffee beans?"
+    }
+   ]
+  },
+  {
+   "id": 246,
+   "type": "message",
+   "date": "2026-09-23T12:51:19",
+   "date_unixtime": "1790178679",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "reply_to_message_id": 245,
+   "text": "yes",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "yes"
+    }
+   ]
+  },
+  {
+   "id": 247,
+   "type": "message",
+   "date": "2026-09-23T14:03:19",
+   "date_unixtime": "1790182999",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "text": "Вопрос к знающим: где купить нормальный ноутбук, тут всё дороже в два раза?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вопрос к знающим: где купить нормальный ноутбук, тут всё дороже в два раза?"
+    }
+   ]
+  },
+  {
+   "id": 248,
+   "type": "message",
+   "date": "2026-09-23T14:04:32",
+   "date_unixtime": "1790183072",
+   "from": "Светлана П.",
+   "from_id": "user180000000234",
+   "reply_to_message_id": 247,
+   "text": "Было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней. Может, уже поменялось.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней. Может, уже поменялось."
+    }
+   ]
+  },
+  {
+   "id": 249,
+   "type": "message",
+   "date": "2026-09-23T14:11:31",
+   "date_unixtime": "1790183491",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 248,
+   "text": "Мне сказали, что митапы бывают раз в месяц, анонсы в LinkedIn и Meetup",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что митапы бывают раз в месяц, анонсы в LinkedIn и Meetup"
+    }
+   ]
+  },
+  {
+   "id": 250,
+   "type": "message",
+   "date": "2026-09-23T14:14:26",
+   "date_unixtime": "1790183666",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "reply_to_message_id": 248,
+   "text": "Спасибо!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо!"
+    }
+   ]
+  },
+  {
+   "id": 251,
+   "type": "message",
+   "date": "2026-09-23T14:15:31",
+   "date_unixtime": "1790183731",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "text": "Мне сказали, что использую обычный VPN на своём VPS, проблем не было. Но лучше уточнить на месте.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что использую обычный VPN на своём VPS, проблем не было. Но лучше уточнить на месте."
+    }
+   ]
+  },
+  {
+   "id": 252,
+   "type": "message",
+   "date": "2026-09-23T15:12:20",
+   "date_unixtime": "1790187140",
+   "from": "Наталья И.",
+   "from_id": "user180000000243",
+   "text": "Можно ли сделать eSIM у Claro без cédula?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Можно ли сделать eSIM у Claro без cédula?"
+    }
+   ]
+  },
+  {
+   "id": 253,
+   "type": "message",
+   "date": "2026-09-23T15:12:48",
+   "date_unixtime": "1790187168",
+   "from": "Татьяна Е.",
+   "from_id": "user180000000221",
+   "reply_to_message_id": 252,
+   "text": "почему?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "почему?"
+    }
+   ]
+  },
+  {
+   "id": 254,
+   "type": "message",
+   "date": "2026-09-23T15:12:59",
+   "date_unixtime": "1790187179",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "text": "Домашний интернет выходит около 35 000 песо в год, если пересчитать. У Antel оптика почти везде, в Punta Carretas работает стабильно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Домашний интернет выходит около 35 000 песо в год, если пересчитать. У Antel оптика почти везде, в Punta Carretas работает стабильно"
+    }
+   ]
+  },
+  {
+   "id": 255,
+   "type": "message",
+   "date": "2026-09-23T15:13:03",
+   "date_unixtime": "1790187183",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 254,
+   "text": "Насколько я знаю, у Movistar оптика почти везде, в Pocitos работает стабильно. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, у Movistar оптика почти везде, в Pocitos работает стабильно. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 256,
+   "type": "message",
+   "date": "2026-09-24T17:03:18",
+   "date_unixtime": "1790280198",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000213",
+   "text": "Доброе утро всем",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Доброе утро всем"
+    }
+   ]
+  },
+  {
+   "id": 257,
+   "type": "message",
+   "date": "2026-09-24T18:11:18",
+   "date_unixtime": "1790284278",
+   "from": "Ксения О.",
+   "from_id": "user180000000220",
+   "edited": "2026-09-24T18:15:42",
+   "edited_unixtime": "1790284542",
+   "text": "Друзья, кто работает на зарубежную компанию через DolarApp? Как с налогами здесь?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Друзья, кто работает на зарубежную компанию через DolarApp? Как с налогами здесь?"
+    }
+   ]
+  },
+  {
+   "id": 258,
+   "type": "message",
+   "date": "2026-09-24T18:20:44",
+   "date_unixtime": "1790284844",
+   "from": "Ксения Ф.",
+   "from_id": "user180000000235",
+   "reply_to_message_id": 257,
+   "edited": "2026-09-24T18:33:08",
+   "edited_unixtime": "1790285588",
+   "text": "Как вариант, иностранный доход первые годы может не облагаться, но лучше уточнить у contador",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, иностранный доход первые годы может не облагаться, но лучше уточнить у contador"
+    }
+   ]
+  },
+  {
+   "id": 259,
+   "type": "message",
+   "date": "2026-09-24T18:23:49",
+   "date_unixtime": "1790285029",
+   "from": "Татьяна Е.",
+   "from_id": "user180000000252",
+   "text": "Мне сказали, что senior backend в местных компаниях около 500 USD, у зарубежных сильно больше. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Бухгалтер берёт от 800 USD в месяц за unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что senior backend в местных компаниях около 500 USD, у зарубежных сильно больше. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Бухгалтер берёт от 800 USD в месяц за unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 260,
+   "type": "message",
+   "date": "2026-09-24T18:25:19",
+   "date_unixtime": "1790285119",
+   "from": "Татьяна Е.",
+   "from_id": "user180000000221",
+   "reply_to_message_id": 259,
+   "text": "Из того, что видел, через Deel получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, через Deel получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 261,
+   "type": "message",
+   "date": "2026-09-24T18:25:40",
+   "date_unixtime": "1790285140",
+   "from": "Константин Ф.",
+   "from_id": "user180000000216",
+   "reply_to_message_id": 260,
+   "text": "Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Нам повезло, наверное.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Нам повезло, наверное."
+    }
+   ]
+  },
+  {
+   "id": 262,
+   "type": "message",
+   "date": "2026-09-24T18:36:50",
+   "date_unixtime": "1790285810",
+   "from": "Дмитрий Ф.",
+   "from_id": "user180000000237",
+   "reply_to_message_id": 261,
+   "text": "Мне сказали, что senior backend в местных компаниях около 800 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что senior backend в местных компаниях около 800 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 263,
+   "type": "message",
+   "date": "2026-09-24T18:44:43",
+   "date_unixtime": "1790286283",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "reply_to_message_id": 257,
+   "file": "voice_messages/audio_263.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 35,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 264,
+   "type": "message",
+   "date": "2026-09-24T18:45:21",
+   "date_unixtime": "1790286321",
+   "from": "Никита Г.",
+   "from_id": "user180000000227",
+   "text": "Мне сказали, что senior backend в местных компаниях около 300 USD, у зарубежных сильно больше. Бухгалтер берёт от 800 USD в месяц за unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что senior backend в местных компаниях около 300 USD, у зарубежных сильно больше. Бухгалтер берёт от 800 USD в месяц за unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 265,
+   "type": "message",
+   "date": "2026-09-25T20:04:36",
+   "date_unixtime": "1790377476",
+   "from": "Владимир С.",
+   "from_id": "user180000000214",
+   "text": "Где купить нормальный ноутбук, тут всё дороже в два раза?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Где купить нормальный ноутбук, тут всё дороже в два раза?"
+    }
+   ]
+  },
+  {
+   "id": 266,
+   "type": "message",
+   "date": "2026-09-25T20:05:50",
+   "date_unixtime": "1790377550",
+   "from": "Татьяна Е.",
+   "from_id": "user180000000252",
+   "reply_to_message_id": 265,
+   "text": "Из того, что видел, было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней"
+    }
+   ]
+  },
+  {
+   "id": 267,
+   "type": "message",
+   "date": "2026-09-25T20:06:36",
+   "date_unixtime": "1790377596",
+   "from": "Елена В.",
+   "from_id": "user180000000224",
+   "reply_to_message_id": 265,
+   "edited": "2026-09-25T20:11:03",
+   "edited_unixtime": "1790377863",
+   "text": "Недавно проходили: b2 хватает, на созвонах все говорят медленно и понятно. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: b2 хватает, на созвонах все говорят медленно и понятно. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 268,
+   "type": "message",
+   "date": "2026-09-25T20:07:14",
+   "date_unixtime": "1790377634",
+   "from": "Михаил Ш.",
+   "from_id": "user180000000254",
+   "reply_to_message_id": 267,
+   "text": "ага",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "ага"
+    }
+   ]
+  },
+  {
+   "id": 269,
+   "type": "message",
+   "date": "2026-09-25T20:07:46",
+   "date_unixtime": "1790377666",
+   "from": "Ксения К.",
+   "from_id": "user180000000222",
+   "reply_to_message_id": 265,
+   "text": "Недавно проходили: было 3 этапа: HR, техническое и встреча с командой, заняло около 7 дней. Митапы бывают раз в месяц, анонсы в LinkedIn и Meetup",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: было 3 этапа: HR, техническое и встреча с командой, заняло около 7 дней. Митапы бывают раз в месяц, анонсы в LinkedIn и Meetup"
+    }
+   ]
+  },
+  {
+   "id": 270,
+   "type": "message",
+   "date": "2026-09-25T20:09:39",
+   "date_unixtime": "1790377779",
+   "from": "Никита С.",
+   "from_id": "user180000000255",
+   "reply_to_message_id": 269,
+   "text": "Кстати, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup"
+    }
+   ]
+  },
+  {
+   "id": 271,
+   "type": "message",
+   "date": "2026-09-25T20:10:03",
+   "date_unixtime": "1790377803",
+   "from": "Ирина С.",
+   "from_id": "user180000000247",
+   "reply_to_message_id": 265,
+   "edited": "2026-09-25T20:24:53",
+   "edited_unixtime": "1790378693",
+   "text": "Честно говоря, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 272,
+   "type": "message",
+   "date": "2026-09-25T20:10:07",
+   "date_unixtime": "1790377807",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "reply_to_message_id": 271,
+   "text": "Насколько я знаю, использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 273,
+   "type": "message",
+   "date": "2026-09-26T08:00:27",
+   "date_unixtime": "1790420427",
+   "from": "Ольга Н.",
+   "from_id": "user180000000240",
+   "edited": "2026-09-26T08:08:05",
+   "edited_unixtime": "1790420885",
+   "text": "Подскажите, кто-нибудь проходил собеседование в местный стартап? Какой процесс, сколько этапов?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Подскажите, кто-нибудь проходил собеседование в местный стартап? Какой процесс, сколько этапов?"
+    }
+   ]
+  },
+  {
+   "id": 274,
+   "type": "message",
+   "date": "2026-09-26T08:00:30",
+   "date_unixtime": "1790420430",
+   "from": "Ольга Н.",
+   "from_id": "user180000000240",
+   "reply_to_message_id": 273,
+   "edited": "2026-09-26T08:02:57",
+   "edited_unixtime": "1790420577",
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_027"
+    },
+    " подскажешь?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_027"
+    },
+    {
+     "type": "plain",
+     "text": " подскажешь?"
+    }
+   ]
+  },
+  {
+   "id": 275,
+   "type": "message",
+   "date": "2026-09-26T08:00:45",
+   "date_unixtime": "1790420445",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "reply_to_message_id": 274,
+   "edited": "2026-09-26T08:15:35",
+   "edited_unixtime": "1790421335",
+   "text": "Кстати, было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней. Использую обычный VPN на своём VPS, проблем не было. Это было в прошлом месяце.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней. Использую обычный VPN на своём VPS, проблем не было. Это было в прошлом месяце."
+    }
+   ]
+  },
+  {
+   "id": 276,
+   "type": "message",
+   "date": "2026-09-26T08:00:58",
+   "date_unixtime": "1790420458",
+   "from": "Роман А.",
+   "from_id": "user180000000219",
+   "text": "По опыту, использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 277,
+   "type": "message",
+   "date": "2026-09-26T08:01:13",
+   "date_unixtime": "1790420473",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 273,
+   "edited": "2026-09-26T08:12:54",
+   "edited_unixtime": "1790421174",
+   "text": "Честно говоря, использую обычный VPN на своём VPS, проблем не было. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, использую обычный VPN на своём VPS, проблем не было. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 278,
+   "type": "message",
+   "date": "2026-09-26T08:02:51",
+   "date_unixtime": "1790420571",
+   "from": "Владимир А.",
+   "from_id": "user180000000225",
+   "reply_to_message_id": 273,
+   "text": "понял",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "понял"
+    }
+   ]
+  },
+  {
+   "id": 279,
+   "type": "message",
+   "date": "2026-09-26T08:07:35",
+   "date_unixtime": "1790420855",
+   "from": "Ольга Н.",
+   "from_id": "user180000000240",
+   "reply_to_message_id": 277,
+   "text": "Вопрос к знающим: тестовое давали?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вопрос к знающим: тестовое давали?"
+    }
+   ]
+  },
+  {
+   "id": 280,
+   "type": "message",
+   "date": "2026-09-26T08:07:38",
+   "date_unixtime": "1790420858",
+   "from": "Светлана П.",
+   "from_id": "user180000000234",
+   "reply_to_message_id": 274,
+   "text": "+",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "+"
+    }
+   ]
+  },
+  {
+   "id": 281,
+   "type": "message",
+   "date": "2026-09-27T09:31:11",
+   "date_unixtime": "1790512271",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "text": "Кто работает на зарубежную компанию через DolarApp? Как с налогами здесь?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кто работает на зарубежную компанию через DolarApp? Как с налогами здесь?"
+    }
+   ]
+  },
+  {
+   "id": 282,
+   "type": "message",
+   "date": "2026-09-27T09:33:31",
+   "date_unixtime": "1790512411",
+   "from": "Сергей В.",
+   "from_id": "user180000000233",
+   "reply_to_message_id": 281,
+   "text": "Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Но лучше уточнить на месте.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Но лучше уточнить на месте."
+    }
+   ]
+  },
+  {
+   "id": 283,
+   "type": "message",
+   "date": "2026-09-27T09:33:56",
+   "date_unixtime": "1790512436",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "reply_to_message_id": 282,
+   "text": "Если что, иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Senior backend в местных компаниях около 500 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Senior backend в местных компаниях около 500 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 284,
+   "type": "message",
+   "date": "2026-09-27T09:34:01",
+   "date_unixtime": "1790512441",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "reply_to_message_id": 283,
+   "text": "Бухгалтер онлайн или надо ездить?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Бухгалтер онлайн или надо ездить?"
+    }
+   ]
+  },
+  {
+   "id": 285,
+   "type": "message",
+   "date": "2026-09-27T09:37:34",
+   "date_unixtime": "1790512654",
+   "from": "Ирина З.",
+   "from_id": "user180000000241",
+   "reply_to_message_id": 282,
+   "text": "Мы делали так: иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 286,
+   "type": "message",
+   "date": "2026-09-27T09:39:22",
+   "date_unixtime": "1790512762",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "text": "Мы делали так: senior backend в местных компаниях около 1 200 USD, у зарубежных сильно больше. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: senior backend в местных компаниях около 1 200 USD, у зарубежных сильно больше. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 287,
+   "type": "message",
+   "date": "2026-09-27T09:43:32",
+   "date_unixtime": "1790513012",
+   "from": "Артём О.",
+   "from_id": "user180000000210",
+   "reply_to_message_id": 286,
+   "text": "По опыту, бухгалтер берёт от 150 USD в месяц за unipersonal. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, бухгалтер берёт от 150 USD в месяц за unipersonal. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador"
+    }
+   ]
+  },
+  {
+   "id": 288,
+   "type": "message",
+   "date": "2026-09-27T09:44:08",
+   "date_unixtime": "1790513048",
+   "from": "Дмитрий Е.",
+   "from_id": "user180000000238",
+   "reply_to_message_id": 281,
+   "text": "По опыту, senior backend в местных компаниях около 300 USD, у зарубежных сильно больше. Unipersonal проще на старте, SAS имеет смысл, если оборот большой. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, senior backend в местных компаниях около 300 USD, у зарубежных сильно больше. Unipersonal проще на старте, SAS имеет смысл, если оборот большой. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 289,
+   "type": "message",
+   "date": "2026-09-27T16:55:18",
+   "date_unixtime": "1790538918",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "edited": "2026-09-27T16:56:02",
+   "edited_unixtime": "1790538962",
+   "text": "Who's coming to the Saturday meetup in Buceo?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Who's coming to the Saturday meetup in Buceo?"
+    }
+   ]
+  },
+  {
+   "id": 290,
+   "type": "message",
+   "date": "2026-09-27T16:55:26",
+   "date_unixtime": "1790538926",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "text": "As far as I know, i'll be there, we meet at 11 near the rambla. Count me in, just share the place",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "As far as I know, i'll be there, we meet at 11 near the rambla. Count me in, just share the place"
+    }
+   ]
+  },
+  {
+   "id": 291,
+   "type": "message",
+   "date": "2026-09-27T16:56:10",
+   "date_unixtime": "1790538970",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "text": "FWIW, i'll be there, we meet at 11 near the rambla. Count me in, just share the place",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "FWIW, i'll be there, we meet at 11 near the rambla. Count me in, just share the place"
+    }
+   ]
+  },
+  {
+   "id": 292,
+   "type": "message",
+   "date": "2026-09-27T16:56:51",
+   "date_unixtime": "1790539011",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 289,
+   "edited": "2026-09-27T16:58:55",
+   "edited_unixtime": "1790539135",
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_008"
+    },
+    " didn't you do this recently?"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_008"
+    },
+    {
+     "type": "plain",
+     "text": " didn't you do this recently?"
+    }
+   ]
+  },
+  {
+   "id": 293,
+   "type": "message",
+   "date": "2026-09-27T16:57:00",
+   "date_unixtime": "1790539020",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 292,
+   "edited": "2026-09-27T17:04:27",
+   "edited_unixtime": "1790539467",
+   "text": "In our case i'll be there, we meet at 11 near the rambla. Count me in, just share the place",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "In our case i'll be there, we meet at 11 near the rambla. Count me in, just share the place"
+    }
+   ]
+  },
+  {
+   "id": 294,
+   "type": "message",
+   "date": "2026-09-27T16:57:33",
+   "date_unixtime": "1790539053",
+   "from": "Ethan L.",
+   "from_id": "user180000000206",
+   "reply_to_message_id": 293,
+   "text": "From experience, count me in, just share the place. That was last month.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "From experience, count me in, just share the place. That was last month."
+    }
+   ]
+  },
+  {
+   "id": 295,
+   "type": "message",
+   "date": "2026-09-27T17:00:43",
+   "date_unixtime": "1790539243",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 292,
+   "text": "Can we bring kids?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Can we bring kids?"
+    }
+   ]
+  },
+  {
+   "id": 296,
+   "type": "message",
+   "date": "2026-09-27T17:01:40",
+   "date_unixtime": "1790539300",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 292,
+   "edited": "2026-09-27T17:04:07",
+   "edited_unixtime": "1790539447",
+   "text": "Can we bring kids?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Can we bring kids?"
+    }
+   ]
+  },
+  {
+   "id": 297,
+   "type": "message",
+   "date": "2026-09-27T17:03:16",
+   "date_unixtime": "1790539396",
+   "from": "James R.",
+   "from_id": "user180000000202",
+   "reply_to_message_id": 296,
+   "text": "Honestly, count me in, just share the place. Good luck!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Honestly, count me in, just share the place. Good luck!"
+    }
+   ]
+  },
+  {
+   "id": 298,
+   "type": "message",
+   "date": "2026-09-27T17:20:00",
+   "date_unixtime": "1790540400",
+   "from": "James S.",
+   "from_id": "user180000000201",
+   "reply_to_message_id": 294,
+   "text": "Thanks for sharing",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Thanks for sharing"
+    }
+   ]
+  },
+  {
+   "id": 299,
+   "type": "message",
+   "date": "2026-09-28T20:33:05",
+   "date_unixtime": "1790638385",
+   "from": "Татьяна Р.",
+   "from_id": "user180000000215",
+   "text": "Есть смысл открывать unipersonal или лучше SAS?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Есть смысл открывать unipersonal или лучше SAS?"
+    }
+   ]
+  },
+  {
+   "id": 300,
+   "type": "message",
+   "date": "2026-09-28T20:35:07",
+   "date_unixtime": "1790638507",
+   "from": "Ирина З.",
+   "from_id": "user180000000241",
+   "reply_to_message_id": 299,
+   "edited": "2026-09-28T20:48:17",
+   "edited_unixtime": "1790639297",
+   "text": "Из того, что видел, иностранный доход первые годы может не облагаться, но лучше уточнить у contador",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, иностранный доход первые годы может не облагаться, но лучше уточнить у contador"
+    }
+   ]
+  },
+  {
+   "id": 301,
+   "type": "message",
+   "date": "2026-09-28T20:44:17",
+   "date_unixtime": "1790639057",
+   "from": "Михаил М.",
+   "from_id": "user180000000209",
+   "reply_to_message_id": 300,
+   "text": [
+    "Хорошая подборка вопросов по unipersonal: ",
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    ". Это было в прошлом месяце."
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Хорошая подборка вопросов по unipersonal: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/fonasa-paso-a-paso"
+    },
+    {
+     "type": "plain",
+     "text": ". Это было в прошлом месяце."
+    }
+   ]
+  },
+  {
+   "id": 302,
+   "type": "message",
+   "date": "2026-09-28T20:44:28",
+   "date_unixtime": "1790639068",
+   "from": "Ирина С.",
+   "from_id": "user180000000247",
+   "reply_to_message_id": 301,
+   "text": "По опыту, через DolarApp получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, через DolarApp получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 303,
+   "type": "message",
+   "date": "2026-09-28T20:47:21",
+   "date_unixtime": "1790639241",
+   "from": "Андрей И.",
+   "from_id": "user180000000223",
+   "reply_to_message_id": 300,
+   "edited": "2026-09-28T20:47:45",
+   "edited_unixtime": "1790639265",
+   "text": "Мне сказали, что unipersonal проще на старте, SAS имеет смысл, если оборот большой. Может, уже поменялось.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что unipersonal проще на старте, SAS имеет смысл, если оборот большой. Может, уже поменялось."
+    }
+   ]
+  },
+  {
+   "id": 304,
+   "type": "message",
+   "date": "2026-09-29T14:02:38",
+   "date_unixtime": "1790701358",
+   "from": "Ирина З.",
+   "from_id": "user180000000241",
+   "edited": "2026-09-29T14:08:18",
+   "edited_unixtime": "1790701698",
+   "text": "Будет ли английский клуб на этой неделе?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Будет ли английский клуб на этой неделе?"
+    }
+   ]
+  },
+  {
+   "id": 305,
+   "type": "message",
+   "date": "2026-09-29T14:03:51",
+   "date_unixtime": "1790701431",
+   "from": "Михаил Ш.",
+   "from_id": "user180000000254",
+   "reply_to_message_id": 304,
+   "text": "Мы делали так: клуб в четверг в 19:00, тема про налоги для фрилансеров. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: клуб в четверг в 19:00, тема про налоги для фрилансеров. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 306,
+   "type": "message",
+   "date": "2026-09-29T14:04:41",
+   "date_unixtime": "1790701481",
+   "from": "Владимир С.",
+   "from_id": "user180000000214",
+   "reply_to_message_id": 304,
+   "text": "Как вариант, клуб в четверг в 19:00, тема про налоги для фрилансеров. Я буду, собираемся к 11, кафе возле рамблы. Я в Malvín, могу в выходные. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, клуб в четверг в 19:00, тема про налоги для фрилансеров. Я буду, собираемся к 11, кафе возле рамблы. Я в Malvín, могу в выходные. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 307,
+   "type": "message",
+   "date": "2026-09-29T14:06:53",
+   "date_unixtime": "1790701613",
+   "from": "Ирина З.",
+   "from_id": "user180000000241",
+   "reply_to_message_id": 305,
+   "edited": "2026-09-29T14:13:58",
+   "edited_unixtime": "1790702038",
+   "text": "Нужна регистрация?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Нужна регистрация?"
+    }
+   ]
+  },
+  {
+   "id": 308,
+   "type": "message",
+   "date": "2026-09-29T14:09:00",
+   "date_unixtime": "1790701740",
+   "from": "Ирина Д.",
+   "from_id": "user180000000217",
+   "reply_to_message_id": 304,
+   "edited": "2026-09-29T14:15:04",
+   "edited_unixtime": "1790702104",
+   "text": "Мне сказали, что я в Centro, могу в выходные. Я буду, собираемся к 11, кафе возле рамблы. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что я в Centro, могу в выходные. Я буду, собираемся к 11, кафе возле рамблы. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 309,
+   "type": "message",
+   "date": "2026-09-29T16:35:07",
+   "date_unixtime": "1790710507",
+   "from": "Ryan L.",
+   "from_id": "user180000000205",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Earn $500 a week"
+    },
+    " working from home, DM me ",
+    {
+     "type": "mention",
+     "text": "@income_demo"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Earn $500 a week"
+    },
+    {
+     "type": "plain",
+     "text": " working from home, DM me "
+    },
+    {
+     "type": "mention",
+     "text": "@income_demo"
+    }
+   ]
+  },
+  {
+   "id": 310,
+   "type": "message",
+   "date": "2026-09-29T17:42:07",
+   "date_unixtime": "1790714527",
+   "from": "Дарья М.",
+   "from_id": "user180000000232",
+   "edited": "2026-09-29T17:55:41",
+   "edited_unixtime": "1790715341",
+   "text": "Может, кто знает: есть ли тут митапы по Python или Go?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Может, кто знает: есть ли тут митапы по Python или Go?"
+    }
+   ]
+  },
+  {
+   "id": 311,
+   "type": "message",
+   "date": "2026-10-01T10:29:31",
+   "date_unixtime": "1790861371",
+   "from": "Михаил М.",
+   "from_id": "user180000000209",
+   "text": "Может, кто знает: кто-нибудь проходил собеседование в местный стартап? Какой процесс, сколько этапов?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Может, кто знает: кто-нибудь проходил собеседование в местный стартап? Какой процесс, сколько этапов?"
+    }
+   ]
+  },
+  {
+   "id": 312,
+   "type": "service",
+   "date": "2026-10-01T19:27:44",
+   "date_unixtime": "1790893664",
+   "actor": "Ethan L.",
+   "actor_id": "user180000000206",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 313,
+   "type": "message",
+   "date": "2026-10-01T19:48:44",
+   "date_unixtime": "1790894924",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "text": "Может, кто знает: нужен ли IRPF, если доход из-за границы?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Может, кто знает: нужен ли IRPF, если доход из-за границы?"
+    }
+   ]
+  },
+  {
+   "id": 314,
+   "type": "message",
+   "date": "2026-10-01T19:48:48",
+   "date_unixtime": "1790894928",
+   "from": "Татьяна Р.",
+   "from_id": "user180000000215",
+   "reply_to_message_id": 313,
+   "text": "Если что, есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 315,
+   "type": "message",
+   "date": "2026-10-01T19:49:13",
+   "date_unixtime": "1790894953",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "reply_to_message_id": 314,
+   "text": "благодарю",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "благодарю"
+    }
+   ]
+  },
+  {
+   "id": 316,
+   "type": "message",
+   "date": "2026-10-01T19:55:26",
+   "date_unixtime": "1790895326",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "reply_to_message_id": 314,
+   "edited": "2026-10-01T19:58:53",
+   "edited_unixtime": "1790895533",
+   "text": "А BPS платить всё равно надо?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "А BPS платить всё равно надо?"
+    }
+   ]
+  },
+  {
+   "id": 317,
+   "type": "message",
+   "date": "2026-10-01T19:58:17",
+   "date_unixtime": "1790895497",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "reply_to_message_id": 314,
+   "edited": "2026-10-01T20:07:02",
+   "edited_unixtime": "1790896022",
+   "text": "благодарю",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "благодарю"
+    }
+   ]
+  },
+  {
+   "id": 318,
+   "type": "message",
+   "date": "2026-10-01T20:03:53",
+   "date_unixtime": "1790895833",
+   "from": "Роман Ш.",
+   "from_id": "user180000000226",
+   "reply_to_message_id": 317,
+   "edited": "2026-10-01T20:16:05",
+   "edited_unixtime": "1790896565",
+   "text": "Кстати, unipersonal проще на старте, SAS имеет смысл, если оборот большой",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, unipersonal проще на старте, SAS имеет смысл, если оборот большой"
+    }
+   ]
+  },
+  {
+   "id": 319,
+   "type": "message",
+   "date": "2026-10-01T20:15:24",
+   "date_unixtime": "1790896524",
+   "from": "Сергей В.",
+   "from_id": "user180000000233",
+   "edited": "2026-10-01T20:16:42",
+   "edited_unixtime": "1790896602",
+   "text": "Unipersonal проще на старте, SAS имеет смысл, если оборот большой. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Unipersonal проще на старте, SAS имеет смысл, если оборот большой. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 320,
+   "type": "message",
+   "date": "2026-10-01T20:19:25",
+   "date_unixtime": "1790896765",
+   "from": "Михаил З.",
+   "from_id": "user180000000218",
+   "reply_to_message_id": 314,
+   "text": "Спасибо большое!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо большое!"
+    }
+   ]
+  },
+  {
+   "id": 321,
+   "type": "message",
+   "date": "2026-10-02T11:07:29",
+   "date_unixtime": "1790950049",
+   "from": "Татьяна Е.",
+   "from_id": "user180000000221",
+   "text": "Друзья, кто-нибудь проходил собеседование в местный стартап? Какой процесс, сколько этапов?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Друзья, кто-нибудь проходил собеседование в местный стартап? Какой процесс, сколько этапов?"
+    }
+   ]
+  },
+  {
+   "id": 322,
+   "type": "message",
+   "date": "2026-10-02T11:08:59",
+   "date_unixtime": "1790950139",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000253",
+   "reply_to_message_id": 321,
+   "text": "Насколько я знаю, было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней. Использую обычный VPN на своём VPS, проблем не было. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней. Использую обычный VPN на своём VPS, проблем не было. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 323,
+   "type": "message",
+   "date": "2026-10-02T11:09:02",
+   "date_unixtime": "1790950142",
+   "from": "Андрей И.",
+   "from_id": "user180000000223",
+   "reply_to_message_id": 321,
+   "text": "Насколько я знаю, b2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, b2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 324,
+   "type": "message",
+   "date": "2026-10-02T11:09:34",
+   "date_unixtime": "1790950174",
+   "from": "Дмитрий Ф.",
+   "from_id": "user180000000237",
+   "text": "Недавно проходили: было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Недавно проходили: было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней"
+    }
+   ]
+  },
+  {
+   "id": 325,
+   "type": "message",
+   "date": "2026-10-02T11:09:44",
+   "date_unixtime": "1790950184",
+   "from": "Ольга Е.",
+   "from_id": "user180000000242",
+   "edited": "2026-10-02T11:11:36",
+   "edited_unixtime": "1790950296",
+   "text": "По опыту, было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней"
+    }
+   ]
+  },
+  {
+   "id": 326,
+   "type": "message",
+   "date": "2026-10-02T17:32:26",
+   "date_unixtime": "1790973146",
+   "from": "Ольга Н.",
+   "from_id": "user180000000240",
+   "photo": "photos/photo_326.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "Скрин из приложения Santander, у всех так?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Скрин из приложения Santander, у всех так?"
+    }
+   ]
+  },
+  {
+   "id": 327,
+   "type": "message",
+   "date": "2026-10-02T17:42:33",
+   "date_unixtime": "1790973753",
+   "from": "Алексей Ф.",
+   "from_id": "user180000000249",
+   "text": "Как вариант, eSIM с паспортом сделали в офисе за 15 минут",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, eSIM с паспортом сделали в офисе за 15 минут"
+    }
+   ]
+  },
+  {
+   "id": 328,
+   "type": "message",
+   "date": "2026-10-02T17:45:18",
+   "date_unixtime": "1790973918",
+   "from": "Ксения Л.",
+   "from_id": "user180000000207",
+   "text": "Мне сказали, что у Movistar оптика почти везде, в Centro работает стабильно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что у Movistar оптика почти везде, в Centro работает стабильно"
+    }
+   ]
+  },
+  {
+   "id": 329,
+   "type": "message",
+   "date": "2026-10-03T18:54:51",
+   "date_unixtime": "1791064491",
+   "from": "Никита С.",
+   "from_id": "user180000000255",
+   "text": [
+    {
+     "type": "bold",
+     "text": "Продаю"
+    },
+    " велосипед, почти новый, пишите в личку"
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "Продаю"
+    },
+    {
+     "type": "plain",
+     "text": " велосипед, почти новый, пишите в личку"
+    }
+   ]
+  },
+  {
+   "id": 330,
+   "type": "message",
+   "date": "2026-10-03T19:58:51",
+   "date_unixtime": "1791068331",
+   "from": "Игорь Д.",
+   "from_id": "user180000000246",
+   "edited": "2026-10-03T20:07:22",
+   "edited_unixtime": "1791068842",
+   "text": "Может, кто знает: кто пользуется VPN для доступа к сервисам? Что работает стабильно?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Может, кто знает: кто пользуется VPN для доступа к сервисам? Что работает стабильно?"
+    }
+   ]
+  },
+  {
+   "id": 331,
+   "type": "message",
+   "date": "2026-10-03T19:59:36",
+   "date_unixtime": "1791068376",
+   "from": "Артём О.",
+   "from_id": "user180000000210",
+   "reply_to_message_id": 330,
+   "photo": "photos/photo_331.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 332,
+   "type": "message",
+   "date": "2026-10-03T19:59:47",
+   "date_unixtime": "1791068387",
+   "from": "Мария Ч.",
+   "from_id": "user180000000256",
+   "reply_to_message_id": 331,
+   "edited": "2026-10-03T20:11:17",
+   "edited_unixtime": "1791069077",
+   "text": "Насколько я знаю, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 333,
+   "type": "message",
+   "date": "2026-10-03T20:00:11",
+   "date_unixtime": "1791068411",
+   "from": "Наталья И.",
+   "from_id": "user180000000243",
+   "reply_to_message_id": 331,
+   "edited": "2026-10-03T20:04:21",
+   "edited_unixtime": "1791068661",
+   "text": "Как вариант, было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 334,
+   "type": "message",
+   "date": "2026-10-03T20:00:41",
+   "date_unixtime": "1791068441",
+   "from": "Игорь Д.",
+   "from_id": "user180000000246",
+   "reply_to_message_id": 332,
+   "text": "Спасибо!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо!"
+    }
+   ]
+  },
+  {
+   "id": 335,
+   "type": "message",
+   "date": "2026-10-04T09:59:41",
+   "date_unixtime": "1791118781",
+   "from": "Мария Ч.",
+   "from_id": "user180000000256",
+   "text": "Как у вас с английским на работе, хватает B2?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как у вас с английским на работе, хватает B2?"
+    }
+   ]
+  },
+  {
+   "id": 336,
+   "type": "message",
+   "date": "2026-10-04T10:27:43",
+   "date_unixtime": "1791120463",
+   "from": "Ксения К.",
+   "from_id": "user180000000222",
+   "edited": "2026-10-04T10:36:51",
+   "edited_unixtime": "1791121011",
+   "text": "Кстати, было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. B2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней. Ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. B2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 337,
+   "type": "message",
+   "date": "2026-10-04T10:28:09",
+   "date_unixtime": "1791120489",
+   "from": "Елена В.",
+   "from_id": "user180000000224",
+   "reply_to_message_id": 336,
+   "text": "Если что, b2 хватает, на созвонах все говорят медленно и понятно",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Если что, b2 хватает, на созвонах все говорят медленно и понятно"
+    }
+   ]
+  },
+  {
+   "id": 338,
+   "type": "message",
+   "date": "2026-10-04T10:45:21",
+   "date_unixtime": "1791121521",
+   "from": "Татьяна Е.",
+   "from_id": "user180000000252",
+   "text": "Честно говоря, было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней. Удачи!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, было 3 этапа: HR, техническое и встреча с командой, заняло около 3 дней. Удачи!"
+    }
+   ]
+  },
+  {
+   "id": 339,
+   "type": "message",
+   "date": "2026-10-05T13:53:28",
+   "date_unixtime": "1791219208",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "text": "Всем привет! Кто работает на зарубежную компанию через Deel? Как с налогами здесь?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Всем привет! Кто работает на зарубежную компанию через Deel? Как с налогами здесь?"
+    }
+   ]
+  },
+  {
+   "id": 340,
+   "type": "message",
+   "date": "2026-10-05T13:53:46",
+   "date_unixtime": "1791219226",
+   "from": "Екатерина Г.",
+   "from_id": "user180000000239",
+   "text": "По опыту, senior backend в местных компаниях около 300 USD, у зарубежных сильно больше. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, senior backend в местных компаниях около 300 USD, у зарубежных сильно больше. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 341,
+   "type": "message",
+   "date": "2026-10-05T13:53:56",
+   "date_unixtime": "1791219236",
+   "from": "Елена В.",
+   "from_id": "user180000000224",
+   "reply_to_message_id": 340,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "🙏",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 342,
+   "type": "message",
+   "date": "2026-10-05T13:53:59",
+   "date_unixtime": "1791219239",
+   "from": "Ирина Д.",
+   "from_id": "user180000000217",
+   "reply_to_message_id": 341,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "😂",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 343,
+   "type": "message",
+   "date": "2026-10-05T13:54:02",
+   "date_unixtime": "1791219242",
+   "from": "Никита С.",
+   "from_id": "user180000000255",
+   "reply_to_message_id": 339,
+   "edited": "2026-10-05T13:59:32",
+   "edited_unixtime": "1791219572",
+   "text": "Мне сказали, что бухгалтер берёт от 500 USD в месяц за unipersonal",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что бухгалтер берёт от 500 USD в месяц за unipersonal"
+    }
+   ]
+  },
+  {
+   "id": 344,
+   "type": "message",
+   "date": "2026-10-05T13:56:48",
+   "date_unixtime": "1791219408",
+   "from": "Мария Д.",
+   "from_id": "user180000000244",
+   "reply_to_message_id": 343,
+   "text": "Как вариант, unipersonal проще на старте, SAS имеет смысл, если оборот большой",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, unipersonal проще на старте, SAS имеет смысл, если оборот большой"
+    }
+   ]
+  },
+  {
+   "id": 345,
+   "type": "message",
+   "date": "2026-10-05T13:56:51",
+   "date_unixtime": "1791219411",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "reply_to_message_id": 343,
+   "text": "Народ, вопрос: это до вычета налогов?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Народ, вопрос: это до вычета налогов?"
+    }
+   ]
+  },
+  {
+   "id": 346,
+   "type": "message",
+   "date": "2026-10-05T13:56:54",
+   "date_unixtime": "1791219414",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "reply_to_message_id": 344,
+   "text": "спасибо",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "спасибо"
+    }
+   ]
+  },
+  {
+   "id": 347,
+   "type": "message",
+   "date": "2026-10-05T14:00:40",
+   "date_unixtime": "1791219640",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "reply_to_message_id": 339,
+   "text": "У нас было так: senior backend в местных компаниях около 800 USD, у зарубежных сильно больше. Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: senior backend в местных компаниях около 800 USD, у зарубежных сильно больше. Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 348,
+   "type": "message",
+   "date": "2026-10-05T14:17:13",
+   "date_unixtime": "1791220633",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "reply_to_message_id": 343,
+   "text": "спасибо",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "спасибо"
+    }
+   ]
+  },
+  {
+   "id": 349,
+   "type": "message",
+   "date": "2026-10-05T14:17:47",
+   "date_unixtime": "1791220667",
+   "from": "Артём Ч.",
+   "from_id": "user180000000245",
+   "reply_to_message_id": 348,
+   "text": "Как вариант, через Payoneer получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Но лучше уточнить на месте.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Как вариант, через Payoneer получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Но лучше уточнить на месте."
+    }
+   ]
+  },
+  {
+   "id": 350,
+   "type": "message",
+   "date": "2026-10-05T14:17:50",
+   "date_unixtime": "1791220670",
+   "from": "Андрей И.",
+   "from_id": "user180000000223",
+   "edited": "2026-10-05T14:19:34",
+   "edited_unixtime": "1791220774",
+   "text": "Слышал, что unipersonal проще на старте, SAS имеет смысл, если оборот большой. Через Wise получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Нам повезло, наверное.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Слышал, что unipersonal проще на старте, SAS имеет смысл, если оборот большой. Через Wise получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Нам повезло, наверное."
+    }
+   ]
+  },
+  {
+   "id": 351,
+   "type": "message",
+   "date": "2026-10-05T14:21:11",
+   "date_unixtime": "1791220871",
+   "from": "Елена В.",
+   "from_id": "user180000000224",
+   "reply_to_message_id": 350,
+   "text": "По опыту, бухгалтер берёт от 150 USD в месяц за unipersonal. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, бухгалтер берёт от 150 USD в месяц за unipersonal. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador"
+    }
+   ]
+  },
+  {
+   "id": 352,
+   "type": "message",
+   "date": "2026-10-05T14:21:14",
+   "date_unixtime": "1791220874",
+   "from": "Татьяна Р.",
+   "from_id": "user180000000215",
+   "reply_to_message_id": 351,
+   "edited": "2026-10-05T14:28:36",
+   "edited_unixtime": "1791221316",
+   "text": "Через Midinero получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Senior backend в местных компаниях около 2 000 USD, у зарубежных сильно больше",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Через Midinero получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Senior backend в местных компаниях около 2 000 USD, у зарубежных сильно больше"
+    }
+   ]
+  },
+  {
+   "id": 353,
+   "type": "message",
+   "date": "2026-10-05T14:21:17",
+   "date_unixtime": "1791220877",
+   "from": "Михаил М.",
+   "from_id": "user180000000209",
+   "reply_to_message_id": 339,
+   "edited": "2026-10-05T14:27:55",
+   "edited_unixtime": "1791221275",
+   "text": "Мы делали так: через Midinero получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Это было в прошлом месяце.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: через Midinero получаю уже год, налоги считаю с бухгалтером, по IRPF есть льготы первые годы. Иностранный доход первые годы может не облагаться, но лучше уточнить у contador. Есть Buscojobs и Computrabajo, но для IT в основном LinkedIn. Это было в прошлом месяце."
+    }
+   ]
+  },
+  {
+   "id": 354,
+   "type": "message",
+   "date": "2026-10-06T09:00:24",
+   "date_unixtime": "1791288024",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "text": "Всем привет! Недавно переехали в Монтевидео, рады быть здесь",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Всем привет! Недавно переехали в Монтевидео, рады быть здесь"
+    }
+   ]
+  },
+  {
+   "id": 355,
+   "type": "message",
+   "date": "2026-10-06T09:15:24",
+   "date_unixtime": "1791288924",
+   "from": "Мария Д.",
+   "from_id": "user180000000244",
+   "text": "Вопрос к знающим: кто-нибудь проходил собеседование в местный стартап? Какой процесс, сколько этапов?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вопрос к знающим: кто-нибудь проходил собеседование в местный стартап? Какой процесс, сколько этапов?"
+    }
+   ]
+  },
+  {
+   "id": 356,
+   "type": "message",
+   "date": "2026-10-06T09:17:03",
+   "date_unixtime": "1791289023",
+   "from": "Андрей Л.",
+   "from_id": "user180000000236",
+   "edited": "2026-10-06T09:20:33",
+   "edited_unixtime": "1791289233",
+   "text": "Использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 357,
+   "type": "message",
+   "date": "2026-10-06T09:17:09",
+   "date_unixtime": "1791289029",
+   "from": "Михаил М.",
+   "from_id": "user180000000209",
+   "reply_to_message_id": 355,
+   "file": "voice_messages/audio_357.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 15,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 358,
+   "type": "message",
+   "date": "2026-10-06T09:19:27",
+   "date_unixtime": "1791289167",
+   "from": "Алексей Ч.",
+   "from_id": "user180000000211",
+   "edited": "2026-10-06T09:22:27",
+   "edited_unixtime": "1791289347",
+   "text": "По опыту, было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней. B2 хватает, на созвонах все говорят медленно и понятно. Использую обычный VPN на своём VPS, проблем не было. У всех по-разному, конечно.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, было 3 этапа: HR, техническое и встреча с командой, заняло около 5 дней. B2 хватает, на созвонах все говорят медленно и понятно. Использую обычный VPN на своём VPS, проблем не было. У всех по-разному, конечно."
+    }
+   ]
+  },
+  {
+   "id": 359,
+   "type": "message",
+   "date": "2026-10-06T12:55:19",
+   "date_unixtime": "1791302119",
+   "from": "Татьяна Р.",
+   "from_id": "user180000000215",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "animation",
+   "mime_type": "video/mp4",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 360,
+   "type": "message",
+   "date": "2026-10-06T14:21:19",
+   "date_unixtime": "1791307279",
+   "from": "Екатерина Г.",
+   "from_id": "user180000000239",
+   "text": "Вопрос к знающим: можно ли снимать наличку с Payoneer без комиссии где-нибудь в Монтевидео?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вопрос к знающим: можно ли снимать наличку с Payoneer без комиссии где-нибудь в Монтевидео?"
+    }
+   ]
+  },
+  {
+   "id": 361,
+   "type": "message",
+   "date": "2026-10-06T14:22:24",
+   "date_unixtime": "1791307344",
+   "from": "Сергей В.",
+   "from_id": "user180000000233",
+   "text": "У нас было так: в BROU без cédula сейчас почти нереально, сначала делайте документы",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: в BROU без cédula сейчас почти нереально, сначала делайте документы"
+    }
+   ]
+  },
+  {
+   "id": 362,
+   "type": "message",
+   "date": "2026-10-06T14:23:23",
+   "date_unixtime": "1791307403",
+   "from": "Ольга Ф.",
+   "from_id": "user180000000213",
+   "reply_to_message_id": 360,
+   "text": "Из того, что видел, в Santander без cédula сейчас почти нереально, сначала делайте документы",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, в Santander без cédula сейчас почти нереально, сначала делайте документы"
+    }
+   ]
+  },
+  {
+   "id": 363,
+   "type": "message",
+   "date": "2026-10-06T14:23:29",
+   "date_unixtime": "1791307409",
+   "from": "Елена Т.",
+   "from_id": "user180000000228",
+   "reply_to_message_id": 362,
+   "edited": "2026-10-06T14:26:28",
+   "edited_unixtime": "1791307588",
+   "text": "Честно говоря, через Redpagos и Abitab снимать можно, но лимиты маленькие. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Честно говоря, через Redpagos и Abitab снимать можно, но лимиты маленькие. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 364,
+   "type": "message",
+   "date": "2026-10-06T14:24:22",
+   "date_unixtime": "1791307462",
+   "from": "Владимир С.",
+   "from_id": "user180000000214",
+   "reply_to_message_id": 362,
+   "photo": "photos/photo_364.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 365,
+   "type": "message",
+   "date": "2026-10-06T14:45:43",
+   "date_unixtime": "1791308743",
+   "from": "Екатерина Г.",
+   "from_id": "user180000000239",
+   "reply_to_message_id": 360,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_035"
+    },
+    " ты же недавно делал"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_035"
+    },
+    {
+     "type": "plain",
+     "text": " ты же недавно делал"
+    }
+   ]
+  },
+  {
+   "id": 366,
+   "type": "message",
+   "date": "2026-10-06T14:45:52",
+   "date_unixtime": "1791308752",
+   "from": "Михаил Ш.",
+   "from_id": "user180000000254",
+   "reply_to_message_id": 365,
+   "text": [
+    "Мы делали так: посмотрите тут, там нормально расписано по банкам: ",
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мы делали так: посмотрите тут, там нормально расписано по банкам: "
+    },
+    {
+     "type": "link",
+     "text": "https://example.org/unipersonal-faq"
+    }
+   ]
+  },
+  {
+   "id": 367,
+   "type": "message",
+   "date": "2026-10-06T14:46:21",
+   "date_unixtime": "1791308781",
+   "from": "Татьяна Р.",
+   "from_id": "user180000000215",
+   "reply_to_message_id": 366,
+   "text": "Насколько я знаю, просили подтверждение источника средств: договор и выписку за 8 месяца. Если что, пишите в личку.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насколько я знаю, просили подтверждение источника средств: договор и выписку за 8 месяца. Если что, пишите в личку."
+    }
+   ]
+  },
+  {
+   "id": 368,
+   "type": "message",
+   "date": "2026-10-07T20:01:05",
+   "date_unixtime": "1791414065",
+   "from": "Владимир Т.",
+   "from_id": "user180000000248",
+   "forwarded_from": "Synthetic News Channel",
+   "text": "Изменились правила продления временной cédula, подробности на сайте",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Изменились правила продления временной cédula, подробности на сайте"
+    }
+   ]
+  },
+  {
+   "id": 369,
+   "type": "message",
+   "date": "2026-10-07T20:12:05",
+   "date_unixtime": "1791414725",
+   "from": "Ирина С.",
+   "from_id": "user180000000247",
+   "text": "Есть ли смысл держать счёт в долларах или сразу всё в песо?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Есть ли смысл держать счёт в долларах или сразу всё в песо?"
+    }
+   ]
+  },
+  {
+   "id": 370,
+   "type": "message",
+   "date": "2026-10-07T20:12:33",
+   "date_unixtime": "1791414753",
+   "from": "Роман А.",
+   "from_id": "user180000000219",
+   "text": "Счёт в долларах удобен, если платите аренду в долларах, у многих так. Просили подтверждение источника средств: договор и выписку за 4 месяца. Но лучше уточнить на месте.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Счёт в долларах удобен, если платите аренду в долларах, у многих так. Просили подтверждение источника средств: договор и выписку за 4 месяца. Но лучше уточнить на месте."
+    }
+   ]
+  },
+  {
+   "id": 371,
+   "type": "message",
+   "date": "2026-10-07T20:13:01",
+   "date_unixtime": "1791414781",
+   "from": "Роман К.",
+   "from_id": "user180000000208",
+   "reply_to_message_id": 369,
+   "file": "voice_messages/audio_371.ogg",
+   "media_type": "voice_message",
+   "mime_type": "audio/ogg",
+   "duration_seconds": 24,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 372,
+   "type": "message",
+   "date": "2026-10-07T20:13:44",
+   "date_unixtime": "1791414824",
+   "from": "Михаил М.",
+   "from_id": "user180000000209",
+   "reply_to_message_id": 369,
+   "text": "Мне в HSBC открыли с паспортом и справкой о доходах, ждал примерно 10 дней",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне в HSBC открыли с паспортом и справкой о доходах, ждал примерно 10 дней"
+    }
+   ]
+  },
+  {
+   "id": 373,
+   "type": "message",
+   "date": "2026-10-08T08:34:38",
+   "date_unixtime": "1791459278",
+   "from": "Артём Ч.",
+   "from_id": "user180000000245",
+   "photo": "photos/photo_373.jpg",
+   "width": 1280,
+   "height": 960,
+   "text": "Вот такое письмо пришло из DGI, что это значит?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вот такое письмо пришло из DGI, что это значит?"
+    }
+   ]
+  },
+  {
+   "id": 374,
+   "type": "message",
+   "date": "2026-10-08T08:54:34",
+   "date_unixtime": "1791460474",
+   "from": "Павел Ф.",
+   "from_id": "user180000000250",
+   "reply_to_message_id": 373,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "media_type": "sticker",
+   "sticker_emoji": "😢",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 375,
+   "type": "message",
+   "date": "2026-10-08T09:42:45",
+   "date_unixtime": "1791463365",
+   "from": "Дарья И.",
+   "from_id": "user180000000212",
+   "reply_to_message_id": 374,
+   "text": "Мне сказали, что митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Использую обычный VPN на своём VPS, проблем не было",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что митапы бывают раз в месяц, анонсы в LinkedIn и Meetup. Использую обычный VPN на своём VPS, проблем не было"
+    }
+   ]
+  },
+  {
+   "id": 376,
+   "type": "message",
+   "date": "2026-10-08T10:08:00",
+   "date_unixtime": "1791464880",
+   "from": "Елена В.",
+   "from_id": "user180000000224",
+   "reply_to_message_id": 375,
+   "edited": "2026-10-08T10:20:59",
+   "edited_unixtime": "1791465659",
+   "text": "Кстати, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Кстати, ноутбук проще привезти, тут техника сильно дороже, плюс пошлина. Было 3 этапа: HR, техническое и встреча с командой, заняло около 15 дней"
+    }
+   ]
+  },
+  {
+   "id": 377,
+   "type": "message",
+   "date": "2026-10-08T10:09:13",
+   "date_unixtime": "1791464953",
+   "from": "Ирина О.",
+   "from_id": "user180000000231",
+   "reply_to_message_id": 373,
+   "text": "Мне сказали, что ноутбук проще привезти, тут техника сильно дороже, плюс пошлина",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Мне сказали, что ноутбук проще привезти, тут техника сильно дороже, плюс пошлина"
+    }
+   ]
+  },
+  {
+   "id": 378,
+   "type": "message",
+   "date": "2026-10-09T10:44:14",
+   "date_unixtime": "1791553454",
+   "from": "Татьяна И.",
+   "from_id": "user180000000251",
+   "edited": "2026-10-09T10:44:45",
+   "edited_unixtime": "1791553485",
+   "text": "Может, кто знает: давайте соберёмся на кофе, кто в Parque Rodó живёт?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Может, кто знает: давайте соберёмся на кофе, кто в Parque Rodó живёт?"
+    }
+   ]
+  },
+  {
+   "id": 379,
+   "type": "message",
+   "date": "2026-10-09T10:50:55",
+   "date_unixtime": "1791553855",
+   "from": "Ксения К.",
+   "from_id": "user180000000222",
+   "reply_to_message_id": 378,
+   "text": "У нас было так: клуб в четверг в 19:00, тема про налоги для фрилансеров",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У нас было так: клуб в четверг в 19:00, тема про налоги для фрилансеров"
+    }
+   ]
+  },
+  {
+   "id": 380,
+   "type": "message",
+   "date": "2026-10-09T10:52:45",
+   "date_unixtime": "1791553965",
+   "from": "Михаил Ш.",
+   "from_id": "user180000000254",
+   "reply_to_message_id": 379,
+   "text": "Из того, что видел, я в Cordón, могу в выходные. Я буду, собираемся к 11, кафе возле рамблы. Надеюсь, поможет.",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из того, что видел, я в Cordón, могу в выходные. Я буду, собираемся к 11, кафе возле рамблы. Надеюсь, поможет."
+    }
+   ]
+  },
+  {
+   "id": 381,
+   "type": "message",
+   "date": "2026-10-09T10:54:12",
+   "date_unixtime": "1791554052",
+   "from": "Павел Ф.",
+   "from_id": "user180000000250",
+   "reply_to_message_id": 380,
+   "text": "По опыту, я буду, собираемся к 11, кафе возле рамблы",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По опыту, я буду, собираемся к 11, кафе возле рамблы"
+    }
+   ]
+  },
+  {
+   "id": 382,
+   "type": "message",
+   "date": "2026-10-09T10:58:20",
+   "date_unixtime": "1791554300",
+   "from": "Татьяна И.",
+   "from_id": "user180000000251",
+   "reply_to_message_id": 379,
+   "edited": "2026-10-09T10:59:11",
+   "edited_unixtime": "1791554351",
+   "text": "Подскажите, нужна регистрация?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Подскажите, нужна регистрация?"
+    }
+   ]
+  },
+  {
+   "id": 383,
+   "type": "message",
+   "date": "2026-10-09T11:00:37",
+   "date_unixtime": "1791554437",
+   "from": "Татьяна И.",
+   "from_id": "user180000000251",
+   "reply_to_message_id": 378,
+   "text": [
+    {
+     "type": "mention",
+     "text": "@member_2_029"
+    },
+    " ты же недавно делал"
+   ],
+   "text_entities": [
+    {
+     "type": "mention",
+     "text": "@member_2_029"
+    },
+    {
+     "type": "plain",
+     "text": " ты же недавно делал"
+    }
+   ]
+  },
+  {
+   "id": 384,
+   "type": "message",
+   "date": "2026-10-09T11:00:56",
+   "date_unixtime": "1791554456",
+   "from": "Татьяна И.",
+   "from_id": "user180000000251",
+   "reply_to_message_id": 380,
+   "text": "Спасибо большое!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спасибо большое!"
+    }
+   ]
+  }
+ ]
+}
