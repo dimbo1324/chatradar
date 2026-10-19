@@ -5,8 +5,8 @@ replies into discussions and makes them searchable, so a question gets a short a
 **links to the source messages and their dates**. Later: weekly digests of hot topics,
 "evergreen questions", who to ask, topic subscriptions. Product intent: `docs/vision.md`.
 
-**Stage: level 0, MVP without AI (roadmap steps 1–8) is built; the first live Telegram
-login is the owner's next step.** AI stages (topic
+**Stage: level 0, MVP without AI (roadmap steps 1–8) plus the learning lexicon is built;
+the first live Telegram login is the owner's next step.** AI stages (topic
 labelling, embeddings, answers) come after the non-AI service is complete; they plug in as
 pipeline stages behind the same `Stage` interface.
 

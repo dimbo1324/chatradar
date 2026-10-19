@@ -7,6 +7,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 
 ### Added
 
+- Learning lexicon (ADR-0003): word lists as reviewable data with a revision, statistical
+  candidate mining (`chatradar mine`), human decisions and message labels from the panel
+  through a guarded write path (ADR-0004), filter evaluation against synthetic ground truth
+  or labels (`chatradar eval`, `just eval`) with a regression gate in the tests, stages that
+  reprocess when the lexicon revision moves.
+- Panel: Lexicon and Quality pages, labeling buttons, a redesigned interface with light and
+  dark themes, self-hosted Inter font (SIL OFL), drawn SVG icons and a responsive layout.
+- `docs/backlog.md` for consciously deferred work.
 - Synthetic chat exports in Russian, Spanish and English (`just synthetic`, `just demo`),
   generated deterministically and calibrated on aggregate statistics of real chats.
 - MVP without AI (roadmap steps 2–8): Telegram Desktop export import, Telethon
@@ -41,6 +49,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 
 ### Fixed
 
+- Mining no longer proposes a phrase that already exists in the lexicon under another
+  language.
+- `.woff2` fonts are served as `font/woff2` on Windows too.
 - Noise filter: repeated short replies ("why?", "yes") are no longer duplicates; spam is
   recognised before duplicates and in English "working from home" offers; more gratitude
   phrases. Existing data is re-checked (noise stage version 3).

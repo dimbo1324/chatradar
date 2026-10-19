@@ -165,6 +165,22 @@ async def test_a_language_specific_twin_of_a_neutral_term_is_refreshed_not_dupli
     assert report.refreshed >= 1
 
 
+async def test_a_term_seeded_under_another_language_is_refreshed_not_proposed_again() -> None:
+    """Regression found on the synthetic chats: a seeded Russian "thanks" was proposed again
+    as a language-neutral candidate."""
+    seeded = LexiconTerm(
+        kind=LexiconKind.SPAM_OFFERS, lang="ru", term="earn", status=TermStatus.ACTIVE
+    )
+    lexicon = FakeLexicon([seeded])
+
+    await run(lexicon, corpus())
+
+    assert (LexiconKind.SPAM_OFFERS, "en", "earn") not in lexicon.terms
+    assert (LexiconKind.SPAM_OFFERS, "any", "earn") not in lexicon.terms
+    assert lexicon.terms[seeded.key].occurrences == 8
+    assert lexicon.terms[seeded.key].status is TermStatus.ACTIVE
+
+
 async def test_candidates_carry_examples_as_keys_only() -> None:
     lexicon = FakeLexicon()
 

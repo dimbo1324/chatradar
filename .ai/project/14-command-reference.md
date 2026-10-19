@@ -14,6 +14,9 @@
 | `sync [--chat ID]... [--recheck-days N]` | fetch new messages into `data/raw/`, then process |
 | `process [--stage S] [--reset-stage S]` | run pipeline stages |
 | `rebuild` | clear derived data and re-map every raw record, then process |
+| `eval [--truth PATH]... [--labels] [--json]` | precision, recall and F1 of the noise filter, the question detector and language detection against a truth file or the human labels |
+| `mine` | propose lexicon candidates from the stored messages (nothing becomes active) |
+| `lexicon list\|stats\|accept\|reject\|reset\|add` | inspect and change the learning lexicon; a decision moves its revision and the next `process` applies it |
 | `web [--host] [--port]` | the panel (uvicorn) |
 | `worker` | loop: migrate, sync (if Telegram is configured), process, sleep |
 

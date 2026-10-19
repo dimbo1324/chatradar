@@ -42,9 +42,11 @@ async def mine_candidates(
         for msg in batch:
             miner.observe(msg)
 
+    mined = miner.terms()
+    known = await _known_languages(lexicon, {term.kind for term in mined})
     by_kind: dict[LexiconKind, list[LexiconTerm]] = {}
-    for term in miner.terms():
-        by_kind.setdefault(term.kind, []).append(await _align_language(lexicon, term))
+    for term in mined:
+        by_kind.setdefault(term.kind, []).append(_align_language(known, term))
 
     new_by_kind: dict[str, int] = {}
     inserted_total = refreshed_total = 0
@@ -72,11 +74,34 @@ async def mine_candidates(
     )
 
 
-async def _align_language(lexicon: LexiconRepository, term: LexiconTerm) -> LexiconTerm:
-    """A term that already exists as language-neutral (a seed, say) is refreshed under `any`
-    instead of being proposed a second time under the language it happens to be written in."""
-    if term.lang == "any":
+_PAGE = 500
+
+
+async def _known_languages(
+    lexicon: LexiconRepository, kinds: set[LexiconKind]
+) -> dict[tuple[LexiconKind, str], list[str]]:
+    """Every (kind, term) already in the lexicon, with the languages it exists under."""
+    known: dict[tuple[LexiconKind, str], list[str]] = {}
+    for kind in kinds:
+        offset = 0
+        while True:
+            page = await lexicon.list_terms(kind=kind, limit=_PAGE, offset=offset)
+            for existing in page.items:
+                known.setdefault((existing.kind, existing.term), []).append(existing.lang)
+            offset += _PAGE
+            if offset >= page.total:
+                break
+    return known
+
+
+def _align_language(
+    known: dict[tuple[LexiconKind, str], list[str]], term: LexiconTerm
+) -> LexiconTerm:
+    """A phrase that already exists, under any language, is refreshed there instead of being
+    proposed again under the language it happens to be written in (a Russian "thanks" seeded as
+    `ru` but mined as `any`, say). An exact language match wins, then `any`, then the first."""
+    languages = known.get((term.kind, term.term))
+    if not languages or term.lang in languages:
         return term
-    if await lexicon.get_term(term.kind, "any", term.term) is not None:
-        return term.model_copy(update={"lang": "any"})
-    return term
+    chosen = "any" if "any" in languages else languages[0]
+    return term.model_copy(update={"lang": chosen})

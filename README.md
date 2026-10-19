@@ -120,6 +120,22 @@ directory is mounted into the containers and survives rebuilds.
 
 Without `just`, run the same commands through `uv run …` (see [`justfile`](justfile)).
 
+## Learning lexicon and quality
+
+The word lists behind the noise filter and question detection are data you can review. After
+`just demo`:
+
+```bash
+uv run chatradar mine
+```
+
+proposes candidate words and phrases from the statistics of your chats; open the **Lexicon**
+page in the panel to accept or reject them. A decision moves the lexicon revision; the next
+`uv run chatradar process` (or worker cycle) applies it. The **Filter review** page lets you
+label messages as noise or not, and **Quality** shows how well the filter agrees with your
+labels. `just eval` measures it against the synthetic ground truth. Design:
+[ADR-0003](docs/adr/0003-learning-lexicon.md), deferred work: [docs/backlog.md](docs/backlog.md).
+
 ## CLI
 
 ```
@@ -130,6 +146,9 @@ chatradar import tg-export ./result.json  # import a Telegram Desktop export
 chatradar sync [--chat ID] [--recheck-days 7]
 chatradar process [--stage noise] [--reset-stage noise]
 chatradar rebuild                         # rebuild the database from data/raw
+chatradar eval [--truth FILE]... [--labels]   # filter quality
+chatradar mine                            # propose lexicon candidates
+chatradar lexicon list|stats|accept|reject|reset|add
 chatradar web                             # web panel
 chatradar worker                          # loop: sync → process → sleep
 ```

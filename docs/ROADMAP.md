@@ -17,6 +17,10 @@ Design details for every step: `docs/architecture.md` §12.
 | 7 | Telethon connector, `login`, `sync`, worker | Automatic incremental sync | code done 2026-10-19; live login pending |
 | 8 | Docker and Compose for the whole service | `docker compose up` runs everything | done 2026-10-19 (image verified) |
 
+After step 8 ChatRadar is a complete service without AI. Beside the numbered steps the
+learning lexicon (see the section after step 8) adds the measurement and review loop the
+AI stages will plug into.
+
 After step 8 ChatRadar is a complete service without AI. AI stages (topic labelling,
 embeddings, answers with sources, digests) follow as new pipeline stages, then the
 Telegram bot — product level 0 in `docs/vision.md`.
@@ -99,3 +103,18 @@ documented upgrade to Postgres.
 lexicons; verified by building it, importing the fixture into a volume, reindexing
 after version bumps and browsing the panel. `docker compose up` itself was not run in
 this session.
+
+## 3. Learning lexicon (2026-10-19)
+
+Decisions: `docs/adr/0003-learning-lexicon.md`, `docs/adr/0004-panel-write-path.md`. Deferred
+parts: `docs/backlog.md`.
+
+**Status.** Done 2026-10-19: (1) measurement — the generator writes ground truth, `chatradar
+eval` computes precision/recall/F1 against it or against human labels, with a regression gate in
+the tests; (2) the lexicon is data (`lexicon_terms`, seeded from the built-in lists, revisioned,
+stages reprocess when their applied revision is behind); (3) candidate mining by log-odds with
+thresholds on occurrences, chats and authors (`chatradar mine`), dormancy for long-unseen mined
+terms; (4) human decisions and labels from the panel (pages Lexicon and Quality, buttons on
+the filter review and thread pages) through a guarded write path. The panel was redesigned: design
+system with light/dark themes, Inter font, drawn SVG icons, responsive layout. Not yet: AI as a
+proposer and judge, stemming, per-chat weights, topic terms, worker wake-up on a decision.

@@ -6,6 +6,19 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-19 — Learning lexicon in the rules
+
+**What changed.** `project/10-project-map.md` (stage, `learning/`, lexicon and evaluation
+modules, `docs/backlog.md`), `project/12-domain-rules.md` (the lexicon is data and only
+proposed by statistics; terms are phrases, never people; the panel's narrow write path),
+`project/13-progress-tracking.md` (deferred work goes to `docs/backlog.md`),
+`project/11-commands.md` and `14-command-reference.md` (`eval`, `mine`, `lexicon`).
+
+**Why.** ADR-0003 and ADR-0004 made those lines false or incomplete; the owner approved
+the data-rule change (the panel writes decisions and labels) by asking for the feature.
+
+**Decided by.** Owner (feature and write path), agent (wording), 2026-10-19.
+
 ## 2026-10-19 — The panel's interface is Russian
 
 **What changed.** `project/10-project-map.md` (language policy) names the exception: the

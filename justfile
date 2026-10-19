@@ -65,6 +65,10 @@ demo:
     uv run chatradar import tg-export tests/fixtures/synthetic/es_comunidad.json --username demo_comunidad
     uv run chatradar import tg-export tests/fixtures/synthetic/en_expats.json --username demo_expats_en
 
+# Precision and recall of the noise filter against the synthetic truth (after `just demo`)
+eval:
+    uv run chatradar eval --truth tests/fixtures/synthetic/truth/ru_banks_docs.json --truth tests/fixtures/synthetic/truth/ru_it.json --truth tests/fixtures/synthetic/truth/es_comunidad.json --truth tests/fixtures/synthetic/truth/en_expats.json
+
 # The full gate: everything CI checks
 check: lint typecheck test agents-check language synthetic-check
 
