@@ -20,8 +20,7 @@ from chatradar.services.normalize import normalize_records
 if TYPE_CHECKING:
     from collections.abc import AsyncIterator, Awaitable, Callable, Collection
 
-    from chatradar.domain.ports import ChatRepository, MessageRepository, RawStore
-    from chatradar.services.ingest import ChatCatalog
+    from chatradar.domain.ports import ChatCatalog, ChatRepository, MessageRepository, RawStore
 
 log = get_logger(__name__)
 

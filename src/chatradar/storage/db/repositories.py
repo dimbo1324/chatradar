@@ -18,6 +18,7 @@ from chatradar.domain.models import (
     UpsertResult,
 )
 from chatradar.pipeline.base import STAGE_COLUMNS, STAGE_ORDER, later_stages
+from chatradar.storage.db import tables as t_
 from chatradar.storage.db.rows import (
     MESSAGE_FIELDS,
     STAGE_VALUE_COLUMNS,
@@ -91,14 +92,14 @@ class SqlRepository:
 
     # ------------------------------------------------------------------ chats
 
-    async def upsert_chats(self, chats_: Sequence[ChatInfo]) -> None:
-        if not chats_:
+    async def upsert_chats(self, chats: Sequence[ChatInfo]) -> None:
+        if not chats:
             return
         rows = [
             {**chat.model_dump(), "source": chat.source.value, "kind": chat.kind.value}
-            for chat in chats_
+            for chat in chats
         ]
-        stmt = upsert(self._dialect, chats, ("title", "username", "kind"))
+        stmt = upsert(self._dialect, t_.chats, ("title", "username", "kind"))
         async with self._engine.begin() as conn:
             await conn.execute(stmt, rows)
 
@@ -137,22 +138,22 @@ class SqlRepository:
     # ------------------------------------------------------------------ messages (write)
 
     async def upsert_many(
-        self, messages_: Sequence[Message], normalize_version: int
+        self, messages: Sequence[Message], normalize_version: int
     ) -> UpsertResult:
-        unique = {message.key: message for message in messages_}
+        unique = {message.key: message for message in messages}
         if not unique:
             return UpsertResult()
         keys = list(unique)
         inserted = updated = unchanged = 0
-        stmt = upsert(self._dialect, messages, _UPSERT_UPDATE)
+        stmt = upsert(self._dialect, t_.messages, _UPSERT_UPDATE)
         async with self._engine.begin() as conn:
             for part in chunks(keys):
                 found = await conn.execute(
                     select(
-                        messages.c.source,
-                        messages.c.chat_id,
-                        messages.c.msg_id,
-                        messages.c.content_hash,
+                        t_.messages.c.source,
+                        t_.messages.c.chat_id,
+                        t_.messages.c.msg_id,
+                        t_.messages.c.content_hash,
                     ).where(key_in(part))
                 )
                 existing = {(Source(r[0]), r[1], r[2]): r[3] for r in found}
@@ -247,26 +248,26 @@ class SqlRepository:
         return [to_stored(row) for row in rows]
 
     async def save_threads(
-        self, source: Source, chat_id: str, since: datetime, threads_: Sequence[Thread]
+        self, source: Source, chat_id: str, since: datetime, threads: Sequence[Thread]
     ) -> None:
-        for thread in threads_:
+        for thread in threads:
             if thread.source != source or thread.chat_id != chat_id:
                 raise ValueError(f"thread {thread.thread_id!r} is not in chat {chat_id!r}")
         stmt = upsert(
             self._dialect,
-            threads,
-            (c.name for c in threads.columns if c.name != "thread_id"),
+            t_.threads,
+            (c.name for c in t_.threads.columns if c.name != "thread_id"),
         )
         async with self._engine.begin() as conn:
             await conn.execute(
-                delete(threads).where(
-                    threads.c.source == source.value,
-                    threads.c.chat_id == chat_id,
-                    threads.c.started_at >= since,
+                delete(t_.threads).where(
+                    t_.threads.c.source == source.value,
+                    t_.threads.c.chat_id == chat_id,
+                    t_.threads.c.started_at >= since,
                 )
             )
-            if threads_:
-                await conn.execute(stmt, [thread_values(thread) for thread in threads_])
+            if threads:
+                await conn.execute(stmt, [thread_values(thread) for thread in threads])
 
     async def reset_stage(self, stage: str) -> int:
         names = [f"{s}_v" for s in (_pipeline_stage(stage), *later_stages(stage))]
@@ -278,6 +279,13 @@ class SqlRepository:
         async with self._engine.begin() as conn:
             result = await conn.execute(stmt)
         return result.rowcount
+
+    async def clear_derived(self) -> None:
+        async with self._engine.begin() as conn:
+            if conn.dialect.name == "sqlite":
+                await conn.exec_driver_sql("DELETE FROM threads_fts")
+            await conn.execute(delete(threads))
+            await conn.execute(delete(messages))
 
     # ------------------------------------------------------------------ read side
 

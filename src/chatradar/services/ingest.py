@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING
 
 from chatradar.connectors.telegram.mapper import map_record as map_telethon
 from chatradar.connectors.tg_export.mapper import map_record as map_tg_export
@@ -18,7 +18,13 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
     from pathlib import Path
 
-    from chatradar.domain.ports import ChatRepository, Mapper, MessageRepository, RawStore
+    from chatradar.domain.ports import (
+        ChatCatalog,
+        ChatRepository,
+        Mapper,
+        MessageRepository,
+        RawStore,
+    )
 
 log = get_logger(__name__)
 
@@ -26,17 +32,6 @@ MAPPERS: dict[RawKind, Mapper] = {
     RawKind.TG_DESKTOP: map_tg_export,
     RawKind.TELETHON: map_telethon,
 }
-
-
-class ChatCatalog(Protocol):
-    """Chat metadata kept beside the raw data (`JsonlRawStore` implements it).
-
-    The database is derived from raw data, but `RawRecord` carries no chat title or
-    username; without this a rebuild would lose titles and public links.
-    """
-
-    async def save_chats(self, chats: Sequence[ChatInfo]) -> None: ...
-    async def load_chats(self) -> list[ChatInfo]: ...
 
 
 @dataclass(frozen=True)

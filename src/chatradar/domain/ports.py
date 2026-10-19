@@ -65,6 +65,22 @@ class RawStore(Protocol):
         ...
 
 
+class ChatCatalog(Protocol):
+    """Chat metadata kept beside the raw data, so a rebuild restores titles and links.
+
+    `RawRecord` carries no chat title or username; `JsonlRawStore` implements this.
+    """
+
+    async def save_chats(self, chats: Sequence[ChatInfo]) -> None: ...
+    async def load_chats(self) -> list[ChatInfo]: ...
+
+
+class DerivedDataStore(Protocol):
+    async def clear_derived(self) -> None:
+        """Delete messages, threads and the search index; keep chats and sync state."""
+        ...
+
+
 class ChatRepository(Protocol):
     async def upsert_chats(self, chats: Sequence[ChatInfo]) -> None: ...
     async def get_chat(self, source: Source, chat_id: str) -> ChatInfo | None: ...

@@ -30,9 +30,15 @@ def configure_logging(env: Environment, level: LogLevel = "INFO") -> None:
     structlog.configure(
         processors=[*shared, renderer],
         wrapper_class=structlog.make_filtering_bound_logger(logging.getLevelNamesMapping()[level]),
-        logger_factory=structlog.PrintLoggerFactory(file=sys.stderr),
-        cache_logger_on_first_use=True,
+        # Resolve sys.stderr on every log call: a cached logger would keep writing to a
+        # stream that was replaced and closed (test runners, reconfigured consoles).
+        logger_factory=_stderr_logger,
+        cache_logger_on_first_use=False,
     )
+
+
+def _stderr_logger(*_args: object) -> structlog.PrintLogger:
+    return structlog.PrintLogger(sys.stderr)
 
 
 def get_logger(name: str | None = None) -> structlog.stdlib.BoundLogger:
