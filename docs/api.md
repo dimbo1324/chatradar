@@ -14,6 +14,7 @@ All endpoints bind to 127.0.0.1 by default. Errors use FastAPI's `{"detail": ...
 | `GET /api/chats` | — | `list[ChatSummary]` |
 | `GET /api/pipeline` | — | `PipelineStats` |
 | `GET /api/messages` | `source`, `chat_id`, `date_from`, `date_to`, `lang`, `is_noise`, `noise_reason`, `is_question`, `thread_id`, `limit` (1–500, default 50), `offset` (default 0) | `MessagePage` |
+| `GET /api/messages/{source}/{chat_id}/{msg_id}` | — | `StoredMessage` (404 if unknown) — one message, e.g. a lexicon example |
 | `GET /api/threads/{thread_id}` | — | `ThreadDetail` (404 if unknown) |
 | `GET /api/search` | `q` (required, may be empty → `[]`), `source`, `chat_id`, `date_from`, `date_to`, `limit` (1–100, default 20) | `list[ThreadHit]` |
 | `GET /api/review` | `noise` (bool, required), `n` (1–200, default 100) | `list[StoredMessage]` — a random sample |

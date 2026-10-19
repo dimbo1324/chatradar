@@ -16,6 +16,7 @@ if TYPE_CHECKING:
         MessagePage,
         PipelineStats,
         SearchFilters,
+        Source,
         StoredMessage,
         ThreadDetail,
         ThreadHit,
@@ -23,6 +24,7 @@ if TYPE_CHECKING:
     from chatradar.domain.ports import (
         LabelRepository,
         LexiconRepository,
+        MessageRepository,
         QueryRepository,
         SearchIndex,
         TermOrder,
@@ -36,6 +38,7 @@ class ReadServices:
     stage_versions: Sequence[tuple[str, int]]  # (stage name, current version) in order
     lexicon: LexiconRepository | None = None
     labels: LabelRepository | None = None
+    message_store: MessageRepository | None = None  # single-message lookup
     quality_report: Callable[[], Awaitable[EvalReport]] | None = None  # vs. human labels
 
     async def chats(self) -> list[ChatSummary]:
@@ -83,6 +86,10 @@ class ReadServices:
 
     async def label_list(self, limit: int | None = None) -> list[MessageLabel]:
         return await _need(self.labels, "labels").list_labels(limit)
+
+    async def message(self, source: Source, chat_id: str, msg_id: str) -> StoredMessage | None:
+        key = (source, chat_id, msg_id)
+        return (await _need(self.message_store, "message_store").get_many([key])).get(key)
 
     async def quality(self) -> EvalReport:
         return await _need(self.quality_report, "quality_report")()
