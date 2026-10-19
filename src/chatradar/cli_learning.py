@@ -6,32 +6,15 @@ from __future__ import annotations
 import asyncio
 from datetime import UTC, datetime
 from pathlib import Path  # noqa: TC003 — Typer reads annotations at runtime
-from typing import TYPE_CHECKING, Annotated, Protocol, cast
+from typing import Annotated
 
 import typer
 
 from chatradar.config import get_settings
-from chatradar.domain.ports import MessageRepository, MessageScanner, QueryRepository
 from chatradar.pipeline.registry import stage_versions
 from chatradar.services.container import open_runtime
 from chatradar.services.evaluation import evaluate_labels, evaluate_truth_files, format_report
 from chatradar.services.learning import mine_candidates
-
-if TYPE_CHECKING:
-    from chatradar.domain.ports import LabelRepository, LexiconRepository
-
-
-class _Repo(MessageRepository, QueryRepository, MessageScanner, Protocol): ...
-
-
-class _LearningRuntime(Protocol):
-    @property
-    def repo(self) -> _Repo: ...
-    @property
-    def lexicon(self) -> LexiconRepository: ...
-    @property
-    def labels(self) -> LabelRepository: ...
-
 
 learning_app = typer.Typer(no_args_is_help=True, help="Learning lexicon: evaluation and mining.")
 
@@ -58,7 +41,7 @@ def eval_command(
 
     async def go() -> str:
         async with open_runtime(get_settings()) as opened:
-            rt = cast("_LearningRuntime", opened)
+            rt = opened
             versions = dict(stage_versions())
             revision = await rt.lexicon.revision()
             if labels:
@@ -85,7 +68,7 @@ def mine_command() -> None:
 
     async def go() -> str:
         async with open_runtime(settings) as opened:
-            rt = cast("_LearningRuntime", opened)
+            rt = opened
             report = await mine_candidates(
                 settings.learning,
                 scanner=rt.repo,

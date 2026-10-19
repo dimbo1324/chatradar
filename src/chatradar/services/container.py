@@ -93,11 +93,3 @@ async def open_runtime(settings: Settings, *, migrate: bool = True) -> AsyncGene
         yield runtime
     finally:
         await engine.dispose()
-
-
-@asynccontextmanager
-async def build_read_services(settings: Settings) -> AsyncGenerator[ReadServices]:
-    """For the web app's lifespan. Migrating is idempotent, so the panel also works on a
-    database the worker has not created yet."""
-    async with open_runtime(settings) as runtime:
-        yield runtime.read

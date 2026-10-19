@@ -11,6 +11,8 @@ from typing import TYPE_CHECKING, Annotated
 import typer
 
 from chatradar import __version__
+from chatradar.cli_learning import learning_app
+from chatradar.cli_lexicon import lexicon_app
 from chatradar.config import Settings, get_settings
 from chatradar.logs import configure_logging, get_logger
 from chatradar.services.container import open_runtime
@@ -28,6 +30,9 @@ import_app = typer.Typer(no_args_is_help=True, help="Import manual exports.")
 app.add_typer(telegram_app, name="telegram")
 app.add_typer(chats_app, name="chats")
 app.add_typer(import_app, name="import")
+app.add_typer(lexicon_app, name="lexicon")
+# `eval` and `mine` live at the top level, next to `process` and `rebuild`.
+app.registered_commands.extend(learning_app.registered_commands)
 
 log = get_logger(__name__)
 

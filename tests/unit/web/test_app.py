@@ -18,6 +18,9 @@ if TYPE_CHECKING:
     from chatradar.services.queries import ReadServices
 
 
+FEEDBACK = object()  # stands in for FeedbackServices; the app only stores it
+
+
 def _install_runtime(
     monkeypatch: pytest.MonkeyPatch, read: ReadServices, events: list[str] | None = None
 ) -> None:
@@ -26,7 +29,7 @@ def _install_runtime(
         assert isinstance(settings, Settings)
         if events is not None:
             events.append("open")
-        yield SimpleNamespace(read=read)
+        yield SimpleNamespace(read=read, feedback=FEEDBACK)
         if events is not None:
             events.append("close")
 
@@ -39,6 +42,7 @@ def test_without_services_the_runtime_provides_them(monkeypatch: pytest.MonkeyPa
 
     with TestClient(create_app()) as client:
         assert client.app.state.read is read  # type: ignore[attr-defined]
+        assert client.app.state.feedback is FEEDBACK  # type: ignore[attr-defined]
         assert client.get("/api/noise-reasons").json() == {"short": 1}
 
 

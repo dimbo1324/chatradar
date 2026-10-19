@@ -116,8 +116,6 @@ def test_fonts_are_served(panel: Panel, name: str) -> None:
 
     assert response.status_code == 200
     assert response.content[:4] == b"wOF2"
-    # Starlette takes the type from the platform's mimetypes table, which lacks .woff2 on some
-    # systems (Windows); browsers load fonts regardless of the type, nosniff does not apply.
-    served_type = response.headers["content-type"].split(";")[0]
-    assert served_type in {"font/woff2", "application/octet-stream"}
+    # app.py registers .woff2 itself: the platform table lacks it on Windows.
+    assert response.headers["content-type"].split(";")[0] == "font/woff2"
     assert response.headers["content-security-policy"] == CONTENT_SECURITY_POLICY
