@@ -1,0 +1,39 @@
+# Words and phrases that make a sentence a question when the sentence starts with them.
+# Matched after case and accent folding, on word boundaries. Words that often open a
+# statement too ("как", "когда", "que", "como", "when") are left out: those sentences
+# count as questions only with a question mark.
+# ru
+кто
+где
+куда
+откуда
+почему
+зачем
+какой
+какая
+какое
+какие
+сколько
+чей
+можно ли
+есть ли
+не знаете
+# es
+quien
+quienes
+donde
+adonde
+cuanto
+cuanta
+cuantos
+cuantas
+por que
+recomiendan
+# en
+who
+where
+why
+which
+how
+is there
+are there
