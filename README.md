@@ -3,6 +3,7 @@
 [![CI](https://github.com/dimbo1324/chatradar/actions/workflows/ci.yml/badge.svg)](https://github.com/dimbo1324/chatradar/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/dimbo1324/chatradar/actions/workflows/codeql.yml/badge.svg)](https://github.com/dimbo1324/chatradar/actions/workflows/codeql.yml)
 ![Python](https://img.shields.io/badge/python-3.13%20%7C%203.14-blue)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
@@ -147,3 +148,7 @@ docs/                # видение, архитектура, ADR
 ## Участие
 
 См. [CONTRIBUTING.md](CONTRIBUTING.md). Об уязвимостях — [SECURITY.md](SECURITY.md).
+
+## Лицензия
+
+[MIT](LICENSE)

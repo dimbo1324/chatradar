@@ -7,6 +7,7 @@
 ### Added
 
 - Скелет проекта: uv, ruff, pyright strict, pytest, pre-commit, gitleaks.
+- Лицензия MIT.
 - `Settings` на pydantic-settings, structlog, доменная модель `Message` и порты.
 - CLI на Typer с командами из плана (пока заглушки), веб-заглушка с `/healthz`.
 - Alembic (async, batch-режим для SQLite).
