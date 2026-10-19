@@ -33,23 +33,39 @@ File zones (a package touches nothing outside its zone; tests live in its test f
 | C pipeline | `src/chatradar/pipeline/**` except `base.py`, `src/chatradar/resources/lexicons/**`, `src/chatradar/services/process.py`, `tests/unit/pipeline/**`, `tests/fixtures/pipeline/**` |
 | D web | `src/chatradar/web/**`, `tests/unit/web/**`, `tests/unit/test_web.py` |
 
-[ ] A: Telegram Desktop export parser and mapper, Telethon mapper and connector, JSONL raw
-    store, import and sync services, synthetic export fixtures
-[ ] B: async engine with SQLite pragmas, SQL repositories (chat, message, query), FTS5
-    search index
-[ ] C: noise, enrich, threads, index stages, the runner, lexicons, process service
-[ ] D: JSON API per `docs/api.md`, static SPA (chats, pipeline, messages, thread, search,
-    review)
++ A: Desktop export parser and mapper, Telethon mapper and connector, JSONL raw store
+    with a chat catalog, import and sync services, synthetic fixtures (branch
+    `claude/mvp-connectors-0596b3`, 183 tests in the branch)
++ B: engine with pragmas and programmatic migrations, `SqlRepository`, FTS5 index
+    (`claude/mvp-storage-0890e9`, 94 integration tests)
++ C: noise, enrich, threads, index stages, runner, registry, lexicons, process service
+    (`claude/mvp-pipeline-d26ace`)
++ D: JSON API per `docs/api.md`, static SPA with six pages, CSP
+    (`claude/mvp-web-305522`, checked in a browser by the session)
 
 ## 3. Wave 2 — integration (lead)
 
-[ ] Merge A, B, C, D into `feat/mvp`, gate green after each merge
-[ ] `services/container.py`, rebuild service, CLI wiring, worker loop with migrations
-[ ] Docker image serves static files; compose runs web and worker
-[ ] End-to-end on synthetic data: import → process → search → web pages
++ Merge A, B, C, D into `feat/mvp` (no conflicts; 470 tests green after the merges)
++ `services/container.py`, `services/rebuild.py`, `services/worker.py`, CLI wiring;
+  `ChatCatalog` and `DerivedDataStore` added to the ports
++ Integration defects found and fixed: `SqlRepository` parameter names did not match the
+  ports; a cached structlog logger wrote to a closed stream; `process` turned any
+  `ValueError` into "unknown stage"
++ Docker image built and run: import into a volume, process, web panel and API, version
+  bumps reindex existing data
+- `docker compose up` itself was not run (the image and both commands were run directly)
++ End-to-end on synthetic data: import → process → search → rebuild → web API (test), and
+  every page checked in the browser against the Docker container
++ Fixes from the manual check: Cyrillic yo/ie in search (index v2), "thanks for sharing"
+  as gratitude (noise v2)
+- Live Telegram login and sync: not run — synthetic data only (owner decision); the
+  owner's next step
+- CI on GitHub for `4c48369`: result unknown — the anonymous API rate limit was spent
 
 ## 4. Completion
 
-[ ] `docs/ROADMAP.md` status lines for steps 2–8, project map, README, CHANGELOG
-[ ] `just check` green; fast-forward `main` only when the owner says so
-[ ] Final report to the owner
++ `docs/ROADMAP.md` status lines for steps 2–8, project map, command reference, README,
+  CHANGELOG, `.ai/CHANGELOG.md`
++ `just check` green
+- Fast-forward of `main` and push: not done — waits for the owner
++ Final report to the owner

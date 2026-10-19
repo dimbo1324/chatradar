@@ -5,7 +5,8 @@ replies into discussions and makes them searchable, so a question gets a short a
 **links to the source messages and their dates**. Later: weekly digests of hot topics,
 "evergreen questions", who to ask, topic subscriptions. Product intent: `docs/vision.md`.
 
-**Stage: level 0, step 1 of `docs/ROADMAP.md` is done (skeleton).** AI stages (topic
+**Stage: level 0, MVP without AI (roadmap steps 1–8) is built; the first live Telegram
+login is the owner's next step.** AI stages (topic
 labelling, embeddings, answers) come after the non-AI service is complete; they plug in as
 pipeline stages behind the same `Stage` interface.
 
@@ -23,10 +24,13 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
   `tg_export/` (Telegram Desktop JSON import). Each yields `RawRecord`s.
 - `src/chatradar/storage/` — raw JSONL store (source of truth) and `db/` (SQLAlchemy 2.0,
   repositories, FTS5). The only place with dialect-specific code.
-- `src/chatradar/pipeline/` — `base.py` (`Stage` protocol, `STAGE_ORDER`) and the stages
-  normalize → noise → enrich → threads → index.
-- `src/chatradar/services/` — use cases: `normalize.py` (raw → upsert), `queries.py`
-  (`ReadServices` for the web), ingestion, sync, process, rebuild.
+- `src/chatradar/pipeline/` — `base.py` (`Stage` protocol, `STAGE_ORDER`), the stages
+  noise → enrich → threads → index, `runner.py`, `registry.py`; lexicons in
+  `src/chatradar/resources/lexicons/` (data, Russian and Spanish allowed).
+- `src/chatradar/services/` — use cases: `normalize.py` (raw → upsert), `ingest.py`
+  (import, re-map), `sync.py`, `process.py`, `rebuild.py`, `worker.py`, `queries.py`
+  (`ReadServices` for the web); `container.py` is the composition root — the only
+  module that builds concrete adapters.
 - `src/chatradar/web/` — FastAPI JSON API (`docs/api.md`) and the static panel in
   `web/static/` (plain HTML, CSS, JavaScript modules; ADR-0002).
 - `src/chatradar/cli.py` — Typer entry point `chatradar`; thin wrappers over `services/`.

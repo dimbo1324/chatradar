@@ -6,6 +6,19 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-19 — Project modules follow the built MVP
+
+**What changed.** `project/10-project-map.md` states the stage (MVP steps 1–8 built, live
+Telegram login pending) and lists the services (`container.py` as the composition root,
+ingest, sync, process, rebuild, worker) and the pipeline modules and lexicons.
+`project/14-command-reference.md` (extended tier) describes the working CLI instead of
+step numbers and exit code 2.
+
+**Why.** The MVP made those lines false. Factual corrections, which
+`universal/08-rules-evolution.md` allows without approval.
+
+**Decided by.** Agent, as part of the owner-requested MVP of 2026-10-19.
+
 ## 2026-10-19 — Rules follow the MVP contracts and the static frontend
 
 **What changed.** `project/10-project-map.md` describes the contract modules

@@ -11,8 +11,8 @@ Collects messages from messenger chats, filters out noise and answers questions 
 to the source messages and their dates**. Digests of hot topics, "evergreen questions",
 hints on whom to ask.
 
-> **Status:** pre-alpha. The project skeleton is ready (roadmap step 1); features are in
-> progress. More: [product vision](docs/vision.md), [architecture](docs/architecture.md),
+> **Status:** MVP without AI — import, noise filter, threads, full-text search and a web
+> panel work; live Telegram sync is built and awaits its first real login. More: [product vision](docs/vision.md), [architecture](docs/architecture.md),
 > [roadmap](docs/ROADMAP.md).
 
 ## How it works
@@ -54,6 +54,22 @@ uv run chatradar --help
 ```
 
 `uv` installs Python 3.13 from `.python-version` by itself.
+
+### Try it without Telegram
+
+Export a chat in Telegram Desktop (chat menu → Export chat history → format JSON), or use
+the synthetic one from the tests:
+
+```bash
+uv run chatradar import tg-export tests/fixtures/tg_export/supergroup_result.json --username demo
+```
+
+```bash
+uv run chatradar web
+```
+
+Open <http://127.0.0.1:8000>: chats, pipeline state, messages with filters, threads,
+search and the noise review page.
 
 ### Telegram
 
@@ -133,13 +149,13 @@ docs/                # vision, architecture, roadmap, decisions, ADR
 | Step | What | Status |
 |---|---|---|
 | 1 | Skeleton: uv, ruff, pyright, pytest, pre-commit, CI, `Settings` | ✅ |
-| 2 | Domain and ports, Telegram Desktop JSON import, JSONL RawStore | ⏳ |
-| 3 | SQLAlchemy, Alembic, tables, normalization with upsert | |
-| 4 | Stage runner, noise filter and enrichment | |
-| 5 | Web: chats, pipeline, messages | |
-| 6 | Thread grouping, FTS5, search | |
-| 7 | Telethon connector, `login`, `sync`, worker | |
-| 8 | Docker and Compose for the whole service | |
+| 2 | Domain and ports, Telegram Desktop JSON import, JSONL RawStore | ✅ |
+| 3 | SQLAlchemy, Alembic, tables, normalization with upsert | ✅ |
+| 4 | Stage runner, noise filter and enrichment | ✅ |
+| 5 | Web: chats, pipeline, messages | ✅ |
+| 6 | Thread grouping, FTS5, search | ✅ |
+| 7 | Telethon connector, `login`, `sync`, worker | ✅ code, live login pending |
+| 8 | Docker and Compose for the whole service | ✅ |
 
 Details and status lines: [docs/ROADMAP.md](docs/ROADMAP.md).
 

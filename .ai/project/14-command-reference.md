@@ -6,18 +6,19 @@
 
 ## CLI (`chatradar`)
 
-| Command | Step | What it does |
-|---|---|---|
-| `telegram login` | 7 | interactive first login; session in `data/sessions/` |
-| `chats add <@username or id>` / `chats list` | 7 / 3 | tracked chats |
-| `import tg-export <result.json>` | 2 | Telegram Desktop JSON import |
-| `sync [--chat ID] [--recheck-days N]` | 7 | fetch new messages into `data/raw/` |
-| `process [--stage S] [--reset-stage S]` | 4 | run pipeline stages |
-| `rebuild` | 3 | recreate the database from `data/raw/` |
-| `web [--host] [--port]` | 5 | debug panel (uvicorn) |
-| `worker` | 7 | loop: migrate, sync, process, sleep |
+| Command | What it does |
+|---|---|
+| `telegram login` | interactive first login; session in `data/sessions/` |
+| `chats add <@username, link or id>` / `chats list` | track a chat / list known chats |
+| `import tg-export <result.json> [--username U] [--no-process]` | Desktop JSON import, then process |
+| `sync [--chat ID]... [--recheck-days N]` | fetch new messages into `data/raw/`, then process |
+| `process [--stage S] [--reset-stage S]` | run pipeline stages |
+| `rebuild` | clear derived data and re-map every raw record, then process |
+| `web [--host] [--port]` | the panel (uvicorn) |
+| `worker` | loop: migrate, sync (if Telegram is configured), process, sleep |
 
-Unimplemented commands print the step number and exit with code 2.
+Telegram commands exit with code 2 and a hint when `TELEGRAM__API_ID`/`API_HASH` are
+missing. Every command applies migrations when it opens the database.
 
 ## Configuration
 

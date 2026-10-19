@@ -7,6 +7,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 
 ### Added
 
+- MVP without AI (roadmap steps 2–8): Telegram Desktop export import, Telethon
+  connector with login, tracked chats and incremental sync, append-only JSONL raw store,
+  SQLite storage with migrations, noise filter (ru/es/en), enrichment, thread grouping,
+  FTS5 search with Russian/Spanish inflection, `rebuild` from raw data, the worker loop,
+  and a JSON API with a plain HTML/CSS/JavaScript panel (chats, pipeline, messages,
+  threads, search, noise review).
 - AI assistant rule system: `.ai/` modules shared by Claude Code (`CLAUDE.md`), Codex
   (generated `AGENTS.md`, `.codex/`) and Gemini CLI (`GEMINI.md`); project subagents and
   skills in `.claude/`.
@@ -25,6 +31,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 ### Changed
 
 - Everything in the repository is English.
+- The web panel is a static plain-JavaScript app over a JSON API; Jinja2 is removed
+  (ADR-0002).
 
 ### Fixed
 
