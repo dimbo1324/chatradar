@@ -7,6 +7,15 @@ invented phrase bank `tests/fixtures/synthetic/phrasebank.json`; nothing real is
 
 Deterministic: the same seed always writes byte-identical files.
 
+Ground truth. Next to every chat the generator writes `truth/<chat file>`: what each
+message was MEANT to be, not what the filter says. Gratitude, emoji-only, sticker, join,
+spam and a repost of an earlier question are noise with that reason; a short reply is
+`short` noise only when it does not answer a question; media-only messages (voice, photo,
+video note, animation) and forwards are useful. Known gap: off-topic chatter and greetings
+are written as useful (`is_noise: false`) - the filter cannot see that they are off topic,
+and the truth does not pretend it can. `is_question` is true for generated questions;
+`lang` is the language the text was generated in (null for messages without text).
+
 Usage: uv run python scripts/generate_synthetic.py [--check] [--out DIR] [--seed N]
 """
 
@@ -26,6 +35,7 @@ from typing import Any, cast
 ROOT = Path(__file__).resolve().parent.parent
 FIXTURES = ROOT / "tests" / "fixtures" / "synthetic"
 PHRASEBANK = FIXTURES / "phrasebank.json"
+TRUTH_DIR = "truth"
 SEED = 20261019
 LOCAL_TZ = timezone(timedelta(hours=-3))  # Montevideo; Desktop writes local "date"
 SLOT = re.compile(r"\{(\w+)\}")
@@ -152,6 +162,9 @@ class Draft:
     reply_to: int | None = None
     extra: Json = field(default_factory=dict[str, Any])
     service_action: str | None = None
+    noise: str | None = None  # truth: the reason this message is noise, None when useful
+    question: bool = False  # truth: the message asks something
+    lang: str | None = None  # truth: language of the generated text
 
 
 class Generator:
@@ -261,7 +274,12 @@ class Generator:
         topic = self._weighted(spec.topics)
         asker = self._author(members, lang)
         root = Draft(
-            self._key(), start, asker, self._topic_phrase(topic, "questions", lang, members)
+            self._key(),
+            start,
+            asker,
+            self._topic_phrase(topic, "questions", lang, members),
+            question=True,
+            lang=lang,
         )
         if self.rng.random() < PHOTO_QUESTION_RATE:
             root.text = self._phrase("captions", lang, members)
@@ -284,7 +302,17 @@ class Generator:
                 answers.append(draft)
         if self.rng.random() < DUPLICATE_THREAD_RATE:
             later = at + timedelta(days=self.rng.randint(1, 10), seconds=self.rng.randint(0, 3600))
-            drafts.append(Draft(self._key(), later, asker, root.text))
+            drafts.append(
+                Draft(
+                    self._key(),
+                    later,
+                    asker,
+                    root.text,
+                    noise="duplicate",
+                    question=True,
+                    lang=lang,
+                )
+            )
         return drafts
 
     def _reply(
@@ -305,7 +333,11 @@ class Generator:
         helper = self._author(members, lang, exclude=asker)
         if kind == "answer" and self.rng.random() < UNLINKED_ANSWER_RATE:
             return Draft(
-                self._key(), at, helper, self._topic_phrase(topic, "answers", lang, members)
+                self._key(),
+                at,
+                helper,
+                self._topic_phrase(topic, "answers", lang, members),
+                lang=lang,
             )
         if kind == "answer":
             return Draft(
@@ -314,6 +346,7 @@ class Generator:
                 helper,
                 self._topic_phrase(topic, "answers", lang, members),
                 target.key,
+                lang=lang,
             )
         if kind == "followup":
             if not answers:
@@ -324,15 +357,13 @@ class Generator:
                 asker,
                 self._topic_phrase(topic, "followups", lang, members),
                 self._pick(answers).key,
+                question=True,
+                lang=lang,
             )
         if kind == "short":
-            return Draft(
-                self._key(),
-                at,
-                self._author(members, lang),
-                self._phrase("short", lang, members),
-                target.key,
-            )
+            key = self._key()
+            author = self._author(members, lang)
+            return _short_reply(key, at, author, self._phrase("short", lang, members), target, lang)
         if kind == "gratitude":
             if not answers:
                 return None
@@ -342,16 +373,22 @@ class Generator:
                 asker,
                 self._phrase("gratitude", lang, members),
                 self._pick(answers).key,
+                noise="gratitude",
+                lang=lang,
             )
         if kind == "continue":  # same thread by time proximity only, no reply link
             return Draft(
-                self._key(), at, helper, self._topic_phrase(topic, "answers", lang, members)
+                self._key(),
+                at,
+                helper,
+                self._topic_phrase(topic, "answers", lang, members),
+                lang=lang,
             )
         if kind == "mention":
             text = self._fill(
                 self._pick(cast("dict[str, list[str]]", self.bank["mention_tail"])[lang]), members
             )
-            return Draft(self._key(), at, asker, text, root.key)
+            return Draft(self._key(), at, asker, text, root.key, question=_asks(text), lang=lang)
         if kind == "voice":
             return Draft(
                 self._key(), at, helper, "", target.key, {"voice": self.rng.randint(4, 90)}
@@ -366,6 +403,7 @@ class Generator:
                 "",
                 target.key,
                 {"sticker": self._pick(self.bank["sticker_emoji"])},
+                noise="sticker",
             )
         return Draft(
             self._key(), at, helper, "", target.key, {"video_note": self.rng.randint(3, 40)}
@@ -377,39 +415,57 @@ class Generator:
         roll = self.rng.random()
         someone = self._author(members, lang)
         if roll < 0.06:
-            return [Draft(self._key(), at, someone, service_action="join_group_by_link")]
+            return [
+                Draft(
+                    self._key(), at, someone, service_action="join_group_by_link", noise="service"
+                )
+            ]
         if roll < 0.10:
-            return [Draft(self._key(), at, someone, self._phrase("greetings", lang, members))]
+            key = self._key()
+            greeting = self._phrase("greetings", lang, members)
+            return [Draft(key, at, someone, greeting, lang=lang)]
         if roll < 0.16:
-            first = Draft(self._key(), at, someone, self._phrase("offtopic", lang, members))
-            reply = Draft(
-                self._key(),
-                at + self._gap(),
-                self._author(members, lang, someone),
-                self._phrase("short", lang, members),
-                first.key,
+            key = self._key()
+            chatter = self._phrase("offtopic", lang, members)
+            first = Draft(key, at, someone, chatter, question=_asks(chatter), lang=lang)
+            key = self._key()
+            when = at + self._gap()
+            author = self._author(members, lang, someone)
+            reply = _short_reply(
+                key, when, author, self._phrase("short", lang, members), first, lang
             )
             return [first, reply]
         if roll < 0.18:
-            return [Draft(self._key(), at, someone, self._pick(self.bank["emoji_only"]))]
+            key = self._key()
+            emoji = self._pick(self.bank["emoji_only"])
+            return [Draft(key, at, someone, emoji, noise="emoji_only")]
         if roll < 0.23:
             return [Draft(self._key(), at, someone, "", extra={"animation": True})]
         if roll < 0.25:
-            forward = Draft(self._key(), at, someone, self._phrase("forwards", lang, members))
+            key = self._key()
+            forward = Draft(key, at, someone, self._phrase("forwards", lang, members), lang=lang)
             forward.extra["forwarded_from"] = "Synthetic News Channel"
             return [forward]
         if roll < 0.25 + spec.spam_rate * 4:
             spam = cast("dict[str, list[list[str | Json]]]", self.bank["spam"])
-            return [Draft(self._key(), at, someone, list(self._pick(spam[lang])))]
+            key = self._key()
+            return [Draft(key, at, someone, list(self._pick(spam[lang])), noise="spam", lang=lang)]
         return []
 
     # ------------------------------------------------------------------ chat
 
-    def chat(self, spec: ChatSpec) -> Json:
+    def chat(self, spec: ChatSpec) -> tuple[Json, Json]:
+        """The Desktop export and its truth file content."""
         members = self.members(spec)
         # Exports start with service events too; every chat gets at least one join.
         drafts: list[Draft] = [
-            Draft(self._key(), spec.start, self._pick(members), service_action="join_group_by_link")
+            Draft(
+                self._key(),
+                spec.start,
+                self._pick(members),
+                service_action="join_group_by_link",
+                noise="service",
+            )
         ]
         span = spec.days * 86400
         for index in range(spec.threads):
@@ -422,7 +478,34 @@ class Generator:
         drafts.sort(key=lambda d: (d.at, d.key))
         ids = {d.key: index for index, d in enumerate(drafts, start=1)}
         messages = [_render(d, ids) for d in drafts]
-        return {"name": spec.name, "type": spec.type, "id": spec.id, "messages": messages}
+        export = {"name": spec.name, "type": spec.type, "id": spec.id, "messages": messages}
+        rows = [_truth_row(d, ids[d.key]) for d in drafts]
+        return export, {"chat_id": f"-100{spec.id}", "rows": rows}
+
+
+def _asks(text: Text) -> bool:
+    if isinstance(text, str):
+        return "?" in text
+    return any("?" in (p if isinstance(p, str) else str(p["text"])) for p in text)
+
+
+def _short_reply(
+    key: int, at: datetime, author: Member, text: Text, target: Draft, lang: str
+) -> Draft:
+    """A one-word reply is noise unless it asks something or answers a question."""
+    asks = _asks(text)
+    noise = None if asks or target.question else "short"
+    return Draft(key, at, author, text, target.key, noise=noise, question=asks, lang=lang)
+
+
+def _truth_row(draft: Draft, msg_id: int) -> Json:
+    return {
+        "msg_id": str(msg_id),
+        "is_noise": draft.noise is not None,
+        "reason": draft.noise,
+        "is_question": draft.question,
+        "lang": draft.lang if draft.text else None,
+    }
 
 
 def _lower_first(text: Text) -> Text:
@@ -536,10 +619,12 @@ def _media(draft: Draft, msg_id: int) -> Json:
 def render_all(seed: int = SEED) -> dict[str, str]:
     bank = cast("Json", json.loads(PHRASEBANK.read_text(encoding="utf-8")))
     generator = Generator(bank, seed)
-    return {
-        spec.file: json.dumps(generator.chat(spec), ensure_ascii=False, indent=1) + "\n"
-        for spec in CHATS
-    }
+    outputs: dict[str, str] = {}
+    for spec in CHATS:
+        export, truth = generator.chat(spec)
+        outputs[spec.file] = json.dumps(export, ensure_ascii=False, indent=1) + "\n"
+        outputs[f"{TRUTH_DIR}/{spec.file}"] = json.dumps(truth, ensure_ascii=False, indent=1) + "\n"
+    return outputs
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -561,12 +646,12 @@ def main(argv: list[str] | None = None) -> int:
         if stale:
             sys.stderr.write(f"ERR synthetic fixtures are stale: {stale}. Run: just synthetic\n")
             return 1
-        sys.stdout.write(f"ok  synthetic fixtures in sync ({len(outputs)} chats)\n")
+        sys.stdout.write(f"ok  synthetic fixtures in sync ({len(outputs) // 2} chats)\n")
         return 0
-    out.mkdir(parents=True, exist_ok=True)
     for name, content in outputs.items():
+        (out / name).parent.mkdir(parents=True, exist_ok=True)
         (out / name).write_text(content, encoding="utf-8", newline="\n")
-    counts = {name: content.count('"id": ') for name, content in outputs.items()}
+    counts = {n: c.count('"id": ') for n, c in outputs.items() if not n.startswith(TRUTH_DIR)}
     sys.stdout.write(f"ok  wrote {counts}\n")
     return 0
 
