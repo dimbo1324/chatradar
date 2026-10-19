@@ -80,3 +80,104 @@ def test_all_three_languages_are_present() -> None:
 
     assert names >= {"ru", "es", "en"}
     assert langs == {"ru", "es", "en"}
+
+
+def _truth(spec: gen.ChatSpec) -> dict[str, dict[str, Any]]:
+    data: dict[str, Any] = json.loads(
+        (gen.FIXTURES / gen.TRUTH_DIR / spec.file).read_text(encoding="utf-8")
+    )
+    assert data["chat_id"] == f"-100{spec.id}"
+    return {row["msg_id"]: row for row in data["rows"]}
+
+
+def _export(spec: gen.ChatSpec) -> list[dict[str, Any]]:
+    data: dict[str, Any] = json.loads((gen.FIXTURES / spec.file).read_text(encoding="utf-8"))
+    return data["messages"]
+
+
+def _plain(message: dict[str, Any]) -> str:
+    return "".join(entity["text"] for entity in message["text_entities"])
+
+
+def _bank_texts(group: str) -> set[str]:
+    bank: dict[str, Any] = json.loads(gen.PHRASEBANK.read_text(encoding="utf-8"))
+    return {text for texts in bank[group].values() for text in texts}
+
+
+@pytest.mark.parametrize("spec", gen.CHATS, ids=lambda s: s.file)
+def test_truth_has_one_row_per_message(spec: gen.ChatSpec) -> None:
+    truth = _truth(spec)
+    messages = _export(spec)
+
+    assert list(truth) == [str(m["id"]) for m in messages]
+    assert {r["reason"] for r in truth.values() if r["is_noise"]} <= {
+        "service", "sticker", "emoji_only", "gratitude", "short", "spam", "duplicate",
+    }  # fmt: skip
+    assert all(r["reason"] is None for r in truth.values() if not r["is_noise"])
+    assert all(r["lang"] in {None, "ru", "es", "en"} for r in truth.values())
+
+
+@pytest.mark.parametrize("spec", gen.CHATS, ids=lambda s: s.file)
+def test_truth_reflects_what_the_generator_meant(spec: gen.ChatSpec) -> None:
+    truth = _truth(spec)
+    emoji = set(json.loads(gen.PHRASEBANK.read_text(encoding="utf-8"))["emoji_only"])
+    gratitude = _bank_texts("gratitude")
+    offtopic = {t for t in _bank_texts("offtopic") if "{" not in t}
+    seen: dict[str, Any] = {}
+
+    for message in _export(spec):
+        row = truth[str(message["id"])]
+        text = _plain(message)
+        media = message.get("media_type")
+        if message["type"] == "service":
+            assert (row["is_noise"], row["reason"], row["lang"]) == (True, "service", None)
+        elif media == "sticker":
+            assert (row["is_noise"], row["reason"]) == (True, "sticker")
+        elif text in emoji:
+            assert (row["is_noise"], row["reason"]) == (True, "emoji_only")
+        elif not text:  # voice, video note, animation, photo without caption
+            assert (row["is_noise"], row["lang"]) == (False, None)
+        elif text in gratitude:
+            assert (row["is_noise"], row["reason"], row["is_question"]) == (
+                True,
+                "gratitude",
+                False,
+            )
+        elif text in offtopic:
+            assert row["is_noise"] is False  # the known gap: the truth does not pretend
+        if row["reason"] == "duplicate":
+            assert text in seen
+            assert row["is_question"] is True
+        seen.setdefault(text, message)
+
+
+@pytest.mark.parametrize("spec", gen.CHATS, ids=lambda s: s.file)
+def test_short_replies_are_noise_only_when_they_answer_no_question(spec: gen.ChatSpec) -> None:
+    truth = _truth(spec)
+    messages = {m["id"]: m for m in _export(spec)}
+    short = _bank_texts("short")
+    checked = Counter[bool]()
+
+    for message in messages.values():
+        target_id = message.get("reply_to_message_id")
+        if target_id is None or _plain(message) not in short or "photo" in message:
+            continue
+        row = truth[str(message["id"])]
+        answers_question = truth[str(target_id)]["is_question"] or "?" in _plain(message)
+        assert row["is_noise"] is not answers_question
+        assert row["reason"] == (None if answers_question else "short")
+        checked[answers_question] += 1
+
+    assert checked[True] > 0
+    assert checked[False] > 0
+
+
+def test_truth_counts_per_reason_are_stable() -> None:
+    counts = Counter(
+        row["reason"] for spec in gen.CHATS for row in _truth(spec).values() if row["is_noise"]
+    )
+
+    assert set(counts) == {
+        "service", "sticker", "emoji_only", "gratitude", "short", "spam", "duplicate",
+    }  # fmt: skip
+    assert all(count >= 4 for count in counts.values())
