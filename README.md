@@ -120,7 +120,7 @@ src/chatradar/
 ├── storage/         # raw JSONL + db (SQLAlchemy 2.0, FTS5)
 ├── pipeline/        # stages: normalize, noise, enrich, threads, index
 ├── services/        # use cases: sync, process, search, stats
-├── web/             # FastAPI + Jinja2 + HTMX
+├── web/             # FastAPI JSON API + static panel (plain HTML/CSS/JS)
 └── cli.py           # Typer
 migrations/          # Alembic (async, batch mode on SQLite)
 scripts/             # repo tooling: sync_agents, check_language, doctor

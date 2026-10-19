@@ -433,6 +433,10 @@ Moving to Postgres:
 
 ## 7. Web interface (FastAPI + HTMX)
 
+> **Superseded in part by ADR-0002 (2026-10-19):** the panel is a static plain
+> HTML/CSS/JavaScript app over the JSON API in `docs/api.md`; Jinja2 and HTMX are not
+> used. The pages below stay the same.
+
 The goal is to see what happens inside. It is a debug panel, not a product.
 
 1. **Chats:** list, message count, last sync, a "sync" button.

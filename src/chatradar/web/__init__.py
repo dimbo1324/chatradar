@@ -1,1 +1,1 @@
-"""Debug web panel: FastAPI + Jinja2 + HTMX."""
+"""Debug web panel: FastAPI JSON API and a static plain-JavaScript frontend."""

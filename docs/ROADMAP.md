@@ -53,7 +53,8 @@ The stage runner over `<stage>_v` columns, noise rules with table-driven tests, 
 
 ### Step 5 — Web panel
 
-Chats, pipeline state and message table pages (FastAPI + Jinja2 + HTMX), filter review page.
+JSON API (`docs/api.md`) and a static panel in plain HTML, CSS and JavaScript (ADR-0002):
+chats, pipeline state, message table, thread view, filter review page.
 
 ### Step 6 — Threads and search
 

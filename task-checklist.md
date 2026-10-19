@@ -1,46 +1,55 @@
-# Task: AI-assistant setup, English-only repository, toolchain check
+# Task: MVP without AI — roadmap steps 2–8, built by parallel agent sessions
 
-Owner instruction of 2026-10-19: study the AI-assistant setup of `daily-quest`, `codepack`
-and `CogniBoiler` and build the same in ChatRadar so every assistant (Claude Code first)
-knows the project's purpose, currency and state and can cooperate; translate every text in
-the repository to English; verify that everything works and install the missing toolchain
-on this machine; commit and push.
+Owner instruction of 2026-10-19: build the MVP with a multi-agent setup; frontend in plain
+JavaScript, CSS and HTML; ask questions first. Owner answers: steps 2–8 without AI;
+parallel sessions in git worktrees; static frontend over a JSON API; synthetic data only
+(`docs/decisions.md`, 2026-10-19).
+
+Synchronisation: integration branch `feat/mvp`. Wave 0 — the lead commits the contracts.
+Wave 1 — one session and one branch per work package, disjoint file zones, no dependency
+changes (`pyproject.toml` and `uv.lock` belong to the lead). Wave 2 — the lead merges each
+branch into `feat/mvp`, runs the gate after each merge, wires services, CLI, worker and
+Docker, and runs the end-to-end check.
 
 Marks: `[ ]` open, `+` done, `-` not done or partially done (with a note).
 
-## 1. Preparation
+## 1. Wave 0 — contracts (lead)
 
-+ Study the rule systems of the three reference repositories (`daily-quest` is the newest
-  and the template; `universal/` modules are identical in all three)
-+ Task branch `chore/ai-assistant-setup`
-- This checklist was written during the work, not committed before it (the rule system
-  did not exist yet when the task started)
++ Owner decisions recorded; ADR-0002 (static frontend); `jinja2` removed
++ `domain/models.py`, `domain/ports.py`, `domain/text.py`
++ `pipeline/base.py` (`Stage`, `STAGE_ORDER`, `STAGE_COLUMNS`, `NORMALIZE_VERSION`)
++ `storage/db/tables.py`, migration 0001 (with `threads_fts`), `migrations/env.py`
++ `services/normalize.py`, `services/queries.py`, `docs/api.md`
++ Contract tests; `just check` green; committed on `feat/mvp`
 
-## 2. Implementation
+## 2. Wave 1 — work packages (parallel sessions)
 
-+ `.ai/universal` (verbatim) and `.ai/project/10–14` for ChatRadar
-+ `CLAUDE.md`, generated `AGENTS.md` (26.7 of 30 KiB), `GEMINI.md`
-+ `.claude/` settings, launch, 9 agents, 7 skills; generated `.codex/` mirror
-+ `scripts/sync_agents.py`, `scripts/check_language.py`, `scripts/doctor.py` with tests
-+ State documents: `docs/ROADMAP.md`, `docs/decisions.md`, this checklist
-+ Gate wiring: `justfile`, pre-commit, CI (`assistants` job)
-+ Translate code, comments, docs and configs to English; RUF001–003 re-enabled
-+ Fix the Docker build failure from CI (missing `LICENSE` in the build context)
-+ The deny rule `Read(./.env.*)` also hid `.env.example`; narrowed with owner approval
+File zones (a package touches nothing outside its zone; tests live in its test folder):
 
-## 3. Verification
+| Package | Zone |
+|---|---|
+| A connectors | `src/chatradar/connectors/**`, `src/chatradar/storage/raw_jsonl.py`, `src/chatradar/services/ingest.py`, `src/chatradar/services/sync.py`, `tests/unit/connectors/**`, `tests/fixtures/tg_export/**` |
+| B storage | `src/chatradar/storage/db/**` except `tables.py`, `tests/integration/storage/**` |
+| C pipeline | `src/chatradar/pipeline/**` except `base.py`, `src/chatradar/resources/lexicons/**`, `src/chatradar/services/process.py`, `tests/unit/pipeline/**`, `tests/fixtures/pipeline/**` |
+| D web | `src/chatradar/web/**`, `tests/unit/web/**`, `tests/unit/test_web.py` |
 
-+ Toolchain: `just` 1.59.0 installed; `just doctor` reports "ready to develop"
-- GitHub CLI not installed: the MSI installer was cancelled (exit 1602, elevation prompt);
-  optional, `winget install GitHub.cli` when convenient
-- Docker daemon not running (Docker Desktop is started by the owner); the image is
-  verified by the CI Docker job
-+ `just check` green (25 tests); `just hooks` green
-+ Alembic on an empty SQLite, CLI `--version` and stub exit code, web panel `/healthz`
-  through `.claude/launch.json`
-- CI after push: cannot be verified before the push; reported in the final report
+[ ] A: Telegram Desktop export parser and mapper, Telethon mapper and connector, JSONL raw
+    store, import and sync services, synthetic export fixtures
+[ ] B: async engine with SQLite pragmas, SQL repositories (chat, message, query), FTS5
+    search index
+[ ] C: noise, enrich, threads, index stages, the runner, lexicons, process service
+[ ] D: JSON API per `docs/api.md`, static SPA (chats, pipeline, messages, thread, search,
+    review)
+
+## 3. Wave 2 — integration (lead)
+
+[ ] Merge A, B, C, D into `feat/mvp`, gate green after each merge
+[ ] `services/container.py`, rebuild service, CLI wiring, worker loop with migrations
+[ ] Docker image serves static files; compose runs web and worker
+[ ] End-to-end on synthetic data: import → process → search → web pages
 
 ## 4. Completion
 
-+ Fast-forward merge into `main` and push
-+ Final report to the owner
+[ ] `docs/ROADMAP.md` status lines for steps 2–8, project map, README, CHANGELOG
+[ ] `just check` green; fast-forward `main` only when the owner says so
+[ ] Final report to the owner

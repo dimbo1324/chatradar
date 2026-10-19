@@ -15,8 +15,9 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
 
 - `src/chatradar/config.py` — `Settings` (pydantic-settings), everything from `CHATRADAR_*` env.
 - `src/chatradar/logs.py` — structlog setup: console in dev, JSON in prod.
-- `src/chatradar/domain/` — `models.py` (`Message`, `ChatInfo`, `RawRecord`, enums) and
-  `ports.py` (`Connector`, `RawStore`, `MessageRepository`, `SearchIndex` protocols).
+- `src/chatradar/domain/` — `models.py` (messages, threads, read models), `ports.py`
+  (`Connector`, `Mapper`, `RawStore`, `ChatRepository`, `MessageRepository`,
+  `QueryRepository`, `SearchIndex`), `text.py` (normalization, hashes, links).
   Imports nothing from adapters.
 - `src/chatradar/connectors/` — `telegram/` (Telethon, MTProto user account) and
   `tg_export/` (Telegram Desktop JSON import). Each yields `RawRecord`s.
@@ -24,8 +25,10 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
   repositories, FTS5). The only place with dialect-specific code.
 - `src/chatradar/pipeline/` — `base.py` (`Stage` protocol, `STAGE_ORDER`) and the stages
   normalize → noise → enrich → threads → index.
-- `src/chatradar/services/` — use cases (sync, process, search, stats).
-- `src/chatradar/web/` — FastAPI + Jinja2 + HTMX debug panel (`/healthz` today).
+- `src/chatradar/services/` — use cases: `normalize.py` (raw → upsert), `queries.py`
+  (`ReadServices` for the web), ingestion, sync, process, rebuild.
+- `src/chatradar/web/` — FastAPI JSON API (`docs/api.md`) and the static panel in
+  `web/static/` (plain HTML, CSS, JavaScript modules; ADR-0002).
 - `src/chatradar/cli.py` — Typer entry point `chatradar`; thin wrappers over `services/`.
 - `migrations/` — Alembic (async, batch mode on SQLite); `alembic.ini` stays ASCII-only.
 - `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only).

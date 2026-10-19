@@ -6,6 +6,20 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-19 — Rules follow the MVP contracts and the static frontend
+
+**What changed.** `project/10-project-map.md` describes the contract modules
+(`domain/text.py`, the full port list, `services/normalize.py`, `services/queries.py`) and
+the web package as a JSON API plus a static plain-JavaScript panel.
+`.claude/agents/chatradar-interfaces.md` (and its generated Codex mirror) drops Jinja2 and
+HTMX, points at `docs/api.md` and ADR-0002, and requires `textContent` for message text.
+
+**Why.** The owner decided the frontend is plain HTML, CSS and JavaScript (ADR-0002) and
+the MVP contracts were written; the old lines were factually false. Corrections, which
+`universal/08-rules-evolution.md` allows without approval.
+
+**Decided by.** Owner (frontend), agent (factual update), 2026-10-19.
+
 ## 2026-10-19 — The rule system arrives
 
 **What changed.** ChatRadar gains the assistant rule system the owner runs in `daily-quest`,

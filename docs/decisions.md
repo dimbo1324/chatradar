@@ -5,6 +5,21 @@ decision made in chat is recorded here, or it is invisible to the next session.
 
 ## Decisions
 
+### 2026-10-19 — MVP scope and how it is built
+
+- **Scope:** roadmap steps 2–8, without AI (the complete non-AI service of
+  `docs/architecture.md`). AI answers, digests and the Telegram bot come later.
+- **Parallel development:** the lead fixes the contracts first (`domain/models.py`,
+  `domain/ports.py`, `pipeline/base.py`, `storage/db/tables.py` with migration 0001,
+  `services/normalize.py`, `services/queries.py`, `docs/api.md`), then separate agent
+  sessions build connectors, storage, pipeline and web in their own git worktrees with
+  disjoint file zones; the lead merges them into `feat/mvp` and integrates. This
+  overrides the one-step-per-task order of `docs/ROADMAP.md` for steps 2–8.
+- **Frontend:** plain HTML, CSS and JavaScript modules over a JSON API, no build step
+  (ADR-0002). Jinja2 and HTMX are dropped.
+- **Data:** agents use only synthetic anonymized fixtures; Telethon is tested with fakes.
+  The owner does the first live Telegram login after the MVP is merged.
+
 ### 2026-10-19 — Everything in the repository is English
 
 Code, comments, docstrings, CLI help, documentation, rule modules, commit messages and test
