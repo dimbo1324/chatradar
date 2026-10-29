@@ -1,8 +1,8 @@
 """Repository language policy: everything tracked by git is English.
 
 Fails on any Cyrillic character in a tracked or new (not ignored) text file, except under
-``ALLOWED_PREFIXES``: data that is Russian or Spanish by nature (anonymized test fixtures,
-noise and question lexicons, the Russian UI strings). Code that reads that data stays English.
+``ALLOWED_PREFIXES``: data that is Russian or Spanish by nature (anonymized test fixtures).
+Code that reads that data stays English.
 
 Usage: uv run python scripts/check_language.py
 """
@@ -16,12 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-ALLOWED_PREFIXES: tuple[str, ...] = (
-    "tests/fixtures/",
-    "src/chatradar/resources/lexicons/",
-    "src/chatradar/web/static/i18n/",  # UI strings; the code only refers to keys
-    "src/chatradar/web/static/index.html",  # static shell text before JavaScript runs
-)
+ALLOWED_PREFIXES: tuple[str, ...] = ("tests/fixtures/",)
 BINARY_SUFFIXES = frozenset(
     {".png", ".jpg", ".jpeg", ".gif", ".ico", ".pdf", ".zip", ".gz", ".woff", ".woff2", ".db"}
 )
@@ -49,7 +44,7 @@ def find_hits(root: Path, files: list[str]) -> list[str]:
     for rel in filter(is_checked, files):
         try:
             text = (root / rel).read_text(encoding="utf-8")
-        except (UnicodeDecodeError, FileNotFoundError, IsADirectoryError):
+        except UnicodeDecodeError, FileNotFoundError, IsADirectoryError:
             continue
         hits += [
             f"{rel}:{number}"

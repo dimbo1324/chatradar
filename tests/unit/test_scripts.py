@@ -94,13 +94,9 @@ def test_repository_agents_are_in_sync() -> None:
 @pytest.mark.parametrize(
     ("path", "checked"),
     [
-        ("src/chatradar/cli.py", True),
+        ("src/chatimport/cli.py", True),
         ("README.md", True),
         ("tests/fixtures/chat.json", False),
-        ("src/chatradar/resources/lexicons/gratitude.txt", False),
-        ("src/chatradar/web/static/i18n/ru.json", False),
-        ("src/chatradar/web/static/index.html", False),
-        ("src/chatradar/web/static/js/app.js", True),
         ("docs/logo.png", False),
     ],
 )

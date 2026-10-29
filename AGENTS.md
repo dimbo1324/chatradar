@@ -4,7 +4,7 @@ Source of truth: .ai/universal/*.md and .ai/project/*.md.
 Edit a module, then run: just agents
 -->
 
-# ChatRadar - working notes for Codex and other AI assistants
+# ChatImport - working notes for Codex and other AI assistants
 
 This file is the entry point for Codex and any tool that reads AGENTS.md. It is assembled
 from the shared rule modules in `.ai/`, so every assistant follows identical rules. Later
@@ -324,58 +324,38 @@ sessions; git is the coordination surface and the rule modules are shared.
 
 <!-- module: .ai/project/10-project-map.md -->
 
-# Project: ChatRadar
+# Project: ChatImport
 
-ChatRadar collects messages from messenger chats (Telegram first), filters out noise, groups
-replies into discussions and makes them searchable, so a question gets a short answer with
-**links to the source messages and their dates**. Later: weekly digests of hot topics,
-"evergreen questions", who to ask, topic subscriptions. Product intent: `docs/vision.md`.
+ChatImport is a background service that keeps a full local text archive of the Telegram
+groups and channels listed in the owner's `chats.toml` library. It runs as its own session
+of the owner's account (Telethon, MTProto), backfills each chat's history once, then appends
+new messages in small batches (every 5 messages or 30 seconds), rechecks the last 7 days
+daily for edits and deletions, and protects free disk space by trimming the oldest parts.
+Output is JSONL in a `ChatImport` folder (the Desktop by default). Product intent:
+`docs/vision.md`; design: `docs/architecture.md`.
 
-**Stage: level 0, MVP without AI (roadmap steps 1–8) plus the learning lexicon is built;
-the first live Telegram login is the owner's next step.** AI stages (topic
-labelling, embeddings, answers) come after the non-AI service is complete; they plug in as
-pipeline stages behind the same `Stage` interface.
+This is branch `chatimport`, a parallel line to ChatRadar on `main`. The two are meant to
+become one product later (`docs/architecture.md` §15): ChatImport's JSONL folder is a
+candidate raw store for ChatRadar.
+
+**Stage: 0.0 — repository prepared, no service code yet; stage 0.1 is next.**
 
 ## Repository map
 
-Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
+Single uv project on Python 3.14+ (`src/` layout, package `chatimport`):
 
-- `src/chatradar/config.py` — `Settings` (pydantic-settings), everything from `CHATRADAR_*` env.
-- `src/chatradar/logs.py` — structlog setup: console in dev, JSON in prod.
-- `src/chatradar/domain/` — `models.py` (messages, threads, read models), `ports.py`
-  (`Connector`, `Mapper`, `RawStore`, `ChatRepository`, `MessageRepository`,
-  `QueryRepository`, `SearchIndex`, plus `LexiconRepository`, `LabelRepository`,
-  `MessageScanner`), `text.py` (normalization, hashes, links), `lexicon.py` (learning-lexicon
-  models and status rules), `evaluation.py` (labels, truth rows, metrics).
-  Imports nothing from adapters.
-- `src/chatradar/connectors/` — `telegram/` (Telethon, MTProto user account) and
-  `tg_export/` (Telegram Desktop JSON import). Each yields `RawRecord`s.
-- `src/chatradar/storage/` — raw JSONL store (source of truth) and `db/` (SQLAlchemy 2.0,
-  repositories, FTS5). The only place with dialect-specific code.
-- `src/chatradar/pipeline/` — `base.py` (`Stage` protocol, `STAGE_ORDER`), the stages
-  noise → enrich → threads → index, `runner.py`, `registry.py`; lexicons in
-  `src/chatradar/resources/lexicons/` (data, Russian and Spanish allowed).
-- `src/chatradar/services/` — use cases: `normalize.py` (raw → upsert), `ingest.py`
-  (import, re-map), `sync.py`, `process.py`, `rebuild.py`, `worker.py`, `queries.py`
-  (`ReadServices` for the web); `container.py` is the composition root — the only
-  module that builds concrete adapters.
-- `src/chatradar/learning/` — corpus statistics that propose lexicon candidates (pure
-  functions: tokenizing, n-grams, log-odds scoring); `services/learning.py` runs them,
-  `services/evaluation.py` measures the filter, `services/feedback.py` is the panel's only
-  write path (ADR-0003, ADR-0004).
-- `src/chatradar/web/` — FastAPI JSON API (`docs/api.md`) and the static panel in
-  `web/static/` (plain HTML, CSS, JavaScript modules; ADR-0002).
-- `src/chatradar/cli.py` — Typer entry point `chatradar`; thin wrappers over `services/`.
-- `migrations/` — Alembic (async, batch mode on SQLite); `alembic.ini` stays ASCII-only.
-- `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only);
-  `tests/fixtures/synthetic/` holds four generated chat exports (ru, es, en) and the
-  phrase bank they are built from.
-- `scripts/` — stdlib-only repo tooling: `sync_agents.py`, `check_language.py`, `doctor.py`,
-  `generate_synthetic.py` (deterministic synthetic Telegram Desktop exports).
-- `data/` — runtime data (raw JSONL, Telegram sessions, SQLite). **Never tracked.**
-- `Dockerfile`, `compose.yaml`, `justfile`, `.pre-commit-config.yaml`, `.github/`.
-- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`, `backlog.md`
-  (deferred work), `adr/`.
+- `src/chatimport/cli.py` — Typer entry point `chatimport`; thin wrappers only.
+- Planned modules (spec layout, `docs/architecture.md` §12): `config.py`, `paths.py`,
+  `library.py`, `app.py`, `telegram/` (`client.py`, `resolve.py`, `mapper.py`),
+  `storage/` (`layout.py`, `writer.py`, `state.py`, `recover.py`), `worker.py`,
+  `recheck.py`, `trim.py`, `guards/` (`disk.py`, `folders.py`), `control.py`, `tray.py`,
+  `media.py`. A module joins this list when it exists.
+- `config.example.toml`, `chats.example.toml` — templates; the real files live in the
+  application data folder and are never tracked.
+- `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only).
+- `scripts/` — stdlib-only repo tooling: `sync_agents.py`, `check_language.py`, `doctor.py`.
+- `justfile`, `.pre-commit-config.yaml`, `.github/`.
+- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`.
 - `.ai/`, `.claude/`, `.codex/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` — assistant rules.
 
 ## Language policy
@@ -383,13 +363,9 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
 - **Everything tracked by git is English**: code, comments, docstrings, CLI help, docs, rule
   modules, commit messages, test names, `task-checklist.md`. Owner decision 2026-10-19.
 - `python scripts/check_language.py` fails on any Cyrillic character in a tracked file,
-  except in the data paths listed in `scripts/check_language.py` (`ALLOWED_PREFIXES`):
-  anonymized test fixtures, noise/question lexicons (Russian and Spanish by nature) and
-  the panel's Russian UI text. Code that uses them stays English.
-- **The web panel speaks Russian** (owner decision 2026-10-19): every user-visible string
-  lives in `web/static/i18n/ru.json` and is reached through `t()`, `tn()` (plurals) or
-  `tEnum()` (server values); the JavaScript contains no UI text. `index.html` holds only
-  the pre-JavaScript shell. CLI, logs, API fields and errors stay English.
+  except under `tests/fixtures/` (anonymized chat data is Russian by nature).
+- The owner's original spec is Russian and lives outside the repository;
+  `docs/architecture.md` is its English version and the reference inside the repository.
 - Reports to the owner in chat are in Russian, short and step by step.
 
 ## Documentation policy
@@ -401,14 +377,14 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
 
 ## Product guardrails
 
-- Every statement the product shows a user carries a link to the source message and its
-  date. No found messages → "no answer in the chats", never an invented one.
-- Raw messages are never published outside the owner's machine — only summaries and links.
-- No profiles of people are built (Uruguay, Ley 18.331). A specialist directory, if ever
-  built, is opt-in only.
-- Telegram is read through a user account with pauses and FloodWait respected; a bot
-  cannot see history and is not a substitute.
-- **Step order in `docs/ROADMAP.md` is binding.** Skipping ahead needs an owner decision
+- Only chats listed and enabled in `chats.toml` are read or stored; private dialogs, bots
+  and everything else are dropped at the router.
+- The service never joins a chat by itself and never sends anything to Telegram.
+- Data stays on the owner's disk. Sender names are personal data (Uruguay, Ley 18.331):
+  any export or publication strips them.
+- Telegram is read through the owner's user account with pauses and FloodWait respected;
+  history backfill runs one chat at a time.
+- **Stage order in `docs/ROADMAP.md` is binding.** Skipping ahead needs an owner decision
   recorded in `docs/decisions.md`.
 
 ---
@@ -418,13 +394,13 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
 # Project Commands and Quality Gates
 
 All commands run from the repository root (PowerShell or Git Bash on Windows, any POSIX
-shell elsewhere). Toolchain: uv (it installs Python 3.13 from `.python-version`), git,
-just, Docker Desktop; `python scripts/doctor.py` checks all of them read-only.
+shell elsewhere). Toolchain: uv (it installs Python 3.14 from `.python-version`), git,
+just; `python scripts/doctor.py` checks all of them read-only.
 
 ## The one gate
 
 ```bash
-just check        # lint, format, pyright strict, pytest, agents sync, language, synthetic
+just check        # lint, format, pyright strict, pytest, agents sync, language
 ```
 
 CI runs the same sections as separate jobs. Without `just`, run the recipe's lines from
@@ -438,12 +414,7 @@ CI runs the same sections as separate jobs. Without `just`, run the recipe's lin
 | `test` / `cov` | pytest / with coverage |
 | `agents` / `agents-check` | regenerate / verify `AGENTS.md` and `.codex/` |
 | `language` | no Cyrillic outside the allowed data paths |
-| `synthetic` / `synthetic-check` | regenerate / verify `tests/fixtures/synthetic/` |
-| `demo` / `eval` | import the synthetic chats / measure the filter against their truth |
 | `doctor` | read-only toolchain check |
-| `migrate` / `revision "msg"` | Alembic upgrade / new autogenerated migration |
-| `web` | the debug panel on 127.0.0.1:8000 |
-| `up` / `down` / `logs` / `login` | Docker Compose stack, first Telegram login |
 | `hooks` | every pre-commit hook over the whole repository |
 
 **Standing duty — keep the tooling true.** A task that changes how the project is checked,
@@ -453,16 +424,18 @@ committed together with the regenerated artifact.
 
 ## Publishing
 
-- No pull requests (owner workflow shared with the owner's other repositories). Work on a
-  task branch `type/short-description`, merge into `main` locally with
-  `git merge --ff-only` after a green `just check`, then `git push origin main`.
+- No pull requests (owner workflow shared with the owner's other repositories).
+- **This line of work lives on branch `chatimport`, not `main`.** Task branches start from
+  `chatimport` (`type/short-description`) and merge back into it with
+  `git merge --ff-only` after a green `just check`; then `git push origin chatimport`.
+  `main` (ChatRadar) is never touched from this branch; joining the two is a separate
+  owner decision.
 - Agents push only when the owner asked for it in the current task. Never force-push.
-- A release is a `vX.Y.Z` tag: CI publishes the image to GHCR and a GitHub Release.
 
 ## Gate policy
 
-- `just check` is green before any merge to `main`. Docs- and config-only changes still
-  run it: the agents-sync and language sections cover them.
+- `just check` is green before any merge into `chatimport`. Docs- and config-only changes
+  still run it: the agents-sync and language sections cover them.
 - The pre-commit hook formats and checks hygiene, secrets, pyright and generated files;
   it never replaces the full gate.
 - Never skip a hook (`--no-verify`) or weaken a check to get green.
@@ -471,75 +444,75 @@ committed together with the regenerated artifact.
 
 <!-- module: .ai/project/12-domain-rules.md -->
 
-# Domain Rules and House Style (ChatRadar)
+# Domain Rules and House Style (ChatImport)
 
 These sharpen the universal rules for this codebase. Stricter wins.
 
 ## Python code
 
-- Python 3.13+, full type hints, pyright strict is a gate. A `# type: ignore` or
+- Python 3.14+, full type hints, pyright strict is a gate. A `# type: ignore` or
   `# pyright: ignore` names its rule; a `# noqa` names its code and says why.
 - Ruff rules in `pyproject.toml` are binding; `T20` bans `print`, `DTZ` bans naive datetimes.
-- A module past roughly 500 lines is split by meaning. `cli.py` holds argument parsing and
-  wiring only — logic lives in `services/`.
-- Dependencies only through `uv add` / `uv add --dev`; `uv.lock` is committed.
+- A module past roughly 500 lines is split by meaning. `cli.py` and `tray.py` hold argument
+  parsing, menus and wiring only.
+- Dependencies only through `uv add` / `uv add --dev`; `uv.lock` is committed. Only free
+  open-source dependencies; a new one is added with the code that first uses it.
 
-## Hexagonal boundaries
+## Boundaries
 
-- `chatradar.domain` imports nothing from Telethon, SQLAlchemy, FastAPI, Typer or aiogram.
-- Adapters depend on the domain, never the other way round. Ports are `Protocol`s;
-  adapters do not inherit from them.
-- Dialect-specific SQL (upsert, FTS) lives only in `chatradar.storage.db`.
-- The boundary between modules is a data format (JSONL, tables), not a Python object, so
-  any stage can move to another process or language.
+- `telegram/mapper.py`, the storage layout and `trim` are pure or file-only: no Telethon
+  client, no tray, no CLI imports. This keeps them portable into ChatRadar later.
+- Telethon is touched only in `telegram/`. Everything else receives plain records.
+- Collaborators come in through constructors (Telegram client, `disk_usage`, clock), so
+  every component is testable without network and without a real disk.
 
 ## Data rules
 
-- Raw data in `data/raw/` is immutable and append-only; the database is derived and can be
-  rebuilt with `chatradar rebuild` without calling any source.
-- Sync is at-least-once: write the JSONL batch first, then advance `last_id`; the
-  normalize stage upserts, so duplicates are harmless.
-- Pipeline stages are idempotent and versioned. Changing a stage's rules bumps its
-  `version`; a changed `content_hash` resets every later stage of that message.
-- Noise is marked (`is_noise`, `noise_reason`), never deleted.
-- The lexicon is data (ADR-0003). Statistics only *propose* terms (CANDIDATE); a human
-  accepts them. Mining never changes the active set. Only a change of the ACTIVE set moves
-  the revision, and a stage whose applied revision is behind is reset by `process`.
-- A lexicon term is a phrase, never a person: no names, handles, phone numbers or message
-  text in it; examples are message keys; author counts are numbers, not ids.
-- All datetimes are timezone-aware UTC (`AwareDatetime`); IDs from sources are strings.
-- Schema changes go through Alembic migrations only; SQLite uses `render_as_batch=True`.
-- The worker writes to SQLite; the web panel reads, except term decisions and message labels (ADR-0004).
+- **One writer.** Only the service process writes into the `ChatImport` folder, and inside
+  it only the chat's worker (or the trimmer holding that chat's lock). CLI and tray send
+  commands through the control folder; they never write data files.
+- Records are JSONL, one object per line, schema field `v`. Adding a field keeps `v`;
+  removing or changing meaning bumps it. History is append-only: edits and deletions are
+  new `edit`/`delete` records, never rewrites.
+- Files are `YYYY-MM_NNN.jsonl` (UTC month, part number); a part is the unit of storage,
+  accounting and trimming. Lines inside a part ascend by `msg_id`.
+- At-least-once intake plus deduplication by `msg_id` (`last_id` in `state.json`): no
+  duplicates and no gaps after a crash or restart.
+- `state.json` is a cache; the JSONL files are the truth. It is written atomically
+  (temp file, `fsync`, `os.replace`) and rebuilt from the files when missing or broken.
+- Data files are never held open between writes (Windows must be able to delete a folder).
+- Trimming removes oldest first, never selectively, and raises `floor_id`; the service
+  never backfills below `floor_id` on its own.
+- All datetimes are timezone-aware UTC, written as ISO 8601 with `Z`.
 
 ## Telegram and privacy
 
-- A `*.session` file is full access to an account: it lives in `data/sessions/`, is never
-  read into a transcript, logged, committed or copied.
-- Respect FloodWait, pause between chats, keep load low on a new account.
-- Do not store phone numbers or other personal data in dedicated fields; do not build
-  per-person profiles.
-- Logs carry IDs and counts, never message text.
+- A `*.session` file is full access to an account: it lives in the application data folder,
+  is never read into a transcript, logged, committed or copied.
+- `api_id`/`api_hash` live only in the real `config.toml`; the repository holds
+  `config.example.toml`.
+- Respect FloodWait, pause between requests and chats, backfill one chat at a time; do not
+  shorten pauses for speed.
+- Logs carry chat ids, message ids and counts, never message text or sender names.
 
 ## Tests
 
-- Telegram is never called in tests: a fake `Connector` replaces it.
-- Unit tests need no network and no real `data/`: the autouse fixture in
-  `tests/conftest.py` isolates env and the working directory.
-- Mappers, noise rules and thread grouping are pure functions with table-driven tests;
-  every misclassification found by hand becomes a new row.
+- Telegram is never called in tests: a fake client (`tests/fakes.py`) replays history and
+  events from fixtures.
+- Unit tests need no network and touch only `tmp_path`: the autouse fixture in
+  `tests/conftest.py` isolates `CHATIMPORT_*` variables and the working directory.
+- Mapper, chunking, recover and trim are table-driven; size thresholds are shrunk in tests
+  (for example 1 KB parts) instead of writing large files.
 - Fixtures in `tests/fixtures/` are anonymized: no real names, usernames or phone numbers.
-- Real chat exports may be studied only locally and only as aggregates (rates, lengths,
-  topics); no real message, name or username is ever copied into the repository or a
-  transcript. New realistic data goes through `scripts/generate_synthetic.py` and its
-  invented phrase bank.
+  Real exports may be studied only locally and only as aggregates.
 
 ## Assistant workspaces
 
 - `.claude/agents` and `.claude/skills` are the source; `.codex/agents|skills` are generated
   from them by `just agents`. Never edit `.codex/agents|skills` or `AGENTS.md` by hand.
 - `.claude/settings.json` allowlists routine read and verification commands and denies
-  destructive git and Docker volume operations and reading secrets. Extend the allowlist
-  rather than routing around it; never remove a deny entry without owner approval.
+  destructive git operations and reading secrets. Extend the allowlist rather than routing
+  around it; never remove a deny entry without owner approval.
 
 ---
 
@@ -627,4 +600,4 @@ Read and report every date at full precision — hours, minutes, seconds, zone. 
 
 File: `.ai/project/14-command-reference.md`
 
-Lookup material — CLI commands, configuration variables, Docker usage, CI jobs and the Windows notes (UTF-8 consoles, ASCII-only `alembic.ini`, Docker Desktop started by the owner, `httpx2` for the Starlette test client); the always-apply policies live in `11-commands.md`.
+Lookup material — the planned `chatimport` commands, where configuration and data live, CI jobs and the Windows notes (UTF-8 consoles, `pythonw` autostart, files closed between writes, `os.replace` within one volume); the always-apply policies live in `11-commands.md`.

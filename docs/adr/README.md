@@ -4,7 +4,4 @@ Short records of significant architecture decisions: context → decision → co
 A new decision is a new file `NNNN-kebab-case.md`. Superseded records are not deleted but
 marked "superseded by ADR-XXXX".
 
-| No. | Decision | Status |
-|---|---|---|
-| [0001](0001-modular-monolith-hexagonal.md) | Modular monolith with ports and adapters | accepted |
-| [0002](0002-static-frontend-json-api.md) | Static frontend in plain HTML, CSS and JavaScript over a JSON API | accepted |
+None yet on this branch; the base design is `docs/architecture.md`.

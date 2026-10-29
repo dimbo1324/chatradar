@@ -37,7 +37,7 @@ Source of truth: .ai/universal/*.md and .ai/project/*.md.
 Edit a module, then run: {SYNC_COMMAND}
 -->
 
-# ChatRadar - working notes for Codex and other AI assistants
+# ChatImport - working notes for Codex and other AI assistants
 
 This file is the entry point for Codex and any tool that reads AGENTS.md. It is assembled
 from the shared rule modules in `.ai/`, so every assistant follows identical rules. Later

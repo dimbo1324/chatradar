@@ -50,27 +50,8 @@ agents-check:
 language:
     uv run python scripts/check_language.py
 
-# Regenerate the synthetic chat exports in tests/fixtures/synthetic/
-synthetic:
-    uv run python scripts/generate_synthetic.py
-
-# Verify the committed synthetic exports match the generator
-synthetic-check:
-    uv run python scripts/generate_synthetic.py --check
-
-# Load every synthetic chat into the local database (data/) for manual testing
-demo:
-    uv run chatradar import tg-export tests/fixtures/synthetic/ru_banks_docs.json --username demo_banks_docs
-    uv run chatradar import tg-export tests/fixtures/synthetic/ru_it.json --username demo_it_uy
-    uv run chatradar import tg-export tests/fixtures/synthetic/es_comunidad.json --username demo_comunidad
-    uv run chatradar import tg-export tests/fixtures/synthetic/en_expats.json --username demo_expats_en
-
-# Precision and recall of the noise filter against the synthetic truth (after `just demo`)
-eval:
-    uv run chatradar eval --truth tests/fixtures/synthetic/truth/ru_banks_docs.json --truth tests/fixtures/synthetic/truth/ru_it.json --truth tests/fixtures/synthetic/truth/es_comunidad.json --truth tests/fixtures/synthetic/truth/en_expats.json
-
 # The full gate: everything CI checks
-check: lint typecheck test agents-check language synthetic-check
+check: lint typecheck test agents-check language
 
 # Read-only toolchain check
 doctor:
@@ -79,31 +60,3 @@ doctor:
 # Every pre-commit hook over the whole repository
 hooks:
     uv run pre-commit run --all-files
-
-# Apply migrations
-migrate:
-    uv run alembic upgrade head
-
-# New migration: just revision "add messages table"
-revision message:
-    uv run alembic revision --autogenerate -m "{{ message }}"
-
-# Debug panel on 127.0.0.1:8000
-web:
-    uv run chatradar web
-
-# Docker: build and start
-up:
-    docker compose up -d --build
-
-# Docker: stop
-down:
-    docker compose down
-
-# Docker: follow logs
-logs *args:
-    docker compose logs -f {{ args }}
-
-# First Telegram login inside the container
-login:
-    docker compose run --rm -it worker telegram login

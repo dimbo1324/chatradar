@@ -1,4 +1,4 @@
-# ChatRadar — working notes for Claude Code
+# ChatImport — working notes for Claude Code
 
 This file is the Claude Code entry point. All rules live in shared modules under `.ai/` —
 the single source of truth for every AI assistant in this repository. Codex and other tools
@@ -39,7 +39,7 @@ change them, and `.ai/CHANGELOG.md` for what changed so far.
 - @.ai/universal/08-rules-evolution.md
 - @.ai/universal/09-time-and-timestamps.md
 
-## Project rules (ChatRadar)
+## Project rules (ChatImport)
 
 - @.ai/project/10-project-map.md
 - @.ai/project/11-commands.md
@@ -50,9 +50,8 @@ change them, and `.ai/CHANGELOG.md` for what changed so far.
 ## Claude Code workspace
 
 - `.claude/settings.json` — permission allow and deny lists (secrets are never read).
-- `.claude/launch.json` — the debug panel for the preview browser.
-- `.claude/agents/` — project subagents (`chatradar-*`); the source of the generated
+- `.claude/agents/` — project subagents (`chatimport-*`); the source of the generated
   `.codex/agents/` mirror.
-- `.claude/skills/` — reusable workflows (`step-episode`, `pipeline-stage-change`,
-  `schema-change`, `code-review`, `ci-fix`, `project-maintenance`, `rules-evolution`);
+- `.claude/skills/` — reusable workflows (`step-episode`, `format-change`,
+  `code-review`, `ci-fix`, `project-maintenance`, `rules-evolution`);
   the source of `.codex/skills/`.

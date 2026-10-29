@@ -1,4 +1,4 @@
-# Project-scoped Codex defaults for ChatRadar.
+# Project-scoped Codex defaults for ChatImport.
 # Personal credentials and machine-specific paths belong in ~/.codex/config.toml or
 # .codex/config.local.toml, never in this repository.
 

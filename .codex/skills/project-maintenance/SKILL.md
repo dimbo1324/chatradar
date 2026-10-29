@@ -1,7 +1,7 @@
 ---
 # GENERATED from .claude/skills/project-maintenance/SKILL.md by just agents - do not edit.
 name: project-maintenance
-description: Use for routine ChatRadar upkeep — the quality gate, generated assistant files, state documents, versions, dependency updates, toolchain checks and explicitly requested publishing.
+description: Use for routine ChatImport upkeep — the quality gate, generated assistant files, state documents, versions, dependency updates, toolchain checks and explicitly requested publishing.
 ---
 
 # Repository Maintenance
@@ -27,7 +27,7 @@ just hooks          # every pre-commit hook over the repository
 - Version lives in `pyproject.toml` (SemVer); a release is a `vX.Y.Z` tag plus a
   `CHANGELOG.md` section.
 - Dependencies through `uv add`; a new production dependency is justified and named in the
-  final report. Dependabot PRs are merged locally after a green gate.
+  final report. Dependabot reads only `main`; update this branch by hand with `uv lock --upgrade-package`.
 
 ## State documents
 
@@ -37,5 +37,6 @@ Step done → `docs/ROADMAP.md` `**Status.**` line. Shape changed → project ma
 
 ## Publishing
 
-No pull requests. Merge the task branch into `main` with `git merge --ff-only` after a
-green gate and push `main` — only when the owner asked in the current task.
+No pull requests. Merge the task branch into `chatimport` with `git merge --ff-only` after
+a green gate and push `chatimport` — only when the owner asked in the current task. `main`
+(ChatRadar) is not touched from this line of work.

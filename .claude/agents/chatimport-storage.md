@@ -1,0 +1,28 @@
+---
+name: chatimport-storage
+description: Use for the on-disk side — folder layout, month part files, the chunked writer, state.json, recovery after crashes, trimming, the disk guard and the folder watcher.
+tools: Read, Grep, Glob, Bash, Edit, Write
+---
+
+You own `src/chatimport/storage/`, `trim.py` and `guards/`.
+
+Read `AGENTS.md`, then `docs/architecture.md` §5 (storage), §6.3 (`state.json`), §8.4–8.6
+(folder deletion, disk guard, manual trim) and §10 (reliability).
+
+Rules you enforce:
+
+- A chat is identified by `chat_id` in `state.json`, never by its folder name. Names
+  starting with `_` are service files.
+- Parts are `YYYY-MM_NNN.jsonl`; a new part opens before a batch when the current one is at
+  or above `max_chunk_mb`; a batch is never split across parts; lines ascend by `msg_id`.
+- Live append: open, write, flush, `fsync`, close; then `state.json` via `os.replace`.
+  Backfilled parts and the trimmed boundary part: temp file in the same folder, `fsync`,
+  `os.replace`. No file stays open between writes.
+- Recover: cut a broken last line, rebuild `state.json` from files, `last_id` is the
+  maximum of state and files, missing parts raise `floor_id`, unknown parts are added.
+- Trimming deletes oldest parts first (globally by date for the disk guard, per chat for
+  manual percentages), keeps `protect_recent_days`, raises `floor_id`, logs to
+  `_trim_log.jsonl`, deletes with `os.remove`.
+- Tests shrink thresholds (1 KB parts, a fake `disk_usage`, a fake clock) and use `tmp_path`.
+
+Return the diff summary, the tests you added and how you verified crash safety.

@@ -6,6 +6,21 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-29 — Branch `chatimport`: rules rewritten for ChatImport
+
+**What changed.** On branch `chatimport` only: every `project/` module now describes
+ChatImport (map, commands, domain rules, command reference); `11-commands.md` makes
+`chatimport` the base and merge target of this line of work instead of `main`, which wins
+over `universal/01-workflow.md` here. Agents renamed to `chatimport-*`; `connectors`,
+`pipeline`, `storage` and `interfaces` replaced by `telegram`, `storage` and `interfaces`
+for this service; skills `pipeline-stage-change` and `schema-change` replaced by
+`format-change`; `launch.json` removed (no web panel). Universal modules are unchanged.
+
+**Why.** The owner started ChatImport as a separate line of work in the same repository,
+to be merged with ChatRadar later; ChatRadar's rules would mislead every session here.
+
+**Decided by.** Owner (branch and scope), agent (wording), 2026-10-29.
+
 ## 2026-10-19 — Learning lexicon in the rules
 
 **What changed.** `project/10-project-map.md` (stage, `learning/`, lexicon and evaluation

@@ -1,4 +1,4 @@
-"""Read-only toolchain check: is this machine ready to develop ChatRadar?
+"""Read-only toolchain check: is this machine ready to develop ChatImport?
 
 Usage: python scripts/doctor.py   (stdlib only, runs before `uv sync`)
 Exit code 1 when a required tool is missing; optional tools only warn.
@@ -27,19 +27,12 @@ CHECKS: tuple[Check, ...] = (
     Check("git", ("git", "--version"), True, "https://git-scm.com/downloads"),
     Check("uv", ("uv", "--version"), True, "winget install astral-sh.uv"),
     Check(
-        "python 3.13 (uv)",
-        ("uv", "python", "find", "3.13"),
+        "python 3.14 (uv)",
+        ("uv", "python", "find", "3.14"),
         True,
-        "uv python install 3.13",
+        "uv python install 3.14",
     ),
     Check("just", ("just", "--version"), True, "winget install Casey.Just"),
-    Check("docker cli", ("docker", "--version"), False, "install Docker Desktop"),
-    Check(
-        "docker daemon",
-        ("docker", "info", "--format", "{{.ServerVersion}}"),
-        False,
-        "start Docker Desktop",
-    ),
     Check("gh (GitHub CLI)", ("gh", "--version"), False, "winget install GitHub.cli"),
 )
 
@@ -72,12 +65,6 @@ def repo_state() -> list[tuple[bool, bool, str, str]]:
             True,
             "pre-commit hook",
             "installed" if hook.is_file() else "run: uv run pre-commit install",
-        ),
-        (
-            (ROOT / ".env").is_file(),
-            False,
-            ".env",
-            "present" if (ROOT / ".env").is_file() else "optional: cp .env.example .env",
         ),
     ]
 

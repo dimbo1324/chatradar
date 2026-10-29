@@ -1,15 +1,15 @@
 ## What and why
 
-<!-- In short: the problem solved and the roadmap step (docs/ROADMAP.md). -->
+<!-- In short: the problem solved and the roadmap stage (docs/ROADMAP.md). -->
 
 ## How it was verified
 
 - [ ] `just check` (ruff, pyright strict, pytest, agents sync, language) passes locally
-- [ ] New rules and mappers are covered by table-driven tests
-- [ ] A migration is added and applies on an empty SQLite (if the schema changes)
+- [ ] Mapper, writer, recover and trim changes are covered by table-driven tests
+- [ ] A record or `state.json` format change keeps existing files readable
 
 ## Data safety checklist
 
-- [ ] No secrets, `.env`, `*.session` or chat exports
+- [ ] No secrets, `*.session`, `config.toml`, `chats.toml` or exported chats
 - [ ] Fixtures contain anonymized messages only
-- [ ] No raw messages leave the machine — only summaries and links
+- [ ] Nothing leaves the owner's machine

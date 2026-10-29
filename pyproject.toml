@@ -1,40 +1,31 @@
 [project]
-name = "chatradar"
-version = "0.1.0"
-description = "Collect, clean and search messenger chats; answers link back to source messages."
+name = "chatimport"
+version = "0.0.1"
+description = "Local, reactive export of chosen Telegram groups and channels to chunked JSONL."
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "dimbo1324" }]
-keywords = ["telegram", "chat", "search", "digest", "telethon"]
+keywords = ["telegram", "export", "jsonl", "archive", "telethon"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Typing :: Typed",
 ]
 dependencies = [
-    "aiosqlite>=0.22.1",
-    "alembic>=1.20.0",
-    "fastapi>=0.146.0",
-    "lingua-language-detector>=2.2.0",
-    "pydantic>=2.14",
-    "pydantic-settings>=2.16",
-    "sqlalchemy[asyncio]>=2.1",
-    "structlog>=26.1.0",
-    "telethon>=1.45,<2", # v2 has a different API; moving is a separate decision
+    "filelock>=4.2.4",
+    "platformdirs>=4.14.0",
+    "telethon>=1.45,<2",
     "typer>=0.27.3",
-    "tzdata>=2026.5 ; sys_platform == 'win32'",
-    "uvicorn[standard]>=0.54.0",
 ]
 
 [project.scripts]
-chatradar = "chatradar.cli:run"
+chatimport = "chatimport.cli:run"
 
 [project.urls]
-Repository = "https://github.com/dimbo1324/chatradar"
+Repository = "https://github.com/dimbo1324/chatradar/tree/chatimport"
 Issues = "https://github.com/dimbo1324/chatradar/issues"
 
 [build-system]
@@ -43,13 +34,12 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
-    "httpx2>=2.14.0",
     "pre-commit>=4.7.0",
     "pyright[nodejs]>=1.1.414",
-    "pytest>=9.1.1",
-    "pytest-asyncio>=1.4.0",
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.4.1",
     "pytest-cov>=7.1.0",
-    "ruff>=0.17.1",
+    "ruff>=0.17.3",
 ]
 
 # ---------------------------------------------------------------- uv
@@ -58,10 +48,10 @@ default-groups = ["dev"]
 
 # ---------------------------------------------------------------- ruff
 [tool.ruff]
-target-version = "py313"
+target-version = "py314"
 line-length = 100
 src = ["src", "tests", "scripts"]
-extend-exclude = ["migrations/versions", "docs"]
+extend-exclude = ["docs"]
 
 [tool.ruff.lint]
 select = [
@@ -84,13 +74,9 @@ select = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101", "S105", "S106"]
-"migrations/**" = ["INP001"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["chatradar", "scripts"]
-
-[tool.ruff.lint.flake8-type-checking]
-runtime-evaluated-base-classes = ["pydantic.BaseModel", "pydantic_settings.BaseSettings"]
+known-first-party = ["chatimport", "scripts"]
 
 [tool.ruff.format]
 docstring-code-format = true
@@ -98,8 +84,8 @@ docstring-code-format = true
 # ---------------------------------------------------------------- pyright
 [tool.pyright]
 include = ["src", "tests", "scripts"]
-exclude = ["migrations/versions", "**/__pycache__", ".venv"]
-pythonVersion = "3.13"
+exclude = ["**/__pycache__", ".venv"]
+pythonVersion = "3.14"
 typeCheckingMode = "strict"
 venvPath = "."
 venv = ".venv"
@@ -115,13 +101,13 @@ addopts = ["-ra", "--strict-markers", "--strict-config", "--import-mode=importli
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 markers = [
-    "integration: tests with a real database (in-memory SQLite) and file system",
+    "integration: tests over a temporary folder tree and a fake Telegram client",
 ]
 filterwarnings = ["error"]
 
 # ---------------------------------------------------------------- coverage
 [tool.coverage.run]
-source = ["chatradar"]
+source = ["chatimport"]
 branch = true
 
 [tool.coverage.report]

@@ -13,12 +13,12 @@ body:
     id: repro
     attributes:
       label: How to reproduce
-      placeholder: "chatradar sync --chat ..."
+      placeholder: "chatimport run --once --chat ..."
   - type: input
     id: version
     attributes:
       label: Version
-      placeholder: "chatradar --version"
+      placeholder: "chatimport --version"
   - type: textarea
     id: logs
     attributes:

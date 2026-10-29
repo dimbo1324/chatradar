@@ -2,65 +2,56 @@
 
 <!-- tier: extended -->
 
-> **Essence.** Lookup material — CLI commands, configuration variables, Docker usage, CI jobs and the Windows notes (UTF-8 consoles, ASCII-only `alembic.ini`, Docker Desktop started by the owner, `httpx2` for the Starlette test client); the always-apply policies live in `11-commands.md`.
+> **Essence.** Lookup material — the planned `chatimport` commands, where configuration and data live, CI jobs and the Windows notes (UTF-8 consoles, `pythonw` autostart, files closed between writes, `os.replace` within one volume); the always-apply policies live in `11-commands.md`.
 
-## CLI (`chatradar`)
+## CLI (`chatimport`)
 
-| Command | What it does |
+Implemented now: `--version`. The full set (spec, `docs/architecture.md` §9) arrives stage
+by stage; move a command into "implemented" when it works.
+
+| Command | What it does | Stage |
+|---|---|---|
+| `login` | first login: phone, code, 2FA password; creates the session | 0.1 |
+| `dialogs` | your groups and channels with `chat_id` and links | 0.1 |
+| `chats list` / `chats add <ref> [--name N]` / `chats disable\|enable` | the library | 0.1 |
+| `run [--once] [--chat X]` | console mode; `--once` backfills or catches up and exits | 0.1 |
+| `status` | phase, `last_id`, backfill progress, size, free space | 0.3 |
+| `check [--repair]` | integrity of files and `state.json` | 0.3 |
+| `trim {25,50,75} [--chat X] [--yes]` | delete the oldest share of history | 0.4 |
+| `pause` / `resume [--chat X]` | stop and continue collecting | 0.4 |
+| `tray` | normal mode with a tray icon | 0.5 |
+| `set-root <path> [--move]` | change the output folder | 0.5 |
+| `recheck [--chat X] [--days N]` | compare recent days with Telegram now | 0.6 |
+| `backfill --deeper [--chat X]` | lower `floor_id` and fetch older history | 0.6 |
+| `export-json --chat X [--out F]` | assemble a classic JSON array | 0.6 |
+
+## Where things live
+
+Resolved through `platformdirs`. Windows paths shown:
+
+| What | Where |
 |---|---|
-| `telegram login` | interactive first login; session in `data/sessions/` |
-| `chats add <@username, link or id>` / `chats list` | track a chat / list known chats |
-| `import tg-export <result.json> [--username U] [--no-process]` | Desktop JSON import, then process |
-| `sync [--chat ID]... [--recheck-days N]` | fetch new messages into `data/raw/`, then process |
-| `process [--stage S] [--reset-stage S]` | run pipeline stages |
-| `rebuild` | clear derived data and re-map every raw record, then process |
-| `eval [--truth PATH]... [--labels] [--json]` | precision, recall and F1 of the noise filter, the question detector and language detection against a truth file or the human labels |
-| `mine` | propose lexicon candidates from the stored messages (nothing becomes active) |
-| `lexicon list\|stats\|accept\|reject\|reset\|add` | inspect and change the learning lexicon; a decision moves its revision and the next `process` applies it |
-| `web [--host] [--port]` | the panel (uvicorn) |
-| `worker` | loop: migrate, sync (if Telegram is configured), process, sleep |
-
-Telegram commands exit with code 2 and a hint when `TELEGRAM__API_ID`/`API_HASH` are
-missing. Every command applies migrations when it opens the database.
-
-## Configuration
-
-`Settings` in `src/chatradar/config.py`; prefix `CHATRADAR_`, nested with `__`, empty
-values fall back to defaults. Template: `.env.example`. Key variables: `ENV` (`dev`/`prod`),
-`LOG_LEVEL`, `DATA_DIR`, `DATABASE_URL` (empty → SQLite in `DATA_DIR`),
-`TELEGRAM__API_ID`, `TELEGRAM__API_HASH`, `TELEGRAM__SESSION_NAME`,
-`WORKER__SYNC_INTERVAL_HOURS`, `WORKER__RECHECK_DAYS`, `WEB__HOST`, `WEB__PORT`.
-
-## Docker
-
-- `docker compose up -d --build` starts `web` (127.0.0.1:8000, healthcheck `/healthz`) and
-  `worker`; `./data` is mounted at `/app/data`.
-- `docker compose run --rm -it worker telegram login` for the first login.
-- The image runs as uid 1000 with `CHATRADAR_ENV=prod` (JSON logs). `uv` is pinned in the
-  `Dockerfile` (`UV_VERSION`); the build context is an allowlist in `.dockerignore` — a new
-  file the build needs (as `LICENSE` once was) must be added there.
-- Postgres: uncomment `db` in `compose.yaml`, set `CHATRADAR_DATABASE_URL`, run
-  `alembic upgrade head`, then `chatradar rebuild`.
+| Chat data | `<Desktop>\ChatImport\` (override: `--root`, `CHATIMPORT_ROOT`, `output.root_dir`) |
+| Config, library | `%LOCALAPPDATA%\ChatImport\config.toml`, `chats.toml` |
+| Session | `%LOCALAPPDATA%\ChatImport\session\chatimport.session` |
+| Logs, lock, control queue | `%LOCALAPPDATA%\ChatImport\logs\`, `chatimport.lock`, `control\` |
 
 ## CI (`.github/workflows/`)
 
-- `ci.yml`: lint (uv lock check, ruff), typecheck, tests on Ubuntu 3.13/3.14 and Windows
-  3.13 with migrations on an empty SQLite, assistants sync and language check, gitleaks,
-  Docker build and smoke (`--version`, `/healthz`).
-- `codeql.yml`: Python and Actions, weekly and on `main`.
-- `release.yml`: on `v*.*.*` tags, multi-arch image to `ghcr.io/dimbo1324/chatradar` with
-  provenance and SBOM, then a GitHub Release with generated notes.
-- Dependabot: uv, GitHub Actions, Docker, pre-commit; Telethon majors are ignored.
+- `ci.yml` (pushes to `main` and `chatimport`): lint (uv lock check, ruff), typecheck,
+  tests on Ubuntu and Windows with Python 3.14, assistants sync and language check,
+  gitleaks.
+- `codeql.yml`: Python and Actions, weekly and on `main`/`chatimport`.
+- Dependabot only reads the default branch (`main`); updates for this branch are manual.
 
 ## Windows notes
 
-- Console output: the `chatradar` entry point (`cli.run`) reconfigures stdout and stderr to
-  UTF-8, otherwise Rich help crashes on cp1252 pipes. Call `run`, not `app`, from scripts.
-- `alembic.ini` must stay ASCII-only: configparser reads it in the locale encoding.
-- Docker Desktop is started by the owner. An agent session finds the daemon down as
-  `npipe:////./pipe/dockerDesktopLinuxEngine ... cannot find the file`; report it and rely
-  on the CI Docker job instead of starting Docker Desktop from the session.
-- `tzdata` is a Windows-only dependency so `zoneinfo` (Alembic `timezone = UTC`) works.
-- Starlette's test client needs `httpx2`; plain `httpx` raises a deprecation error, which
-  `filterwarnings = error` turns into a failure.
+- Console output: the `chatimport` entry point (`cli.run`) reconfigures stdout and stderr
+  to UTF-8, otherwise Rich help crashes on cp1252 pipes. Call `run`, not `app`, from scripts.
+- Autostart: Task Scheduler at logon with a 1-minute delay, running
+  `.venv\Scripts\pythonw.exe -m chatimport tray` (no console window).
+- Close every data file after each write, or Explorer cannot delete the chat folder.
+- `os.replace` is atomic only within one volume: write temp files next to the target.
+- Auto-trimming deletes with `os.remove`, never to the Recycle Bin, or no space is freed.
+- If the Desktop syncs to OneDrive, set `output.root_dir` outside it.
 - Prefer `uv run <tool>` over the `.venv/Scripts/*.exe` shims.

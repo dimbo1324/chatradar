@@ -1,6 +1,6 @@
 # Codex Project Configuration
 
-Project-scoped Codex configuration for ChatRadar.
+Project-scoped Codex configuration for ChatImport.
 
 Rules live in the shared modules under `.ai/`. Codex reads them through the generated
 `AGENTS.md` in the repository root. Claude Code (the priority assistant) gets the same
@@ -18,11 +18,11 @@ Never edit `agents/`, `skills/` or `AGENTS.md` by hand: edit the source in `.ai/
 
 ## Agents
 
-`chatradar-step-planner`, `chatradar-connectors`, `chatradar-pipeline`, `chatradar-storage`,
-`chatradar-interfaces`, `chatradar-platform`, `chatradar-privacy-security`,
-`chatradar-quality-reviewer`, `chatradar-repo-maintainer`.
+`chatimport-step-planner`, `chatimport-telegram`, `chatimport-storage`,
+`chatimport-interfaces`, `chatimport-platform`, `chatimport-privacy-security`,
+`chatimport-quality-reviewer`, `chatimport-repo-maintainer`.
 
 ## Skills
 
-`step-episode`, `pipeline-stage-change`, `schema-change`, `code-review`, `ci-fix`,
-`project-maintenance`, `rules-evolution`.
+`step-episode`, `format-change`, `code-review`, `ci-fix`, `project-maintenance`,
+`rules-evolution`.

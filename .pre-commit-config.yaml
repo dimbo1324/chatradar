@@ -39,11 +39,10 @@ repos:
   - repo: local
     hooks:
       - id: forbid-secrets
-        name: forbid committing .env, *.session and data/
+        name: forbid committing secrets, real config and exported chats
         language: fail
-        entry: "Secrets and data are never committed (.env, *.session, data/). Unstage the file: git rm --cached <file>"
-        files: '(^|/)(\.env(\..+)?|.+\.session(-journal)?|data/.+)$'
-        exclude: '(^|/)(\.env\.example|data/\.gitkeep)$'
+        entry: "Secrets and chat data are never committed (.env, *.session, config.toml, chats.toml, ChatImport/). Unstage the file: git rm --cached <file>"
+        files: '(^|/)(\.env(\..+)?|.+\.session(-journal)?|ChatImport/.+)$|^(config|chats)\.toml$'
 
       - id: pyright
         name: pyright (strict)
@@ -57,13 +56,6 @@ repos:
         language: system
         entry: uv run --frozen python scripts/sync_agents.py --check
         files: '^(\.ai/|\.claude/(agents|skills)/|\.codex/(agents|skills)/|AGENTS\.md$|scripts/sync_agents\.py$)'
-        pass_filenames: false
-
-      - id: synthetic
-        name: synthetic fixtures match the generator
-        language: system
-        entry: uv run --frozen python scripts/generate_synthetic.py --check
-        files: '^(scripts/generate_synthetic\.py|tests/fixtures/synthetic/.*)$'
         pass_filenames: false
 
       - id: language

@@ -1,55 +1,35 @@
-# Project: ChatRadar
+# Project: ChatImport
 
-ChatRadar collects messages from messenger chats (Telegram first), filters out noise, groups
-replies into discussions and makes them searchable, so a question gets a short answer with
-**links to the source messages and their dates**. Later: weekly digests of hot topics,
-"evergreen questions", who to ask, topic subscriptions. Product intent: `docs/vision.md`.
+ChatImport is a background service that keeps a full local text archive of the Telegram
+groups and channels listed in the owner's `chats.toml` library. It runs as its own session
+of the owner's account (Telethon, MTProto), backfills each chat's history once, then appends
+new messages in small batches (every 5 messages or 30 seconds), rechecks the last 7 days
+daily for edits and deletions, and protects free disk space by trimming the oldest parts.
+Output is JSONL in a `ChatImport` folder (the Desktop by default). Product intent:
+`docs/vision.md`; design: `docs/architecture.md`.
 
-**Stage: level 0, MVP without AI (roadmap steps 1–8) plus the learning lexicon is built;
-the first live Telegram login is the owner's next step.** AI stages (topic
-labelling, embeddings, answers) come after the non-AI service is complete; they plug in as
-pipeline stages behind the same `Stage` interface.
+This is branch `chatimport`, a parallel line to ChatRadar on `main`. The two are meant to
+become one product later (`docs/architecture.md` §15): ChatImport's JSONL folder is a
+candidate raw store for ChatRadar.
+
+**Stage: 0.0 — repository prepared, no service code yet; stage 0.1 is next.**
 
 ## Repository map
 
-Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
+Single uv project on Python 3.14+ (`src/` layout, package `chatimport`):
 
-- `src/chatradar/config.py` — `Settings` (pydantic-settings), everything from `CHATRADAR_*` env.
-- `src/chatradar/logs.py` — structlog setup: console in dev, JSON in prod.
-- `src/chatradar/domain/` — `models.py` (messages, threads, read models), `ports.py`
-  (`Connector`, `Mapper`, `RawStore`, `ChatRepository`, `MessageRepository`,
-  `QueryRepository`, `SearchIndex`, plus `LexiconRepository`, `LabelRepository`,
-  `MessageScanner`), `text.py` (normalization, hashes, links), `lexicon.py` (learning-lexicon
-  models and status rules), `evaluation.py` (labels, truth rows, metrics).
-  Imports nothing from adapters.
-- `src/chatradar/connectors/` — `telegram/` (Telethon, MTProto user account) and
-  `tg_export/` (Telegram Desktop JSON import). Each yields `RawRecord`s.
-- `src/chatradar/storage/` — raw JSONL store (source of truth) and `db/` (SQLAlchemy 2.0,
-  repositories, FTS5). The only place with dialect-specific code.
-- `src/chatradar/pipeline/` — `base.py` (`Stage` protocol, `STAGE_ORDER`), the stages
-  noise → enrich → threads → index, `runner.py`, `registry.py`; lexicons in
-  `src/chatradar/resources/lexicons/` (data, Russian and Spanish allowed).
-- `src/chatradar/services/` — use cases: `normalize.py` (raw → upsert), `ingest.py`
-  (import, re-map), `sync.py`, `process.py`, `rebuild.py`, `worker.py`, `queries.py`
-  (`ReadServices` for the web); `container.py` is the composition root — the only
-  module that builds concrete adapters.
-- `src/chatradar/learning/` — corpus statistics that propose lexicon candidates (pure
-  functions: tokenizing, n-grams, log-odds scoring); `services/learning.py` runs them,
-  `services/evaluation.py` measures the filter, `services/feedback.py` is the panel's only
-  write path (ADR-0003, ADR-0004).
-- `src/chatradar/web/` — FastAPI JSON API (`docs/api.md`) and the static panel in
-  `web/static/` (plain HTML, CSS, JavaScript modules; ADR-0002).
-- `src/chatradar/cli.py` — Typer entry point `chatradar`; thin wrappers over `services/`.
-- `migrations/` — Alembic (async, batch mode on SQLite); `alembic.ini` stays ASCII-only.
-- `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only);
-  `tests/fixtures/synthetic/` holds four generated chat exports (ru, es, en) and the
-  phrase bank they are built from.
-- `scripts/` — stdlib-only repo tooling: `sync_agents.py`, `check_language.py`, `doctor.py`,
-  `generate_synthetic.py` (deterministic synthetic Telegram Desktop exports).
-- `data/` — runtime data (raw JSONL, Telegram sessions, SQLite). **Never tracked.**
-- `Dockerfile`, `compose.yaml`, `justfile`, `.pre-commit-config.yaml`, `.github/`.
-- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`, `backlog.md`
-  (deferred work), `adr/`.
+- `src/chatimport/cli.py` — Typer entry point `chatimport`; thin wrappers only.
+- Planned modules (spec layout, `docs/architecture.md` §12): `config.py`, `paths.py`,
+  `library.py`, `app.py`, `telegram/` (`client.py`, `resolve.py`, `mapper.py`),
+  `storage/` (`layout.py`, `writer.py`, `state.py`, `recover.py`), `worker.py`,
+  `recheck.py`, `trim.py`, `guards/` (`disk.py`, `folders.py`), `control.py`, `tray.py`,
+  `media.py`. A module joins this list when it exists.
+- `config.example.toml`, `chats.example.toml` — templates; the real files live in the
+  application data folder and are never tracked.
+- `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only).
+- `scripts/` — stdlib-only repo tooling: `sync_agents.py`, `check_language.py`, `doctor.py`.
+- `justfile`, `.pre-commit-config.yaml`, `.github/`.
+- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`.
 - `.ai/`, `.claude/`, `.codex/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` — assistant rules.
 
 ## Language policy
@@ -57,13 +37,9 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
 - **Everything tracked by git is English**: code, comments, docstrings, CLI help, docs, rule
   modules, commit messages, test names, `task-checklist.md`. Owner decision 2026-10-19.
 - `python scripts/check_language.py` fails on any Cyrillic character in a tracked file,
-  except in the data paths listed in `scripts/check_language.py` (`ALLOWED_PREFIXES`):
-  anonymized test fixtures, noise/question lexicons (Russian and Spanish by nature) and
-  the panel's Russian UI text. Code that uses them stays English.
-- **The web panel speaks Russian** (owner decision 2026-10-19): every user-visible string
-  lives in `web/static/i18n/ru.json` and is reached through `t()`, `tn()` (plurals) or
-  `tEnum()` (server values); the JavaScript contains no UI text. `index.html` holds only
-  the pre-JavaScript shell. CLI, logs, API fields and errors stay English.
+  except under `tests/fixtures/` (anonymized chat data is Russian by nature).
+- The owner's original spec is Russian and lives outside the repository;
+  `docs/architecture.md` is its English version and the reference inside the repository.
 - Reports to the owner in chat are in Russian, short and step by step.
 
 ## Documentation policy
@@ -75,12 +51,12 @@ Single uv project on Python 3.13+ (`src/` layout, package `chatradar`):
 
 ## Product guardrails
 
-- Every statement the product shows a user carries a link to the source message and its
-  date. No found messages → "no answer in the chats", never an invented one.
-- Raw messages are never published outside the owner's machine — only summaries and links.
-- No profiles of people are built (Uruguay, Ley 18.331). A specialist directory, if ever
-  built, is opt-in only.
-- Telegram is read through a user account with pauses and FloodWait respected; a bot
-  cannot see history and is not a substitute.
-- **Step order in `docs/ROADMAP.md` is binding.** Skipping ahead needs an owner decision
+- Only chats listed and enabled in `chats.toml` are read or stored; private dialogs, bots
+  and everything else are dropped at the router.
+- The service never joins a chat by itself and never sends anything to Telegram.
+- Data stays on the owner's disk. Sender names are personal data (Uruguay, Ley 18.331):
+  any export or publication strips them.
+- Telegram is read through the owner's user account with pauses and FloodWait respected;
+  history backfill runs one chat at a time.
+- **Stage order in `docs/ROADMAP.md` is binding.** Skipping ahead needs an owner decision
   recorded in `docs/decisions.md`.

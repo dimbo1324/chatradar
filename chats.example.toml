@@ -1,0 +1,17 @@
+# Library of tracked groups and channels. The real file is chats.toml in the application
+# data folder and never reaches git. Anything not listed here is never read or stored.
+#
+# ref     - how to find the chat: t.me link, @username, invite link, numeric id or exact title.
+# name    - optional short folder name; otherwise derived from the chat title.
+# enabled - false stops tracking; data already on disk stays.
+
+[[chat]]
+ref = "https://t.me/example_public_group"
+name = "example_group"
+
+[[chat]]
+ref = "@example_channel"
+
+[[chat]]
+ref = "-1001234567890"
+enabled = false

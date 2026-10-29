@@ -1,586 +1,640 @@
-# ChatRadar — MVP architecture without AI
+# ChatImport — Architecture
 
-Version of 2026-10-18. Stage: collecting and processing messages (a "plain service"); AI is
-added later. MVP language: Python. Re-check current library versions before each step.
+English version of the owner's spec v1.2 (2026-10-29; the Russian original is kept outside
+the repository). This file is the reference inside the repository; where code and this file
+disagree, the code is the fact and this file is fixed in the same task.
 
----
+## 1. Goals and non-goals
 
-## 0. How automatic export from Telegram works
+ChatImport keeps the full text history of about eight Telegram groups and channels locally,
+in a machine-readable form. It reacts to new messages almost at once but writes in batches;
+it is controlled by simple actions (delete a folder to refetch it, `trim` to drop old
+history); it guards free disk space; and its record format already has room for media.
 
-**Principle.** A manual export in Telegram Desktop is ordinary requests to the Telegram API
-(the MTProto protocol), just behind a button. To automate it you write your own client that
-logs in as a user and makes the same requests. A bot does not fit: it cannot see history
-from before it was added. Telegram Desktop has no command line for exporting, so it cannot
-be scheduled.
+It does **not**: read Telegram Desktop's encrypted `tdata` (it is its own client; Telegram
+Desktop may be closed); analyse messages (that is ChatRadar's job); fetch secret chats
+(unavailable through the API); send or publish anything anywhere.
 
-**Tools:**
-- **Telethon** (Python) — the main choice: a mature library with good documentation that
-  handles FloodWait itself.
-- Pyrogram — the original is no longer maintained; only forks live on. Do not use.
-- TDLib — Telegram's official C++ library; overkill for the MVP.
-- Ready-made CLIs (for example `tdl` in Go) — to take a quick look at the data.
+## 2. Requirements
 
-**How Telethon works:**
-1. Register an application at my.telegram.org and get `api_id` and `api_hash`.
-2. First login: phone number, the code from Telegram, the 2FA password. A `*.session` file
-   is created; later logins need no code. **The session file = full access to the
-   account**: not in git, keep it like a password.
-3. Chats: public ones by `@username`, private ones through `get_dialogs` if the account is
-   a member.
-4. History: `iter_messages`; the library pages through it 100 at a time.
-5. Incremental sync: keep `last_id` per chat and request `min_id=last_id`.
-6. Run on a schedule.
+| ID | Requirement |
+|---|---|
+| F1 | First run for a chat fetches its whole available text history. |
+| F2 | Then new messages are written in batches of N (default 5) or every T seconds (default 30), whichever comes first. |
+| F3 | Format: JSONL, one JSON object per line. |
+| F4 | Output folder `ChatImport` on the current user's Desktop by default; the path changes without code edits (command, tray, environment variable, config), moving existing data (§7.3). |
+| F5 | A deleted chat folder means a full refetch of that chat; a deleted root means all chats. |
+| F6 | Disk guard: when the volume has less than 15 GB free, delete the oldest messages until at least 17 GB is free; recent messages stay. |
+| F7 | Manual trim of the oldest 25 / 50 / 75 % — strictly in order, for all chats or one. |
+| F8 | Edits and deletions are separate records; history is never rewritten. |
+| F9 | Every record has a `media` field; enabling media is a setting, not a redesign. |
+| F10 | **Only** groups and channels from the `chats.toml` library are tracked; private dialogs and everything else are ignored. The library changes without a restart (§7.2). |
+| F11 | Sender names (`sender_name`, `sender_username`) are stored, not only `sender_id`. |
+| F12 | Daily recheck of the last N days (default 7) records edits and deletions missed while the service was off (§8.7). |
 
-Minimal example (Telethon 1.x):
+| ID | Non-functional |
+|---|---|
+| N1 | Python ≥ 3.14. |
+| N2 | Free open-source dependencies only. |
+| N3 | No duplicates and no losses across restart, crash or power loss (at-least-once intake + dedup by `msg_id`). |
+| N4 | Files are not held open between writes, so Windows can delete a folder. |
+| N5 | Gentle on Telegram limits: pauses, FloodWait handling, no aggressive parallelism. |
+| N6 | One failing subtask never brings the service down; status is visible in `_status.json` and the tray. |
+| N7 | One service instance per user. |
 
-```python
-import asyncio
-from telethon import TelegramClient
+## 3. Stack
 
-client = TelegramClient("collector", API_ID, API_HASH, flood_sleep_threshold=120)
-
-async def fetch(chat, last_id=0):
-    msgs = []
-    async for m in client.iter_messages(chat, min_id=last_id, reverse=True):
-        msgs.append({
-            "id": m.id,
-            "date": m.date.isoformat(),
-            "author": m.sender_id,
-            "text": m.message,
-            "reply_to": m.reply_to.reply_to_msg_id if m.reply_to else None,
-            "has_media": m.media is not None,
-        })
-    return msgs
-
-async def main():
-    async with client:          # the first run asks for the phone and the code
-        msgs = await fetch("some_public_chat")
-        print(len(msgs), msgs[-1] if msgs else None)
-
-asyncio.run(main())
-```
-
-`reverse=True` yields messages from oldest to newest, so the last processed one has the
-highest id.
-
-**Nuances:**
-- Incremental sync by `min_id` does not see edits and deletions. The simple fix: once a day
-  refetch the last 3–7 days. The full fix: a persistent connection and the `NewMessage`,
-  `MessageEdited`, `MessageDeleted` events.
-- Links: public chat — `t.me/<username>/<id>`; private supergroup —
-  `t.me/c/<id without -100>/<message id>` (opens only for members).
-- In forums (groups with topics) `reply_to` may point at the topic rather than a message —
-  check on your own chats.
-- Media: only mark the type at first; download (`download_media`) later and selectively.
-- `client.takeout(...)` — Desktop's export mode with softer limits for a large initial
-  download. Not needed for 5–10 chats.
-
-**Main or separate account:**
-
-| | Main account | Separate account |
+| Need | Component | License |
 |---|---|---|
-| Pros | Already in every chat, including private ones; an old account raises less suspicion | The risk is isolated from the personal account |
-| Cons | It gets the restrictions if overloaded; the session = access to the personal account | Needs a second number; private chats must be joined again; new accounts are banned more often through the API |
+| Language | Python 3.14 | PSF |
+| Project manager | uv | MIT / Apache-2.0 |
+| Telegram (MTProto) | Telethon 1.x | MIT |
+| Faster crypto (optional) | cryptg, only if a 3.14 wheel exists | CC0 |
+| Desktop and app folders | platformdirs (`user_desktop_dir`, `user_data_dir`) | MIT |
+| Single instance | filelock | Unlicense |
+| CLI | Typer (with Click and Rich) | MIT / BSD-3 |
+| Tray (optional) | pystray + Pillow | LGPL-3.0 / MIT-CMU |
+| Confirmation dialogs | tkinter | PSF (stdlib) |
+| Config | `tomllib` (read-only) | stdlib |
+| Free space | `shutil.disk_usage` | stdlib |
+| Logs | `logging` + `RotatingFileHandler` | stdlib |
+| Development | pytest, pytest-asyncio, ruff, pyright | MIT |
 
-For experiments and periodic export of 5–10 chats the main account is fine, without
-aggressive load. A separate account is for when the collector moves to a server and runs
-around the clock, or when the bot starts serving other people. Let a new account "live" a
-few days as an ordinary one and make the first export slowly.
+Deliberately **not** used: a database (the files are the storage), watchdog/inotify (polling
+every 10 s is more reliable across systems and Explorer deletions), Docker (the service needs
+the user's Desktop and tray).
 
----
+## 4. Components
 
-## 1. Architecture principles
+```mermaid
+flowchart LR
+  TG[(Telegram)] <--> CL[Telegram client<br/>Telethon]
+  CL -- NewMessage / Edited / Deleted --> RT[Router]
+  RT --> W1[ChatWorker: chat 1]
+  RT --> Wn[ChatWorker: chat N]
+  W1 & Wn -- history / catch-up --> CL
+  W1 & Wn --> ST[Storage<br/>JSONL + state.json]
+  FW[FolderWatcher] -- folder missing --> W1 & Wn
+  DG[DiskGuard] -- free space low --> TR[Trimmer]
+  CTL[Control<br/>CLI / tray] -- trim, pause, status --> TR
+  TR --> ST
+  SUP[Supervisor] -. restarts failed tasks .-> W1 & FW & DG
+  ST --> FS[(ChatImport folder)]
+```
 
-1. **A modular monolith with ports and adapters (hexagonal architecture).** At the center
-   are the domain model (`Message`, `Thread`, `Chat`) and "port" interfaces: message source,
-   raw data store, message repository, search index. Telethon, SQLite and FastAPI are
-   adapters; the domain does not know them. SQLite → Postgres = a new repository adapter;
-   the pipeline does not change.
-2. **Raw data is immutable and kept apart from the database.** Telegram → JSONL in
-   `data/raw/`. The database is derived: it can be deleted and rebuilt with `rebuild`
-   without calling Telegram.
-3. **A pipeline of idempotent, versioned stages.** Any stage can be rerun; changed rules
-   recompute only what is needed.
-4. **The boundary between modules is a data format, not Python objects.** Then any stage can
-   be rewritten in Go or Rust: it reads and writes the same tables and files.
-5. **Configuration through environment variables**; secrets only in `.env` (not in git).
-
----
-
-## 2. Stack
-
-| Task | Tool | Why |
+| Component | Does | Does not |
 |---|---|---|
-| Python | 3.13 (3.14 if every dependency builds) | |
-| Project, dependencies, venv | **uv** | Fast, lock file, convenient in Docker |
-| Linter and formatter | **ruff** | Replaces flake8, isort, black |
-| Types | **pyright** or **mypy** (strict) | Strict typing |
-| Tests | **pytest**, pytest-asyncio | |
-| Models and config | **pydantic v2**, **pydantic-settings** | Validation at the edges, config from env |
-| Database | **SQLAlchemy 2.0** (async) + **Alembic** | One abstraction for SQLite and Postgres, migrations |
-| Drivers | `aiosqlite` → later `asyncpg` | Switching databases = changing `DATABASE_URL` |
-| Telegram | **Telethon 1.x** | The stable main branch; v2 has a different API — check its status before starting |
-| CLI | **Typer** | |
-| Web | **FastAPI** + **Jinja2** + **HTMX** | A simple interface without a separate frontend |
-| Logs | **structlog** | Structured logs, JSON in Docker |
-| Text language | **lingua-py** | Tells ru from es even on short phrases |
-| Containers | Docker + **docker compose** | |
-| Quality | pre-commit, GitHub Actions | |
+| TelegramClient | connection, session, `iter_messages`, events, FloodWait | write files |
+| Mapper | pure `Telethon Message → dict` (§6) | any I/O |
+| Library | reads `chats.toml`, resolves refs to `chat_id`, watches the file | fetch messages |
+| Router | routes events to workers by `chat_id`; drops anything outside the library | write files |
+| Rechecker | daily comparison of the last N days with Telegram | write directly — hands records to the worker |
+| ChatWorker (one per chat) | state machine: backfill, catch-up, live buffer, writes | touch other chats |
+| Storage | layout, atomic writes, `state.json`, recovery | know about Telegram |
+| Trimmer | deletes old messages in order (manual and automatic) | decide *when* |
+| DiskGuard | checks free space every 5 min, calls the trimmer | |
+| FolderWatcher | checks folders every 10 s, notifies workers | |
+| Control | commands from CLI/tray, `_status.json` | |
+| Supervisor | starts tasks, restarts failed ones with exponential backoff | |
 
-**Deliberately not used at the start:** Celery, Redis, Kafka, React, microservices. The
-architecture allows adding them later without rewriting the core.
+**One writer.** Only the service process writes into `ChatImport`, and inside it only the
+chat's worker (or the trimmer holding that chat's `asyncio.Lock`). CLI and tray send
+commands (§9.3). No inter-process locking of data files is needed.
 
----
+### Worker state machine
 
-## 3. Repository layout
-
-```
-chatradar/
-├── pyproject.toml          # dependencies, ruff/pyright/pytest settings
-├── uv.lock
-├── .env.example            # config template (in git); .env is not
-├── .gitignore
-├── Dockerfile
-├── compose.yaml
-├── alembic.ini
-├── justfile                # short commands: just test, just sync, just up
-├── migrations/             # Alembic
-├── data/                   # ALL of it git-ignored
-│   ├── raw/telegram/<chat_id>/2026-10-18T23-50.jsonl
-│   ├── sessions/collector.session
-│   └── chatradar.db
-├── src/chatradar/
-│   ├── config.py           # Settings (pydantic-settings)
-│   ├── domain/
-│   │   ├── models.py       # Message, Thread, Chat, enums
-│   │   └── ports.py        # Protocol interfaces
-│   ├── connectors/
-│   │   ├── telegram/       # Telethon: client.py, mapper.py
-│   │   └── tg_export/      # Telegram Desktop JSON import
-│   ├── storage/
-│   │   ├── raw_jsonl.py    # file-based RawStore
-│   │   └── db/             # engine.py, tables.py, repositories.py, search_fts5.py
-│   ├── pipeline/
-│   │   ├── base.py         # Stage interface, runner
-│   │   ├── normalize.py
-│   │   ├── noise.py
-│   │   ├── enrich.py
-│   │   ├── threads.py
-│   │   └── index.py
-│   ├── services/           # use cases: sync, process, search, stats
-│   ├── web/                # FastAPI: app.py, routes.py, templates/
-│   └── cli.py              # Typer: the entry point
-└── tests/
-    ├── fixtures/           # anonymized real messages
-    ├── unit/
-    └── integration/
+```mermaid
+stateDiagram-v2
+  [*] --> Recover: start / folder found
+  [*] --> HeadBackfill: no folder
+  Recover --> CatchUp
+  HeadBackfill --> CatchUp: current month written
+  CatchUp --> Live: reached last_id
+  Live --> Live: batch of 5 / 30 s
+  Live --> CatchUp: reconcile every 10 min
+  Live --> HeadBackfill: folder deleted
+  state Live {
+    [*] --> TailBackfill: history incomplete
+    TailBackfill --> [*]: reached chat start / floor
+  }
+  Live --> Paused: pause
+  Paused --> CatchUp: resume
 ```
 
-`.gitignore` (the essentials):
+- **HeadBackfill** — the current month (newest messages).
+- **CatchUp** — `iter_messages(min_id=last_id)`: everything since the service last listened.
+- **Live** — events into a buffer, written in batches.
+- **TailBackfill** — older months in the background, in parallel with Live (other files).
+
+## 5. Storage on disk
+
+### 5.1 Locations (Windows; `platformdirs` gives the equivalents elsewhere)
+
+| What | Where | Why |
+|---|---|---|
+| Chat data | `%USERPROFILE%\Desktop\ChatImport\` | default; changeable (§7.3) |
+| Config | `%LOCALAPPDATA%\ChatImport\config.toml` | deleting data must not delete settings |
+| Library | `%LOCALAPPDATA%\ChatImport\chats.toml` | a separate hand-edited file |
+| Session | `%LOCALAPPDATA%\ChatImport\session\chatimport.session` | a secret; survives data deletion |
+| Logs | `%LOCALAPPDATA%\ChatImport\logs\` | |
+| Instance lock | `%LOCALAPPDATA%\ChatImport\chatimport.lock` | |
+| Command queue | `%LOCALAPPDATA%\ChatImport\control\` | |
+
+### 5.2 Layout
 
 ```
-data/
-*.session
-*.session-journal
-.env
-.venv/
+ChatImport/
+├── _status.json               # service status, refreshed every minute (read-only)
+├── _trim_log.jsonl            # every deletion: when, what, why
+└── <slug>_<chat_id>/          # for example example_group_-1001234567890
+    ├── state.json             # chat state (§6.3)
+    ├── 2024-03_001.jsonl      # <UTC month>_<part>; lines ascend by msg_id
+    ├── 2026-09_001.jsonl
+    ├── 2026-09_002.jsonl      # the month did not fit into one part
+    └── 2026-10_001.jsonl      # current part of the current month — live appends here
 ```
 
-The session and the exports live inside the project, but not in git. In Docker the `data/`
-directory is mounted as a volume.
+- A chat is identified by `chat_id` in `state.json`, never by its folder name: renaming the
+  chat in Telegram or the folder by hand changes nothing.
+- Names starting with `_` are service files, not chats.
+- **Month files are split into parts.** The part is the unit of storage, deletion and
+  accounting in `state.json`.
 
----
+| Rule | Description |
+|---|---|
+| Name | `YYYY-MM_NNN.jsonl`: UTC month and zero-padded part number (`001`–`999`); name order is chronological |
+| Threshold | `max_chunk_mb = 20`. Before appending a batch: if the current part is ≥ 20 MB, open the next. A batch is never split, so a part may slightly exceed the threshold |
+| Order | Part `_001` holds a month's oldest messages; inside a part, ascending `msg_id` |
+| Backfill | A month is collected in memory, sorted and written straight into parts by threshold, each part atomically |
+| Edits and deletions | Appended to the last part of the event's month |
+| Threshold change | Applies to new parts only; old parts are not re-split |
+| Accounting | Each part is an entry in `state.json → chunks` (records, first and last `msg_id`, bytes) |
+| Trimming | Auto-trim deletes the oldest whole part; manual trim deletes whole parts and cuts one boundary part (§8.5, §8.6) |
 
-## 4. Domain model and ports
+### 5.3 Expected volume
 
-```python
-# domain/models.py
-from datetime import datetime
-from enum import StrEnum
-from pydantic import BaseModel, ConfigDict
+One record with sender names is about 0.4–0.6 KB. Earlier profiling of the owner's chats
+(8 chats, ~177 thousand messages over 2022–2026): ~450 messages per chat per month,
+~0.2–0.3 MB per month file, ~100 MB for the whole text archive (~400 MB with `include_raw`).
+Text alone will not fill a disk; the 15 GB guard matters once media is on (§12). Parts keep
+manual trims fast, auto-trim fine-grained and files easy to open; most months will be a
+single `_001`.
 
-class Source(StrEnum):
-    TELEGRAM = "telegram"
-    WHATSAPP_EXPORT = "whatsapp_export"
+### 5.4 Why JSONL
 
-class MediaType(StrEnum):
-    NONE = "none"; PHOTO = "photo"; VOICE = "voice"; VIDEO_NOTE = "video_note"
-    DOCUMENT = "document"; STICKER = "sticker"; OTHER = "other"
+Appending 5 messages adds 5 lines instead of rewriting a file; old history is deleted as
+whole files; a crash damages at most the last line, which recovery cuts; reading is a
+streaming `for line in f: json.loads(line)`. `chatimport export-json --chat X` assembles a
+classic JSON array when needed.
 
-class Message(BaseModel):
-    model_config = ConfigDict(frozen=True)
-    source: Source
-    chat_id: str            # strings: messengers use different id types
-    msg_id: str
-    author_id: str | None
-    date: datetime          # always UTC, timezone-aware
-    text: str
-    reply_to: str | None
-    topic_id: str | None    # topic in Telegram forums
-    media_type: MediaType
-    is_forward: bool
-    is_service: bool        # "joined the group" and similar
-    edited_at: datetime | None
-    link: str | None
-    content_hash: str       # hash of meaningful fields, to catch edits
-```
+## 6. Data format
 
-```python
-# domain/ports.py
-from typing import Protocol, AsyncIterator
-
-class Connector(Protocol):
-    source: Source
-    async def list_chats(self) -> list[ChatInfo]: ...
-    def fetch(self, chat_id: str, since_id: str | None) -> AsyncIterator[RawRecord]: ...
-
-class RawStore(Protocol):
-    async def append(self, source: Source, chat_id: str, records: list[RawRecord]) -> None: ...
-    def read(self, source: Source, chat_id: str) -> AsyncIterator[RawRecord]: ...
-
-class MessageRepository(Protocol):
-    async def upsert_many(self, msgs: list[Message]) -> UpsertResult: ...
-    async def pending_for(self, stage: str, version: int, limit: int) -> list[StoredMessage]: ...
-    async def mark(self, stage: str, version: int, updates: list[StageResult]) -> None: ...
-
-class SearchIndex(Protocol):
-    async def index(self, items: list[Indexable]) -> None: ...
-    async def search(self, query: str, filters: SearchFilters) -> list[Hit]: ...
-```
-
-`Protocol` is structural typing: an adapter does not inherit from it, it only needs the
-methods. In tests an in-memory class replaces SQLite.
-
----
-
-## 5. Pipeline stages
-
-```
-export → raw data → normalization → noise filter → enrichment → thread grouping → index → (AI)
-```
-
-### Stage 0. Collection (sync)
-
-Task: fetch new messages into `data/raw/`.
-
-For each chat:
-1. Read `last_id` from the `sync_state` table.
-2. `iter_messages(chat, min_id=last_id, reverse=True)`, accumulating batches of 500.
-3. Append each batch to this run's JSONL file.
-4. **Only after the file is written** update `last_id` in the database.
-5. Pause 2–5 seconds between chats.
-
-If the process dies between steps 3 and 4, some messages are fetched again — there are no
-duplicates thanks to the upsert in the next stage (at-least-once delivery + idempotent
-processing).
-
-Edits and deletions: once a day refetch the last 7 days (`offset_date`); `content_hash`
-catches the changes.
-
-Raw record format:
+### 6.1 Message record (`kind = "message"`)
 
 ```json
-{"source":"telegram","chat_id":"-100123","fetched_at":"2026-10-18T23:50:00Z","payload":{"...": "m.to_dict()"}}
+{
+  "v": 1,
+  "kind": "message",
+  "source": "telegram",
+  "chat_id": -1001234567890,
+  "msg_id": 4512,
+  "date": "2026-10-29T21:03:11Z",
+  "edit_date": null,
+  "fetched_at": "2026-10-29T21:03:40Z",
+  "sender_id": 777000111,
+  "sender_name": "Example Person",
+  "sender_username": "example_user",
+  "text": "Where can I get an apostille in Montevideo?",
+  "reply_to_msg_id": 4507,
+  "topic_id": null,
+  "grouped_id": null,
+  "forwarded": false,
+  "service": null,
+  "link": "https://t.me/c/1234567890/4512",
+  "media": null
+}
 ```
 
-`m.to_dict()` contains `datetime` and `bytes` — `json.dumps` needs its own `default=`
-(datetime → ISO, bytes → base64).
-
-The first login is a separate interactive command `chatradar telegram login`; the session
-lives in `data/sessions/`.
-
-The same `Connector` port is implemented by the Telegram Desktop JSON import, so the whole
-pipeline can be debugged without connecting to Telegram.
-
-### Stage 1. Normalization (normalize)
-
-Task: raw records → `Message` → upsert into `messages`.
-
-- **The mapper is a pure function** `telethon_dict → Message`, without I/O. The prime
-  candidate for tests.
-- Dates → UTC; text → Unicode NFC, trimmed whitespace, collapsed repeated newlines. The
-  original is kept in `text_raw`.
-- Link: `t.me/<username>/<id>` or `t.me/c/<id without -100>/<id>`.
-- **Upsert with a hash check:** new → insert; `content_hash` changed → update and **reset
-  the versions of every later stage**; same hash → do nothing.
-
-Upsert in SQLAlchemy differs for SQLite and Postgres (`sqlite.insert` /
-`postgresql.insert` with `on_conflict_do_update`). This is the only place where code knows
-the dialect, and it is hidden in the repository.
-
-### Stage 2. Noise filter (noise)
-
-Task: set `is_noise` and `noise_reason`. **Delete nothing.**
-
-A list of rules, each a function `(msg, context) -> reason | None`; the first match wins:
-
-```python
-RULES: list[Rule] = [
-    service_message,      # service events
-    sticker_or_emoji_only,
-    gratitude,            # "thanks", "gracias", "+", "👍" — from a dictionary
-    short_without_value,  # < 15 characters AND not an answer to a question
-    duplicate,            # the normalized text's hash was seen within 30 days
-    spam_patterns,        # links + "easy money / DM me", bot messages
-]
-NOISE_VERSION = 3          # change the rules → bump it
-```
-
-- `context` gives access to the message being replied to: "yes" as an answer to a
-  question ≠ "yes" as flood.
-- Dictionaries and thresholds live in configuration (YAML or constants), not inside rule
-  code.
-- Table-driven tests: "message → expected reason". Every miss found by hand becomes a new
-  test row.
-- On the web — a page "random 100 from noise / from non-noise" for manual review.
-
-### Stage 3. Enrichment (enrich)
-
-Cheap features without AI, only for `is_noise = false`:
-- `lang`: ru / es / en / mixed (lingua-py; texts shorter than ~20 characters → `unknown`);
-- `is_question`: "?" or question words in ru and es;
-- `urls`: extracted links;
-- `has_mention`: @username mentions.
-
-Do not extract phone numbers or personal data into separate fields.
-
-### Stage 4. Thread grouping (threads)
-
-Task: assign every message a `thread_id`.
-
-1. **Reply links → connected components** (union-find).
-2. **Messages without a reply** join the previous thread of the same chat (and the same
-   forum topic) if the gap is shorter than `GAP` (start with 30 minutes). Otherwise — a new
-   thread.
-3. **Stable id:** `thread_id = f"{chat_id}:{root_msg_id}"`, the root being the earliest
-   message.
-4. **Incremental:** only the tail of the chat is recomputed — new messages plus a 2-day
-   overlap.
-
-Result: the `threads` table (id, chat, start, end, message count, `has_question`) and
-`messages.thread_id`.
-
-The stage is isolated behind an interface — later another algorithm (for example with
-embeddings) can be plugged in and compared.
-
-### Stage 5. Indexing (index)
-
-- SQLite: FTS5 over `messages.text` and over the joined thread text. For Russian, without
-  morphology at first — prefix search (`kvartir*`).
-- Postgres later: `tsvector` + a GIN index.
-- Both implementations sit behind the `SearchIndex` port.
-- Later: embeddings, `sqlite-vec` → `pgvector`.
-
-### Stage orchestration
-
-```python
-class Stage(Protocol):
-    name: str            # "noise"
-    version: int         # NOISE_VERSION
-    depends_on: str      # "normalize"
-    async def process(self, batch: list[StoredMessage]) -> list[StageResult]: ...
-```
-
-Runner:
-
-```
-for each stage in order:
-    while there are messages where <stage>_v IS NULL or < version
-                         and the previous stage is done:
-        take a batch (500) → process → write the result and the version in one transaction
-```
-
-`messages` has the columns `normalize_v, noise_v, enrich_v, thread_v, index_v`. The
-pipeline state is visible in one SQL query.
-
-When scaling, the runner is replaced by a queue (Redis Streams, NATS); the `Stage`
-interface stays.
-
----
-
-## 6. Database and the SQLite → Postgres move
-
-Starting schema:
-
-```
-chats         (source, chat_id, title, username)
-sync_state    (source, chat_id, last_id, last_sync_at)
-messages      (source, chat_id, msg_id, author_id, date, text, text_raw, reply_to, topic_id,
-               media_type, is_forward, is_service, edited_at, link, content_hash,
-               lang, is_question, is_noise, noise_reason, thread_id,
-               normalize_v, noise_v, enrich_v, thread_v, index_v)
-threads       (thread_id, source, chat_id, started_at, ended_at, root_msg_id, msg_count, has_question)
-messages_fts  (FTS5)
-```
-
-- **SQLAlchemy 2.0 Core** for the pipeline (bulk upserts). ORM in the web part, where it is
-  more convenient.
-- **Alembic** from day one. For SQLite — `render_as_batch=True` (otherwise `ALTER TABLE`
-  does not work).
-- **SQLite PRAGMAs** on connect: `journal_mode=WAL; foreign_keys=ON; busy_timeout=5000;
-  synchronous=NORMAL`. WAL lets the web read while the worker writes.
-- **One process writes to SQLite** (the worker); the web only reads. With Postgres this
-  limit goes away.
-- Dialect-dependent code (upsert, FTS) — only in `storage/db/`.
-
-Moving to Postgres:
-1. add a `db` service to compose;
-2. change `DATABASE_URL`;
-3. `alembic upgrade head`;
-4. `chatradar rebuild` — rebuild the database from the raw JSONL.
-
----
-
-## 7. Web interface (FastAPI + HTMX)
-
-> **Superseded in part by ADR-0002 (2026-10-19):** the panel is a static plain
-> HTML/CSS/JavaScript app over the JSON API in `docs/api.md`; Jinja2 and HTMX are not
-> used. The pages below stay the same.
-
-The goal is to see what happens inside. It is a debug panel, not a product.
-
-1. **Chats:** list, message count, last sync, a "sync" button.
-2. **Pipeline:** how many messages are at each stage, how many wait, rule versions.
-3. **Messages:** a table with filters (chat, date, language, noise, noise reason, question),
-   loaded through HTMX.
-4. **Thread:** the thread's messages as a feed indented by reply, with Telegram links.
-5. **Search:** query → found threads.
-6. **Filter review:** random 100 from noise and from non-noise.
-
-HTMX: only Python and HTML templates, no frontend build. The future web dashboard is
-separate, in React/Next.js, over the same FastAPI as a JSON API.
-
-The future Telegram bot is an interface adapter just like the web: it calls the same
-`search`, `stats` and `digest` services. The core does not have to change.
-
----
-
-## 8. CLI
-
-```
-chatradar telegram login                  # first login, interactive
-chatradar chats add @montevideo_ru        # add a chat to the list
-chatradar chats list
-chatradar import tg-export ./result.json  # import a Desktop export
-chatradar sync [--chat ID] [--recheck-days 7]
-chatradar process [--stage noise] [--reset-stage noise]
-chatradar rebuild                         # the database again from data/raw
-chatradar web                             # uvicorn
-chatradar worker                          # loop: sync → process → pause
-```
-
-Every command is a thin wrapper over a function in `services/`. There is no logic in the CLI.
-
----
-
-## 9. Docker
-
-**Dockerfile** (multi-stage with uv):
-
-```dockerfile
-FROM python:3.13-slim AS builder
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
-WORKDIR /app
-ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
-COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --no-install-project
-COPY src ./src
-COPY migrations ./migrations
-COPY alembic.ini ./
-RUN uv sync --frozen --no-dev
-
-FROM python:3.13-slim
-WORKDIR /app
-RUN useradd -m app
-COPY --from=builder --chown=app /app /app
-ENV PATH="/app/.venv/bin:$PATH"
-USER app
-ENTRYPOINT ["chatradar"]
-```
-
-Pin the `uv:latest` tag to a concrete version in the project (done: `UV_VERSION` in the
-`Dockerfile`).
-
-**compose.yaml:**
-
-```yaml
-services:
-  web:
-    build: .
-    command: web --host 0.0.0.0 --port 8000
-    ports: ["127.0.0.1:8000:8000"]   # loopback only
-    env_file: .env
-    volumes: ["./data:/app/data"]
-
-  worker:
-    build: .
-    command: worker
-    env_file: .env
-    volumes: ["./data:/app/data"]
-    restart: unless-stopped
-
-  # later:
-  # db:
-  #   image: postgres:17
-  #   volumes: ["pgdata:/var/lib/postgresql/data"]
-```
-
-First Telegram login:
-
-```
-docker compose run --rm -it worker telegram login
-```
-
-The session appears in `./data/sessions/` and survives container rebuilds.
-
-At start `worker` runs `alembic upgrade head`, then an endless loop: a sync every N hours,
-processing after every sync. For the MVP an `asyncio` loop with `sleep` is enough, without a
-separate scheduler.
-
----
-
-## 10. Code quality
-
-- **pyproject.toml:** ruff with the rules `E, F, I, UP, B, SIM, ASYNC, RUF` (and more, see
-  the file); pyright in strict mode.
-- **pre-commit:** ruff, ruff-format, pyright, a ban on committing `.env` and `*.session`.
-- **Tests:**
-  - unit — the mapper, noise rules, the grouping algorithm, on anonymized real fixtures;
-  - integration — the whole pipeline on in-memory SQLite;
-  - Telegram is never called in tests; a fake `Connector` replaces it.
-- **CI** (GitHub Actions): lint → typecheck → tests on every push.
-- **Logs:** structlog; every event carries `stage`, `chat_id`, `count`, `duration_ms`.
-- **Config:** one `Settings` class (pydantic-settings); `.env.example` in the repository,
-  `.env` not.
-
----
-
-## 11. About Go, C++ and Rust
-
-The project's bottlenecks are **Telegram API limits** and **LLM speed and cost**, not
-Python. A rule-based filter handles hundreds of thousands of messages in seconds. Rewrite in
-another language only when profiling shows a concrete hot spot. Candidates:
-- local embedding computation (but there is C++/Rust inside the libraries already);
-- a high-load collector for thousands of chats — Go fits.
-
-The boundary between modules is JSONL and database tables, so a stage can be rewritten on
-its own. Not worth doing in advance.
-
----
-
-## 12. Implementation order
-
-| Step | What to do | Result |
+| Field | Type | Meaning |
 |---|---|---|
-| 1 | Skeleton: uv, ruff, pyright, pytest, pre-commit, folder layout, `Settings` | An empty project passing CI |
-| 2 | Domain and ports; Telegram Desktop JSON import; JSONL RawStore | Data in `data/raw/` without Telethon |
-| 3 | SQLAlchemy, Alembic, tables, normalization with upsert | Messages in SQLite |
-| 4 | Stage runner; noise filter and enrichment with tests | Labelled messages |
-| 5 | Web: "chats", "pipeline", "messages" | Visible internals |
-| 6 | Thread grouping, FTS5, search page | Working search |
-| 7 | Telethon connector, `login`, `sync`, worker | Automatic incremental sync |
-| 8 | Docker and compose | `docker compose up` runs everything |
+| `v` | int | Schema version. New fields keep it; removal or a change of meaning bumps it |
+| `kind` | str | `message` · `edit` · `delete` |
+| `chat_id`, `msg_id` | int | Message key; `msg_id` is unique within a chat |
+| `date`, `edit_date`, `fetched_at` | ISO 8601 UTC | Always UTC with a `Z` suffix |
+| `sender_id` | int \| null | `null` for anonymous admins and channels |
+| `sender_name` | str \| null | Display name at fetch time (first + last name, or channel title); on by default (`include_sender_names`) |
+| `sender_username` | str \| null | The sender's @username, if any |
+| `text` | str | As is; empty string for media-only messages |
+| `reply_to_msg_id`, `topic_id` | int \| null | Reply and forum topic (in forums `reply_to` may point at the topic) |
+| `grouped_id` | int \| null | Album |
+| `forwarded` | bool | Forwarded message |
+| `service` | str \| null | Service event type (`join`, `leave`, `pin`, …) |
+| `link` | str \| null | `t.me/<username>/<id>` or `t.me/c/<id without -100>/<id>` |
+| `media` | object \| null | Attachment description (§12); `file = null` while media is off |
 
-After step 8 — a complete service without AI. The AI stages (topic labelling, embeddings,
-answers) plug in as the next stages through the same `Stage` interface. Progress is tracked
-in `docs/ROADMAP.md`.
+`include_raw = true` adds `raw` with the full `message.to_dict()` (dates as ISO, bytes as
+base64) — compatible with ChatRadar's raw payload. Off by default: 3–5× the volume.
+
+### 6.2 Edit and delete
+
+```json
+{"v":1,"kind":"edit","chat_id":-1001234567890,"msg_id":4512,"edit_date":"2026-10-29T21:10:02Z","text":"new text","media":null,"detected_by":"event","fetched_at":"2026-10-29T21:10:05Z"}
+{"v":1,"kind":"delete","chat_id":-1001234567890,"msg_ids":[4510,4511],"detected_by":"event","fetched_at":"2026-10-29T21:11:00Z"}
+```
+
+- `detected_by`: `event` (real time) or `recheck` (§8.7).
+- Written into the file of the **event's** month; history stays append-only.
+- Consumers apply them on top: the latest `edit` wins; `delete` is a mark. An edit of a
+  message whose month was trimmed is ignored.
+- For **basic small groups** Telegram sends deletions without a `chat_id`; those go to
+  `ChatImport/_unrouted_deletes.jsonl`. Supergroups and channels always carry it.
+
+### 6.3 `state.json`
+
+```json
+{
+  "v": 1,
+  "chat_id": -1001234567890,
+  "title": "Example group",
+  "username": "example_group",
+  "phase": "live",
+  "last_id": 4512,
+  "floor_id": 118,
+  "floor_reason": "manual_trim_25",
+  "last_recheck_at": "2026-10-29T07:00:00Z",
+  "backfill": {"done": false, "head_id": 4380, "oldest_done_id": 2201, "started_at": "2026-10-29T20:00:00Z"},
+  "chunks": {
+    "2026-09_001": {"records": 1830, "first_id": 2201, "last_id": 3999, "bytes": 912345},
+    "2026-10_001": {"records": 520, "first_id": 4000, "last_id": 4512, "bytes": 260111}
+  },
+  "updated_at": "2026-10-29T21:03:40Z"
+}
+```
+
+- `last_id` — the highest written `msg_id`; anything `≤ last_id` is never written again.
+- `floor_id` — the history floor: the service never fetches older messages by itself.
+  Trims and a disk-space stop raise it; only `backfill --deeper` or deleting the chat
+  folder lowers it.
+- **`state.json` is a cache.** The JSONL files are the truth; a missing or broken state is
+  rebuilt by scanning them (§10.2). Writes are atomic (temp file → `os.replace`).
+
+## 7. Configuration
+
+### 7.1 `config.toml`
+
+Template with every default: `config.example.toml` in the repository root. Sections:
+`telegram` (API id and hash, `flood_sleep_threshold`), `output` (`root_dir`,
+`include_sender_names`, `include_raw`, `max_chunk_mb`), `library` (`file`,
+`reload_check_seconds`), `recheck` (`enabled`, `days`, `daily_at`, pause), `live`
+(`flush_every_messages`, `flush_every_seconds`, `reconcile_every_minutes`), `backfill`
+(`batch_size`, pauses, `max_parallel_chats = 1`, `use_takeout`), `disk` (watermarks 15/17 GB,
+`check_every_minutes`, `protect_recent_days = 30`), `watch` (`check_every_seconds`,
+`confirm_checks = 2`), `media`, `events`. An empty file gives all defaults. Changes apply
+on restart (or "Reload config" in the tray), except the library and the output path, which
+change live.
+
+### 7.2 Library `chats.toml`
+
+The only source of truth for what is tracked. Template: `chats.example.toml`. Each
+`[[chat]]` has `ref`, optional `name` (folder name) and optional `enabled`.
+
+| `ref` kind | Resolved by | Notes |
+|---|---|---|
+| `https://t.me/name`, `@name` | `get_entity` | public groups and channels |
+| `https://t.me/+…`, `t.me/joinchat/…` | invite check | **never joins by itself**: not a member → status "need to join" |
+| `-100…` | among your dialogs | the most reliable |
+| text | exact title among your dialogs | two equal titles → "ambiguous, use a link"; a rename breaks it |
+
+- After the first resolution the `chat_id` is kept in `state.json`; later renames do not
+  matter.
+- A ref that points at a person or a bot gets "not a group or channel" and is ignored.
+- The file is checked every 10 s by mtime: a new entry starts a backfill; `enabled = false`
+  or removal stops collection and keeps the folder.
+- A syntax error keeps the previous valid version running and shows the error in the tray
+  and `_status.json`.
+- Each entry's resolution (found / need to join / not found / ambiguous) shows in
+  `chatimport chats list` and `_status.json`.
+
+### 7.3 Output path
+
+First match wins: `--root <path>` → `CHATIMPORT_ROOT` → `output.root_dir` →
+`<Desktop>\ChatImport`. `~` and environment variables expand; if the path does not end in
+`ChatImport`, the folder is created inside it.
+
+`chatimport set-root <path> [--move]` (or tray "Change folder…"): validate the path
+(creatable, writable, not inside the old folder; warn about OneDrive) → flush buffers and
+pause workers → with `--move` move the data (rename on the same volume, verified copy and
+delete across volumes; without it, a full refetch with a warning) → save the path to
+`config.toml` and resume → DiskGuard watches the new volume.
+
+## 8. Scenarios
+
+### 8.1 Start
+
+1. Take the single-instance lock; if taken, say "already running" and exit.
+2. Read the config and connect (the session exists after `chatimport login`).
+3. Read the library and resolve refs; unresolved ones go to the log, status and a
+   notification.
+4. Subscribe to events **before** starting workers (events queue up; nothing is lost).
+5. Per chat: folder found by `state.json` → Recover → CatchUp → Live; no folder →
+   HeadBackfill.
+6. Start FolderWatcher, DiskGuard, Control and the `_status.json` refresh.
+
+### 8.2 Full backfill (newest to oldest)
+
+So that any stop leaves the most recent history already on disk:
+
+1. **HeadBackfill.** `head_id` = newest message; fetch the current month, sort, write
+   atomically; `last_id = head_id`; go to CatchUp → Live within minutes.
+2. **TailBackfill** (background, one chat at a time): `iter_messages(offset_id=oldest_done_id)`
+   walks back; when a message of the previous month appears, the collected month is sorted
+   and written in parts, each atomically; `oldest_done_id` and `chunks` update.
+3. Chat start or `floor_id` reached → `backfill.done = true`.
+4. Interrupted → resume from `oldest_done_id`; an unfinished month is refetched
+   (idempotent).
+5. Free space below `low_watermark` → stop, `floor_id = oldest_done_id`,
+   `floor_reason = "disk"`, notify. No automatic resume (it would fetch and delete forever).
+
+Pause `pause_between_chats_sec` between chats; a FloodWait above the threshold sleeps only
+that worker while the other chats stay live.
+
+### 8.3 Live
+
+1. `NewMessage` → Router → the chat's worker queue.
+2. The worker buffers; flush at `flush_every_messages` records **or** `flush_every_seconds`
+   after the first buffered record, whichever comes first.
+3. Flush: drop `msg_id ≤ last_id` → sort by `msg_id` → open the current part for append (or
+   the next if ≥ `max_chunk_mb`) → write → `flush` + `fsync` → **close** → update
+   `state.json` (`last_id`, `chunks`).
+4. A batch crossing a month boundary is split into its months' files.
+5. `MessageEdited` / `MessageDeleted` go through the same buffer as `edit` / `delete`.
+6. Every `reconcile_every_minutes` a safety CatchUp picks up what events missed
+   (disconnects, sleep, known update gaps).
+7. On shutdown (Ctrl+C, tray exit) the buffer is flushed.
+
+### 8.4 Folder deletion
+
+| Deleted | Reaction |
+|---|---|
+| A chat folder | after 2 checks in a row (~20 s): HeadBackfill from scratch, `floor_id` reset |
+| The whole `ChatImport` | recreate; HeadBackfill for every chat, one at a time |
+| Only `state.json` | rebuild from files, **no** refetch |
+| Some part files | treated as a manual trim: `floor_id` rises to the first remaining message |
+| The current month's file | likewise; new messages go into a new file |
+
+Two checks are needed because Explorer deletes a large folder gradually. Files are closed
+between writes, so Windows does not block the deletion.
+
+### 8.5 Automatic disk guard
+
+```
+every 5 minutes:
+  free = disk_usage(root_dir).free
+  if free < 15 GB:
+      pause TailBackfill in every chat
+      while free < 17 GB:
+          candidate = the oldest part across ALL chats that is entirely older than protect_recent_days
+          if none: notify "space is low, but everything allowed is already deleted" -> stop
+          os.remove(candidate)            # not the Recycle Bin, or no space is freed
+          raise that chat's floor_id, update chunks, append to _trim_log.jsonl
+          free = disk_usage(root_dir).free
+      notify "freed X GB: deleted parts ..."
+```
+
+Oldest first across all chats; the 15/17 GB gap prevents trimming on every message;
+`protect_recent_days` keeps recent history even when something else filled the disk.
+
+### 8.6 Manual trim 25 / 50 / 75 %
+
+`chatimport trim 50` (all chats) or `chatimport trim 50 --chat example_group`:
+
+1. Per chat: `total = sum(chunks[*].records)`, `target = floor(total × p)`.
+2. Delete parts from the oldest while their records sum to ≤ `target`.
+3. The remainder in the boundary part: read it, skip the first `k` lines, write the rest to
+   a temp file → `os.replace`.
+4. `floor_id` = first remaining `msg_id`; update `chunks`; append to `_trim_log.jsonl`.
+5. Percentages are **per chat** — half of each chat's history, not half of the bytes.
+
+Allowed values: 25, 50, 75 (100 % = delete the folder). The tray asks for confirmation; the
+CLI asks `y/N` (`--yes` for scripts).
+
+### 8.7 Daily recheck of the last 7 days
+
+Edit and delete events arrive only while connected; the recheck catches what changed while
+the laptop was off.
+
+**When:** daily at `recheck.daily_at` and on start if `last_recheck_at` is over 24 h old.
+One chat at a time with pauses; a chat in backfill is postponed.
+
+**How (one chat):**
+
+1. Window: now minus 7 days up to `last_id`, never below `floor_id`.
+2. Read the window's current state from the files (latest version of each `msg_id` after
+   existing `edit`/`delete` records).
+3. Fetch the window from Telegram: `iter_messages(offset_date=…, reverse=True)` up to
+   `last_id`.
+4. Compare: newer `edit_date` or different text/media → `edit` with `detected_by:
+   "recheck"`; in the file but not returned → `delete` with `detected_by: "recheck"`; returned
+   but not in the file → append as a normal `message` (consumers sort by `msg_id`).
+5. Update `last_recheck_at`.
+
+This also places small-group deletions that arrived without a `chat_id`. Load: a few
+thousand messages and tens of requests a day.
+
+### 8.8 Library changes at run time
+
+| Change in `chats.toml` | Reaction |
+|---|---|
+| Entry added | resolve → create folder → HeadBackfill (in the shared backfill queue) |
+| `enabled = false` / entry removed | flush, stop the worker, unsubscribe; data stays |
+| Re-enabled | Recover → CatchUp from `last_id` |
+| `name` changed | the folder is not renamed; the name applies to new folders |
+| Syntax error | keep the last valid version, show the error |
+
+## 9. Control: CLI and tray
+
+### 9.1 Commands
+
+The full command list with the stage each arrives in is in
+`.ai/project/14-command-reference.md`.
+
+### 9.2 Tray menu
+
+Status tooltip ("8 chats · live · 2.1 GB · 41 GB free"); open the ChatImport folder; change
+folder…; open the library in the default editor; recheck now; trim → 25/50/75 % with
+confirmation; pause / resume; reload config; open log; exit with a clean flush.
+Notifications: low space, parts deleted, FloodWait over 10 minutes, login failure.
+
+### 9.3 How CLI commands reach a running service
+
+If the service runs, the CLI drops a command file into the control folder (for example
+`trim-<uuid>.json` with `{"pct": 50, "chat": null}`); Control picks it up within ~1 s, runs it
+and writes `…result.json`, which the CLI waits for. If the service is not running, the CLI
+takes the single-instance lock and runs the command itself. No network ports.
+
+### 9.4 `_status.json`
+
+```json
+{
+  "updated_at": "2026-10-29T21:05:00Z",
+  "service": "running",
+  "disk": {"path": "C:\\", "free_gb": 41.2, "low_watermark_gb": 15},
+  "total_bytes": 2254857830,
+  "chats": [
+    {"chat_id": -1001234567890, "title": "Example group", "phase": "live",
+     "last_id": 4512, "backfill_done": false, "oldest_date": "2024-03-02T08:14:55Z", "records": 48210}
+  ],
+  "errors": []
+}
+```
+
+## 10. Reliability and recovery
+
+### 10.1 Guarantees
+
+| Situation | Outcome |
+|---|---|
+| Clean shutdown | buffers flushed, nothing lost |
+| Process killed / PC off | at most the buffer (≤ 5 messages / 30 s) is lost — CatchUp refetches it |
+| Power loss mid-write | the last line may be cut — Recover trims it; the message is refetched |
+| Sleep / no network | CatchUp on reconnect plus reconcile every 10 min |
+| FloodWait | short: Telethon waits; long: that worker sleeps, others stay live |
+| Session revoked | collection stops; notification "run `chatimport login`" |
+| Removed from a chat | `phase = "no_access"`, data kept, notification |
+| A subtask fails | Supervisor restarts it after 1 → 2 → 4 … 300 s; error in `_status.json` |
+
+At-least-once intake + dedup by `msg_id` = no duplicates and no gaps.
+
+### 10.2 Recover on start (per chat folder)
+
+1. For each `*.jsonl`: if the last line does not parse, truncate to the last `\n`.
+2. Missing or broken `state.json`: rebuild from files (`records`, `first_id`, `last_id`,
+   `bytes`; `floor_id` = minimum `msg_id`; `backfill.done = false`).
+3. `last_id = max(state.last_id, max msg_id in files)` — files win.
+4. Parts deleted by hand: drop from `chunks`, raise `floor_id`.
+5. Files missing from `chunks` (for example after a crash during a part switch): add them.
+
+### 10.3 Atomic writes
+
+- Live append: `open("a") → write → flush → os.fsync → close`, then `state.json` via
+  `os.replace`. A crash in between leaves `state.json` behind; Recover step 3 fixes it.
+- Backfilled parts and the trimmed boundary part: temp file in the same folder → `fsync` →
+  `os.replace` (atomic within one volume on Windows).
+
+## 11. Security and Telegram rules
+
+- **A session is full account access.** It lives in the application data folder, never on
+  the Desktop, in git or in cloud sync. It shows in Telegram → Settings → Devices, where it
+  can be terminated.
+- `api_id`/`api_hash` live only in the real config; the repository holds
+  `config.example.toml`.
+- **Sender names are personal data** (Uruguay, Ley 18.331): exports with names are for the
+  owner's local work only; strip names before sharing or publishing.
+- **OneDrive.** A synced Desktop uploads the archive and "Files On-Demand" distorts space
+  accounting; set `output.root_dir` outside it.
+- **Telegram terms.** Archiving chats you are a member of for yourself is close to normal
+  client use, but since February 2026 the terms separately forbid scraping and using platform
+  data for AI without participants' consent. Do not pass the export to third parties or to AI
+  services for other people; settle this before building a product on it.
+- **Limits.** Backfill one chat at a time with pauses; not on a fresh account; never shorten
+  pauses for speed.
+
+## 12. Media (later stage)
+
+Every record already has `media`:
+
+```json
+"media": {"type": "voice", "mime": "audio/ogg", "size": 48213, "duration": 14,
+          "width": null, "height": null, "file_name": null, "file": null}
+```
+
+Plan: `media.enabled = true` with chosen `types` and `max_file_mb`; a separate
+MediaDownloader queue (one file at a time, own pauses) takes records with `file == null`,
+refetches the message by `msg_id` right before downloading (file references expire), saves
+to `media/<YYYY-MM>/<msg_id>[_<n>].<ext>` inside the chat folder and appends
+`{"kind": "media_saved", "msg_id": …, "file": "media/2026-10/4512.ogg"}`. Trimming a part
+deletes its media by the part's `first_id…last_id` range; the disk guard pauses media
+downloads first. Voice transcription is a separate future consumer.
+
+### Planned module layout
+
+```
+src/chatimport/
+├── __main__.py
+├── cli.py              # Typer: login, run, tray, status, trim, …
+├── config.py           # TOML → dataclasses, validation
+├── paths.py            # platformdirs: desktop, data, logs, control
+├── app.py              # wiring, Supervisor, graceful shutdown
+├── library.py          # chats.toml: read, watch, add/disable
+├── telegram/
+│   ├── client.py       # connection, history, events, FloodWait
+│   ├── resolve.py      # library ref → chat_id
+│   └── mapper.py       # Message → dict (pure)
+├── recheck.py
+├── storage/
+│   ├── layout.py       # folders by chat_id, part names
+│   ├── writer.py       # append, atomic part writes
+│   ├── state.py        # state.json read/write/rebuild
+│   └── recover.py      # cut broken lines, reconcile state with files
+├── worker.py           # ChatWorker state machine, buffer
+├── trim.py
+├── guards/
+│   ├── disk.py
+│   └── folders.py
+├── control.py          # control folder, _status.json
+├── tray.py             # pystray, notifications, tkinter dialogs
+└── media.py            # stage 0.7
+tests/
+├── fakes.py            # FakeTelegram: history and events from fixtures
+└── test_mapper.py, test_writer.py, test_recover.py, test_trim.py, …
+```
+
+Dependencies are injected through constructors (Telegram client, `disk_usage`, clock), so
+everything is testable without network and without a real 15 GB disk.
+
+## 13. Testing
+
+| What | How |
+|---|---|
+| Mapper | table-driven: fake Telethon objects → expected dict (text, reply, forum, forward, service, media) |
+| Buffer and dedup | 5 messages → one write; 3 messages + 30 s (fake clock) → write; repeated `msg_id` dropped |
+| Order | events out of order in a batch → ascending `msg_id` in the file |
+| Parts | threshold 1 KB in tests: switch to `_002`; batches not split; backfill writes a month in several parts; `msg_id` order across parts |
+| Recover | cut last line; deleted `state.json`; deleted part; part missing from `chunks` |
+| Trim | 25/50/75 % on synthetic data; boundary part; `floor_id`; record counts |
+| DiskGuard | fake `disk_usage`: deletes oldest first, stops at 17 GB, keeps `protect_recent_days` |
+| FolderWatcher | deleted folder → refetch; deleted `state.json` only → no refetch |
+| Library | every ref kind; ambiguous title; person rejected; hot add/disable; broken TOML does not stop the service |
+| Recheck | edit, delete and gap inside the 7-day window found; nothing below `floor_id` touched; a rerun adds nothing |
+| Path change | `set-root --move` on the same and another volume; without `--move` — warning and refetch; DiskGuard follows |
+| Router | events from private dialogs or chats outside the library go nowhere |
+| Windows | no open files after a flush; `os.replace` over an existing file |
+| Integration | FakeTelegram with 3 chats: backfill → live → folder deleted → refetch → trim |
+| Manual | live login, one small chat, then all eight — the owner's step |
+
+## 14. Run and autostart
+
+```bash
+uv sync
+uv run chatimport login          # once
+uv run chatimport dialogs        # find your groups and channels
+uv run chatimport chats add https://t.me/example_group
+uv run chatimport tray           # normal operation
+```
+
+Windows autostart: Task Scheduler, trigger "at log on" with a 1-minute delay; action
+`<project>\.venv\Scripts\pythonw.exe -m chatimport tray`; restart on failure every 5 minutes
+up to 10 times; do not start a new instance if one runs. A single `.exe` through PyInstaller
+may come later.
+
+## 15. Integration with ChatRadar
+
+- A `kind = "message"` record maps one to one onto ChatRadar's `RawRecord` (`source`,
+  `chat_id`, `fetched_at`, `payload`); with `include_raw = true` the payload is the same
+  `message.to_dict()` ChatRadar's Telethon connector stores.
+- **Variant A (fast):** a `chatimport_dir` connector in ChatRadar reads the `ChatImport`
+  folder incrementally (by `chunks` and `last_id`). The services stay independent.
+- **Variant B (target):** move `telegram/`, `storage/writer.py` and `worker.py` into
+  ChatRadar as `chatradar listen`, with the `ChatImport` folder as a `RawStore` variant.
+- `mapper`, `worker` and `trim` carry no tray or CLI dependencies — that is what makes the
+  move possible.

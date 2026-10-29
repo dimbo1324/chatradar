@@ -7,7 +7,7 @@ description: Use when just check, a pre-commit hook or the GitHub Actions CI fai
 # Fixing a Failing Check
 
 1. Reproduce with `just check`; CI runs the same sections as separate jobs (see
-   `.github/workflows/ci.yml`), plus gitleaks and a Docker build with a smoke test.
+   `.github/workflows/ci.yml`), plus gitleaks.
 2. Run the failing section alone: `just lint`, `just typecheck`, `just test`,
    `just agents-check`, `just language`, `uv lock --check`.
 3. Typical causes:
@@ -17,7 +17,6 @@ description: Use when just check, a pre-commit hook or the GitHub Actions CI fai
      the allowed paths of `scripts/check_language.py`.
    - `uv lock --check`: `pyproject.toml` changed without `uv lock`.
    - pyright strict: an untyped library value leaking out — type it at the boundary.
-   - Docker job: a file the build needs is missing from the `.dockerignore` allowlist.
    - Windows-only failures: see the platform notes in `.ai/project/14-command-reference.md`.
    - gitleaks: a secret reached git. Remove it **and rotate it**; deleting the line is not
      enough.

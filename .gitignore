@@ -4,16 +4,18 @@
 *.session-journal
 .env
 .env.*
-!.env.example
 
-# Raw exports, sessions, database: all in data/, all outside git
-data/*
-!data/.gitkeep
+# Real configuration and chat library: only the *.example.toml templates are tracked
+/config.toml
+/chats.toml
 
-# Telegram Desktop / WhatsApp exports dropped into the root by accident
-result.json
-ChatExport_*/
-WhatsApp Chat*.txt
+# Exported chats (personal data of chat members) dropped into the repository by accident
+ChatImport/
+_status.json
+_trim_log.jsonl
+
+# Leftovers of the ChatRadar line of work on this machine
+data/
 *.db
 *.sqlite
 *.sqlite3

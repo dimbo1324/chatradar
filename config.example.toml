@@ -1,0 +1,55 @@
+# ChatImport configuration template. The real file lives in the application data folder
+# (Windows: %LOCALAPPDATA%\ChatImport\config.toml) and never reaches git.
+# Every value below is the default; an empty file gives the same behaviour.
+
+[telegram]
+api_id = 0                      # my.telegram.org -> API development tools
+api_hash = ""
+flood_sleep_threshold = 120     # shorter FloodWait: Telethon sleeps; longer: the worker pauses
+
+[output]
+root_dir = ""                   # empty = <Desktop>/ChatImport; see docs/architecture.md
+include_sender_names = true
+include_raw = false
+max_chunk_mb = 20               # size of one part of a month file
+
+[library]
+file = ""                       # empty = chats.toml next to this file
+reload_check_seconds = 10
+
+[recheck]
+enabled = true
+days = 7                        # how many recent days to compare with Telegram
+daily_at = "04:00"              # local time; also on start when the last run is > 24 h old
+pause_between_chats_sec = 10
+
+[live]
+flush_every_messages = 5
+flush_every_seconds = 30
+reconcile_every_minutes = 10    # safety catch-up: Telegram updates are sometimes lost
+
+[backfill]
+batch_size = 100
+pause_between_requests_sec = 1.0
+pause_between_chats_sec = 5
+max_parallel_chats = 1
+use_takeout = false
+
+[disk]
+low_watermark_gb = 15           # below: start deleting the oldest parts
+high_watermark_gb = 17          # delete until free space is above this
+check_every_minutes = 5
+protect_recent_days = 30        # never deleted automatically
+
+[watch]
+check_every_seconds = 10
+confirm_checks = 2              # a folder must be missing on 2 checks in a row
+
+[media]
+enabled = false
+types = []                      # "photo","voice","video_note","video","audio","document","sticker"
+max_file_mb = 50
+
+[events]
+track_edits = true
+track_deletes = true

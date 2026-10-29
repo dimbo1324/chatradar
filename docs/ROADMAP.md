@@ -1,120 +1,54 @@
-# ChatRadar — Roadmap
+# ChatImport — Roadmap
 
-The plan and the progress record. Steps run in order; **the first step without a
+The plan and the progress record. Stages run in order; **the first stage without a
 `**Status.**` line is next**. Skipping ahead needs an owner decision in `docs/decisions.md`.
-Design details for every step: `docs/architecture.md` §12.
+Design details for every stage: `docs/architecture.md`.
 
 ## 1. Overview
 
-| Step | What | Result | Status |
+| Stage | What | Done when | Status |
 |---|---|---|---|
-| 1 | Skeleton: uv, ruff, pyright, pytest, pre-commit, CI, `Settings` | Empty project passing CI | done 2026-10-19 |
-| 2 | Domain and ports; Telegram Desktop JSON import; JSONL `RawStore` | Data in `data/raw/` without Telethon | done 2026-10-19 |
-| 3 | SQLAlchemy, Alembic, tables, normalization with upsert | Messages in SQLite | done 2026-10-19 |
-| 4 | Stage runner; noise filter and enrichment with tests | Labelled messages | done 2026-10-19 |
-| 5 | Web: chats, pipeline, messages pages | Visible internals | done 2026-10-19 |
-| 6 | Thread grouping, FTS5, search page | Working search | done 2026-10-19 |
-| 7 | Telethon connector, `login`, `sync`, worker | Automatic incremental sync | code done 2026-10-19; live login pending |
-| 8 | Docker and Compose for the whole service | `docker compose up` runs everything | done 2026-10-19 (image verified) |
+| 0.0 | Repository prepared on branch `chatimport`: stack, tooling, rules, docs | `just check` green on an empty package | done 2026-10-29 |
+| 0.1 | Config, `chats.toml` library, `login`, `dialogs`, mapper with sender names, chunked writer, full backfill of one chat | One chat's history lies in JSONL parts | |
+| 0.2 | ChatWorker: CatchUp + Live with the 5 / 30 s buffer, reconcile, graceful shutdown | A new message reaches a file within 30 s | |
+| 0.3 | Recover, FolderWatcher, refetch, `_status.json` | Deleted folder → refetched; killed process → no gaps or duplicates | |
+| 0.4 | Trim (CLI), DiskGuard, `_trim_log.jsonl`, command queue | Fake-disk test passes; `trim 50` works against a running service | |
+| 0.5 | Tray, notifications, autostart, `set-root` | Runs after a reboot without a console; the folder moves from the tray | |
+| 0.6 | Edit and delete events, daily recheck, hot library reload | An edit made while the laptop was off appears after recheck; a new library entry is picked up without restart | |
+| 0.7 | Media: voice, round videos, photos | Files beside the JSONL, trimmed with their part | |
+| 1.0 | Integration with ChatRadar (variant A or B) | ChatRadar reads ChatImport data | |
 
-After step 8 ChatRadar is a complete service without AI. Beside the numbered steps the
-learning lexicon (see the section after step 8) adds the measurement and review loop the
-AI stages will plug into.
+## 2. Stages
 
-After step 8 ChatRadar is a complete service without AI. AI stages (topic labelling,
-embeddings, answers with sources, digests) follow as new pipeline stages, then the
-Telegram bot — product level 0 in `docs/vision.md`.
+### Stage 0.0 — Repository
 
-## 2. Steps
+**Status.** Done 2026-10-29: branch `chatimport` cut from `main`; ChatRadar code, tests,
+migrations, Docker and panel removed; uv project `chatimport` on Python 3.14 with Telethon,
+platformdirs, filelock and Typer; `chatimport --version`; config and library templates;
+rules, agents, skills, CI and docs rewritten for ChatImport.
 
-### Step 1 — Skeleton
+### Stage 0.1 — One chat's history on disk
 
-uv project on Python 3.13+, `src/` layout, ruff, pyright strict, pytest with coverage,
-pre-commit (ruff, pyright, uv-lock, gitleaks, a ban on `.env`/`*.session`/`data/`), `Settings`,
-structlog, the domain `Message` model and ports, the Typer CLI with stub commands, a FastAPI
-`/healthz`, Alembic, Dockerfile, Compose, justfile, GitHub Actions (CI, CodeQL, release),
-Dependabot, the AI-assistant rule system.
+Goal: the history of one library chat lies in `ChatImport` in the record format, split into
+parts. No live mode, tray or trimming yet. Order of work:
 
-**Status.** Done 2026-10-19: skeleton on `main`, CI green on Linux and Windows, AI-assistant
-rules in `.ai/`, `.claude/`, `.codex/`, everything in English.
+| # | Module | What | Done when |
+|---|---|---|---|
+| 1 | `paths.py` | app folders via `platformdirs`; data root by priority (§7.3), no `set-root` yet | test: flag > env > config > Desktop |
+| 2 | `config.py` | `tomllib` → dataclasses with the defaults of `config.example.toml`; clear validation errors | an empty config gives every default |
+| 3 | `library.py` | read `chats.toml`, no watching yet | broken TOML → a clear error |
+| 4 | `cli.py` + `telegram/client.py` | `chatimport login`, `chatimport dialogs` | the owner sees their groups and channels with `chat_id` |
+| 5 | `telegram/resolve.py` | every ref kind → `chat_id`; people and bots rejected | `chatimport chats list` shows statuses |
+| 6 | `telegram/mapper.py` | `Message → dict` with sender names | table-driven tests on fake messages |
+| 7 | `storage/layout.py`, `writer.py`, `state.py` | part names, append with threshold, atomic writes, `state.json` | part-splitting tests with a 1 KB threshold |
+| 8 | `worker.py` (part) | HeadBackfill + TailBackfill newest to oldest for one chat, with pauses and FloodWait | `chatimport run --once --chat <name>` fetches the chat and exits |
+| 9 | Manual check (owner) | one small chat, then the largest | files open, `msg_id` ascends, a rerun adds no duplicates |
 
-### Step 2 — Domain, Telegram Desktop import, raw store
+Acceptance: `just check` green; a second `run --once` appends nothing (dedup by `last_id`);
+Ctrl+C mid-backfill and a rerun continue where it stopped without duplicates; the session
+and real configs never reach git.
 
-Import `result.json` from Telegram Desktop through the `Connector` port, write `RawRecord`s
-to `data/raw/<source>/<chat_id>/<timestamp>.jsonl` through a `RawStore`, `chatradar import
-tg-export`. Anonymized fixtures in `tests/fixtures/`.
+### Stages 0.2–1.0
 
-**Status.** Done 2026-10-19 (package A): Desktop export parser (single chat and full account)
-and mapper, append-only `JsonlRawStore` with a chat catalog beside the raw data,
-`chatradar import tg-export` (then processes), synthetic ru/es fixtures (60 messages).
-
-### Step 3 — Database and normalization
-
-SQLAlchemy 2.0 tables (`chats`, `sync_state`, `messages`, `threads`, `messages_fts`), the
-first Alembic migration, the normalize stage (pure mapper, NFC text, UTC dates, links) with
-hash-checked upsert, `chatradar rebuild`.
-
-**Status.** Done 2026-10-19 (package B + lead): engine with SQLite pragmas, migrations on
-start, `SqlRepository` (chat, message and query ports), `chatradar rebuild` clears
-derived data and re-maps every raw record; verified to reproduce the same counts.
-
-### Step 4 — Runner, noise, enrichment
-
-The stage runner over `<stage>_v` columns, noise rules with table-driven tests, enrichment
-(`lang`, `is_question`, `urls`, `has_mention`), `chatradar process`.
-
-**Status.** Done 2026-10-19 (package C): noise rules (service, sticker, emoji, gratitude,
-short, duplicate, spam) from ru/es/en lexicons, enrichment with lingua, runner with
-versions; noise is at version 2 after a miss found on the review page.
-
-### Step 5 — Web panel
-
-JSON API (`docs/api.md`) and a static panel in plain HTML, CSS and JavaScript (ADR-0002):
-chats, pipeline state, message table, thread view, filter review page.
-
-**Status.** Done 2026-10-19 (package D): every endpoint of `docs/api.md`, six pages in native
-ES modules, strict CSP, text inserted only through DOM nodes; checked in a browser
-against a real database inside the Docker image.
-
-### Step 6 — Threads and search
-
-Reply components plus time-gap grouping, stable thread ids, FTS5 index, search page.
-
-**Status.** Done 2026-10-19 (packages B, C): union-find over replies plus a 30-minute gap,
-incremental window, FTS5 with prefix terms for inflection and yo/ie folding (index
-version 2). Cross-language search ("rent" finding "alquiler") is level 1: embeddings.
-
-### Step 7 — Telethon and worker
-
-Telethon connector with FloodWait handling, `telegram login`, `chats add`, `sync`, recheck
-of the last N days, the `worker` loop with `alembic upgrade head` at start.
-
-**Status.** Code done 2026-10-19 (package A + lead): `TelegramConnector`, `telegram login`,
-`chats add`, `sync`, the worker loop (migrate, sync, process, sleep; daily recheck; a
-failed cycle is retried). Tested with fakes only — **the first live login and sync are
-the owner's next step** (`docs/decisions.md`).
-
-### Step 8 — Docker for the whole service
-
-`docker compose up` runs web and worker with real data; login inside the container;
-documented upgrade to Postgres.
-
-**Status.** Done 2026-10-19: the image installs the wheel with the static panel and the
-lexicons; verified by building it, importing the fixture into a volume, reindexing
-after version bumps and browsing the panel. `docker compose up` itself was not run in
-this session.
-
-## 3. Learning lexicon (2026-10-19)
-
-Decisions: `docs/adr/0003-learning-lexicon.md`, `docs/adr/0004-panel-write-path.md`. Deferred
-parts: `docs/backlog.md`.
-
-**Status.** Done 2026-10-19: (1) measurement — the generator writes ground truth, `chatradar
-eval` computes precision/recall/F1 against it or against human labels, with a regression gate in
-the tests; (2) the lexicon is data (`lexicon_terms`, seeded from the built-in lists, revisioned,
-stages reprocess when their applied revision is behind); (3) candidate mining by log-odds with
-thresholds on occurrences, chats and authors (`chatradar mine`), dormancy for long-unseen mined
-terms; (4) human decisions and labels from the panel (pages Lexicon and Quality, buttons on
-the filter review and thread pages) through a guarded write path. The panel was redesigned: design
-system with light/dark themes, Inter font, drawn SVG icons, responsive layout. Not yet: AI as a
-proposer and judge, stemming, per-chat weights, topic terms, worker wake-up on a decision.
+Scope per the overview table and `docs/architecture.md`; each gets its detailed plan when it
+becomes next.
