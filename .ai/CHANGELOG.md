@@ -6,6 +6,15 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-29 — `chatimport` is the main branch
+
+**What changed.** `project/11-commands.md`: a strict section making `chatimport` the main
+branch of this repository and forbidding any work on `main` (ChatRadar).
+
+**Why.** Owner instruction: agents must treat `chatimport` as `main` and never touch `main`.
+
+**Decided by.** Owner, 2026-10-29.
+
 ## 2026-10-29 — Branch `chatimport`: rules rewritten for ChatImport
 
 **What changed.** On branch `chatimport` only: every `project/` module now describes

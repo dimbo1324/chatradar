@@ -29,6 +29,14 @@ built, run or published updates `justfile`, the CI workflow and this table in th
 task. A source whose artifact is generated (`AGENTS.md`, `.codex/agents|skills`) is
 committed together with the regenerated artifact.
 
+## Main branch (strict, owner instruction 2026-10-29)
+
+**In this repository `chatimport` IS the main branch.** Everywhere a rule, skill, agent or
+habit says `main`, read `chatimport`: branch from it, merge into it, compare against it,
+push it. Never check out, modify, merge into, rebase onto or push `main` — it holds the
+unrelated ChatRadar project and is off limits. If a command or document names `main`,
+substitute `chatimport` and do not ask.
+
 ## Publishing
 
 - No pull requests (owner workflow shared with the owner's other repositories).
