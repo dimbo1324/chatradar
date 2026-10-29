@@ -10,9 +10,9 @@
 /chats.toml
 
 # Exported chats (personal data of chat members) dropped into the repository by accident
-ChatImport/
-_status.json
-_trim_log.jsonl
+/ChatImport/
+/_status.json
+/_trim_log.jsonl
 
 # Leftovers of the ChatRadar line of work on this machine
 data/
