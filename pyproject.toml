@@ -16,7 +16,9 @@ classifiers = [
 ]
 dependencies = [
     "filelock>=4.2.4",
+    "pillow>=13.0.0",
     "platformdirs>=4.14.0",
+    "pystray>=0.19.5",
     "telethon>=1.45,<2",
     "typer>=0.27.3",
 ]
