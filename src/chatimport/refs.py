@@ -6,6 +6,7 @@ ref through `parse_ref`, so they agree on which refs name the same chat.
 
 from __future__ import annotations
 
+import hashlib
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -81,10 +82,14 @@ def _parse_path(path: str, original: str) -> ParsedRef:
     return ParsedRef(RefKind.TITLE, original)
 
 
-def display_ref(ref: str) -> str:
+def display_ref(ref: str, *, digest: bool = False) -> str:
     """The ref as it may be shown or stored outside `chats.toml`: an invite link is a secret
-    join token, so only its first characters are kept."""
+    join token, so only its first characters are kept; `digest` adds a short hash that tells
+    two invites apart without revealing either."""
     parsed = parse_ref(ref)
-    if parsed.kind is RefKind.INVITE:
-        return f"t.me/+{parsed.value[:INVITE_VISIBLE_CHARS]}..."
-    return ref.strip()
+    if parsed.kind is not RefKind.INVITE:
+        return ref.strip()
+    shown = f"t.me/+{parsed.value[:INVITE_VISIBLE_CHARS]}..."
+    if digest:
+        shown += "#" + hashlib.sha256(parsed.value.encode()).hexdigest()[:6]
+    return shown

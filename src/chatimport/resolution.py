@@ -3,15 +3,15 @@ which wait for a retry, and which errors the status file shows."""
 
 from __future__ import annotations
 
-import hashlib
 import logging
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Final, NamedTuple, Protocol
 
+from chatimport import refs
 from chatimport.ports import ChatImportError, ResolvedChat, ResolveStatus, SessionRevoked
 from chatimport.runtime import TrackedChat
 from chatimport.storage.layout import chat_folder_name
-from chatimport.telegram.resolve import RefKind, parse_ref
+from chatimport.textnorm import fold
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -60,13 +60,14 @@ async def select_for_once(
     entry = library.find(chat)
     if entry is not None:
         return await resolve_entries(gateway, [entry])
-    needle = chat.strip().casefold()
+    needle = fold(chat)
     username = needle.removeprefix("@")
     matched = [
         item
         for item in await resolve_library(gateway, library)
         if str(item.resolved.chat_id) == needle
-        or (item.resolved.username is not None and item.resolved.username.casefold() == username)
+        or (item.resolved.username is not None and fold(item.resolved.username) == username)
+        or (item.resolved.title is not None and fold(item.resolved.title) == needle)
     ]
     if not matched:
         raise ChatImportError(f"no library chat matches {chat.strip()!r}")
@@ -88,11 +89,7 @@ def tracked_chat(entry: ChatEntry, resolved: ResolvedChat) -> TrackedChat:
 def display_ref(ref: str) -> str:
     """The ref as status files and toasts may show it: an invite link is a secret join token,
     so only its first characters and a short digest (to tell two invites apart) remain."""
-    parsed = parse_ref(ref)
-    if parsed.kind is not RefKind.INVITE:
-        return ref.strip()
-    digest = hashlib.sha256(parsed.value.encode()).hexdigest()[:6]
-    return f"t.me/+{parsed.value[:3]}...#{digest}"
+    return refs.display_ref(ref, digest=True)
 
 
 def resolve_error_key(entry: ChatEntry) -> str:

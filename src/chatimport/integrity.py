@@ -195,7 +195,7 @@ def _leftovers(folder: Path, *, repair: bool) -> list[CheckIssue]:
     return found
 
 
-def _check_folder(folder: Path, *, repair: bool, now: datetime) -> list[CheckIssue]:
+def check_folder(folder: Path, *, repair: bool, now: datetime) -> list[CheckIssue]:
     if not _is_chat_folder(folder):
         return [CheckIssue(None, folder.name, WARNING, "not a chat folder; left alone")]
     leftovers = _leftovers(folder, repair=repair)
@@ -228,6 +228,6 @@ def _check_folder(folder: Path, *, repair: bool, now: datetime) -> list[CheckIss
 def check_root(root: Path, *, repair: bool, now: datetime) -> list[CheckIssue]:
     issues: list[CheckIssue] = []
     for folder in iter_chat_folders(root):
-        issues.extend(_check_folder(folder, repair=repair, now=now))
+        issues.extend(check_folder(folder, repair=repair, now=now))
     issues.sort(key=lambda i: (i.folder, _SEVERITY_RANK.get(i.severity, len(_SEVERITY_RANK))))
     return issues

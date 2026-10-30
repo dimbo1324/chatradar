@@ -10,8 +10,7 @@ from dataclasses import dataclass, field
 from types import MappingProxyType
 from typing import TYPE_CHECKING, Any, Final, Protocol, Self
 
-from chatimport.integrity import ERROR, INFO, WARNING
-from chatimport.integrity import _check_folder as check_folder  # pyright: ignore[reportPrivateUsage]
+from chatimport.integrity import ERROR, INFO, WARNING, check_folder
 from chatimport.offline import lower_floor_state, resolve_chat_selector
 from chatimport.ports import ChatImportError
 from chatimport.status import format_status_lines
