@@ -58,3 +58,4 @@ desktop.ini
 *.local.md
 .claude/settings.local.json
 .codex/config.local.toml
+pytest.log

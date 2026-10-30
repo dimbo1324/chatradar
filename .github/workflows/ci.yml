@@ -63,7 +63,15 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: uv sync
       - name: pytest
-        run: uv run pytest --cov --cov-report=term-missing --cov-report=xml
+        shell: bash
+        run: |
+          set -o pipefail
+          uv run pytest --cov --cov-report=term-missing --cov-report=xml 2>&1 | tee pytest.log
+      - name: Show test failures as annotations
+        if: failure()
+        shell: bash
+        run: |
+          grep -E "^(FAILED|ERROR)|^E  " pytest.log | head -40 | cut -c1-400 | while IFS= read -r line; do echo "::error::${line}"; done
       - uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest'
         with:

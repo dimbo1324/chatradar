@@ -16,11 +16,11 @@ import threading
 from contextlib import contextmanager
 from typing import TYPE_CHECKING, Any, Literal, Protocol, cast
 
-import pystray
 from PIL import Image, ImageDraw
 
 from chatimport.control import AlreadyRunning
 from chatimport.paths import normalize_root
+from chatimport.ports import ChatImportError
 from chatimport.runtime import Level
 from chatimport.status import STATUS_FILE, format_status_lines
 
@@ -33,6 +33,19 @@ if TYPE_CHECKING:
     from chatimport.control import CommandResult
 
 log = logging.getLogger(__name__)
+
+
+def _load_pystray() -> Any:
+    """pystray raises on import without a display (headless Linux): treat that as no tray."""
+    try:
+        import pystray
+    except Exception:
+        log.info("pystray is not usable here; the tray is unavailable")
+        return None
+    return pystray
+
+
+pystray: Any = _load_pystray()
 
 type IconState = Literal["running", "paused", "error"]
 
@@ -192,6 +205,8 @@ class _Tray:
         self._paused = False
         self._failed = False
         self._state: IconState = "running"
+        if pystray is None:
+            raise ChatImportError("the system tray is not available on this machine")
         icon_class: Any = pystray.Icon
         self._icon: _TrayIcon = icon_class(
             "chatimport", make_icon_image("running"), "ChatImport", self._build_menu()
