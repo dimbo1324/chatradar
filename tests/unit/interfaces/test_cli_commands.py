@@ -921,12 +921,12 @@ def test_check_end_to_end_flags_a_corrupt_state_file(env: Env) -> None:
 # ------------------------------ export-json
 
 
-def test_export_json_writes_a_valid_array_next_to_the_data(env: Env) -> None:
+def test_export_json_writes_a_valid_array_into_the_exports_folder(env: Env) -> None:
     folder = env.make_chat(CHAT_ID, "Example group", range(1, 4))
 
     result = invoke(env, "export-json", "--chat", "Example group")
 
-    target = folder / f"{folder.name}.json"
+    target = folder.parent / "_exports" / f"{folder.name}.json"
     assert result.exit_code == 0
     assert f"Wrote {target}" in result.output
     data = json.loads(target.read_text(encoding="utf-8"))

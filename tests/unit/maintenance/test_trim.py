@@ -9,6 +9,7 @@ from typing import Literal
 
 import pytest
 
+from chatimport.ports import ChatImportError
 from chatimport.records import DeleteRecord, EditRecord, MediaSavedRecord, MessageRecord, Record
 from chatimport.runtime import ChatRegistry
 from chatimport.storage.layout import STATE_FILE, list_parts
@@ -233,13 +234,13 @@ async def test_trimming_one_chat_leaves_the_others_alone(tmp_path: Path) -> None
     assert message_ids(b) == [3, 4]
 
 
-async def test_unknown_chat_is_a_quiet_no_op(tmp_path: Path) -> None:
+async def test_unknown_chat_is_an_error_and_trims_nothing(tmp_path: Path) -> None:
     root = tmp_path / "root"
     chat = build_chat(root, CHAT, layout(messages(4), "each"))
 
-    report = await make_trimmer(root, chat).trim_percent(50, chat_id=999)
+    with pytest.raises(ChatImportError, match="no chat 999 to trim"):
+        await make_trimmer(root, chat).trim_percent(50, chat_id=999)
 
-    assert report.trimmed_records == 0
     assert message_ids(chat) == [1, 2, 3, 4]
 
 

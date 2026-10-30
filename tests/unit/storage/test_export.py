@@ -93,11 +93,15 @@ def test_export_preserves_unicode_and_awkward_text(tmp_path: Path) -> None:
     assert RU_LOWER.encode() in out.read_bytes()
 
 
-def test_export_default_path_is_inside_the_folder_named_after_it(tmp_path: Path) -> None:
+def test_export_default_path_is_in_the_exports_service_folder_outside_the_chat(
+    tmp_path: Path,
+) -> None:
     folder = tmp_path / "chat_-1"
     build(folder, 1)
-    assert export_chat_json(folder) == folder / "chat_-1.json"
-    assert (folder / "chat_-1.json").is_file()
+    target = tmp_path / "_exports" / "chat_-1.json"
+    assert export_chat_json(folder) == target
+    assert target.is_file()
+    assert not (folder / "chat_-1.json").exists()
 
 
 def test_exporting_twice_overwrites_and_ignores_its_own_previous_output(tmp_path: Path) -> None:

@@ -1,14 +1,26 @@
-"""Routes Telegram events to chat workers by `chat_id`; the rest is dropped."""
+"""Routes Telegram events to chat workers by `chat_id`; the rest is dropped.
+
+Deletions in basic groups and private dialogs arrive without a chat id. Their ids (nothing
+else) go to `_unrouted_deletes.jsonl`, which is capped: past `UNROUTED_MAX_BYTES` only the
+newest `UNROUTED_KEEP_BYTES` are kept. The file is written in a worker thread, so its fsync
+never stalls the event loop.
+"""
 
 from __future__ import annotations
 
-import json
+import asyncio
 import logging
-import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 from chatimport.ports import DeletedMessagesEvent
-from chatimport.records import DETECTED_EVENT, KIND_DELETE, SCHEMA_VERSION, format_dt
+from chatimport.records import (
+    DETECTED_EVENT,
+    KIND_DELETE,
+    SCHEMA_VERSION,
+    format_dt,
+    json_line_bytes,
+)
+from chatimport.storage.fileio import append_line, atomic_write_bytes
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -18,7 +30,20 @@ if TYPE_CHECKING:
 
 log = logging.getLogger(__name__)
 
-UNROUTED_DELETES_FILE = "_unrouted_deletes.jsonl"
+UNROUTED_DELETES_FILE: Final = "_unrouted_deletes.jsonl"
+UNROUTED_MAX_BYTES: Final = 2 * 1024 * 1024
+UNROUTED_KEEP_BYTES: Final = 1024 * 1024
+
+
+def cap_jsonl(path: Path, max_bytes: int, keep_bytes: int) -> bool:
+    """Once `path` is larger than `max_bytes`, keep only its newest whole lines that fit in
+    `keep_bytes` (`keep_bytes` < `max_bytes`); True when the file was shortened."""
+    if path.stat().st_size <= max_bytes:
+        return False
+    data = path.read_bytes()
+    first_line = data.find(b"\n", len(data) - keep_bytes - 1) + 1
+    atomic_write_bytes(path, data[first_line:])
+    return True
 
 
 class Router:
@@ -31,7 +56,7 @@ class Router:
         try:
             if isinstance(event, DeletedMessagesEvent):
                 if event.chat_id is None:
-                    self._append_unrouted(event.msg_ids)
+                    await asyncio.to_thread(self._append_unrouted, event.msg_ids)
                     return
                 chat_id = event.chat_id
             else:
@@ -51,10 +76,8 @@ class Router:
             "detected_by": DETECTED_EVENT,
             "fetched_at": format_dt(self._clock.now()),
         }
-        data = (json.dumps(line, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
-        self._root.mkdir(parents=True, exist_ok=True)
-        with (self._root / UNROUTED_DELETES_FILE).open("ab") as handle:
-            handle.write(data)
-            handle.flush()
-            os.fsync(handle.fileno())
+        path = self._root / UNROUTED_DELETES_FILE
+        append_line(path, json_line_bytes(line))
+        if cap_jsonl(path, UNROUTED_MAX_BYTES, UNROUTED_KEEP_BYTES):
+            log.info("unrouted deletes file capped", extra={"bytes": UNROUTED_KEEP_BYTES})
         log.info("unrouted delete stored: %d ids", len(msg_ids))

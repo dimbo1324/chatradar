@@ -46,6 +46,12 @@ def watcher_for(
     return watcher, notifier
 
 
+async def settle(watcher: FolderWatcher, checks: int = 2) -> None:
+    """Run the consecutive checks that confirm a mismatch (default `confirm_checks`)."""
+    for _ in range(checks):
+        await watcher.check_once()
+
+
 def chat_with_parts(root: Path, chat_id: int = -1, title: str = "Group") -> FakeController:
     batches = [[mmsg(i, chat_id=chat_id)] for i in (1, 2, 3)]
     return build_chat(root, chat_id, batches, title=title)
@@ -209,7 +215,7 @@ async def test_only_state_json_deleted_rebuilds_it_without_a_refetch(tmp_path: P
     await watcher.check_once()
     (chat.folder / STATE_FILE).unlink()
 
-    await watcher.check_once()
+    await settle(watcher)
 
     assert refetches(chat) == 0
     state = read_state(chat)
@@ -228,7 +234,7 @@ async def test_corrupt_state_json_is_rebuilt_from_the_parts(tmp_path: Path) -> N
     watcher, _ = watcher_for(root, chat)
     (chat.folder / STATE_FILE).write_text("{not json", encoding="utf-8")
 
-    await watcher.check_once()
+    await settle(watcher)
 
     assert read_state(chat).last_id == 3
     assert refetches(chat) == 0
@@ -267,7 +273,7 @@ async def test_deleted_part_files_raise_the_floor_like_a_manual_trim(tmp_path: P
     watcher, _ = watcher_for(root, chat)
     list_parts(chat.folder)[0].unlink()
 
-    await watcher.check_once()
+    await settle(watcher)
 
     state = read_state(chat)
     assert state.floor_id == 2
@@ -286,7 +292,7 @@ async def test_the_newest_part_deleted_keeps_last_id_so_nothing_is_refetched(
     watcher, _ = watcher_for(root, chat)
     list_parts(chat.folder)[-1].unlink()
 
-    await watcher.check_once()
+    await settle(watcher)
 
     state = read_state(chat)
     assert state.last_id == 3
@@ -300,7 +306,7 @@ async def test_all_part_files_deleted_floor_jumps_over_everything_known(tmp_path
     for path in list_parts(chat.folder):
         path.unlink()
 
-    await watcher.check_once()
+    await settle(watcher)
 
     state = read_state(chat)
     assert state.chunks == {}
@@ -316,7 +322,7 @@ async def test_an_unknown_part_added_by_hand_is_adopted(tmp_path: Path) -> None:
     extra = chat.folder / "2026-08_001.jsonl"
     extra.write_bytes(source.read_bytes())
 
-    await watcher.check_once()
+    await settle(watcher)
 
     state = read_state(chat)
     assert "2026-08_001" in state.chunks
@@ -348,7 +354,7 @@ async def test_recovery_waits_for_the_controller_lock(tmp_path: Path) -> None:
     (chat.folder / STATE_FILE).unlink()
 
     async with chat.lock:
-        task = asyncio.create_task(watcher.check_once())
+        task = asyncio.create_task(settle(watcher))
         for _ in range(20):
             await asyncio.sleep(0)
         assert not task.done()
@@ -411,6 +417,6 @@ async def test_recovery_stamps_the_injected_clock(tmp_path: Path) -> None:
     watcher, _ = watcher_for(root, chat, clock=clock)
     (chat.folder / STATE_FILE).unlink()
 
-    await watcher.check_once()
+    await settle(watcher)
 
     assert read_state(chat).updated_at == NOW

@@ -8,7 +8,7 @@ import pytest
 
 from chatimport.config import ConfigError, parse_config
 from chatimport.library import add_entry, load_library, set_enabled
-from chatimport.media import _size_of  # pyright: ignore[reportPrivateUsage]
+from chatimport.media import _identity  # pyright: ignore[reportPrivateUsage]
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -21,8 +21,8 @@ def test_negative_pause_between_chats_is_rejected() -> None:
         parse_config({"backfill": {"pause_between_chats_sec": -1}})
 
 
-def test_size_of_a_missing_file_is_minus_one(tmp_path: Path) -> None:
-    assert _size_of(tmp_path / "missing.jsonl") == -1
+def test_identity_of_a_missing_file_has_size_minus_one(tmp_path: Path) -> None:
+    assert _identity(tmp_path / "missing.jsonl") == (-1, 0)
 
 
 def test_set_enabled_survives_escapes_and_quotes_inside_other_strings(tmp_path: Path) -> None:

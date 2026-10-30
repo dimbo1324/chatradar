@@ -9,14 +9,17 @@ chat's state or files does so while holding `ChatController.lock`, and starts by
 from __future__ import annotations
 
 import asyncio
+import contextlib
+import logging
 import shutil
+from collections import deque
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from enum import StrEnum
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import AsyncGenerator, Iterator
     from pathlib import Path
 
     from chatimport.ports import ChatEvent
@@ -27,6 +30,17 @@ class Level(StrEnum):
     WARNING = "warning"
     ERROR = "error"
 
+    @property
+    def logging_level(self) -> int:
+        return _LOGGING_LEVELS[self]
+
+
+_LOGGING_LEVELS = {
+    Level.INFO: logging.INFO,
+    Level.WARNING: logging.WARNING,
+    Level.ERROR: logging.ERROR,
+}
+
 
 class Notifier(Protocol):
     """User-visible notifications (tray toast, log). Never carries message text or names."""
@@ -36,14 +50,10 @@ class Notifier(Protocol):
 
 class LogNotifier:
     def __init__(self) -> None:
-        import logging
-
         self._log = logging.getLogger("chatimport.notify")
 
     def notify(self, level: Level, title: str, message: str) -> None:
-        self._log.log(
-            {"info": 20, "warning": 30, "error": 40}[level.value], "%s: %s", title, message
-        )
+        self._log.log(level.logging_level, "%s: %s", title, message)
 
 
 @dataclass(frozen=True, slots=True)
@@ -69,8 +79,9 @@ class ChatStatus:
     error: str | None = None
 
 
-class ChatController(Protocol):
-    """The handle on one chat worker that the router, trimmer, guards and control use."""
+class ChatHandle(Protocol):
+    """What file-level maintenance (trim, media, integrity) needs of a chat: its id, its folder
+    and the lock that every writer of that folder holds."""
 
     @property
     def chat_id(self) -> int: ...
@@ -80,6 +91,10 @@ class ChatController(Protocol):
 
     @property
     def lock(self) -> asyncio.Lock: ...
+
+
+class ChatController(ChatHandle, Protocol):
+    """The handle on one chat worker that the router, trimmer, guards and control use."""
 
     def submit(self, event: ChatEvent) -> None:
         """Queue a live event for this chat; never blocks."""
@@ -149,3 +164,64 @@ class SystemDiskUsage:
         while not target.exists() and target != target.parent:
             target = target.parent
         return shutil.disk_usage(target).free
+
+
+class BackfillSlots:
+    """At most `limit` chats download history at once; waiting chats get a slot in arrival
+    order. A chat that already holds a slot may enter again without waiting."""
+
+    def __init__(self, limit: int) -> None:
+        if limit < 1:
+            raise ValueError(f"limit must be at least 1, got {limit}")
+        self._limit = limit
+        self._depth: dict[int, int] = {}
+        self._waiters: deque[tuple[int, asyncio.Future[None]]] = deque()
+
+    @property
+    def limit(self) -> int:
+        return self._limit
+
+    @property
+    def holders(self) -> tuple[int, ...]:
+        return tuple(self._depth)
+
+    @property
+    def waiting(self) -> tuple[int, ...]:
+        return tuple(chat_id for chat_id, future in self._waiters if not future.done())
+
+    @contextlib.asynccontextmanager
+    async def acquire(self, chat_id: int) -> AsyncGenerator[None]:
+        await self._enter(chat_id)
+        try:
+            yield
+        finally:
+            self._leave(chat_id)
+
+    async def _enter(self, chat_id: int) -> None:
+        if chat_id in self._depth:
+            self._depth[chat_id] += 1
+            return
+        if len(self._depth) < self._limit and not self.waiting:
+            self._depth[chat_id] = 1
+            return
+        future: asyncio.Future[None] = asyncio.get_running_loop().create_future()
+        self._waiters.append((chat_id, future))
+        try:
+            await future
+        except asyncio.CancelledError:
+            if future.done() and not future.cancelled():
+                self._leave(chat_id)
+            raise
+
+    def _leave(self, chat_id: int) -> None:
+        depth = self._depth[chat_id] - 1
+        if depth:
+            self._depth[chat_id] = depth
+            return
+        del self._depth[chat_id]
+        while self._waiters and len(self._depth) < self._limit:
+            waiter, future = self._waiters.popleft()
+            if future.done():
+                continue
+            self._depth[waiter] = self._depth.get(waiter, 0) + 1
+            future.set_result(None)

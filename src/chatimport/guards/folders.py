@@ -1,4 +1,9 @@
-"""Folder-deletion watcher (spec §8.4): refetch a deleted chat, recover a damaged one."""
+"""Folder-deletion watcher (spec §8.4): refetch a deleted chat, recover a damaged one.
+
+Explorer deletes a large folder gradually, so neither a missing folder nor a mismatch between
+`state.json` and the parts is acted on at once: the same picture must be seen on
+`confirm_checks` consecutive checks. A state that cannot be read right now is left alone.
+"""
 
 from __future__ import annotations
 
@@ -8,7 +13,7 @@ from typing import TYPE_CHECKING, Final
 from chatimport.runtime import Level
 from chatimport.storage.layout import list_parts
 from chatimport.storage.recover import recover_chat
-from chatimport.storage.state import load_state
+from chatimport.storage.state import StateUnreadable, load_state
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -20,6 +25,8 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 TITLE: Final = "Folder watch"
+
+type _Signature = tuple[frozenset[str] | None, frozenset[str]]
 
 
 class FolderWatcher:
@@ -42,6 +49,7 @@ class FolderWatcher:
         self._seen: set[int] = set()
         self._misses: dict[int, int] = {}
         self._refetching: set[int] = set()
+        self._mismatch: dict[int, tuple[_Signature, int]] = {}
 
     async def run(self) -> None:
         while True:
@@ -101,12 +109,20 @@ class FolderWatcher:
         async with controller.lock:
             if not folder.is_dir():
                 return
-            state = load_state(folder)
-            parts = {p.stem for p in list_parts(folder)}
-            if state is None:
-                if not parts:
-                    return
-            elif set(state.chunks) == parts:
+            try:
+                state = load_state(folder)
+            except StateUnreadable:
+                log.warning("state.json unreadable, check skipped", extra={"chat_id": chat_id})
+                return
+            parts = frozenset(p.stem for p in list_parts(folder))
+            if (state is None and not parts) or (
+                state is not None and frozenset(state.chunks) == parts
+            ):
+                self._mismatch.pop(chat_id, None)
+                return
+            if not self._mismatch_confirmed(
+                chat_id, (None if state is None else frozenset(state.chunks), parts)
+            ):
                 return
             recover_chat(
                 folder,
@@ -115,3 +131,12 @@ class FolderWatcher:
                 fallback_title=controller.status().title,
             )
             log.warning("chat folder recovered after manual changes", extra={"chat_id": chat_id})
+
+    def _mismatch_confirmed(self, chat_id: int, signature: _Signature) -> bool:
+        previous, count = self._mismatch.get(chat_id, (signature, 0))
+        count = count + 1 if previous == signature else 1
+        if count < self._config.confirm_checks:
+            self._mismatch[chat_id] = (signature, count)
+            return False
+        self._mismatch.pop(chat_id, None)
+        return True

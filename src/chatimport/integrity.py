@@ -10,16 +10,17 @@ import re
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Final
 
-from chatimport.records import MediaSavedRecord, MessageRecord, Record, record_from_line
+from chatimport.ports import ChatImportError
+from chatimport.records import MediaSavedRecord, MessageRecord
 from chatimport.storage.layout import (
     STATE_FILE,
     iter_chat_folders,
     list_parts,
     parse_part_name,
 )
+from chatimport.storage.reader import decode_line, scan_part
 from chatimport.storage.recover import recover_chat
-from chatimport.storage.state import load_state
-from chatimport.storage.writer import scan_part
+from chatimport.storage.state import StateUnreadable, load_state
 
 if TYPE_CHECKING:
     from datetime import datetime
@@ -58,13 +59,6 @@ class _Analysis:
             self.fixable.append(issue)
 
 
-def _parse_line(raw: bytes) -> Record | None:
-    try:
-        return record_from_line(raw.decode("utf-8"))
-    except ValueError, KeyError, TypeError:
-        return None
-
-
 def _folder_chat_id(folder: Path) -> int | None:
     match = _FOLDER_ID_RE.search(folder.name)
     return int(match.group(1)) if match else None
@@ -86,7 +80,7 @@ def _check_parts(folder: Path, result: _Analysis) -> int:
         last_id = 0
         unordered = 0
         for number, raw in enumerate(lines, start=1):
-            record = _parse_line(raw)
+            record = decode_line(raw)
             if record is None:
                 bad += 1
                 bad_only_last = bad_only_last and number == len(lines)
@@ -159,7 +153,12 @@ def _compare_state(folder: Path, state: ChatState, max_file_id: int, result: _An
 
 def _analyze(folder: Path) -> _Analysis:
     result = _Analysis(folder=folder.name)
-    state = load_state(folder)
+    try:
+        state = load_state(folder)
+    except StateUnreadable as error:
+        result.add(ERROR, f"{STATE_FILE} cannot be read now ({error.__cause__}); try again")
+        _check_parts(folder, result)
+        return result
     if state is not None:
         result.chat_id = state.chat_id
     for stray in sorted(folder.glob("*.jsonl")):
@@ -174,7 +173,13 @@ def _analyze(folder: Path) -> _Analysis:
     return result
 
 
+def _is_chat_folder(folder: Path) -> bool:
+    """A folder with a state or part files; anything else under the root is not ours."""
+    return (folder / STATE_FILE).exists() or bool(list_parts(folder))
+
+
 def _leftovers(folder: Path, *, repair: bool) -> list[CheckIssue]:
+    """Temp files of interrupted writes in a chat folder."""
     found: list[CheckIssue] = []
     for tmp in sorted(folder.glob(".*.tmp")):
         if not repair:
@@ -191,6 +196,8 @@ def _leftovers(folder: Path, *, repair: bool) -> list[CheckIssue]:
 
 
 def _check_folder(folder: Path, *, repair: bool, now: datetime) -> list[CheckIssue]:
+    if not _is_chat_folder(folder):
+        return [CheckIssue(None, folder.name, WARNING, "not a chat folder; left alone")]
     leftovers = _leftovers(folder, repair=repair)
     analysis = _analyze(folder)
     issues = analysis.issues
@@ -198,7 +205,7 @@ def _check_folder(folder: Path, *, repair: bool, now: datetime) -> list[CheckIss
         fallback = analysis.chat_id if analysis.chat_id is not None else _folder_chat_id(folder)
         try:
             recover_chat(folder, now=now, fallback_chat_id=fallback)
-        except (ValueError, OSError) as exc:
+        except (ValueError, OSError, ChatImportError) as exc:
             log.warning("repair failed", extra={"folder": folder.name, "error": str(exc)})
             issues = [
                 *issues,

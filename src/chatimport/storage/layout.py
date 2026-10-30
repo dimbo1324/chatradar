@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import re
-import unicodedata
 from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Final
+
+from chatimport.textnorm import transliterate
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -13,6 +14,7 @@ if TYPE_CHECKING:
 
 STATE_FILE: Final = "state.json"
 SERVICE_PREFIX: Final = "_"
+MEDIA_DIR: Final = "media"
 
 _PART_RE: Final = re.compile(r"([0-9]{4}-(?:0[1-9]|1[0-2]))_((?!000)[0-9]{3})\.jsonl")
 _UNSAFE_RE: Final = re.compile(r"[^a-z0-9_-]+")
@@ -23,8 +25,8 @@ MAX_PART_NUMBER: Final = 999
 
 
 def slugify(name: str) -> str:
-    ascii_name = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode("ascii")
-    slug = _UNSAFE_RE.sub("_", ascii_name.lower())
+    """A safe ASCII folder component; Cyrillic is transliterated, accents are dropped."""
+    slug = _UNSAFE_RE.sub("_", transliterate(name).lower())
     slug = _REPEAT_RE.sub("_", slug)[:_SLUG_MAX].strip("_-")
     return slug or _SLUG_FALLBACK
 
@@ -68,12 +70,17 @@ def iter_chat_folders(root: Path) -> Iterator[Path]:
 
 
 def find_chat_folder(root: Path, chat_id: int) -> Path | None:
-    from chatimport.storage.state import load_state
+    """The folder whose `state.json` names `chat_id`; else the first folder ending in
+    `_<chat_id>` whose state is missing, broken or unreadable right now."""
+    from chatimport.storage.state import StateUnreadable, load_state
 
     suffix = f"_{chat_id}"
     fallback: Path | None = None
     for folder in iter_chat_folders(root):
-        state = load_state(folder)
+        try:
+            state = load_state(folder)
+        except StateUnreadable:
+            state = None
         if state is None:
             if fallback is None and folder.name.endswith(suffix):
                 fallback = folder

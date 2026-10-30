@@ -1,38 +1,46 @@
-"""Trimming (spec §8.5, §8.6): whole oldest parts, one cut boundary part, media, the trim log."""
+"""Trimming (spec §8.5, §8.6): whole oldest parts, one cut boundary part, media, the trim log.
+
+Folders of chats that are on disk but not active (a disabled library entry) are trimmed too,
+under a lock of their own: nothing else writes into them.
+"""
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
-import os
 from dataclasses import dataclass, field, replace
 from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING, Final
 
-from chatimport.records import MessageRecord, Record, format_dt, record_event_date, record_to_line
-from chatimport.storage.layout import parse_part_name
+from chatimport.ports import ChatImportError
+from chatimport.records import MessageRecord, escape_line_breaks, format_dt, record_event_date
+from chatimport.storage.fileio import append_line, unlink_file
+from chatimport.storage.layout import MEDIA_DIR, iter_chat_folders, parse_part_name
+from chatimport.storage.media_files import delete_media, media_month_dir
+from chatimport.storage.reader import iter_part_records, read_part_lines
 from chatimport.storage.state import (
     ChatState,
     ChunkInfo,
+    StateUnreadable,
     atomic_write_bytes,
     load_state,
     save_state,
 )
-from chatimport.storage.writer import iter_part_records, scan_part
+from chatimport.storage.writer import scan_part
 
 if TYPE_CHECKING:
     from pathlib import Path
 
     from chatimport.ports import Clock
-    from chatimport.runtime import ChatController, ChatRegistry
+    from chatimport.runtime import ChatHandle, ChatRegistry
 
-__all__ = ["TRIM_LOG", "TrimReport", "TrimmedPart", "Trimmer"]
+__all__ = ["ALLOWED_PERCENTS", "MEDIA_DIR", "TRIM_LOG", "TrimReport", "TrimmedPart", "Trimmer"]
 
 log = logging.getLogger(__name__)
 
 TRIM_LOG: Final = "_trim_log.jsonl"
 ALLOWED_PERCENTS: Final = (25, 50, 75)
-MEDIA_DIR: Final = "media"
 FLOOR_REASON_DISK: Final = "disk"
 
 
@@ -55,48 +63,71 @@ class TrimReport:
 
 
 @dataclass(frozen=True, slots=True)
+class _FolderHandle:
+    """A chat folder with no active worker (`runtime.ChatHandle`)."""
+
+    chat_id: int
+    folder: Path
+    lock: asyncio.Lock
+
+
+@dataclass(frozen=True, slots=True)
 class _Candidate:
-    controller: ChatController
+    handle: ChatHandle
     first_date: datetime
+
+
+@dataclass(frozen=True, slots=True)
+class _Oldest:
+    """A chat's oldest part that is old enough for the disk trim, and the state it is in."""
+
+    first_date: datetime
+    state: ChatState
+    key: str
+
+
+@dataclass(slots=True)
+class _ChatTrim:
+    """What one manual trim of one chat has done so far; persisted even when it fails."""
+
+    deleted: list[TrimmedPart] = field(default_factory=list[TrimmedPart])
+    removed: int = 0
+    freed: int = 0
+    boundary_key: str | None = None
+
+    @property
+    def changed(self) -> bool:
+        return bool(self.deleted) or self.boundary_key is not None
+
+
+def _month_of(key: str) -> str:
+    return key.rsplit("_", 1)[0]
 
 
 def _month_start(month: str) -> datetime:
     return datetime.strptime(month, "%Y-%m").replace(tzinfo=UTC)
 
 
-def _message_ids(records: list[Record]) -> set[int]:
-    return {r.msg_id for r in records if isinstance(r, MessageRecord)}
+def _next_month_start(month: str) -> datetime:
+    start = _month_start(month)
+    return (
+        start.replace(year=start.year + 1, month=1)
+        if start.month == 12
+        else start.replace(month=start.month + 1)
+    )
 
 
-def _media_id(name: str) -> int | None:
-    digits = name.split(".", 1)[0].split("_", 1)[0]
-    return int(digits) if digits.isdecimal() else None
-
-
-def _delete_media(folder: Path, month: str, msg_ids: set[int]) -> None:
-    month_dir = folder / MEDIA_DIR / month
-    if not msg_ids or not month_dir.is_dir():
-        return
-    for entry in month_dir.iterdir():
-        if entry.is_file() and _media_id(entry.name) in msg_ids:
-            try:
-                entry.unlink()
-            except OSError:
-                log.warning("cannot delete a media file", extra={"folder": folder.name})
-    if not any(month_dir.iterdir()):
-        try:
-            month_dir.rmdir()
-        except OSError:
-            log.warning("cannot remove an empty media folder", extra={"folder": folder.name})
-
-
-def _month_of(key: str) -> str:
-    parsed = parse_part_name(f"{key}.jsonl")
-    return parsed[0] if parsed is not None else key[:7]
+def _message_ids(path: Path) -> set[int]:
+    return {r.msg_id for r in iter_part_records(path) if isinstance(r, MessageRecord)}
 
 
 def _existing_chunks(folder: Path, state: ChatState) -> dict[str, ChunkInfo]:
-    return {k: v for k, v in sorted(state.chunks.items()) if (folder / f"{k}.jsonl").is_file()}
+    """The listed parts that are real part files of this folder, oldest first."""
+    return {
+        key: info
+        for key, info in sorted(state.chunks.items())
+        if parse_part_name(f"{key}.jsonl") is not None and (folder / f"{key}.jsonl").is_file()
+    }
 
 
 def _first_remaining_id(folder: Path, chunks: dict[str, ChunkInfo]) -> int | None:
@@ -105,6 +136,18 @@ def _first_remaining_id(folder: Path, chunks: dict[str, ChunkInfo]) -> int | Non
             if isinstance(record, MessageRecord):
                 return record.msg_id
     return None
+
+
+def _drop_part(folder: Path, chat_id: int, key: str, info: ChunkInfo) -> TrimmedPart:
+    """Delete one whole part and the media of its messages. The part is decoded only when
+    its month has a media folder."""
+    path = folder / f"{key}.jsonl"
+    size = path.stat().st_size
+    month = _month_of(key)
+    ids = _message_ids(path) if media_month_dir(folder, month).is_dir() else set[int]()
+    unlink_file(path)
+    delete_media(folder, month, ids)
+    return TrimmedPart(chat_id, key, info.records, info.first_id, info.last_id, size)
 
 
 class Trimmer:
@@ -120,70 +163,124 @@ class Trimmer:
         self.registry = registry
         self.max_chunk_bytes = max_chunk_bytes
         self._clock = clock
+        self._locks: dict[int, asyncio.Lock] = {}
+
+    def _handles(self) -> list[ChatHandle]:
+        """Active chats first, then every other chat folder under the root."""
+        handles: list[ChatHandle] = list(self.registry.all())
+        known = {handle.chat_id for handle in handles}
+        for folder in iter_chat_folders(self.root):
+            try:
+                state = load_state(folder)
+            except StateUnreadable:
+                log.warning(
+                    "skipped a chat whose state is unreadable", extra={"folder": folder.name}
+                )
+                continue
+            if state is None or state.chat_id in known:
+                continue
+            known.add(state.chat_id)
+            lock = self._locks.setdefault(state.chat_id, asyncio.Lock())
+            handles.append(_FolderHandle(state.chat_id, folder, lock))
+        return handles
+
+    def _still_free(self, handle: ChatHandle) -> bool:
+        """A folder handle may be used only while no worker took the chat over."""
+        return not isinstance(handle, _FolderHandle) or self.registry.get(handle.chat_id) is None
 
     async def trim_percent(self, pct: int, chat_id: int | None = None) -> TrimReport:
         if pct not in ALLOWED_PERCENTS:
             raise ValueError(f"pct must be one of {ALLOWED_PERCENTS}, got {pct}")
-        if chat_id is None:
-            controllers = self.registry.all()
-        else:
-            found = self.registry.get(chat_id)
-            controllers = [found] if found is not None else []
+        handles = self._handles()
+        if chat_id is not None:
+            handles = [h for h in handles if h.chat_id == chat_id]
+            if not handles:
+                raise ChatImportError(f"no chat {chat_id} to trim")
         report = TrimReport()
-        for controller in controllers:
-            async with controller.lock:
-                self._trim_chat(controller, pct, report)
+        for handle in handles:
+            async with handle.lock:
+                if self._still_free(handle):
+                    self._trim_chat(handle, pct, report)
         return report
 
-    def _trim_chat(self, controller: ChatController, pct: int, report: TrimReport) -> None:
-        folder = controller.folder
+    def _trim_chat(self, handle: ChatHandle, pct: int, report: TrimReport) -> None:
+        folder = handle.folder
         if not folder.is_dir():
             return
         state = load_state(folder)
         if state is None:
             return
         chunks = _existing_chunks(folder, state)
-        total = sum(c.records for c in chunks.values())
-        target = total * pct // 100
+        target = sum(c.records for c in chunks.values()) * pct // 100
         if target <= 0:
             return
-
-        deleted: list[TrimmedPart] = []
-        removed = 0
-        freed = 0
-        boundary_key: str | None = None
-        cut_ids: set[int] = set()
-        for key, info in chunks.items():
-            if removed + info.records <= target:
-                path = folder / f"{key}.jsonl"
-                size = path.stat().st_size
-                ids = _message_ids(list(iter_part_records(path)))
-                path.unlink()
-                _delete_media(folder, _month_of(key), ids)
-                deleted.append(
-                    TrimmedPart(
-                        controller.chat_id, key, info.records, info.first_id, info.last_id, size
-                    )
-                )
-                removed += info.records
-                freed += size
-                continue
-            skip = target - removed
+        done = _ChatTrim()
+        keys = iter(chunks)
+        try:
+            key = next(keys)
+            while done.removed + chunks[key].records <= target:
+                part = _drop_part(folder, handle.chat_id, key, chunks[key])
+                done.deleted.append(part)
+                done.removed += part.records
+                done.freed += part.bytes
+                key = next(keys)
+            skip = target - done.removed
             if skip > 0:
-                boundary_key = key
                 freed_cut, cut_ids = self._cut_boundary(folder / f"{key}.jsonl", skip)
-                removed += skip
-                freed += freed_cut
-            break
+                done.boundary_key = key
+                done.removed += skip
+                done.freed += freed_cut
+                delete_media(folder, _month_of(key), cut_ids)
+        except BaseException:
+            if done.changed:
+                self._save_manual_trim(handle, state, chunks, pct, done, report)
+            raise
+        self._save_manual_trim(handle, state, chunks, pct, done, report)
 
-        deleted_keys = {d.part for d in deleted}
+    def _save_manual_trim(
+        self,
+        handle: ChatHandle,
+        state: ChatState,
+        chunks: dict[str, ChunkInfo],
+        pct: int,
+        done: _ChatTrim,
+        report: TrimReport,
+    ) -> None:
+        folder = handle.folder
+        deleted_keys = {d.part for d in done.deleted}
         remaining = {k: v for k, v in chunks.items() if k not in deleted_keys}
-        if boundary_key is not None:
-            remaining[boundary_key] = scan_part(folder / f"{boundary_key}.jsonl")
-            _delete_media(folder, _month_of(boundary_key), cut_ids)
+        if done.boundary_key is not None:
+            remaining[done.boundary_key] = scan_part(folder / f"{done.boundary_key}.jsonl")
+        reason = f"manual_trim_{pct}"
+        self._save_trimmed(folder, state, remaining, reason)
+        report.deleted_parts.extend(done.deleted)
+        report.trimmed_records += done.removed
+        report.freed_bytes += done.freed
+        report.per_chat[handle.chat_id] = done.removed
+        self._log_entry(
+            kind="manual",
+            chat_id=handle.chat_id,
+            pct=pct,
+            parts=[d.part for d in done.deleted],
+            records=done.removed,
+            freed=done.freed,
+            reason=reason,
+        )
+        log.info(
+            "manual trim done",
+            extra={
+                "chat_id": handle.chat_id,
+                "pct": pct,
+                "records": done.removed,
+                "bytes": done.freed,
+            },
+        )
+
+    def _save_trimmed(
+        self, folder: Path, state: ChatState, remaining: dict[str, ChunkInfo], reason: str
+    ) -> None:
         first_id = _first_remaining_id(folder, remaining)
         floor = first_id if first_id is not None else state.last_id
-        reason = f"manual_trim_{pct}"
         save_state(
             folder,
             replace(
@@ -195,87 +292,77 @@ class Trimmer:
             ),
         )
 
-        report.deleted_parts.extend(deleted)
-        report.trimmed_records += removed
-        report.freed_bytes += freed
-        report.per_chat[controller.chat_id] = removed
-        self._log_entry(
-            kind="manual",
-            chat_id=controller.chat_id,
-            pct=pct,
-            parts=[d.part for d in deleted],
-            records=removed,
-            freed=freed,
-            reason=reason,
-        )
-        log.info(
-            "manual trim done",
-            extra={"chat_id": controller.chat_id, "pct": pct, "records": removed, "bytes": freed},
-        )
-
     @staticmethod
     def _cut_boundary(path: Path, skip: int) -> tuple[int, set[int]]:
-        records = list(iter_part_records(path))
+        """Drop the first `skip` records; the kept lines are copied byte for byte."""
+        lines = read_part_lines(path)
         old_size = path.stat().st_size
-        payload = "".join(record_to_line(r) + "\n" for r in records[skip:]).encode("utf-8")
+        seen = 0
+        cut = 0
+        ids: set[int] = set()
+        while cut < len(lines) and seen < skip:
+            record = lines[cut].record
+            if record is not None:
+                seen += 1
+                if isinstance(record, MessageRecord):
+                    ids.add(record.msg_id)
+            cut += 1
+        payload = b"".join(line.data for line in lines[cut:])
         atomic_write_bytes(path, payload)
-        return max(0, old_size - len(payload)), _message_ids(records[:skip])
+        return max(0, old_size - len(payload)), ids
 
     async def delete_oldest_part(self, protect_recent_days: int) -> TrimmedPart | None:
         cutoff = self._clock.now() - timedelta(days=protect_recent_days)
         candidates: list[_Candidate] = []
-        for controller in self.registry.all():
-            async with controller.lock:
-                first_date = self._oldest_eligible(controller, cutoff)
-            if first_date is not None:
-                candidates.append(_Candidate(controller, first_date))
+        for handle in self._handles():
+            async with handle.lock:
+                oldest = self._oldest_eligible(handle, cutoff)
+            if oldest is not None:
+                candidates.append(_Candidate(handle, oldest.first_date))
         for candidate in sorted(candidates, key=lambda c: c.first_date):
-            async with candidate.controller.lock:
-                if self._oldest_eligible(candidate.controller, cutoff) is None:
-                    continue
-                part = self._delete_oldest(candidate.controller)
-            if part is not None:
-                return part
+            async with candidate.handle.lock:
+                oldest = self._oldest_eligible(candidate.handle, cutoff)
+                if oldest is not None and self._still_free(candidate.handle):
+                    return self._delete_oldest(candidate.handle, oldest)
         return None
 
-    def _oldest_eligible(self, controller: ChatController, cutoff: datetime) -> datetime | None:
-        """First message date of the chat's oldest part, if the whole part is older than cutoff."""
-        folder = controller.folder
+    def _oldest_eligible(self, handle: ChatHandle, cutoff: datetime) -> _Oldest | None:
+        """First message date of the chat's oldest part, if the whole part is older than
+        cutoff. A month that ends before the cutoff is read only up to its first message."""
+        folder = handle.folder
         if not folder.is_dir():
             return None
-        state = load_state(folder)
+        try:
+            state = load_state(folder)
+        except StateUnreadable:
+            log.warning("disk trim skipped an unreadable state", extra={"chat_id": handle.chat_id})
+            return None
         if state is None:
             return None
         chunks = _existing_chunks(folder, state)
         if not chunks:
             return None
         key = next(iter(chunks))
-        month_start = _month_start(_month_of(key))
+        month = _month_of(key)
+        whole_month_is_old = _next_month_start(month) <= cutoff
         first_date: datetime | None = None
-        last_date = month_start
+        last_date = _month_start(month)
         for record in iter_part_records(folder / f"{key}.jsonl"):
             last_date = max(last_date, record_event_date(record))
             if first_date is None and isinstance(record, MessageRecord):
                 first_date = record.date
+                if whole_month_is_old:
+                    break
         if last_date >= cutoff:
             return None
-        return first_date or month_start
+        return _Oldest(first_date or _month_start(month), state, key)
 
-    def _delete_oldest(self, controller: ChatController) -> TrimmedPart | None:
-        folder = controller.folder
-        state = load_state(folder)
-        if state is None:
-            return None
+    def _delete_oldest(self, handle: ChatHandle, oldest: _Oldest) -> TrimmedPart:
+        folder = handle.folder
+        state, key = oldest.state, oldest.key
         chunks = _existing_chunks(folder, state)
-        if not chunks:
-            return None
-        key = next(iter(chunks))
         info = chunks[key]
-        path = folder / f"{key}.jsonl"
-        size = path.stat().st_size
-        ids = _message_ids(list(iter_part_records(path)))
-        path.unlink()
-        _delete_media(folder, _month_of(key), ids)
+        part = _drop_part(folder, handle.chat_id, key, info)
         remaining = {k: v for k, v in chunks.items() if k != key}
         next_first = next((v.first_id for v in remaining.values() if v.first_id), None)
         floor = next_first if next_first is not None else info.last_id
@@ -291,18 +378,18 @@ class Trimmer:
         )
         self._log_entry(
             kind="disk",
-            chat_id=controller.chat_id,
+            chat_id=handle.chat_id,
             pct=None,
             parts=[key],
             records=info.records,
-            freed=size,
+            freed=part.bytes,
             reason=FLOOR_REASON_DISK,
         )
         log.info(
             "disk trim deleted a part",
-            extra={"chat_id": controller.chat_id, "part": key, "bytes": size},
+            extra={"chat_id": handle.chat_id, "part": key, "bytes": part.bytes},
         )
-        return TrimmedPart(controller.chat_id, key, info.records, info.first_id, info.last_id, size)
+        return part
 
     def _log_entry(
         self,
@@ -325,9 +412,5 @@ class Trimmer:
             "bytes": freed,
             "reason": reason,
         }
-        line = (json.dumps(entry, ensure_ascii=False) + "\n").encode("utf-8")
-        self.root.mkdir(parents=True, exist_ok=True)
-        with (self.root / TRIM_LOG).open("ab") as handle:
-            handle.write(line)
-            handle.flush()
-            os.fsync(handle.fileno())
+        line = escape_line_breaks(json.dumps(entry, ensure_ascii=False)) + "\n"
+        append_line(self.root / TRIM_LOG, line.encode("utf-8"))

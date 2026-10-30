@@ -30,7 +30,7 @@ if TYPE_CHECKING:
     [
         ("Example Group", "example_group"),
         ("  spaced   out  ", "spaced_out"),
-        (RU_UPPER, "chat"),
+        (RU_UPPER, "privet"),
         ("\U0001f600\U0001f680", "chat"),
         (JA, "chat"),
         (chars(0x43, 0x61, 0x66, 0xE9, 0x20, 0xD1, 0x61, 0x6E, 0x64, 0xFA), "cafe_nandu"),

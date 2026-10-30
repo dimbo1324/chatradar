@@ -22,7 +22,11 @@ DETECTED_EVENT: Final = "event"
 DETECTED_RECHECK: Final = "recheck"
 
 
-_LONE_SURROGATES: Final = dict.fromkeys(range(55296, 57344), 65533)
+DECODE_ERRORS: Final = (ValueError, KeyError, TypeError, RecursionError)
+"""Everything a hostile or damaged JSONL line can raise while being decoded into a record."""
+
+_LONE_SURROGATES: Final = dict.fromkeys(range(0xD800, 0xE000), 0xFFFD)
+_LINE_BREAKS: Final = {0x2028: "\\u2028", 0x2029: "\\u2029", 0x85: "\\u0085"}
 
 
 def format_dt(value: datetime) -> str:
@@ -248,10 +252,36 @@ class MediaSavedRecord:
 type Record = MessageRecord | EditRecord | DeleteRecord | MediaSavedRecord
 
 
+def escape_line_breaks(text: str) -> str:
+    """JSON text with U+2028, U+2029 and U+0085 written as escapes (same value when parsed)."""
+    if "\u2028" in text or "\u2029" in text or "\x85" in text:
+        return text.translate(_LINE_BREAKS)
+    return text
+
+
+def json_line(data: object) -> str:
+    """Compact JSON on one physical line for every reader: non-ASCII text stays readable,
+    U+2028, U+2029 and U+0085 (line breaks to `str.splitlines`) and lone surrogates do not."""
+    return json_line_bytes(data)[:-1].decode("utf-8")
+
+
+def json_line_bytes(data: object) -> bytes:
+    """`json_line` plus the newline, UTF-8 encoded; the text is encoded only once."""
+    line = escape_line_breaks(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n")
+    try:
+        return line.encode("utf-8")
+    except UnicodeEncodeError:
+        return line.translate(_LONE_SURROGATES).encode("utf-8")
+
+
 def record_to_line(record: Record) -> str:
-    """One JSONL line without the trailing newline; non-ASCII text stays readable."""
-    line = json.dumps(record.to_dict(), ensure_ascii=False, separators=(",", ":"))
-    return line.translate(_LONE_SURROGATES)
+    """One JSONL line without the trailing newline."""
+    return json_line(record.to_dict())
+
+
+def record_to_bytes(record: Record) -> bytes:
+    """One JSONL line with its newline, ready to write."""
+    return json_line_bytes(record.to_dict())
 
 
 def record_from_dict(data: dict[str, Any]) -> Record:

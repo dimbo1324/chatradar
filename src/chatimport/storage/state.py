@@ -2,30 +2,71 @@
 
 from __future__ import annotations
 
-import contextlib
 import json
 import logging
-import os
 from dataclasses import dataclass, field
+from enum import StrEnum
 from typing import TYPE_CHECKING, Any, Final
 
-from chatimport.records import format_dt, parse_dt
-from chatimport.storage.layout import STATE_FILE
+from chatimport.ports import ChatImportError
+from chatimport.records import DECODE_ERRORS, escape_line_breaks, format_dt, parse_dt
+from chatimport.storage.fileio import atomic_write_bytes
+from chatimport.storage.layout import STATE_FILE, parse_part_name
 
 if TYPE_CHECKING:
     from datetime import datetime
     from pathlib import Path
 
+__all__ = [
+    "PHASE_CATCH_UP",
+    "PHASE_HEAD_BACKFILL",
+    "PHASE_LIVE",
+    "PHASE_NO_ACCESS",
+    "PHASE_PAUSED",
+    "PHASE_RECOVER",
+    "STATE_VERSION",
+    "BackfillState",
+    "ChatState",
+    "ChunkInfo",
+    "Phase",
+    "StateUnreadable",
+    "atomic_write_bytes",
+    "load_state",
+    "new_state",
+    "save_state",
+]
+
 log = logging.getLogger(__name__)
 
-PHASE_RECOVER: Final = "recover"
-PHASE_HEAD_BACKFILL: Final = "head_backfill"
-PHASE_CATCH_UP: Final = "catch_up"
-PHASE_LIVE: Final = "live"
-PHASE_PAUSED: Final = "paused"
-PHASE_NO_ACCESS: Final = "no_access"
+
+class Phase(StrEnum):
+    """A chat worker's phase as stored in `state.json`; the values are the on-disk strings."""
+
+    RECOVER = "recover"
+    HEAD_BACKFILL = "head_backfill"
+    CATCH_UP = "catch_up"
+    LIVE = "live"
+    PAUSED = "paused"
+    NO_ACCESS = "no_access"
+
+
+PHASE_RECOVER: Final = Phase.RECOVER
+PHASE_HEAD_BACKFILL: Final = Phase.HEAD_BACKFILL
+PHASE_CATCH_UP: Final = Phase.CATCH_UP
+PHASE_LIVE: Final = Phase.LIVE
+PHASE_PAUSED: Final = Phase.PAUSED
+PHASE_NO_ACCESS: Final = Phase.NO_ACCESS
 
 STATE_VERSION: Final = 1
+
+
+class StateUnreadable(ChatImportError):
+    """`state.json` exists but cannot be read right now (a sharing violation, a permission or
+    I/O error). Unlike a missing or broken file it must not be rebuilt over: retry later."""
+
+    def __init__(self, folder: Path, error: OSError) -> None:
+        super().__init__(f"state.json of {folder.name} cannot be read now: {error}")
+        self.folder = folder
 
 
 def _opt_dt(value: str | None) -> datetime | None:
@@ -101,6 +142,10 @@ class ChatState:
     chunks: dict[str, ChunkInfo] = field(default_factory=dict[str, ChunkInfo])
     v: int = STATE_VERSION
 
+    @property
+    def total_records(self) -> int:
+        return sum(info.records for info in self.chunks.values())
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "v": self.v,
@@ -130,12 +175,22 @@ class ChatState:
             floor_reason=data.get("floor_reason"),
             last_recheck_at=_opt_dt(data.get("last_recheck_at")),
             backfill=BackfillState.from_dict(data.get("backfill") or {}),
-            chunks={
-                k: ChunkInfo.from_dict(v)
-                for k, v in dict[str, Any](data.get("chunks") or {}).items()
-            },
+            chunks=_valid_chunks(int(data["chat_id"]), dict[str, Any](data.get("chunks") or {})),
             updated_at=parse_dt(data["updated_at"]),
         )
+
+
+def _valid_chunks(chat_id: int, raw: dict[str, Any]) -> dict[str, ChunkInfo]:
+    """Only keys that name a part file in this folder; anything else (`../x`, an absolute
+    path) would let a trim reach outside the chat folder, so it counts as missing."""
+    parsed = {key: ChunkInfo.from_dict(value) for key, value in raw.items()}
+    chunks = {key: info for key, info in parsed.items() if parse_part_name(f"{key}.jsonl")}
+    dropped = len(parsed) - len(chunks)
+    if dropped:
+        log.warning(
+            "state.json lists invalid part names", extra={"chat_id": chat_id, "keys": dropped}
+        )
+    return chunks
 
 
 def new_state(chat_id: int, title: str, username: str | None, now: datetime) -> ChatState:
@@ -149,35 +204,29 @@ def new_state(chat_id: int, title: str, username: str | None, now: datetime) -> 
 
 
 def load_state(folder: Path) -> ChatState | None:
+    """None when `state.json` is missing or broken (rebuild it from the parts); raises
+    `StateUnreadable` when the file exists but cannot be read at the moment."""
     path = folder / STATE_FILE
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        raw = path.read_bytes()
+    except FileNotFoundError, NotADirectoryError:
+        return None
+    except OSError as error:
+        if path.is_dir():
+            log.warning("state.json is a folder", extra={"folder": folder.name})
+            return None
+        raise StateUnreadable(folder, error) from error
+    try:
+        data = json.loads(raw.decode("utf-8-sig"))
         if not isinstance(data, dict):
             raise ValueError("state.json is not an object")
         return ChatState.from_dict(data)  # pyright: ignore[reportUnknownArgumentType]
-    except FileNotFoundError:
+    except (*DECODE_ERRORS, AttributeError):
+        log.warning("state.json is broken", extra={"folder": folder.name})
         return None
-    except OSError, ValueError, KeyError, TypeError, AttributeError:
-        log.warning("state.json is unreadable", extra={"folder": folder.name})
-        return None
-
-
-def atomic_write_bytes(path: Path, data: bytes) -> None:
-    """Temp file in the same folder, fsync, then `os.replace` (atomic on one volume)."""
-    tmp = path.with_name(f".{path.name}.tmp")
-    try:
-        with tmp.open("wb") as handle:
-            handle.write(data)
-            handle.flush()
-            os.fsync(handle.fileno())
-        tmp.replace(path)
-    except BaseException:
-        with contextlib.suppress(OSError):
-            tmp.unlink(missing_ok=True)
-        raise
 
 
 def save_state(folder: Path, state: ChatState) -> None:
     folder.mkdir(parents=True, exist_ok=True)
-    payload = json.dumps(state.to_dict(), ensure_ascii=False, indent=2) + "\n"
-    atomic_write_bytes(folder / STATE_FILE, payload.encode("utf-8"))
+    text = escape_line_breaks(json.dumps(state.to_dict(), ensure_ascii=False, indent=2))
+    atomic_write_bytes(folder / STATE_FILE, (text + "\n").encode("utf-8", "backslashreplace"))

@@ -1,97 +1,84 @@
-"""Writing and reading month parts. No file stays open between calls (Windows deletes them)."""
+"""Writing month parts. No file stays open between calls (Windows deletes them).
+
+The reading helpers live in `storage.reader` and are re-exported here for older imports.
+"""
 
 from __future__ import annotations
 
 import logging
-import os
 from dataclasses import replace
 from itertools import groupby
 from typing import TYPE_CHECKING
 
+from chatimport.ports import ChatImportError
 from chatimport.records import (
     MessageRecord,
     Record,
     record_event_date,
-    record_from_line,
     record_sort_id,
-    record_to_line,
+    record_to_bytes,
     utc_now,
 )
-from chatimport.storage.layout import (
-    MAX_PART_NUMBER,
-    list_parts,
-    month_key,
-    parse_part_name,
-    part_file_name,
-    part_key,
+from chatimport.storage.fileio import append_line
+from chatimport.storage.layout import MAX_PART_NUMBER, month_key, parse_part_name, part_file_name
+from chatimport.storage.month_commit import commit_month, month_parts, replay_month
+from chatimport.storage.reader import (
+    EMPTY_CHUNK,
+    PartLine,
+    chunk_info,
+    count_lines,
+    decode_line,
+    first_message,
+    iter_part_records,
+    iter_records,
+    read_part_lines,
+    scan_part,
 )
-from chatimport.storage.state import ChatState, ChunkInfo, atomic_write_bytes, save_state
+from chatimport.storage.state import ChatState, atomic_write_bytes, save_state
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable, Iterator, Sequence
+    from collections.abc import Callable, Sequence
     from datetime import datetime
     from pathlib import Path
 
+__all__ = [
+    "ChunkWriter",
+    "PartMissing",
+    "count_lines",
+    "decode_line",
+    "first_message",
+    "iter_part_records",
+    "iter_records",
+    "scan_part",
+]
+
 log = logging.getLogger(__name__)
 
-_EMPTY_CHUNK = ChunkInfo(records=0, first_id=0, last_id=0, bytes=0)
+
+class PartMissing(ChatImportError):
+    """`state.json` lists the part an append would extend, but the file is gone (deleted by
+    hand). The caller must recover the folder first, so the deletion is accounted for."""
+
+    def __init__(self, part: str) -> None:
+        super().__init__(f"part {part} is listed in state.json but missing on disk")
+        self.part = part
 
 
-def _decode(raw: bytes) -> Record | None:
-    try:
-        return record_from_line(raw.decode("utf-8"))
-    except ValueError, KeyError, TypeError:
-        return None
+def _message_order(record: Record) -> tuple[int, int]:
+    return record_sort_id(record), 0 if isinstance(record, MessageRecord) else 1
 
 
-def iter_part_records(path: Path) -> Iterator[Record]:
-    """Yield the records of one part; lines that do not parse (a cut last line) are skipped."""
-    skipped = 0
-    with path.open("rb") as handle:
-        for raw in handle:
-            line = raw.strip()
-            if not line:
-                continue
-            record = _decode(line)
-            if record is None:
-                skipped += 1
-                continue
-            yield record
-    if skipped:
-        log.warning("skipped unparsable lines", extra={"part": path.name, "lines": skipped})
-
-
-def iter_records(folder: Path, parts: Iterable[Path] | None = None) -> Iterator[Record]:
-    for path in list_parts(folder) if parts is None else parts:
-        yield from iter_part_records(path)
-
-
-def count_lines(path: Path) -> int:
-    with path.open("rb") as handle:
-        return sum(1 for raw in handle if raw.strip())
-
-
-def _chunk_from(records: Iterable[Record], size: int, base: ChunkInfo = _EMPTY_CHUNK) -> ChunkInfo:
-    count = base.records
-    ids = [base.first_id, base.last_id] if base.first_id else []
-    for record in records:
-        count += 1
-        if isinstance(record, MessageRecord):
-            ids.append(record.msg_id)
-    return ChunkInfo(
-        records=count,
-        first_id=min(ids, default=0),
-        last_id=max(ids, default=0),
-        bytes=size,
-    )
-
-
-def scan_part(path: Path) -> ChunkInfo:
-    return _chunk_from(iter_part_records(path), path.stat().st_size)
-
-
-def _encode(records: Iterable[Record]) -> bytes:
-    return "".join(record_to_line(record) + "\n" for record in records).encode("utf-8")
+def _sorted_lines(lines: Sequence[PartLine]) -> list[PartLine]:
+    """Sort by message order; a line that does not parse keeps its place after the line
+    that preceded it."""
+    keyed: list[tuple[tuple[int, int], int, PartLine]] = []
+    key = (0, 0)
+    for position, line in enumerate(lines):
+        if line.record is not None:
+            key = _message_order(line.record)
+        keyed.append((key, position, line))
+    keyed.sort(key=lambda item: (item[0], item[1]))
+    return [line for _, _, line in keyed]
 
 
 class ChunkWriter:
@@ -126,14 +113,12 @@ class ChunkWriter:
             batch = list(group)
             path = self._append_target(month)
             key = path.stem
-            base = chunks.get(key)
-            if base is None:
-                base = scan_part(path) if path.exists() else _EMPTY_CHUNK
-            with path.open("ab") as handle:
-                handle.write(_encode(batch))
-                handle.flush()
-                os.fsync(handle.fileno())
-            chunks[key] = _chunk_from(batch, path.stat().st_size, base)
+            exists = path.exists()
+            if key in chunks and not exists:
+                raise PartMissing(key)
+            base = chunks.get(key) or (scan_part(path) if exists else EMPTY_CHUNK)
+            append_line(path, b"".join(record_to_bytes(record) for record in batch))
+            chunks[key] = chunk_info(batch, path.stat().st_size, base)
             last_id = max(
                 [last_id, *(r.msg_id for r in batch if isinstance(r, MessageRecord))],
             )
@@ -142,41 +127,41 @@ class ChunkWriter:
     def write_month(
         self, state: ChatState, month: str, records: Sequence[MessageRecord]
     ) -> ChatState:
-        """Backfill: replace all parts of `month`; every part appears atomically."""
+        """Backfill: replace all parts of `month` in one crash-safe step."""
         by_id = {record.msg_id: record for record in reversed(records)}
         if not by_id:
             return state
-        return self._write_records(state, month, [by_id[msg_id] for msg_id in sorted(by_id)])
+        replay_month(self.folder, month)
+        lines = [PartLine(record_to_bytes(by_id[i]), by_id[i]) for i in sorted(by_id)]
+        return self._write_lines(state, month, lines)
 
     def merge_month(
         self, state: ChatState, month: str, messages: Sequence[MessageRecord]
     ) -> ChatState:
-        """Add messages to a month that may already hold parts, keeping every existing record
-        (messages, edits, deletes, media marks); known `msg_id`s are not replaced."""
-        existing: list[Record] = []
-        for path in self._month_parts(month):
-            existing.extend(iter_part_records(path))
+        """Add messages to a month that may already hold parts, keeping every existing line
+        byte for byte (messages, edits, deletes, media marks, lines this version cannot read);
+        known `msg_id`s are not replaced."""
+        replay_month(self.folder, month)
+        existing = [
+            line for path in month_parts(self.folder, month) for line in read_part_lines(path)
+        ]
         if not existing:
             return self.write_month(state, month, messages)
-        known = {r.msg_id for r in existing if isinstance(r, MessageRecord)}
+        known = {line.record.msg_id for line in existing if isinstance(line.record, MessageRecord)}
         fresh = {m.msg_id: m for m in reversed(messages) if m.msg_id not in known}
         if not fresh:
             return state
-        combined = sorted(
-            [*existing, *fresh.values()],
-            key=lambda r: (record_sort_id(r), 0 if isinstance(r, MessageRecord) else 1),
-        )
-        return self._write_records(state, month, combined)
+        added = [PartLine(record_to_bytes(m), m) for m in fresh.values()]
+        return self._write_lines(state, month, _sorted_lines([*existing, *added]))
 
-    def _write_records(self, state: ChatState, month: str, records: Sequence[Record]) -> ChatState:
+    def _write_lines(self, state: ChatState, month: str, lines: Sequence[PartLine]) -> ChatState:
         self.folder.mkdir(parents=True, exist_ok=True)
-
-        groups: list[list[Record]] = []
-        current: list[Record] = []
+        groups: list[list[PartLine]] = []
+        current: list[PartLine] = []
         size = 0
-        for record in records:
-            current.append(record)
-            size += len(_encode([record]))
+        for line in lines:
+            current.append(line)
+            size += len(line.data)
             if size >= self.max_chunk_bytes:
                 groups.append(current)
                 current, size = [], 0
@@ -185,28 +170,18 @@ class ChunkWriter:
         if len(groups) > MAX_PART_NUMBER:
             raise ValueError(f"month {month} needs more than {MAX_PART_NUMBER} parts")
 
-        chunks = dict(state.chunks)
-        for number, group in enumerate(groups, start=1):
-            payload = _encode(group)
-            atomic_write_bytes(self.folder / part_file_name(month, number), payload)
-            chunks[part_key(month, number)] = _chunk_from(group, len(payload))
-
-        for path in self._month_parts(month):
-            parsed = parse_part_name(path.name)
-            if parsed is not None and parsed[1] > len(groups):
-                path.unlink()
-                chunks.pop(path.stem, None)
+        payloads = [b"".join(line.data for line in group) for group in groups]
+        commit_month(
+            self.folder, month, payloads, lambda path, data: atomic_write_bytes(path, data)
+        )
+        chunks = {k: v for k, v in state.chunks.items() if not k.startswith(f"{month}_")}
+        for number, (group, payload) in enumerate(zip(groups, payloads, strict=True), start=1):
+            records = [line.record for line in group if line.record is not None]
+            chunks[f"{month}_{number:03d}"] = chunk_info(records, len(payload))
         return self.update_state(replace(state, chunks=chunks))
 
-    def _month_parts(self, month: str) -> list[Path]:
-        return [
-            p
-            for p in list_parts(self.folder)
-            if (parsed := parse_part_name(p.name)) is not None and parsed[0] == month
-        ]
-
     def _append_target(self, month: str) -> Path:
-        parts = self._month_parts(month)
+        parts = month_parts(self.folder, month)
         if not parts:
             return self.folder / part_file_name(month, 1)
         last = parts[-1]

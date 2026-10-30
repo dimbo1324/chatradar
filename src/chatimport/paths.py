@@ -2,14 +2,20 @@
 
 from __future__ import annotations
 
+import contextlib
 import os
+import sys
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Final
 
 from platformdirs import user_data_dir, user_desktop_dir
 
 APP_NAME = "ChatImport"
 ROOT_ENV = "CHATIMPORT_ROOT"
+PRIVATE_DIR_MODE: Final = 0o700
+CLOUD_ENV_VARS: Final = ("OneDrive", "OneDriveConsumer", "OneDriveCommercial")
+_CLOUD_FOLDER_MARKER: Final = "onedrive"
 
 
 @dataclass(frozen=True, slots=True)
@@ -43,8 +49,14 @@ class AppPaths:
         return self.base / "control"
 
     def ensure(self) -> None:
+        """Create the folders; on POSIX the base and the session folder are owner-only,
+        because the session file is full access to the account."""
         for folder in (self.base, self.session_file.parent, self.log_dir, self.control_dir):
             folder.mkdir(parents=True, exist_ok=True)
+        if sys.platform != "win32":
+            for folder in (self.base, self.session_file.parent):
+                with contextlib.suppress(OSError):
+                    folder.chmod(PRIVATE_DIR_MODE)
 
 
 def app_paths(base: Path | None = None) -> AppPaths:
@@ -75,4 +87,28 @@ def library_path(configured: str, paths: AppPaths) -> Path:
         Path(os.path.expandvars(configured)).expanduser()
         if configured
         else (paths.default_library_file)
+    )
+
+
+def is_cloud_synced(path: Path, env: dict[str, str] | None = None) -> bool:
+    """True for a folder under OneDrive: a path component that names it (Known Folder Move
+    puts the Desktop at `.../OneDrive/Desktop`), or a folder below its environment variables."""
+    environment = os.environ if env is None else env
+    target = path.absolute()
+    if any(_CLOUD_FOLDER_MARKER in part.casefold() for part in target.parts):
+        return True
+    for name in CLOUD_ENV_VARS:
+        value = environment.get(name)
+        if value and target.is_relative_to(Path(value).absolute()):
+            return True
+    return False
+
+
+def cloud_sync_warning(path: Path, env: dict[str, str] | None = None) -> str | None:
+    """A one-line warning when the data folder is synced to the cloud, else None."""
+    if not is_cloud_synced(path, env):
+        return None
+    return (
+        f"the data folder {path} is synced to the cloud; the archive holds sender names, "
+        "so move it with `chatimport set-root`"
     )

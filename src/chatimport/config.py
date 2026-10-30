@@ -5,11 +5,14 @@ from __future__ import annotations
 import re
 import tomllib
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, get_type_hints
+from typing import TYPE_CHECKING, Any, Final, get_type_hints
 
 if TYPE_CHECKING:
     from pathlib import Path
 
+
+MIB: Final = 1024 * 1024
+GIB: Final = 1024 * MIB
 
 _DAILY_AT = re.compile(r"(?P<hour>[0-9]{1,2}):(?P<minute>[0-9]{2})")
 
@@ -35,6 +38,10 @@ class OutputConfig:
     include_sender_names: bool = True
     include_raw: bool = False
     max_chunk_mb: int = 20
+
+    @property
+    def max_chunk_bytes(self) -> int:
+        return self.max_chunk_mb * MIB
 
 
 @dataclass(frozen=True, slots=True)
@@ -74,6 +81,14 @@ class DiskConfig:
     check_every_minutes: int = 5
     protect_recent_days: int = 30
 
+    @property
+    def low_bytes(self) -> int:
+        return self.low_watermark_gb * GIB
+
+    @property
+    def high_bytes(self) -> int:
+        return self.high_watermark_gb * GIB
+
 
 @dataclass(frozen=True, slots=True)
 class WatchConfig:
@@ -86,6 +101,10 @@ class MediaConfig:
     enabled: bool = False
     types: tuple[str, ...] = ()
     max_file_mb: int = 50
+
+    @property
+    def max_file_bytes(self) -> int:
+        return self.max_file_mb * MIB
 
 
 @dataclass(frozen=True, slots=True)

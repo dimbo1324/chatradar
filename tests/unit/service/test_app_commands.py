@@ -188,12 +188,11 @@ async def test_trim_accepts_a_percentage_given_as_text_and_a_chat_selector(live:
     assert set(result.data["per_chat"]) <= {str(B)}
 
 
-async def test_trim_of_an_untracked_numeric_chat_trims_nothing(live: Env) -> None:
+async def test_trim_of_an_unknown_numeric_chat_is_an_error(live: Env) -> None:
     result = await live.run_command("trim", pct=75, chat=-4242)
 
-    assert result.ok
-    assert result.data["records"] == 0
-    assert result.data["parts"] == 0
+    assert not result.ok
+    assert "no chat -4242 to trim" in result.message
 
 
 async def test_recheck_asks_every_chat_or_the_selected_one(live: Env) -> None:

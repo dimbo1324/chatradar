@@ -319,8 +319,9 @@ async def test_with_the_real_trimmer_the_oldest_parts_go_first_until_17_gib(
     assert message_ids(a) == [3]
     assert message_ids(b) == [2, 3]
     assert a.calls == ["pause_backfill"]
-    assert [n.level for n in notifier.notes] == [Level.INFO]
-    assert "deleted 3 parts" in notifier.notes[0].message
+    assert [n.level for n in notifier.notes] == [Level.WARNING, Level.INFO]
+    assert "history download stopped in 2 chat(s)" in notifier.notes[0].message
+    assert "deleted 3 parts" in notifier.notes[1].message
     assert (root / "_trim_log.jsonl").read_text(encoding="utf-8").count("\n") == 3
 
 
@@ -347,4 +348,5 @@ async def test_with_the_real_trimmer_recent_parts_are_never_deleted(tmp_path: Pa
     await guard.check_once()
 
     assert message_ids(chat) == [1]
-    assert [n.level for n in notifier.notes] == [Level.WARNING]
+    assert [n.level for n in notifier.notes] == [Level.WARNING, Level.WARNING]
+    assert "everything allowed is already deleted" in notifier.notes[1].message

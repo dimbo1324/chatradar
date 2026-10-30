@@ -218,6 +218,7 @@ async def test_part_files_deleted_by_the_user_are_treated_as_a_trim_not_a_refetc
     (alpha.folder / "2026-09_001.jsonl").unlink()
 
     await watcher.check_once()
+    await watcher.check_once()
 
     state = alpha.state()
     assert (state.floor_id, state.floor_reason) == (316, "manual_delete")
