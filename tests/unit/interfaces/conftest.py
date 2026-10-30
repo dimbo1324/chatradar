@@ -88,11 +88,26 @@ class SentCommands:
 
 @pytest.fixture
 def sent(monkeypatch: pytest.MonkeyPatch) -> SentCommands:
-    from chatimport import cli
+    from chatimport import cli_support
 
     fake = SentCommands()
-    monkeypatch.setattr(cli, "send_command", fake)
+    monkeypatch.setattr(cli_support, "send_command", fake)
     return fake
+
+
+@pytest.fixture(autouse=True)
+def logging_setups(monkeypatch: pytest.MonkeyPatch) -> list[tuple[Path | None, bool]]:
+    """Commands configure process-wide logging; tests record the call instead."""
+    from chatimport import cli_service, tray
+
+    calls: list[tuple[Path | None, bool]] = []
+
+    def record(log_dir: Path | None, *, console: bool, level: str = "INFO") -> None:
+        calls.append((log_dir, console))
+
+    monkeypatch.setattr(cli_service, "configure_logging", record)
+    monkeypatch.setattr(tray, "configure_logging", record)
+    return calls
 
 
 @pytest.fixture(autouse=True)

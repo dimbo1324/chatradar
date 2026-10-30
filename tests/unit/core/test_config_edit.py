@@ -320,3 +320,24 @@ def test_result_is_always_valid_utf8_without_bom(config_file: Path) -> None:
     raw = config_file.read_bytes()
     assert not raw.startswith(b"\xef\xbb\xbf")
     assert "\u041f\u0430\u043f\u043a\u0430".encode() in raw
+
+
+def test_root_dir_comment_is_kept(config_file: Path) -> None:
+    write(config_file, '[output]\nroot_dir = "C:/a"  # keep me\ninclude_raw = true\n')
+    set_output_root(config_file, "D:/b")
+    assert read(config_file) == '[output]\nroot_dir = "D:/b"  # keep me\ninclude_raw = true\n'
+
+
+def test_a_bracket_line_inside_a_multiline_string_does_not_end_the_section(
+    config_file: Path,
+) -> None:
+    text = '[telegram]\napi_hash = """\n[output]\n"""\n[output]\nroot_dir = "old"\n'
+    write(config_file, text)
+    set_output_root(config_file, "new")
+    assert read(config_file) == text.replace('"old"', '"new"')
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX permission bits")
+def test_config_is_written_owner_only(config_file: Path) -> None:
+    set_output_root(config_file, "x")
+    assert config_file.stat().st_mode & 0o077 == 0

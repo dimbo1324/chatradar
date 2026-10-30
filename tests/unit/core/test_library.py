@@ -168,10 +168,12 @@ def test_enabled_entries_filters_disabled_ones_in_order() -> None:
     assert [e.ref for e in library.enabled_entries()] == ["a", "c"]
 
 
-def test_find_by_ref_strips_and_is_exact() -> None:
+def test_find_by_ref_strips_and_matches_the_same_chat_in_any_case() -> None:
     library = lib(ChatEntry("@Name", "Alpha"), ChatEntry("other"))
     assert library.find("  @Name ") is library.entries[0]
-    assert library.find("@name") is None
+    assert library.find("@name") is library.entries[0]
+    assert library.find("https://t.me/NAME") is library.entries[0]
+    assert library.find("@other") is None
     assert library.find("") is None
 
 

@@ -2,27 +2,37 @@
 
 from __future__ import annotations
 
-import contextlib
-import json
-import os
 import re
-import tempfile
 import tomllib
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, Final, cast
 
 from chatimport.ports import ChatImportError
+from chatimport.refs import display_ref, parse_ref
+from chatimport.textnorm import fold
+from chatimport.toml_edit import TomlDocument, toml_string, write_validated
 
-_ENTRY_KEYS = frozenset({"ref", "name", "enabled"})
-_PUBLIC_RE = re.compile(
-    r"(?:@|(?:https?://)?(?:www\.)?t\.me/)(?!(?:joinchat|c)(?:/|$))(?P<name>[A-Za-z0-9_]{3,})/?",
-    re.IGNORECASE,
-)
-_HEADER_RE = re.compile(r"^\s*\[\[\s*chat\s*\]\]\s*(#.*)?$")
-_TABLE_RE = re.compile(r"^\s*\[")
-_KEY_RE = re.compile(r"^\s*[A-Za-z0-9_-]+\s*=")
-_ENABLED_RE = re.compile(r"^(\s*enabled\s*=\s*)(?:true|false)(.*)$", re.DOTALL)
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+__all__ = [
+    "ChatEntry",
+    "Library",
+    "LibraryChange",
+    "LibraryError",
+    "LibraryWatcher",
+    "add_entry",
+    "diff_libraries",
+    "display_ref",
+    "identity_of",
+    "load_library",
+    "parse_library",
+    "set_enabled",
+]
+
+_ENTRY_KEYS: Final = frozenset({"ref", "name", "enabled"})
+_HEADER_RE: Final = re.compile(r"^\s*\[\[\s*chat\s*\]\]\s*(#.*)?$")
 
 
 class LibraryError(ChatImportError):
@@ -48,15 +58,23 @@ class Library:
         return tuple(entry for entry in self.entries if entry.enabled)
 
     def find(self, name_or_ref: str) -> ChatEntry | None:
+        """By ref (exact, then the same chat or the same text in any case or Unicode form),
+        then by name ignoring case and Unicode form."""
         needle = name_or_ref.strip()
-        for entry in self.entries:
-            if entry.key == needle:
-                return entry
-        folded = needle.casefold()
-        for entry in self.entries:
-            if entry.name is not None and entry.name.casefold() == folded:
-                return entry
-        return None
+        if not needle:
+            return None
+        identity = identity_of(needle)
+        folded = fold(needle)
+        return (
+            self._first(lambda entry: entry.key == needle)
+            or self._first(
+                lambda entry: identity_of(entry.ref) == identity or fold(entry.ref) == folded
+            )
+            or self._first(lambda entry: entry.name is not None and fold(entry.name) == folded)
+        )
+
+    def _first(self, test: Callable[[ChatEntry], bool]) -> ChatEntry | None:
+        return next((entry for entry in self.entries if test(entry)), None)
 
 
 @dataclass(frozen=True)
@@ -73,12 +91,9 @@ class LibraryChange:
 
 
 def identity_of(ref: str) -> str:
-    """Two refs naming the same public chat (`@Name`, `t.me/name`) share one identity."""
-    cleaned = ref.strip()
-    match = _PUBLIC_RE.fullmatch(cleaned)
-    if match is not None:
-        return "@" + match["name"].lower()
-    return cleaned
+    """Refs naming the same chat (`@Name`, `t.me/name`, `https://telegram.me/NAME?x=1`) share
+    one identity."""
+    return parse_ref(ref).identity
 
 
 def _parse_entry(index: int, raw: object) -> ChatEntry:
@@ -88,7 +103,7 @@ def _parse_entry(index: int, raw: object) -> ChatEntry:
     ref_value = table.get("ref")
     label = f"chat entry #{index}"
     if isinstance(ref_value, str) and ref_value.strip():
-        label = f"chat entry #{index} ({ref_value.strip()})"
+        label = f"chat entry #{index} ({display_ref(ref_value)})"
     unknown = sorted(set(table) - _ENTRY_KEYS)
     if unknown:
         raise LibraryError(f"{label}: unknown key(s) {', '.join(unknown)}")
@@ -123,7 +138,7 @@ def parse_library(text: str) -> Library:
         entry = _parse_entry(index, raw)
         identity = identity_of(entry.ref)
         if identity in seen:
-            raise LibraryError(f"chat entry #{index}: duplicate ref {entry.key!r}")
+            raise LibraryError(f"chat entry #{index}: duplicate ref {display_ref(entry.key)!r}")
         seen.add(identity)
         entries.append(entry)
     return Library(entries=tuple(entries))
@@ -230,29 +245,6 @@ class LibraryWatcher:
         return None if change.is_empty else change
 
 
-def _toml_string(value: str) -> str:
-    return json.dumps(value, ensure_ascii=False).replace("\x7f", "\\u007f")
-
-
-def _write_validated(path: Path, text: str) -> None:
-    parse_library(text)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    descriptor, temp_name = tempfile.mkstemp(
-        dir=path.parent, prefix=f".{path.name}.", suffix=".tmp"
-    )
-    temp = Path(temp_name)
-    try:
-        with os.fdopen(descriptor, "wb") as handle:
-            handle.write(text.encode("utf-8"))
-            handle.flush()
-            os.fsync(handle.fileno())
-        temp.replace(path)
-    except BaseException:
-        with contextlib.suppress(OSError):
-            temp.unlink()
-        raise
-
-
 def _read_for_edit(path: Path) -> str:
     return _read_text(path) if path.exists() else ""
 
@@ -267,67 +259,13 @@ def add_entry(path: Path, ref: str, name: str | None = None) -> None:
     text = _read_for_edit(path)
     existing = parse_library(text)
     if any(identity_of(entry.ref) == identity_of(clean_ref) for entry in existing.entries):
-        raise LibraryError(f"{clean_ref!r} is already in the library")
-    newline = "\r\n" if "\r\n" in text else "\n"
-    lines = [f"[[chat]]{newline}", f"ref = {_toml_string(clean_ref)}{newline}"]
+        raise LibraryError(f"{display_ref(clean_ref)!r} is already in the library")
+    block = ["[[chat]]", f"ref = {toml_string(clean_ref)}"]
     if clean_name is not None:
-        lines.append(f"name = {_toml_string(clean_name)}{newline}")
-    block = "".join(lines)
-    if text and not text.endswith("\n"):
-        text += newline
-    if text.strip():
-        text += newline
-    _write_validated(path, text + block)
-
-
-_LF = chr(10)
-_BACKSLASH = chr(92)
-
-
-def _split_lines(text: str) -> list[str]:
-    """Split on line feeds only: U+2028 and friends are legal inside TOML strings."""
-    parts = text.split(_LF)
-    lines = [part + _LF for part in parts[:-1]]
-    if parts[-1]:
-        lines.append(parts[-1])
-    return lines
-
-
-def _starts_outside_strings(lines: list[str]) -> set[int]:
-    """Indexes of the lines that begin outside any multi-line string."""
-    outside: set[int] = set()
-    open_quote: str | None = None
-    for number, line in enumerate(lines):
-        if open_quote is None:
-            outside.add(number)
-        position = 0
-        while position < len(line):
-            if open_quote is not None:
-                if open_quote == '"""' and line[position] == _BACKSLASH:
-                    position += 2
-                elif line.startswith(open_quote, position):
-                    open_quote = None
-                    position += 3
-                else:
-                    position += 1
-                continue
-            char = line[position]
-            if char == "#":
-                break
-            if line.startswith(('"""', "'''"), position):
-                open_quote = line[position : position + 3]
-                position += 3
-            elif char == '"':
-                position += 1
-                while position < len(line) and line[position] != '"':
-                    position += 2 if line[position] == _BACKSLASH else 1
-                position += 1
-            elif char == "'":
-                closing = line.find("'", position + 1)
-                position = len(line) if closing < 0 else closing + 1
-            else:
-                position += 1
-    return outside
+        block.append(f"name = {toml_string(clean_name)}")
+    document = TomlDocument(text)
+    document.append_block(block)
+    write_validated(path, document.text(), parse_library)
 
 
 def set_enabled(path: Path, name_or_ref: str, enabled: bool) -> None:
@@ -335,35 +273,11 @@ def set_enabled(path: Path, name_or_ref: str, enabled: bool) -> None:
     library = parse_library(text)
     target = library.find(name_or_ref)
     if target is None:
-        raise LibraryError(f"no library entry matches {name_or_ref.strip()!r}")
+        raise LibraryError(f"no library entry matches {display_ref(name_or_ref)!r}")
     index = library.entries.index(target)
-    newline = "\r\n" if "\r\n" in text else "\n"
-    lines = _split_lines(text)
-    outside = _starts_outside_strings(lines)
-    headers = [
-        number
-        for number, line in enumerate(lines)
-        if number in outside and _HEADER_RE.match(line.rstrip("\r\n"))
-    ]
+    document = TomlDocument(text)
+    headers = document.find_tables(_HEADER_RE)
     if index >= len(headers):
-        raise LibraryError(f"cannot locate the block of {target.key!r} in {path}")
-    start = headers[index]
-    end = len(lines)
-    for number in range(start + 1, len(lines)):
-        if number in outside and _TABLE_RE.match(lines[number]):
-            end = number
-            break
-    value = "true" if enabled else "false"
-    for number in range(start + 1, end):
-        if number not in outside:
-            continue
-        match = _ENABLED_RE.match(lines[number])
-        if match is not None:
-            lines[number] = f"{match.group(1)}{value}{match.group(2)}"
-            break
-    else:
-        last_line = max((n for n in range(start, end) if lines[n].strip()), default=start)
-        if not lines[last_line].endswith(_LF):
-            lines[last_line] += newline
-        lines.insert(last_line + 1, f"enabled = {value}{newline}")
-    _write_validated(path, "".join(lines))
+        raise LibraryError(f"cannot locate the block of {display_ref(target.key)!r} in {path}")
+    document.set_value(headers[index], "enabled", "true" if enabled else "false")
+    write_validated(path, document.text(), parse_library)

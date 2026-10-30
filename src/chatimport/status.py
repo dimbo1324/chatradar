@@ -6,9 +6,11 @@ import asyncio
 import json
 import logging
 import os
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Final, cast
 
+from chatimport.config import GIB
 from chatimport.records import format_dt
+from chatimport.storage.layout import MEDIA_DIR, SERVICE_PREFIX
 from chatimport.storage.state import atomic_write_bytes
 
 if TYPE_CHECKING:
@@ -21,9 +23,9 @@ if TYPE_CHECKING:
 
 log = logging.getLogger(__name__)
 
-STATUS_FILE = "_status.json"
-INTERVAL_SECONDS = 60
-GB = 1024**3
+STATUS_FILE: Final = "_status.json"
+INTERVAL_SECONDS: Final = 60
+GB: Final = GIB
 
 
 class StatusWriter:
@@ -46,6 +48,7 @@ class StatusWriter:
         self._low_watermark_gb = low_watermark_gb
         self._service_state = service_state
         self._extra_errors: dict[str, str] = {}
+        self._last_total: int | None = None
 
     def add_error(self, key: str, text: str) -> None:
         self._extra_errors[key] = text
@@ -54,6 +57,10 @@ class StatusWriter:
         self._extra_errors.pop(key, None)
 
     def build(self, total_bytes: int | None = None) -> dict[str, Any]:
+        """Without `total_bytes` the total of the last periodic write is reused, so an
+        on-demand `status` does not walk the tree again."""
+        if total_bytes is None:
+            total_bytes = self._last_total
         if total_bytes is None:
             total_bytes = _total_jsonl_bytes(self._root)
         chats: list[dict[str, Any]] = []
@@ -94,6 +101,7 @@ class StatusWriter:
         if not self._root.exists():
             return
         total = await asyncio.to_thread(_total_jsonl_bytes, self._root)
+        self._last_total = total
         data = json.dumps(self.build(total), ensure_ascii=False, indent=2).encode()
         await asyncio.to_thread(atomic_write_bytes, self._root / STATUS_FILE, data)
 
@@ -106,6 +114,12 @@ class StatusWriter:
             await self._clock.sleep(INTERVAL_SECONDS)
 
 
+def _skipped_dir(name: str) -> bool:
+    """Media folders hold only downloads and `_`-folders are the service's own: neither holds
+    parts, and media can hold tens of thousands of files."""
+    return name == MEDIA_DIR or name.startswith(SERVICE_PREFIX)
+
+
 def _total_jsonl_bytes(root: Path) -> int:
     total = 0
     stack = [str(root)]
@@ -115,7 +129,8 @@ def _total_jsonl_bytes(root: Path) -> int:
                 for entry in entries:
                     try:
                         if entry.is_dir(follow_symlinks=False):
-                            stack.append(entry.path)
+                            if not _skipped_dir(entry.name):
+                                stack.append(entry.path)
                         elif entry.name.endswith(".jsonl"):
                             total += entry.stat(follow_symlinks=False).st_size
                     except OSError:
@@ -123,6 +138,28 @@ def _total_jsonl_bytes(root: Path) -> int:
         except OSError:
             continue
     return total
+
+
+def read_snapshot(root: Path) -> dict[str, Any] | None:
+    """The last `_status.json` under `root`; None when it is missing or unreadable."""
+    try:
+        loaded: object = json.loads((root / STATUS_FILE).read_text(encoding="utf-8"))
+    except OSError, ValueError:
+        return None
+    return cast("dict[str, Any]", loaded) if isinstance(loaded, dict) else None
+
+
+def format_chat_lines(data: dict[str, Any]) -> list[str]:
+    lines: list[str] = []
+    for chat in data.get("chats", []):
+        extra = ", paused" if chat.get("paused") else ""
+        done = "done" if chat.get("backfill_done") else "in progress"
+        lines.append(
+            f"  {chat.get('chat_id')} {chat.get('title', '')}: {chat.get('phase')}, "
+            f"last_id {chat.get('last_id')}, backfill {done}, "
+            f"{chat.get('records', 0)} records{extra}"
+        )
+    return lines
 
 
 def format_status_lines(data: dict[str, Any]) -> list[str]:

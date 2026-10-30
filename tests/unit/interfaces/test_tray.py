@@ -17,7 +17,7 @@ from typing import TYPE_CHECKING, Any
 import pytest
 
 from chatimport import app as app_module
-from chatimport import tray
+from chatimport import tray, tray_dialogs
 from chatimport.control import AlreadyRunning, CommandResult
 from chatimport.paths import normalize_root
 from chatimport.runtime import Level
@@ -996,7 +996,7 @@ def test_open_path_uses_the_platform_opener(
     def popen(argv: list[str]) -> None:
         calls.append(argv)
 
-    monkeypatch.setattr(tray.subprocess, "Popen", popen)
+    monkeypatch.setattr(tray_dialogs.subprocess, "Popen", popen)
 
     tray._open_path(tmp_path)
 
@@ -1008,7 +1008,7 @@ def test_open_path_on_windows_uses_startfile(
 ) -> None:
     started: list[Path] = []
     monkeypatch.setattr(sys, "platform", "win32")
-    monkeypatch.setattr(tray.os, "startfile", started.append, raising=False)
+    monkeypatch.setattr(tray_dialogs.os, "startfile", started.append, raising=False)
 
     tray._open_path(tmp_path)
 
@@ -1301,3 +1301,146 @@ def test_closing_the_tray_window_without_the_exit_item_still_shuts_the_service_d
     tray.run_tray(env.ctx)
 
     assert FakeApp.last.shutdown_calls == 1
+
+
+# ------------------------------ hardening: tooltip width, log files, cloud warning
+
+FIRE = "\U0001f525"
+
+
+def utf16_units(text: str) -> int:
+    return len(text.encode("utf-16-le")) // 2
+
+
+def test_tooltip_fits_utf16_limit_with_emoji(parts: tray._Tray, env: Env) -> None:
+    write_status(env.ctx.root, status_with(errors=[{"source": "s", "message": FIRE * 200}]))
+
+    text = parts._status_text()
+
+    assert utf16_units(text) <= tray.TOOLTIP_LIMIT
+    assert utf16_units(text) >= tray.TOOLTIP_LIMIT - 1
+    text.encode("utf-16-le")
+    assert text.endswith(FIRE)
+
+
+@pytest.mark.parametrize(
+    ("text", "limit", "expected"),
+    [("", 3, ""), ("abc", 3, "abc"), ("abcd", 3, "abc"), (FIRE * 2, 3, FIRE), ("a" + FIRE, 2, "a")],
+)
+def test_fit_utf16_table(text: str, limit: int, expected: str) -> None:
+    assert tray.fit_utf16(text, limit) == expected
+
+
+class RejectingTitleIcon(FakeIcon):
+    @property
+    def title(self) -> str:
+        return ""
+
+    @title.setter
+    def title(self, value: str) -> None:
+        if value != "ChatImport":
+            raise ValueError("string too long")
+
+
+def test_refresh_updates_menu_even_if_title_rejected(
+    env: Env, fake_pystray: None, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    monkeypatch.setattr(tray.pystray, "Icon", RejectingTitleIcon)
+    t = tray._Tray(env.ctx)
+
+    t._refresh()
+
+    assert FakeIcon.last.menu_updates == 1
+    assert "tray refresh failed: icon" in caplog.text
+
+
+def test_open_log_ignores_non_log_files(
+    sync_threads: tray._Tray, env: Env, opened: list[Path]
+) -> None:
+    logs = env.ctx.paths.log_dir
+    script, log_file = logs / "a.bat", logs / "b.log"
+    for path, stamp in ((log_file, 1_000_000), (script, 2_000_000)):
+        path.write_text("x", encoding="utf-8")
+        os.utime(path, (stamp, stamp))
+
+    FakeIcon.last.click("Open log")
+
+    assert opened == [log_file]
+
+
+def test_open_log_with_only_a_script_reports_no_log(
+    sync_threads: tray._Tray, env: Env, opened: list[Path]
+) -> None:
+    (env.ctx.paths.log_dir / "a.bat").write_text("x", encoding="utf-8")
+    notifier = RecordingNotifier()
+    sync_threads._notifier = notifier  # type: ignore[assignment]  # pyright: ignore[reportAttributeAccessIssue]
+
+    FakeIcon.last.click("Open log")
+
+    assert opened == []
+    assert [n.message for n in notifier.notes] == ["There is no log file yet"]
+
+
+def test_open_library_refuses_a_file_that_is_not_toml(
+    env: Env, fake_pystray: None, opened: list[Path]
+) -> None:
+    ctx = types.SimpleNamespace(
+        root=env.ctx.root,
+        library_file=env.home / "run.bat",
+        paths=env.ctx.paths,
+        config=env.ctx.config,
+    )
+    t = tray._Tray(ctx)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+    notifier = RecordingNotifier()
+    t._notifier = notifier  # type: ignore[assignment]  # pyright: ignore[reportAttributeAccessIssue]
+
+    t._open_library()
+
+    assert opened == []
+    assert not (env.home / "run.bat").exists()
+    assert [n.level for n in notifier.notes] == [Level.WARNING]
+
+
+def test_a_cloud_synced_root_is_reported_at_start_and_after_a_folder_change(
+    env: Env, fake_pystray: None, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("OneDrive", str(env.home))
+    t = tray._Tray(env.ctx)
+
+    assert len(t._notifier._pending) == 1
+    assert "synced to the cloud" in t._notifier._pending[0][1]
+
+    notifier = RecordingNotifier()
+    t._notifier = notifier  # type: ignore[assignment]  # pyright: ignore[reportAttributeAccessIssue]
+    new_root = str(env.home / "Elsewhere")
+    t._report("set_root", completed(CommandResult(True, "")), {"path": new_root}, None)
+
+    assert [n.level for n in notifier.notes] == [Level.WARNING]
+
+
+def test_a_local_root_raises_no_cloud_warning(
+    env: Env, fake_pystray: None, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    for name in ("OneDrive", "OneDriveConsumer", "OneDriveCommercial"):
+        monkeypatch.delenv(name, raising=False)
+
+    t = tray._Tray(env.ctx)
+
+    assert t._notifier._pending == []
+
+
+def test_run_tray_writes_its_log_to_the_log_folder(
+    env: Env, fake_pystray: None, logging_setups: list[tuple[Path | None, bool]]
+) -> None:
+    FakeIcon.script = lambda icon: icon.click("Exit")
+
+    tray.run_tray(env.ctx)
+
+    assert logging_setups == [(env.ctx.paths.log_dir, False)]
+
+
+def test_notifier_logs_at_the_level_of_the_note(caplog: pytest.LogCaptureFixture) -> None:
+    with caplog.at_level(logging.INFO, logger=tray.log.name):
+        tray.TrayNotifier().notify(Level.WARNING, "T", "m")
+
+    assert [r.levelno for r in caplog.records] == [logging.WARNING]

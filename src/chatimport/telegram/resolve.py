@@ -6,31 +6,22 @@ yields `NEED_TO_JOIN`.
 
 from __future__ import annotations
 
-import re
+import unicodedata
 from dataclasses import dataclass
-from enum import StrEnum
-from typing import Any, Final, Protocol
+from typing import Any, Protocol
 
 from chatimport.ports import ResolvedChat, ResolveStatus
+from chatimport.refs import CHANNEL_ID_BASE, ParsedRef, RefKind, parse_ref
 
-_URL: Final = re.compile(r"^(?:https?://)?(?:www\.)?(?:t|telegram)\.me/(.+)$", re.IGNORECASE)
-_USERNAME: Final = re.compile(r"^[A-Za-z][A-Za-z0-9_]{2,31}$")
-_NUMBER: Final = re.compile(r"^-?\d+$")
-_CHANNEL_ID_BASE: Final = 10**12
-
-
-class RefKind(StrEnum):
-    PUBLIC = "public"
-    INVITE = "invite"
-    NUMERIC = "numeric"
-    TITLE = "title"
-
-
-@dataclass(frozen=True, slots=True)
-class ParsedRef:
-    kind: RefKind
-    value: str
-    number: int | None = None
+__all__ = [
+    "EntityLookup",
+    "InviteInfo",
+    "ParsedRef",
+    "RefKind",
+    "entity_kind",
+    "parse_ref",
+    "resolve_ref",
+]
 
 
 @dataclass(frozen=True, slots=True)
@@ -52,34 +43,6 @@ class EntityLookup(Protocol):
     def peer_id(self, entity: Any) -> int:
         """The marked chat id (`-100…` for channels)."""
         ...
-
-
-def parse_ref(ref: str) -> ParsedRef:
-    text = ref.strip()
-    url = _URL.match(text)
-    if url:
-        return _parse_path(url.group(1), text)
-    if text.startswith("@") and _USERNAME.match(text[1:]):
-        return ParsedRef(RefKind.PUBLIC, text[1:])
-    if _NUMBER.match(text):
-        return ParsedRef(RefKind.NUMERIC, text, int(text))
-    return ParsedRef(RefKind.TITLE, text)
-
-
-def _parse_path(path: str, original: str) -> ParsedRef:
-    segments = path.split("?", 1)[0].split("#", 1)[0].strip("/").split("/")
-    first = segments[0]
-    if first.startswith("+") and len(first) > 1:
-        return ParsedRef(RefKind.INVITE, first[1:])
-    if first.lower() == "joinchat":
-        if len(segments) > 1 and segments[1]:
-            return ParsedRef(RefKind.INVITE, segments[1])
-        return ParsedRef(RefKind.TITLE, original)
-    if first == "c" and len(segments) > 1 and segments[1].isdigit():
-        return ParsedRef(RefKind.NUMERIC, segments[1], -(_CHANNEL_ID_BASE + int(segments[1])))
-    if _USERNAME.match(first):
-        return ParsedRef(RefKind.PUBLIC, first)
-    return ParsedRef(RefKind.TITLE, original)
 
 
 def entity_kind(entity: Any) -> str | None:
@@ -139,7 +102,7 @@ async def _resolve_number(ref: str, parsed: ParsedRef, lookup: EntityLookup) -> 
     number = parsed.number or 0
     wanted = {number}
     if number > 0:
-        wanted |= {-number, -(_CHANNEL_ID_BASE + number)}
+        wanted |= {-number, -(CHANNEL_ID_BASE + number)}
     matches = [
         entity for entity in await lookup.dialog_entities() if lookup.peer_id(entity) in wanted
     ]
@@ -149,13 +112,19 @@ async def _resolve_number(ref: str, parsed: ParsedRef, lookup: EntityLookup) -> 
     return _found(ref, (chats or matches)[0], lookup)
 
 
+def _nfc(text: object) -> str | None:
+    return unicodedata.normalize("NFC", text) if isinstance(text, str) else None
+
+
 async def _resolve_title(ref: str, title: str, lookup: EntityLookup) -> ResolvedChat:
+    """Exact title match, as the spec says; only the Unicode encoding of accents is forgiven."""
+    wanted = _nfc(title)
     matches = [
         entity
         for entity in await lookup.dialog_entities()
         if entity_kind(entity) is not None
         and not getattr(entity, "deactivated", False)
-        and getattr(entity, "title", None) == title
+        and _nfc(getattr(entity, "title", None)) == wanted
     ]
     if not matches:
         return ResolvedChat(ref, ResolveStatus.NOT_FOUND, detail="no dialog with this title")
