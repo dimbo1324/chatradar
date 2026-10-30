@@ -81,6 +81,7 @@ async def test_move_root_with_symlink_inside_preserves_link(
 async def test_move_root_with_a_junction_inside_is_refused_before_copying(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    assert sys.platform == "win32"
     import _winapi
 
     outside = tmp_path / "outside"
