@@ -44,11 +44,11 @@ def find_hits(root: Path, files: list[str]) -> list[str]:
     for rel in filter(is_checked, files):
         try:
             text = (root / rel).read_text(encoding="utf-8")
-        except UnicodeDecodeError, FileNotFoundError, IsADirectoryError:
+        except UnicodeDecodeError, FileNotFoundError, IsADirectoryError, PermissionError:
             continue
         hits += [
             f"{rel}:{number}"
-            for number, line in enumerate(text.splitlines(), start=1)
+            for number, line in enumerate(text.split(chr(10)), start=1)
             if CYRILLIC.search(line)
         ]
     return hits

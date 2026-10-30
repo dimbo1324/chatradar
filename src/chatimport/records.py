@@ -22,6 +22,9 @@ DETECTED_EVENT: Final = "event"
 DETECTED_RECHECK: Final = "recheck"
 
 
+_LONE_SURROGATES: Final = dict.fromkeys(range(55296, 57344), 65533)
+
+
 def format_dt(value: datetime) -> str:
     """UTC ISO 8601 with a `Z` suffix and whole seconds."""
     return value.astimezone(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -247,10 +250,13 @@ type Record = MessageRecord | EditRecord | DeleteRecord | MediaSavedRecord
 
 def record_to_line(record: Record) -> str:
     """One JSONL line without the trailing newline; non-ASCII text stays readable."""
-    return json.dumps(record.to_dict(), ensure_ascii=False, separators=(",", ":"))
+    line = json.dumps(record.to_dict(), ensure_ascii=False, separators=(",", ":"))
+    return line.translate(_LONE_SURROGATES)
 
 
 def record_from_dict(data: dict[str, Any]) -> Record:
+    if not isinstance(data, dict):  # pyright: ignore[reportUnnecessaryIsInstance]
+        raise ValueError(f"a record must be a JSON object, not {type(data).__name__}")
     kind = data.get("kind")
     if kind == KIND_MESSAGE:
         return MessageRecord.from_dict(data)
@@ -278,7 +284,7 @@ def record_event_date(record: Record) -> datetime:
             return record.date
         case EditRecord():
             return record.edit_date
-        case DeleteRecord() | MediaSavedRecord():
+        case _:
             return record.fetched_at
 
 

@@ -55,6 +55,9 @@ EXTENDED_INDEX_HEADER = (
 _FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n(.*)\Z", re.DOTALL)
 
 
+_SAFE_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*")
+
+
 class SyncError(RuntimeError):
     pass
 
@@ -132,6 +135,8 @@ def parse_frontmatter(text: str, name: str) -> tuple[dict[str, str], str]:
 
 def render_codex_agent(source_name: str, text: str) -> tuple[str, str]:
     meta, body = parse_frontmatter(text, source_name)
+    if not _SAFE_NAME.fullmatch(meta["name"]):
+        raise SyncError(f"{source_name}: agent name {meta['name']!r} is not a safe file name")
     if "'''" in body:
         raise SyncError(f"{source_name}: body must not contain '''")
     content = "\n".join(
@@ -159,9 +164,18 @@ def build_outputs(root: Path) -> dict[str, str]:
     outputs = {"AGENTS.md": render_agents_md(collect_modules(root))}
     for path in sorted((root / ".claude" / "agents").glob("*.md")):
         target, content = render_codex_agent(path.name, read(path))
+        if target in outputs:
+            raise SyncError(f"{path.name}: another agent already uses the name for {target}")
         outputs[target] = content
-    for skill_dir in sorted(p for p in (root / ".claude" / "skills").iterdir() if p.is_dir()):
-        target, content = render_codex_skill(skill_dir.name, read(skill_dir / "SKILL.md"))
+    skills_root = root / ".claude" / "skills"
+    skill_dirs = (
+        sorted(p for p in skills_root.iterdir() if p.is_dir()) if skills_root.is_dir() else []
+    )
+    for skill_dir in skill_dirs:
+        skill_file = skill_dir / "SKILL.md"
+        if not skill_file.is_file():
+            raise SyncError(f"{skill_dir.name}: SKILL.md is missing")
+        target, content = render_codex_skill(skill_dir.name, read(skill_file))
         outputs[target] = content
     return outputs
 

@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 STATE_FILE: Final = "state.json"
 SERVICE_PREFIX: Final = "_"
 
-_PART_RE: Final = re.compile(r"^(\d{4}-\d{2})_(\d{3})\.jsonl$")
+_PART_RE: Final = re.compile(r"([0-9]{4}-(?:0[1-9]|1[0-2]))_((?!000)[0-9]{3})\.jsonl")
 _UNSAFE_RE: Final = re.compile(r"[^a-z0-9_-]+")
 _REPEAT_RE: Final = re.compile(r"_{2,}")
 _SLUG_MAX: Final = 40
@@ -46,7 +46,7 @@ def part_key(month: str, part: int) -> str:
 
 
 def parse_part_name(name: str) -> tuple[str, int] | None:
-    match = _PART_RE.match(name)
+    match = _PART_RE.fullmatch(name)
     if match is None:
         return None
     return match.group(1), int(match.group(2))

@@ -28,7 +28,7 @@ class Supervisor:
     def __init__(self, clock: Clock, notifier: Notifier) -> None:
         self._clock = clock
         self._notifier = notifier
-        self._tasks: dict[str, asyncio.Task[None]] = {}
+        self._tasks: list[asyncio.Task[None]] = []
         self._errors: dict[str, str] = {}
         self.fatal: BaseException | None = None
         self.fatal_event = asyncio.Event()
@@ -41,7 +41,8 @@ class Supervisor:
         restart: bool = True,
     ) -> asyncio.Task[None]:
         task = asyncio.create_task(self._run(name, factory, restart), name=name)
-        self._tasks[name] = task
+        self._tasks = [t for t in self._tasks if not t.done()]
+        self._tasks.append(task)
         return task
 
     def errors(self) -> dict[str, str]:
@@ -51,7 +52,7 @@ class Supervisor:
         await self.fatal_event.wait()
 
     async def stop_all(self) -> None:
-        tasks = list(self._tasks.values())
+        tasks = list(self._tasks)
         self._tasks.clear()
         for task in tasks:
             task.cancel()
@@ -63,6 +64,7 @@ class Supervisor:
         delay = FIRST_DELAY
         while True:
             started = time.monotonic()
+            self._errors.pop(name, None)
             try:
                 await factory()
             except asyncio.CancelledError:

@@ -15,6 +15,10 @@ from typing import Any, cast
 from chatimport.ports import ChatImportError
 
 _ENTRY_KEYS = frozenset({"ref", "name", "enabled"})
+_PUBLIC_RE = re.compile(
+    r"(?:@|(?:https?://)?(?:www\.)?t\.me/)(?!(?:joinchat|c)(?:/|$))(?P<name>[A-Za-z0-9_]{3,})/?",
+    re.IGNORECASE,
+)
 _HEADER_RE = re.compile(r"^\s*\[\[\s*chat\s*\]\]\s*(#.*)?$")
 _TABLE_RE = re.compile(r"^\s*\[")
 _KEY_RE = re.compile(r"^\s*[A-Za-z0-9_-]+\s*=")
@@ -68,6 +72,15 @@ class LibraryChange:
         return not (self.added or self.removed or self.disabled or self.enabled or self.renamed)
 
 
+def identity_of(ref: str) -> str:
+    """Two refs naming the same public chat (`@Name`, `t.me/name`) share one identity."""
+    cleaned = ref.strip()
+    match = _PUBLIC_RE.fullmatch(cleaned)
+    if match is not None:
+        return "@" + match["name"].lower()
+    return cleaned
+
+
 def _parse_entry(index: int, raw: object) -> ChatEntry:
     if not isinstance(raw, dict):
         raise LibraryError(f"chat entry #{index}: expected a table")
@@ -108,9 +121,10 @@ def parse_library(text: str) -> Library:
     seen: set[str] = set()
     for index, raw in enumerate(cast("list[object]", raw_chats), start=1):
         entry = _parse_entry(index, raw)
-        if entry.key in seen:
+        identity = identity_of(entry.ref)
+        if identity in seen:
             raise LibraryError(f"chat entry #{index}: duplicate ref {entry.key!r}")
-        seen.add(entry.key)
+        seen.add(identity)
         entries.append(entry)
     return Library(entries=tuple(entries))
 
@@ -199,8 +213,12 @@ class LibraryWatcher:
             return None
         if self._seen and signature == self._signature:
             return None
+        vanished = signature is None and self._signature is not None
         self._signature = signature
         self._seen = True
+        if vanished:
+            self.last_error = f"{self.path} disappeared; keeping the last known entries"
+            return None
         try:
             new = load_library(self.path)
         except LibraryError as error:
@@ -248,7 +266,7 @@ def add_entry(path: Path, ref: str, name: str | None = None) -> None:
         raise LibraryError("name must not be empty")
     text = _read_for_edit(path)
     existing = parse_library(text)
-    if any(entry.key == clean_ref for entry in existing.entries):
+    if any(identity_of(entry.ref) == identity_of(clean_ref) for entry in existing.entries):
         raise LibraryError(f"{clean_ref!r} is already in the library")
     newline = "\r\n" if "\r\n" in text else "\n"
     lines = [f"[[chat]]{newline}", f"ref = {_toml_string(clean_ref)}{newline}"]
@@ -262,6 +280,56 @@ def add_entry(path: Path, ref: str, name: str | None = None) -> None:
     _write_validated(path, text + block)
 
 
+_LF = chr(10)
+_BACKSLASH = chr(92)
+
+
+def _split_lines(text: str) -> list[str]:
+    """Split on line feeds only: U+2028 and friends are legal inside TOML strings."""
+    parts = text.split(_LF)
+    lines = [part + _LF for part in parts[:-1]]
+    if parts[-1]:
+        lines.append(parts[-1])
+    return lines
+
+
+def _starts_outside_strings(lines: list[str]) -> set[int]:
+    """Indexes of the lines that begin outside any multi-line string."""
+    outside: set[int] = set()
+    open_quote: str | None = None
+    for number, line in enumerate(lines):
+        if open_quote is None:
+            outside.add(number)
+        position = 0
+        while position < len(line):
+            if open_quote is not None:
+                if open_quote == '"""' and line[position] == _BACKSLASH:
+                    position += 2
+                elif line.startswith(open_quote, position):
+                    open_quote = None
+                    position += 3
+                else:
+                    position += 1
+                continue
+            char = line[position]
+            if char == "#":
+                break
+            if line.startswith(('"""', "'''"), position):
+                open_quote = line[position : position + 3]
+                position += 3
+            elif char == '"':
+                position += 1
+                while position < len(line) and line[position] != '"':
+                    position += 2 if line[position] == _BACKSLASH else 1
+                position += 1
+            elif char == "'":
+                closing = line.find("'", position + 1)
+                position = len(line) if closing < 0 else closing + 1
+            else:
+                position += 1
+    return outside
+
+
 def set_enabled(path: Path, name_or_ref: str, enabled: bool) -> None:
     text = _read_for_edit(path)
     library = parse_library(text)
@@ -270,28 +338,32 @@ def set_enabled(path: Path, name_or_ref: str, enabled: bool) -> None:
         raise LibraryError(f"no library entry matches {name_or_ref.strip()!r}")
     index = library.entries.index(target)
     newline = "\r\n" if "\r\n" in text else "\n"
-    lines = text.splitlines(keepends=True)
-    headers = [number for number, line in enumerate(lines) if _HEADER_RE.match(line.rstrip("\r\n"))]
+    lines = _split_lines(text)
+    outside = _starts_outside_strings(lines)
+    headers = [
+        number
+        for number, line in enumerate(lines)
+        if number in outside and _HEADER_RE.match(line.rstrip("\r\n"))
+    ]
     if index >= len(headers):
         raise LibraryError(f"cannot locate the block of {target.key!r} in {path}")
     start = headers[index]
     end = len(lines)
     for number in range(start + 1, len(lines)):
-        if _TABLE_RE.match(lines[number]):
+        if number in outside and _TABLE_RE.match(lines[number]):
             end = number
             break
     value = "true" if enabled else "false"
-    last_key = start
     for number in range(start + 1, end):
-        raw = lines[number]
-        match = _ENABLED_RE.match(raw)
+        if number not in outside:
+            continue
+        match = _ENABLED_RE.match(lines[number])
         if match is not None:
             lines[number] = f"{match.group(1)}{value}{match.group(2)}"
             break
-        if _KEY_RE.match(raw):
-            last_key = number
     else:
-        if not lines[last_key].endswith("\n"):
-            lines[last_key] += newline
-        lines.insert(last_key + 1, f"enabled = {value}{newline}")
+        last_line = max((n for n in range(start, end) if lines[n].strip()), default=start)
+        if not lines[last_line].endswith(_LF):
+            lines[last_line] += newline
+        lines.insert(last_line + 1, f"enabled = {value}{newline}")
     _write_validated(path, "".join(lines))

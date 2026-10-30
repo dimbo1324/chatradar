@@ -41,7 +41,7 @@ class _Pending:
 
 @dataclass(slots=True)
 class _ChatScan:
-    parts: tuple[str, ...] = ()
+    parts: tuple[tuple[str, int], ...] = ()
     done: set[int] = field(default_factory=set[int])
     pending: dict[int, _Pending] = field(default_factory=dict[int, _Pending])
 
@@ -113,10 +113,20 @@ class MediaDownloader:
 
     def _scan_parts(self, folder: Path, scan: _ChatScan) -> None:
         paths = list_parts(folder)
-        names = tuple(p.name for p in paths)
+        signature = tuple((p.name, _size_of(p)) for p in paths)
         cached = scan.parts
-        if names[: len(cached)] == cached and cached:
-            start = len(cached) - 1
+        same_names = len(signature) >= len(cached) and all(
+            old[0] == new[0] for old, new in zip(cached, signature, strict=False)
+        )
+        if cached and same_names:
+            start = next(
+                (
+                    n
+                    for n, (old, new) in enumerate(zip(cached, signature, strict=False))
+                    if old != new
+                ),
+                len(cached) - 1,
+            )
         else:
             scan.done.clear()
             scan.pending.clear()
@@ -133,13 +143,15 @@ class MediaDownloader:
                     and self._wanted(record.media)
                 ):
                     scan.pending[record.msg_id] = _Pending(month_key(record.date), record.media)
-        scan.parts = names
+        scan.parts = signature
 
     async def _download_one(self, controller: ChatController) -> bool:
         scan = await self._refresh(controller)
         chat_id = controller.chat_id
         state = load_state(controller.folder)
-        floor = state.floor_id if state is not None else 0
+        if state is None:
+            return False
+        floor = state.floor_id
         for msg_id in sorted(scan.pending):
             if msg_id < floor or self._attempts.get((chat_id, msg_id), 0) >= MAX_ATTEMPTS:
                 continue
@@ -199,6 +211,13 @@ class MediaDownloader:
         scan.done.add(msg_id)
         scan.pending.pop(msg_id, None)
         log.info("media saved", extra={"chat_id": chat_id, "msg_id": msg_id})
+
+
+def _size_of(path: Path) -> int:
+    try:
+        return path.stat().st_size
+    except OSError:
+        return -1
 
 
 def _unique_name(downloaded: Path, msg_id: int) -> Path:

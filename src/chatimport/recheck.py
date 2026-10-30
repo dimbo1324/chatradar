@@ -53,16 +53,16 @@ def _read_known(folder: Path, state: ChatState, since: datetime) -> dict[int, _K
     for record in iter_records(folder):
         match record:
             case MessageRecord():
-                if floor < record.msg_id <= ceiling and record.date >= since:
+                if floor <= record.msg_id <= ceiling and record.date >= since:
                     messages[record.msg_id] = _Known(record.text, record.media, record.edit_date)
             case EditRecord():
-                if floor < record.msg_id <= ceiling and record.edit_date >= since:
+                if floor <= record.msg_id <= ceiling and record.edit_date >= since:
                     current = edits.get(record.msg_id)
                     if current is None or record.edit_date >= current.edit_date:
                         edits[record.msg_id] = record
             case DeleteRecord():
                 if record.fetched_at >= since:
-                    deleted.update(i for i in record.msg_ids if floor < i <= ceiling)
+                    deleted.update(i for i in record.msg_ids if floor <= i <= ceiling)
             case _:
                 pass
     for msg_id, edit in edits.items():
@@ -106,12 +106,13 @@ async def compute_recheck(
     result: list[Record] = []
     seen: set[int] = set()
     async for message in gateway.iter_window(state.chat_id, since, state.last_id):
-        if message.msg_id <= state.floor_id:
+        if message.msg_id < state.floor_id:
             continue
         seen.add(message.msg_id)
         current = known.get(message.msg_id)
         if current is None:
-            result.append(message)
+            if message.msg_id > state.floor_id:
+                result.append(message)
         elif track_edits and not current.deleted and _differs(current, message):
             result.append(
                 EditRecord(
@@ -159,9 +160,9 @@ def seconds_until_next(daily_at: str, now: datetime, tz: tzinfo) -> float:
     hour, minute = (int(part) for part in daily_at.split(":", 1))
     local = now.astimezone(tz)
     target = datetime.combine(local.date(), time(hour, minute), tzinfo=tz)
-    if target <= local:
+    if target.astimezone(UTC) <= local.astimezone(UTC):
         target = datetime.combine(local.date() + timedelta(days=1), time(hour, minute), tzinfo=tz)
-    return (target - local).total_seconds()
+    return (target.astimezone(UTC) - local.astimezone(UTC)).total_seconds()
 
 
 def _system_tz() -> tzinfo:

@@ -12,7 +12,7 @@ from typing import Any, Final
 
 from chatimport.records import MediaInfo, MessageRecord, format_dt
 
-_PRIVATE_SUPERGROUP_PREFIX: Final = "-100"
+_CHANNEL_ID_BASE: Final = 10**12
 
 _SERVICE_BY_ACTION: Final[dict[str, str]] = {
     "MessageActionChatAddUser": "join",
@@ -48,9 +48,8 @@ _MEDIA_PROPERTIES: Final[tuple[str, ...]] = (
 def message_link(chat_id: int, username: str | None, msg_id: int) -> str | None:
     if username:
         return f"https://t.me/{username}/{msg_id}"
-    text = str(chat_id)
-    if text.startswith(_PRIVATE_SUPERGROUP_PREFIX):
-        return f"https://t.me/c/{text[len(_PRIVATE_SUPERGROUP_PREFIX) :]}/{msg_id}"
+    if chat_id <= -_CHANNEL_ID_BASE:
+        return f"https://t.me/c/{-chat_id - _CHANNEL_ID_BASE}/{msg_id}"
     return None
 
 
@@ -72,6 +71,11 @@ def sender_display_name(sender: Any) -> str | None:
 
 
 def map_media(message: Any) -> MediaInfo | None:
+    if (
+        type(getattr(message, "media", None)).__name__ == "MessageMediaWebPage"
+        or getattr(message, "action", None) is not None
+    ):
+        return None
     media_type = next((name for name in _MEDIA_PROPERTIES if getattr(message, name, None)), None)
     if media_type is None:
         return None

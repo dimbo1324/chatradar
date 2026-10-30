@@ -9,7 +9,7 @@ import sys
 from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path  # noqa: TC003 - Typer reads annotations at runtime
-from typing import TYPE_CHECKING, Annotated, Any, NoReturn
+from typing import TYPE_CHECKING, Annotated, Any, NoReturn, cast
 
 import typer
 
@@ -234,6 +234,12 @@ def chats_list(context: typer.Context) -> None:
                     "" if records is None else str(records),
                 )
             )
+        listed = {entry.key for entry, _ in resolved}
+        rows.extend(
+            (entry.name or entry.ref, entry.ref, "disabled", "", "", "")
+            for entry in library.entries
+            if entry.key not in listed
+        )
         return rows
 
     with _handled():
@@ -342,11 +348,21 @@ def status(context: typer.Context) -> None:
             snapshot = ctx.root / STATUS_FILE
             if not snapshot.is_file():
                 _fail("the service is not running and there is no status snapshot yet")
-            data = json.loads(snapshot.read_text(encoding="utf-8"))
+            data = _read_snapshot(snapshot)
             data["service"] = "stopped"
             typer.echo(f"The service is not running (last snapshot {data.get('updated_at')}).")
         for line in [*format_status_lines(data), *_chat_lines(data)]:
             typer.echo(line)
+
+
+def _read_snapshot(snapshot: Path) -> dict[str, Any]:
+    try:
+        loaded: object = json.loads(snapshot.read_text(encoding="utf-8"))
+    except OSError, ValueError:
+        loaded = None
+    if not isinstance(loaded, dict):
+        _fail(f"the status snapshot {snapshot} is unreadable")
+    return cast("dict[str, Any]", loaded)
 
 
 def _check_pct(value: int) -> int:

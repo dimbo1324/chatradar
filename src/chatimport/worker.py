@@ -110,6 +110,7 @@ class ChatWorker:
         self._queue: asyncio.Queue[ChatEvent | None] = asyncio.Queue()
         self._buffer: list[ChatEvent] = []
         self._first_buffered_at: datetime | None = None
+        self._state_suspect = False
 
         self._cached_folder: Path | None = None
         self._state: ChatState | None = None
@@ -224,6 +225,7 @@ class ChatWorker:
                 task.cancel()
                 await self._exited.wait()
         await self._cancel_tail()
+        self._drain_queue()
         await self._flush()
 
     async def run(self) -> None:
@@ -252,6 +254,8 @@ class ChatWorker:
             self._run_task = None
             await self._cancel_tail()
             try:
+                if not once:
+                    self._drain_queue()
                 await self._flush()
             except Exception:
                 log.exception("final flush failed for chat %s", self.chat_id)
@@ -282,6 +286,8 @@ class ChatWorker:
             except AccessLost:
                 await self._cancel_tail()
                 await self._mark_no_access()
+                if once:
+                    return
                 await self._discard_events_until_stop_or_refetch()
                 phase = PHASE_HEAD_BACKFILL if self._refetch else None
                 self._refetch = False
@@ -427,11 +433,15 @@ class ChatWorker:
                 )
             ):
                 await self._flush()
-            if self._recheck_requested:
+            if self._recheck_requested and self._backfill_finished():
                 await self._do_recheck()
             if now >= next_reconcile:
                 await self._flush()
                 return PHASE_CATCH_UP
+
+    def _backfill_finished(self) -> bool:
+        state = self._state or load_state(self.folder)
+        return state is not None and state.backfill.done
 
     def _seconds_from_now(self, seconds: float) -> datetime:
         return self._clock.now() + timedelta(seconds=seconds)
@@ -453,7 +463,11 @@ class ChatWorker:
                 return
             events, self._buffer = self._buffer, []
             self._first_buffered_at = None
-            state = load_state(self.folder)
+            try:
+                state = self._state_for_flush()
+            except BaseException:
+                self._requeue(events)
+                raise
             if state is None:
                 log.warning("dropped %s buffered events of chat %s", len(events), self.chat_id)
                 return
@@ -461,10 +475,31 @@ class ChatWorker:
             try:
                 self._state = self._writer().append(state, records) if records else state
             except BaseException:
-                self._buffer = events + self._buffer
-                self._first_buffered_at = self._clock.now()
+                self._state_suspect = True
+                self._requeue(events)
                 raise
             log.debug("flushed %s records of chat %s", len(records), self.chat_id)
+
+    def _state_for_flush(self) -> ChatState | None:
+        """The data may have been written before a failed state save: realign from the files."""
+        if self._state_suspect and self.folder.is_dir():
+            state = recover_chat(
+                self.folder,
+                now=self._clock.now(),
+                fallback_chat_id=self.chat_id,
+                fallback_title=self._chat.title,
+            )
+            self._state_suspect = False
+            return state
+        return load_state(self.folder)
+
+    def _requeue(self, events: list[ChatEvent]) -> None:
+        self._buffer = events + self._buffer
+        self._first_buffered_at = self._clock.now()
+
+    def _drain_queue(self) -> None:
+        while not self._queue.empty():
+            self._take(self._queue.get_nowait())
 
     def _records_from(self, events: list[ChatEvent], state: ChatState) -> list[Record]:
         events_config = self._config.events
@@ -614,6 +649,7 @@ class ChatWorker:
             state = replace(state, backfill=replace(state.backfill, done=True))
             self._state = self._writer().update_state(state)
         log.info("backfill of chat %s is complete", self.chat_id)
+        self._wake()
 
     async def _cancel_tail(self) -> None:
         task, self._tail_task = self._tail_task, None

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import errno
 import logging
 import os
 import shutil
@@ -76,8 +77,13 @@ def _move_sync(old: Path, new: Path) -> None:
     new.parent.mkdir(parents=True, exist_ok=True)
     _clear_empty_target(new)
     if _same_volume(old, new):
-        old.replace(new)
-        return
+        try:
+            old.replace(new)
+        except OSError as error:
+            if error.errno != errno.EXDEV:
+                raise
+        else:
+            return
     try:
         shutil.copytree(old, new)
         if _tree_stats(old) != _tree_stats(new):

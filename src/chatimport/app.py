@@ -236,8 +236,8 @@ class ChatImportApp:
             lock.release()
 
     async def run_once(self, chat: str | None = None) -> None:
-        lock = acquire_instance_lock(self._ctx.paths.lock_file)
         gateway = self._gateway or build_gateway(self._ctx, self._clock)
+        lock = acquire_instance_lock(self._ctx.paths.lock_file)
         try:
             await gateway.connect()
             library = load_library(self._ctx.library_file)
@@ -594,7 +594,10 @@ class ChatImportApp:
         item = self._active.pop(entry.key, None)
         if item is None or item[1].chat_id is None:
             return
-        controller = rt.registry.remove(item[1].chat_id)
+        chat_id = item[1].chat_id
+        if any(other[1].chat_id == chat_id for other in self._active.values()):
+            return
+        controller = rt.registry.remove(chat_id)
         if controller is not None:
             await controller.stop()
 

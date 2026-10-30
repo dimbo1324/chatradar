@@ -2,12 +2,16 @@
 
 from __future__ import annotations
 
+import re
 import tomllib
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, get_type_hints
 
 if TYPE_CHECKING:
     from pathlib import Path
+
+
+_DAILY_AT = re.compile(r"(?P<hour>[0-9]{1,2}):(?P<minute>[0-9]{2})")
 
 
 class ConfigError(ValueError):
@@ -112,7 +116,7 @@ def _build[T](cls: type[T], raw: dict[str, Any], section: str) -> T:
     values: dict[str, Any] = {}
     for name, value in raw.items():
         expected = hints[name]
-        if expected is tuple[str, ...]:
+        if expected == tuple[str, ...]:
             items: list[Any] = value if isinstance(value, list) else []  # pyright: ignore[reportUnknownVariableType]
             if not isinstance(value, list) or not all(isinstance(v, str) for v in items):
                 raise ConfigError(f"[{section}] {name} must be a list of strings")
@@ -167,17 +171,30 @@ def _validate(config: Config) -> None:
         raise ConfigError("[backfill] batch_size and max_parallel_chats must be at least 1")
     if config.recheck.days < 1:
         raise ConfigError("[recheck] days must be at least 1")
-    hour, _, minute = config.recheck.daily_at.partition(":")
-    if not (hour.isdigit() and minute.isdigit() and int(hour) < 24 and int(minute) < 60):
+    match = _DAILY_AT.fullmatch(config.recheck.daily_at)
+    if match is None or int(match["hour"]) > 23 or int(match["minute"]) > 59:
         raise ConfigError("[recheck] daily_at must look like HH:MM")
+    intervals = {
+        "[library] reload_check_seconds": config.library.reload_check_seconds,
+        "[watch] check_every_seconds": config.watch.check_every_seconds,
+        "[disk] check_every_minutes": config.disk.check_every_minutes,
+        "[live] reconcile_every_minutes": config.live.reconcile_every_minutes,
+    }
+    for name, value in intervals.items():
+        if value < 1:
+            raise ConfigError(f"{name} must be at least 1")
+    if config.backfill.pause_between_requests_sec < 0 or config.recheck.pause_between_chats_sec < 0:
+        raise ConfigError("pauses must not be negative")
+    if config.backfill.pause_between_chats_sec < 0:
+        raise ConfigError("[backfill] pause_between_chats_sec must not be negative")
 
 
 def load_config(path: Path) -> Config:
     """Read `config.toml`; a missing file means defaults."""
-    if not path.is_file():
+    if not path.exists():
         return Config()
     try:
-        data = tomllib.loads(path.read_text(encoding="utf-8"))
-    except (OSError, tomllib.TOMLDecodeError) as error:
+        data = tomllib.loads(path.read_bytes().decode("utf-8-sig"))
+    except (OSError, UnicodeDecodeError, tomllib.TOMLDecodeError) as error:
         raise ConfigError(f"cannot read {path}: {error}") from error
     return parse_config(data)

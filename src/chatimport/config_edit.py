@@ -16,8 +16,13 @@ _ROOT_KEY_RE = re.compile(r"^\s*root_dir\s*=")
 _KEY_RE = re.compile(r"^\s*[A-Za-z0-9_-]+\s*=")
 
 
+NEWLINE = chr(10)
+DEL = chr(0x7F)
+DEL_ESCAPE = chr(92) + "u007f"
+
+
 def _toml_string(value: str) -> str:
-    return json.dumps(value, ensure_ascii=False).replace("\x7f", "\u007f")
+    return json.dumps(value, ensure_ascii=False).replace(DEL, DEL_ESCAPE)
 
 
 def _read(path: Path) -> str:
@@ -29,10 +34,19 @@ def _read(path: Path) -> str:
         raise ConfigError(f"cannot read {path}: {error}") from error
 
 
+def _split_lines(text: str) -> list[str]:
+    """Split on line feeds only: U+2028 and friends are legal inside TOML strings."""
+    parts = text.split(NEWLINE)
+    lines = [part + NEWLINE for part in parts[:-1]]
+    if parts[-1]:
+        lines.append(parts[-1])
+    return lines
+
+
 def _edited(text: str, root: str) -> str:
     newline = "\r\n" if "\r\n" in text else "\n"
     assignment = f"root_dir = {_toml_string(root)}{newline}"
-    lines = text.splitlines(keepends=True)
+    lines = _split_lines(text)
     start = next((n for n, line in enumerate(lines) if _SECTION_RE.match(line.rstrip("\r\n"))), -1)
     if start < 0:
         if lines and not lines[-1].endswith("\n"):

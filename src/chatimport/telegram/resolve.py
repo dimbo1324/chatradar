@@ -16,7 +16,7 @@ from chatimport.ports import ResolvedChat, ResolveStatus
 _URL: Final = re.compile(r"^(?:https?://)?(?:www\.)?(?:t|telegram)\.me/(.+)$", re.IGNORECASE)
 _USERNAME: Final = re.compile(r"^[A-Za-z][A-Za-z0-9_]{2,31}$")
 _NUMBER: Final = re.compile(r"^-?\d+$")
-_MARKED_PREFIX: Final = "-100"
+_CHANNEL_ID_BASE: Final = 10**12
 
 
 class RefKind(StrEnum):
@@ -71,10 +71,12 @@ def _parse_path(path: str, original: str) -> ParsedRef:
     first = segments[0]
     if first.startswith("+") and len(first) > 1:
         return ParsedRef(RefKind.INVITE, first[1:])
-    if first.lower() == "joinchat" and len(segments) > 1 and segments[1]:
-        return ParsedRef(RefKind.INVITE, segments[1])
+    if first.lower() == "joinchat":
+        if len(segments) > 1 and segments[1]:
+            return ParsedRef(RefKind.INVITE, segments[1])
+        return ParsedRef(RefKind.TITLE, original)
     if first == "c" and len(segments) > 1 and segments[1].isdigit():
-        return ParsedRef(RefKind.NUMERIC, segments[1], int(f"{_MARKED_PREFIX}{segments[1]}"))
+        return ParsedRef(RefKind.NUMERIC, segments[1], -(_CHANNEL_ID_BASE + int(segments[1])))
     if _USERNAME.match(first):
         return ParsedRef(RefKind.PUBLIC, first)
     return ParsedRef(RefKind.TITLE, original)
@@ -103,7 +105,7 @@ async def resolve_ref(ref: str, lookup: EntityLookup) -> ResolvedChat:
             return await _resolve_invite(ref, parsed.value, lookup)
         case RefKind.NUMERIC:
             return await _resolve_number(ref, parsed, lookup)
-        case RefKind.TITLE:
+        case _:
             return await _resolve_title(ref, parsed.value, lookup)
 
 
@@ -134,23 +136,26 @@ async def _resolve_invite(ref: str, invite_hash: str, lookup: EntityLookup) -> R
 
 
 async def _resolve_number(ref: str, parsed: ParsedRef, lookup: EntityLookup) -> ResolvedChat:
-    number = parsed.number
-    if number is None:
-        return ResolvedChat(ref, ResolveStatus.NOT_FOUND)
+    number = parsed.number or 0
     wanted = {number}
     if number > 0:
-        wanted |= {-number, int(f"{_MARKED_PREFIX}{number}")}
-    for entity in await lookup.dialog_entities():
-        if lookup.peer_id(entity) in wanted:
-            return _found(ref, entity, lookup)
-    return ResolvedChat(ref, ResolveStatus.NOT_FOUND, detail="not among your dialogs")
+        wanted |= {-number, -(_CHANNEL_ID_BASE + number)}
+    matches = [
+        entity for entity in await lookup.dialog_entities() if lookup.peer_id(entity) in wanted
+    ]
+    if not matches:
+        return ResolvedChat(ref, ResolveStatus.NOT_FOUND, detail="not among your dialogs")
+    chats = [entity for entity in matches if entity_kind(entity) is not None]
+    return _found(ref, (chats or matches)[0], lookup)
 
 
 async def _resolve_title(ref: str, title: str, lookup: EntityLookup) -> ResolvedChat:
     matches = [
         entity
         for entity in await lookup.dialog_entities()
-        if entity_kind(entity) is not None and getattr(entity, "title", None) == title
+        if entity_kind(entity) is not None
+        and not getattr(entity, "deactivated", False)
+        and getattr(entity, "title", None) == title
     ]
     if not matches:
         return ResolvedChat(ref, ResolveStatus.NOT_FOUND, detail="no dialog with this title")

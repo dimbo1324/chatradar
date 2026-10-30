@@ -6,7 +6,7 @@ from __future__ import annotations
 import asyncio
 import logging
 from contextlib import contextmanager
-from datetime import timedelta
+from datetime import UTC, timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Final
 
@@ -220,7 +220,8 @@ class TelethonGateway:
                     continue
                 if message.id > max_id:
                     return
-                if message.date >= since:
+                dated = message.date if message.date.tzinfo else message.date.replace(tzinfo=UTC)
+                if dated >= since:
                     yield self._record(message, chat_id)
 
     def add_event_handler(self, handler: EventHandler) -> None:

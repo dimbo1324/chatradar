@@ -165,7 +165,14 @@ def _latest_file(folder: Path) -> Path | None:
         files = [p for p in folder.iterdir() if p.is_file()]
     except OSError:
         return None
-    return max(files, key=lambda p: p.stat().st_mtime, default=None)
+    return max(files, key=_modified, default=None)
+
+
+def _modified(path: Path) -> float:
+    try:
+        return path.stat().st_mtime
+    except OSError:
+        return float("-inf")
 
 
 class _Tray:
