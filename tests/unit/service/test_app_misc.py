@@ -8,6 +8,8 @@ from typing import Any
 import pytest
 
 from chatimport import app as app_module
+from chatimport import context as context_module
+from chatimport import service_runtime as service_runtime_module
 from chatimport.app import (
     ServiceContext,
     build_gateway,
@@ -182,7 +184,7 @@ def test_build_gateway_passes_configuration_to_the_telethon_gateway(
             captured["args"] = args
             captured["kwargs"] = kwargs
 
-    monkeypatch.setattr(app_module, "TelethonGateway", Recorder)
+    monkeypatch.setattr(context_module, "TelethonGateway", Recorder)
     base_ctx = make_env(tmp_path).ctx
     config = parse_config(
         {
@@ -406,7 +408,7 @@ class StubDownloader:
 @pytest.fixture
 def stub_downloader(monkeypatch: pytest.MonkeyPatch) -> type[StubDownloader]:
     StubDownloader.instances = []
-    monkeypatch.setattr(app_module, "MediaDownloader", StubDownloader)
+    monkeypatch.setattr(service_runtime_module, "MediaDownloader", StubDownloader)
     return StubDownloader
 
 

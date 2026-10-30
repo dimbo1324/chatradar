@@ -351,12 +351,21 @@ async def test_check_with_repair_waits_for_the_chat_lock(live: Env) -> None:
     assert result.ok
 
 
-async def test_check_without_repair_does_not_take_the_chat_lock(live: Env) -> None:
-    controller = live.app._runtime().registry.get(A)  # pyright: ignore[reportPrivateUsage]
-    assert controller is not None
+async def test_check_without_repair_reads_each_chat_under_its_own_lock_only(live: Env) -> None:
+    registry = live.app.runtime().registry
+    alpha, beta = registry.get(A), registry.get(B)
+    assert alpha is not None
+    assert beta is not None
 
-    async with controller.lock:
-        result = await asyncio.wait_for(live.run_command("check"), 10)
+    async with beta.lock:
+        task = asyncio.create_task(live.run_command("check"))
+        for _ in range(200):
+            await asyncio.sleep(0.01)
+            if not alpha.lock.locked():
+                break
+        assert not task.done()
+        assert not alpha.lock.locked()
+    result = await asyncio.wait_for(task, 10)
 
     assert result.ok
 
