@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import logging
 from dataclasses import replace
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING, Any
 
 import pytest
 
-from chatimport.recheck import compute_recheck
+import chatimport.recheck as recheck_module
+from chatimport.recheck import compute_recheck, window_parts
 from chatimport.records import (
     DETECTED_EVENT,
     DETECTED_RECHECK,
@@ -26,8 +27,7 @@ from chatimport.storage.writer import ChunkWriter
 from tests.fakes import CHAT_ID, NOW, FakeGateway, msg
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
-    from datetime import datetime
+    from collections.abc import Iterable, Iterator, Sequence
     from pathlib import Path
 
 DAYS = 7
@@ -463,3 +463,38 @@ async def test_stale_records_in_the_files_are_ignored(tmp_path: Path) -> None:
     result = await recheck(tmp_path, state, telegram(m(3, text="changed")))
 
     assert [(type(r).__name__, record_sort_id(r)) for r in result] == [("EditRecord", 3)]
+
+
+async def test_only_parts_from_the_window_month_on_are_read(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    old = m(1, hours_ago=24 * 90)
+    state = build(tmp_path, [old, m(2, hours_ago=24 * 40), m(3), m(4, hours_ago=1)])
+    (tmp_path / "2026-07_001.jsonl").write_bytes(b"{not json at all\n")
+    opened: list[str] = []
+    real = recheck_module.iter_records
+
+    def spy(folder: Path, parts: Iterable[Path] | None = None) -> Iterator[Record]:
+        listed = list(parts) if parts is not None else None
+        opened.extend(p.name for p in listed or [])
+        return real(folder, listed)
+
+    monkeypatch.setattr(recheck_module, "iter_records", spy)
+
+    result = await recheck(tmp_path, state, telegram(m(3), m(4, hours_ago=1)))
+
+    assert result == []
+    assert opened == ["2026-10_001.jsonl"]
+
+
+def test_the_window_starts_with_the_month_of_its_first_day(tmp_path: Path) -> None:
+    for name in ("2026-08_001", "2026-09_001", "2026-09_002", "2026-10_001", "notes"):
+        (tmp_path / f"{name}.jsonl").write_bytes(b"")
+
+    since = datetime(2026, 9, 30, 23, 0, tzinfo=UTC)
+
+    assert [p.stem for p in window_parts(tmp_path, since)] == [
+        "2026-09_001",
+        "2026-09_002",
+        "2026-10_001",
+    ]

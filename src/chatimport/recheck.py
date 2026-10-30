@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, replace
-from datetime import UTC, datetime, time, timedelta, tzinfo
+from datetime import UTC, datetime, time, timedelta
+from functools import partial
 from typing import TYPE_CHECKING
 
+from chatimport import worker_store
 from chatimport.records import (
     DETECTED_RECHECK,
     DeleteRecord,
@@ -16,10 +18,12 @@ from chatimport.records import (
     Record,
     record_sort_id,
 )
-from chatimport.storage.writer import iter_records
+from chatimport.storage.layout import list_parts, month_key, parse_part_name
+from chatimport.storage.reader import iter_records
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+    from datetime import tzinfo
     from pathlib import Path
 
     from chatimport.config import RecheckConfig
@@ -44,13 +48,26 @@ def _comparable(media: MediaInfo | None) -> MediaInfo | None:
     return replace(media, file=None) if media else None
 
 
+def window_parts(folder: Path, since: datetime) -> list[Path]:
+    """Parts that can hold a record dated at or after `since`: every record lives in the
+    month of its own date (message date, edit date, detection time), so older months
+    cannot."""
+    first = month_key(since)
+    return [
+        path
+        for path in list_parts(folder)
+        if (parsed := parse_part_name(path.name)) is not None and parsed[0] >= first
+    ]
+
+
 def _read_known(folder: Path, state: ChatState, since: datetime) -> dict[int, _Known]:
-    """Current version of every window message, in one streaming pass over the parts."""
+    """Current version of every window message, in one streaming pass over the window's
+    parts."""
     floor, ceiling = state.floor_id, state.last_id
     messages: dict[int, _Known] = {}
     edits: dict[int, EditRecord] = {}
     deleted: set[int] = set()
-    for record in iter_records(folder):
+    for record in iter_records(folder, window_parts(folder, since)):
         match record:
             case MessageRecord():
                 if floor <= record.msg_id <= ceiling and record.date >= since:
@@ -101,7 +118,7 @@ async def compute_recheck(
     if state.last_id <= state.floor_id:
         return []
     since = now - timedelta(days=days)
-    known = _read_known(folder, state, since)
+    known = await worker_store.run_blocking(partial(_read_known, folder, state, since))
 
     result: list[Record] = []
     seen: set[int] = set()
@@ -155,18 +172,21 @@ async def compute_recheck(
     return result
 
 
-def seconds_until_next(daily_at: str, now: datetime, tz: tzinfo) -> float:
-    """Seconds from `now` to the next local `HH:MM` in `tz`; always positive."""
+def seconds_until_next(daily_at: str, now: datetime, tz: tzinfo | None = None) -> float:
+    """Seconds from `now` to the next local `HH:MM` in `tz`; always positive.
+
+    Without `tz` the system zone is used with the offset in force on the target day (a
+    naive wall time is converted by the operating system's rules), so a DST change between
+    now and the target does not shift the result by an hour.
+    """
     hour, minute = (int(part) for part in daily_at.split(":", 1))
-    local = now.astimezone(tz)
-    target = datetime.combine(local.date(), time(hour, minute), tzinfo=tz)
-    if target.astimezone(UTC) <= local.astimezone(UTC):
-        target = datetime.combine(local.date() + timedelta(days=1), time(hour, minute), tzinfo=tz)
-    return (target.astimezone(UTC) - local.astimezone(UTC)).total_seconds()
-
-
-def _system_tz() -> tzinfo:
-    return datetime.now(UTC).astimezone().tzinfo or UTC
+    wall = time(hour, minute)
+    local_day = now.astimezone(tz).date()
+    instant = now.astimezone(UTC)
+    target = datetime.combine(local_day, wall, tzinfo=tz).astimezone(UTC)
+    if target <= instant:
+        target = datetime.combine(local_day + timedelta(days=1), wall, tzinfo=tz).astimezone(UTC)
+    return (target - instant).total_seconds()
 
 
 class RecheckScheduler:
@@ -180,11 +200,12 @@ class RecheckScheduler:
         last_recheck_at: Callable[[ChatController], datetime | None],
         local_tz: tzinfo | None = None,
     ) -> None:
+        """`local_tz=None` follows the system zone, re-read for every daily wait."""
         self._registry = registry
         self._config = config
         self._clock = clock
         self._last_recheck_at = last_recheck_at
-        self._tz = local_tz or _system_tz()
+        self._tz = local_tz
 
     async def run(self) -> None:
         if not self._config.enabled:

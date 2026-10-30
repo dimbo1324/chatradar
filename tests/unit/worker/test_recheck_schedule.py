@@ -331,3 +331,39 @@ def test_the_test_zones_follow_the_2026_transition_rules(
 
     assert (local.hour, local.minute, local.second, local.fold) == (*wall, fold)
     assert local.astimezone(UTC) == instant
+
+
+@pytest.mark.parametrize("week", range(53))
+def test_without_a_zone_the_wait_lands_on_the_system_local_time_of_that_day(week: int) -> None:
+    now = utc(2026, 1, 1, 12) + timedelta(weeks=week)
+
+    wait = seconds_until_next("04:00", now)
+
+    landing = (now + timedelta(seconds=wait)).astimezone()
+    assert (landing.hour, landing.minute) == (4, 0)
+    assert 0 < wait <= 25 * HOUR
+
+
+async def test_the_system_zone_is_looked_up_again_for_every_daily_wait(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    zones: list[tzinfo | None] = []
+
+    def recording(daily_at: str, now: datetime, tz: tzinfo | None = None) -> float:
+        zones.append(tz)
+        return HOUR
+
+    monkeypatch.setattr("chatimport.recheck.seconds_until_next", recording)
+    clock = FakeClock()
+
+    def on_sleep(_: float) -> None:
+        if len(clock.sleeps) >= 3:
+            raise StopLoop
+
+    clock.on_sleep = on_sleep
+    scheduler = RecheckScheduler(ChatRegistry(), RecheckConfig(), clock, lambda _c: None)
+
+    with pytest.raises(StopLoop):
+        await scheduler.run()
+
+    assert zones == [None, None, None]
