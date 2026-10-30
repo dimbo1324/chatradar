@@ -50,7 +50,7 @@ if TYPE_CHECKING:
 
     from chatimport.config import Config
     from chatimport.ports import ChatEvent, Clock, TelegramGateway
-    from chatimport.runtime import Notifier, TrackedChat
+    from chatimport.runtime import BackfillSlots, Notifier, TrackedChat
 
 log = logging.getLogger(__name__)
 
@@ -97,8 +97,10 @@ class ChatWorker:
         clock: Clock,
         notifier: Notifier,
         recheck: RecheckFn,
+        slots: BackfillSlots | None = None,
     ) -> None:
         self._chat = chat
+        self._slots = slots
         self._root = root
         self._gateway = gateway
         self._config = config
