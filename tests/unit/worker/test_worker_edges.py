@@ -204,7 +204,7 @@ async def test_an_unreadable_part_does_not_break_the_oldest_date_lookup(
         return real_iter_part_records(path)
 
     rig = make_rig(range(1, 1001))
-    monkeypatch.setattr("chatimport.worker.iter_part_records", flaky)
+    monkeypatch.setattr("chatimport.storage.chat_store.iter_part_records", flaky)
     rig.start()
 
     await rig.until_complete()

@@ -33,6 +33,8 @@ if TYPE_CHECKING:
     from collections.abc import AsyncIterator, Callable, Iterable
     from pathlib import Path
 
+    from chatimport.runtime import BackfillSlots
+
 TITLE = "Example Chat"
 TURNS = 30000
 
@@ -139,6 +141,7 @@ class RigFactory:
         clock: FakeClock | None = None,
         notifier: RecordingNotifier | None = None,
         recheck: RecheckFn | None = None,
+        slots: BackfillSlots | None = None,
     ) -> Rig:
         gateway = gateway if gateway is not None else FakeGateway()
         if ids is not None:
@@ -155,14 +158,22 @@ class RigFactory:
             clock=clock,
             notifier=notifier,
             recheck=recheck if recheck is not None else compute_recheck,
+            slots=slots,
         )
         rig = Rig(self.root, gateway, clock, notifier, config, chat, worker)
         self.rigs.append(rig)
         return rig
 
 
+async def run_inline[T](call: Callable[[], T]) -> T:
+    return call()
+
+
 @pytest.fixture
-async def make_rig(tmp_path: Path) -> AsyncIterator[RigFactory]:
+async def make_rig(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> AsyncIterator[RigFactory]:
+    """File work runs inline instead of in threads, so yielding to the loop is enough to see
+    its effect (the thread path has its own tests)."""
+    monkeypatch.setattr("chatimport.worker_store.run_blocking", run_inline)
     factory = RigFactory(tmp_path / "ChatImport")
     yield factory
     for rig in factory.rigs:

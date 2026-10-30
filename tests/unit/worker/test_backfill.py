@@ -319,10 +319,9 @@ async def test_thousands_of_messages_over_many_months_in_tiny_parts(
     assert rig.clock.sleeps.count(1.0) >= total // 50 - 2
 
 
-@pytest.mark.parametrize("mode", ["cancel", "crash"])
 @pytest.mark.parametrize("cut", [1, 7, 150, 299, 315])
 async def test_interrupted_tail_resumes_from_oldest_done_id_without_gaps_or_duplicates(
-    make_rig: RigFactory, cut: int, mode: str
+    make_rig: RigFactory, cut: int
 ) -> None:
     first = make_rig(range(1, 1001))
     seen = 0
@@ -333,20 +332,14 @@ async def test_interrupted_tail_resumes_from_oldest_done_id_without_gaps_or_dupl
             return
         seen += 1
         if seen == cut:
-            if mode == "crash":
-                raise RuntimeError("simulated crash")
             assert first.task is not None
             first.task.cancel()
             raise asyncio.CancelledError
 
     first.gateway.page_hook = hook
     task = first.start()
-    if mode == "crash":
-        with pytest.raises(RuntimeError, match="simulated crash"):
-            await asyncio.wait_for(task, 5)
-    else:
-        with pytest.raises(asyncio.CancelledError):
-            await asyncio.wait_for(task, 5)
+    with pytest.raises(asyncio.CancelledError):
+        await asyncio.wait_for(task, 5)
 
     interrupted = first.state()
     assert not interrupted.backfill.done
@@ -362,6 +355,37 @@ async def test_interrupted_tail_resumes_from_oldest_done_id_without_gaps_or_dupl
     resumed = [args for name, args in second.gateway.calls[mark:] if name == "iter_history"]
     assert resumed[0][1] == interrupted.backfill.oldest_done_id
     assert_disk_consistent(second.folder, expect_ids=range(1, 1001))
+
+
+@pytest.mark.parametrize("cut", [1, 7, 150, 299, 315])
+async def test_a_failing_tail_retries_alone_from_oldest_done_id(
+    make_rig: RigFactory, cut: int
+) -> None:
+    rig = make_rig(range(1, 1001))
+    seen = 0
+    done_at_failure: list[int] = []
+
+    def hook() -> None:
+        nonlocal seen
+        if not tail_calls(rig.gateway):
+            return
+        seen += 1
+        if seen == cut:
+            done_at_failure.append(rig.state().backfill.oldest_done_id)
+            raise RuntimeError("simulated crash")
+
+    rig.gateway.page_hook = hook
+    rig.start()
+    await rig.until_complete()
+
+    tails = tail_calls(rig.gateway)
+    assert len(tails) == 2
+    assert tails[1][1] == done_at_failure[0]
+    assert rig.task is not None
+    assert not rig.task.done()
+    assert 60.0 in rig.clock.sleeps
+    assert rig.worker.status().error is None
+    assert_disk_consistent(rig.folder, expect_ids=range(1, 1001))
 
 
 async def test_rolled_back_state_json_after_a_finished_backfill_rewrites_nothing(

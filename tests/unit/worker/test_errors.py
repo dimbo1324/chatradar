@@ -9,7 +9,7 @@ import pytest
 from chatimport.ports import AccessLost, FloodWait, SessionRevoked
 from chatimport.runtime import Level
 from chatimport.storage.state import PHASE_NO_ACCESS
-from tests.fakes import CHAT_ID, FakeClock, msg
+from tests.fakes import CHAT_ID, NOW, FakeClock, msg
 from tests.unit.worker.rig import (
     TITLE,
     Rig,
@@ -246,7 +246,7 @@ async def test_a_revoked_session_ends_the_run_and_notifies_without_details(
     assert rig.worker.lock.locked() is False
 
 
-@pytest.mark.parametrize("site", ["head_newest", "catch_up", "tail"])
+@pytest.mark.parametrize("site", ["head_newest", "catch_up"])
 async def test_an_unexpected_error_ends_the_run_and_a_new_run_recovers(
     make_rig: RigFactory, site: str
 ) -> None:
@@ -261,3 +261,24 @@ async def test_an_unexpected_error_ends_the_run_and_a_new_run_recovers(
     rig.start()
     await rig.until_complete()
     assert_disk_consistent(rig.folder, expect_ids=expected_ids(site))
+
+
+async def test_a_tail_error_does_not_stop_live_and_the_tail_retries_alone(
+    make_rig: RigFactory,
+) -> None:
+    clock = GatedClock(blocked=60)
+    rig = make_rig(range(1, 1001), clock=clock)
+    fail_once_in_tail(rig, RuntimeError("boom"), after=3)
+    task = rig.start()
+    await rig.until(lambda: clock.gated == [60], "tail waits for its retry")
+
+    assert rig.worker.status().error == "tail: RuntimeError"
+    for i in range(1001, 1006):
+        rig.worker.submit(new_event(i, date=NOW))
+    await rig.until(lambda: max(rig.ids()) == 1005, "live flush while the tail is failing")
+    assert not task.done()
+
+    clock.gate.set()
+    await rig.until_complete()
+    assert rig.worker.status().error is None
+    assert_disk_consistent(rig.folder, expect_ids=range(1, 1006), ordered=False)
