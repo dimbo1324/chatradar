@@ -11,8 +11,13 @@ from datetime import UTC, datetime
 from typing import Any, Final
 
 from chatimport.records import MediaInfo, MessageRecord, format_dt
+from chatimport.refs import CHANNEL_ID_BASE
 
-_CHANNEL_ID_BASE: Final = 10**12
+PERSONAL_RAW_KEYS: Final = frozenset(
+    {"from_name", "post_author", "first_name", "last_name", "phone_number", "vcard", "username"}
+)
+"""Keys of `Message.to_dict()` that name or reach a person (hidden-forward authors, post
+signatures, shared contacts); dropped from `raw` when sender names are off."""
 
 _SERVICE_BY_ACTION: Final[dict[str, str]] = {
     "MessageActionChatAddUser": "join",
@@ -48,8 +53,8 @@ _MEDIA_PROPERTIES: Final[tuple[str, ...]] = (
 def message_link(chat_id: int, username: str | None, msg_id: int) -> str | None:
     if username:
         return f"https://t.me/{username}/{msg_id}"
-    if chat_id <= -_CHANNEL_ID_BASE:
-        return f"https://t.me/c/{-chat_id - _CHANNEL_ID_BASE}/{msg_id}"
+    if chat_id <= -CHANNEL_ID_BASE:
+        return f"https://t.me/c/{-chat_id - CHANNEL_ID_BASE}/{msg_id}"
     return None
 
 
@@ -120,7 +125,7 @@ def map_message(
         service=service_kind(getattr(message, "action", None)),
         link=message_link(chat_id, chat_username, msg_id),
         media=map_media(message),
-        raw=_jsonable(message.to_dict()) if include_raw else None,
+        raw=_raw(message, include_sender_names=include_sender_names) if include_raw else None,
     )
 
 
@@ -147,17 +152,24 @@ def _as_utc(value: datetime) -> datetime:
     return value.astimezone(UTC)
 
 
-def _jsonable(value: Any) -> Any:
+def _raw(message: Any, *, include_sender_names: bool) -> Any:
+    drop: frozenset[str] = frozenset() if include_sender_names else PERSONAL_RAW_KEYS
+    return _jsonable(message.to_dict(), drop)
+
+
+def _jsonable(value: Any, drop: frozenset[str] = frozenset()) -> Any:
     if isinstance(value, datetime):
         return format_dt(_as_utc(value))
     if isinstance(value, bytes):
         return base64.b64encode(value).decode("ascii")
     if isinstance(value, dict):
         mapping: dict[Any, Any] = value  # pyright: ignore[reportUnknownVariableType]
-        return {str(key): _jsonable(item) for key, item in mapping.items()}
+        return {
+            str(key): _jsonable(item, drop) for key, item in mapping.items() if str(key) not in drop
+        }
     if isinstance(value, list | tuple):
         items: list[Any] = list(value)  # pyright: ignore[reportUnknownArgumentType, reportUnknownVariableType]
-        return [_jsonable(item) for item in items]
+        return [_jsonable(item, drop) for item in items]
     if value is None or isinstance(value, bool | int | float | str):
         return value
     return str(value)

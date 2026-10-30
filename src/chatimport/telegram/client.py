@@ -4,7 +4,9 @@ read, logged or copied here."""
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import logging
+import sys
 from contextlib import contextmanager
 from datetime import UTC, timedelta
 from pathlib import Path
@@ -27,6 +29,7 @@ from chatimport.ports import (
     ResolvedChat,
     SessionRevoked,
 )
+from chatimport.storage.fileio import PRIVATE_FILE_MODE
 from chatimport.telegram.mapper import map_message
 from chatimport.telegram.resolve import EntityLookup, InviteInfo, entity_kind, resolve_ref
 
@@ -64,6 +67,26 @@ _UNKNOWN_USERNAME_ERRORS: Final = (
 
 
 _telethon_utils: Any = utils
+_SESSION_COMPANIONS: Final = ("", "-journal", "-wal", "-shm")
+
+
+def _make_client(config: TelegramConfig, session_path: Path) -> Any:
+    return TelegramClient(
+        str(session_path),
+        config.api_id,
+        config.api_hash,
+        flood_sleep_threshold=config.flood_sleep_threshold,
+    )
+
+
+def protect_session(session_path: Path) -> None:
+    """Owner-only permissions on POSIX for the session and its SQLite side files: the session
+    is full access to the account. Windows keeps the per-user ACL of the app folder."""
+    if sys.platform == "win32":
+        return
+    for suffix in _SESSION_COMPANIONS:
+        with contextlib.suppress(OSError):
+            session_path.with_name(session_path.name + suffix).chmod(PRIVATE_FILE_MODE)
 
 
 def _peer_id(peer: Any) -> int:
@@ -142,12 +165,8 @@ class TelethonGateway:
         self._include_sender_names = include_sender_names
         self._include_raw = include_raw
         self._clock = clock
-        self._client: Any = TelegramClient(
-            str(session_path),
-            config.api_id,
-            config.api_hash,
-            flood_sleep_threshold=config.flood_sleep_threshold,
-        )
+        self._session_path = session_path
+        self._client: Any = _make_client(config, session_path)
         self._entities: dict[int, Any] = {}
         self._handlers: list[EventHandler] = []
         self._lookup: EntityLookup = _Lookup(self._client, self._remember)
@@ -155,6 +174,7 @@ class TelethonGateway:
     async def connect(self) -> None:
         with _translate_errors():
             await self._client.connect()
+            protect_session(self._session_path)
             if not await self._client.is_user_authorized():
                 raise SessionRevoked("not logged in; run `chatimport login`")
 
@@ -322,12 +342,7 @@ async def login(
     if not config.is_configured:
         raise ChatImportError("telegram api_id and api_hash are not set in config.toml")
     session_path.parent.mkdir(parents=True, exist_ok=True)
-    client: Any = TelegramClient(
-        str(session_path),
-        config.api_id,
-        config.api_hash,
-        flood_sleep_threshold=config.flood_sleep_threshold,
-    )
+    client = _make_client(config, session_path)
     try:
         with _translate_errors():
             await client.start(
@@ -336,5 +351,6 @@ async def login(
             me = await client.get_me()
     finally:
         await client.disconnect()
+        protect_session(session_path)
     username = getattr(me, "username", None)
     return f"@{username}" if username else f"id {me.id}"

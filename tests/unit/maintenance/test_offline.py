@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 from dataclasses import replace
 from typing import TYPE_CHECKING
 
@@ -9,10 +8,8 @@ import pytest
 from chatimport.app import ServiceContext
 from chatimport.config import Config
 from chatimport.offline import (
-    OfflineController,
     lower_floor,
     lower_floor_state,
-    offline_registry,
     offline_trim,
     resolve_chat_selector,
 )
@@ -31,8 +28,6 @@ from tests.unit.maintenance.helpers import (
 
 if TYPE_CHECKING:
     from pathlib import Path
-
-    from chatimport.runtime import ChatStatus
 
 
 def context(tmp_path: Path, library: str | None = None) -> ServiceContext:
@@ -59,94 +54,7 @@ def named_chat(
     return chat.folder
 
 
-# ---------------------------------------------------------------- OfflineController
-
-
-async def test_offline_controller_exposes_the_folder_and_does_nothing_on_commands(
-    tmp_path: Path,
-) -> None:
-    chat = build_chat(tmp_path / "root", -5, [[mmsg(1, chat_id=-5)]], title="Fives")
-    controller = OfflineController(chat.folder, read_state(chat))
-
-    assert controller.chat_id == -5
-    assert controller.folder == chat.folder
-    assert isinstance(controller.lock, asyncio.Lock)
-    assert controller.lock is controller.lock
-    controller.pause()
-    controller.resume()
-    controller.pause_backfill()
-    controller.resume_backfill()
-    controller.request_refetch()
-    controller.request_recheck(3)
-    assert controller.submit(object()) is None  # pyright: ignore[reportArgumentType]
-    await controller.stop()
-    assert message_ids(chat) == [1]
-
-
-def test_offline_status_reads_the_current_state_not_the_initial_one(tmp_path: Path) -> None:
-    chat = build_chat(tmp_path / "root", -5, [[mmsg(1, chat_id=-5), mmsg(2, chat_id=-5)]])
-    controller = OfflineController(chat.folder, read_state(chat))
-    save_state(
-        chat.folder,
-        replace(
-            read_state(chat),
-            title="Renamed",
-            phase="paused",
-            last_id=99,
-            backfill=BackfillState(done=True),
-        ),
-    )
-
-    status: ChatStatus = controller.status()
-
-    assert (status.chat_id, status.title, status.phase, status.last_id) == (
-        -5,
-        "Renamed",
-        "paused",
-        99,
-    )
-    assert status.backfill_done is True
-    assert status.records == 2
-    assert status.paused is False
-    assert status.error is None
-
-
-def test_offline_status_falls_back_to_the_initial_state_when_the_file_is_gone(
-    tmp_path: Path,
-) -> None:
-    chat = build_chat(tmp_path / "root", -5, [[mmsg(1, chat_id=-5)]], title="Fives")
-    controller = OfflineController(chat.folder, read_state(chat))
-    (chat.folder / STATE_FILE).unlink()
-
-    status = controller.status()
-
-    assert status.title == "Fives"
-    assert status.records == 1
-
-
-# ---------------------------------------------------------------- offline_registry
-
-
-def test_registry_skips_folders_without_a_usable_state_and_service_folders(
-    tmp_path: Path,
-) -> None:
-    root = tmp_path / "root"
-    good = build_chat(root, -1, [[mmsg(1, chat_id=-1)]], title="Good")
-    broken = build_chat(root, -2, [[mmsg(1, chat_id=-2)]], title="Broken")
-    (broken.folder / STATE_FILE).write_text("{ nope", encoding="utf-8")
-    (root / "empty_-3").mkdir()
-    (root / "_service_-4").mkdir()
-    (root / "_trim_log.jsonl").write_text("{}\n", encoding="utf-8")
-
-    registry = offline_registry(root)
-
-    assert [c.chat_id for c in registry.all()] == [-1]
-    assert registry.get(-1) is not None
-    assert registry.get(-1).folder == good.folder  # pyright: ignore[reportOptionalMemberAccess]
-
-
-def test_registry_of_a_missing_root_is_empty(tmp_path: Path) -> None:
-    assert len(offline_registry(tmp_path / "nowhere")) == 0
+# ---------------------------------------------------------------- offline trim
 
 
 async def test_offline_trim_works_on_the_data_folder_without_a_service(tmp_path: Path) -> None:
@@ -404,3 +312,116 @@ def test_selector_ignores_chats_whose_state_is_unreadable(tmp_path: Path) -> Non
 
     with pytest.raises(ChatImportError):
         resolve_chat_selector(ctx, "Chess Club")
+
+
+# ---------------------------------------------------------------- i18n and refs
+
+WORK = "\u0420\u0430\u0431\u043e\u0442\u0430"
+HOME = "\u0414\u043e\u043c"
+NEWS = "\u041d\u043e\u0432\u043e\u0441\u0442\u0438"
+FIRE = "\U0001f525\U0001f525"
+
+
+def invite_library(name: str) -> str:
+    return f'[[chat]]\nref = "https://t.me/+x"\nname = "{name}"\n'
+
+
+def test_selector_by_cyrillic_name_does_not_match_other_cyrillic_chats(tmp_path: Path) -> None:
+    ctx = context(tmp_path, invite_library(NEWS))
+    named_chat(ctx, -1001, WORK)
+    named_chat(ctx, -1002, HOME)
+
+    with pytest.raises(ChatImportError, match="no known chat matches"):
+        resolve_chat_selector(ctx, NEWS)
+
+
+def test_selector_by_name_with_only_other_chat_on_disk(tmp_path: Path) -> None:
+    ctx = context(tmp_path, invite_library(NEWS))
+    named_chat(ctx, -1001, WORK)
+
+    with pytest.raises(ChatImportError, match="no known chat matches"):
+        resolve_chat_selector(ctx, NEWS)
+
+
+def test_a_name_without_letters_never_matches_through_the_fallback_folder(
+    tmp_path: Path,
+) -> None:
+    ctx = context(tmp_path, invite_library(FIRE))
+    named_chat(ctx, -1001, "\U0001f600")
+
+    with pytest.raises(ChatImportError, match="no known chat matches"):
+        resolve_chat_selector(ctx, FIRE)
+
+
+def test_a_cyrillic_library_name_maps_to_its_own_folder(tmp_path: Path) -> None:
+    ctx = context(tmp_path, invite_library(NEWS))
+    named_chat(ctx, -1001, WORK)
+    named_chat(ctx, -1003, "Telegram title", folder_title=NEWS)
+
+    assert resolve_chat_selector(ctx, NEWS) == -1003
+    assert resolve_chat_selector(ctx, NEWS.lower()) == -1003
+
+
+def test_selector_matches_telegram_me_entry(tmp_path: Path) -> None:
+    ctx = context(tmp_path, '[[chat]]\nref = "https://telegram.me/Team_Chat?x=1"\n')
+    named_chat(ctx, -77, "Team", username="team_chat")
+
+    assert resolve_chat_selector(ctx, "https://telegram.me/Team_Chat?x=1") == -77
+
+
+def test_selector_by_title_ignores_the_unicode_form(tmp_path: Path) -> None:
+    ctx = context(tmp_path)
+    named_chat(ctx, -9, "Caf\u00e9 Espa\u00f1a")
+
+    assert resolve_chat_selector(ctx, "CAFE\u0301 ESPAN\u0303A") == -9
+
+
+def test_library_channel_link_ref_maps_by_its_id(tmp_path: Path) -> None:
+    ctx = context(tmp_path, '[[chat]]\nref = "https://t.me/c/555/9"\nname = "Linked"\n')
+    named_chat(ctx, -1000000000555, "Whatever")
+
+    assert resolve_chat_selector(ctx, "Linked") == -1000000000555
+
+
+def unreadable_for(monkeypatch: pytest.MonkeyPatch, folder: Path) -> None:
+    from chatimport import offline
+    from chatimport.storage.state import StateUnreadable, load_state
+
+    def flaky(path: Path) -> object:
+        if path == folder:
+            raise StateUnreadable(path, PermissionError("locked"))
+        return load_state(path)
+
+    monkeypatch.setattr(offline, "load_state", flaky)
+
+
+def test_selector_refuses_while_a_state_is_unreadable(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    ctx = context(tmp_path)
+    locked = named_chat(ctx, -10, "Twin")
+    named_chat(ctx, -20, "Twin")
+    unreadable_for(monkeypatch, locked)
+
+    with pytest.raises(ChatImportError, match="cannot be read right now"):
+        resolve_chat_selector(ctx, "Twin")
+    assert resolve_chat_selector(ctx, "-20") == -20
+
+
+def test_lower_floor_skips_an_unreadable_state(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = tmp_path / "root"
+    locked = build_chat(root, -1, [[mmsg(1, chat_id=-1)]], title="Locked").folder
+    build_chat(root, -2, [[mmsg(1, chat_id=-2)]], title="Fine")
+    unreadable_for(monkeypatch, locked)
+
+    assert lower_floor(root, None) == [-2]
+
+
+async def test_offline_trim_of_an_unknown_chat_is_an_error(tmp_path: Path) -> None:
+    ctx = context(tmp_path)
+    build_chat(ctx.root, -1, [[mmsg(1, chat_id=-1)]], title="A")
+
+    with pytest.raises(ChatImportError, match="no chat -9"):
+        await offline_trim(ctx, 50, -9)

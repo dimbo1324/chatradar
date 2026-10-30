@@ -7,25 +7,27 @@ Menu items only forward a command and show its failure; they hold no business lo
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
-import os
-import subprocess
-import sys
 import threading
-from contextlib import contextmanager
-from typing import TYPE_CHECKING, Any, Literal, Protocol, cast
+from typing import TYPE_CHECKING, Any, Final, Literal, Protocol
 
 from PIL import Image, ImageDraw
 
 from chatimport.control import AlreadyRunning
-from chatimport.paths import normalize_root
+from chatimport.logging_setup import configure_logging
+from chatimport.paths import cloud_sync_warning, normalize_root
 from chatimport.ports import ChatImportError
 from chatimport.runtime import Level
-from chatimport.status import STATUS_FILE, format_status_lines
+from chatimport.status import format_status_lines, read_snapshot
+from chatimport.tray_dialogs import ask_move as _ask_move
+from chatimport.tray_dialogs import choose_folder as _choose_folder
+from chatimport.tray_dialogs import confirm as _confirm
+from chatimport.tray_dialogs import latest_file as _latest_file
+from chatimport.tray_dialogs import open_path as _open_path
+from chatimport.trim import ALLOWED_PERCENTS
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Generator
+    from collections.abc import Callable
     from concurrent.futures import Future
     from pathlib import Path
 
@@ -52,16 +54,17 @@ type IconState = Literal["running", "paused", "error"]
 REFRESH_SECONDS = 15.0
 SERVICE_JOIN_SECONDS = 30.0
 ALREADY_RUNNING_LINGER_SECONDS = 4.0
-TOOLTIP_LIMIT = 127
+TOOLTIP_LIMIT: Final = 127
+"""In UTF-16 code units: Windows keeps the tooltip in a 128-unit wide-char buffer."""
 ICON_SIZE = 64
+LIBRARY_SUFFIX: Final = ".toml"
 STATE_COLORS: dict[str, tuple[int, int, int, int]] = {
     "running": (46, 160, 67, 255),
     "paused": (128, 128, 128, 255),
     "error": (200, 48, 48, 255),
 }
-TRIM_PERCENTS = (25, 50, 75)
+TRIM_PERCENTS: Final = ALLOWED_PERCENTS
 LEVEL_PREFIX = {Level.INFO: "", Level.WARNING: "Warning: ", Level.ERROR: "Error: "}
-LOG_LEVEL = {Level.INFO: logging.INFO, Level.WARNING: logging.WARNING, Level.ERROR: logging.ERROR}
 
 
 class _TrayIcon(Protocol):
@@ -108,7 +111,7 @@ class TrayNotifier:
 
     def notify(self, level: Level, title: str, message: str) -> None:
         full_title = LEVEL_PREFIX[level] + title
-        log.log(LOG_LEVEL[level], "%s: %s", full_title, message)
+        log.log(level.logging_level, "%s: %s", full_title, message)
         with self._lock:
             icon = self._icon
             if icon is None:
@@ -124,68 +127,15 @@ class TrayNotifier:
             log.exception("tray notification failed")
 
 
-@contextmanager
-def _tk_root() -> Generator[Any]:
-    import tkinter
-
-    root = tkinter.Tk()
-    root.withdraw()
-    root.attributes("-topmost", True)  # pyright: ignore[reportUnknownMemberType]
-    try:
-        yield root
-    finally:
-        root.destroy()
-
-
-def _confirm(title: str, question: str) -> bool:
-    from tkinter import messagebox
-
-    with _tk_root() as root:
-        return bool(messagebox.askyesno(title, question, parent=root))
-
-
-def _choose_folder() -> str:
-    from tkinter import filedialog
-
-    with _tk_root() as root:
-        return str(filedialog.askdirectory(title="Choose the ChatImport folder", parent=root))
-
-
-def _ask_move() -> bool | None:
-    from tkinter import messagebox
-
-    with _tk_root() as root:
-        answer = messagebox.askyesnocancel(
-            "Change folder",
-            "Move the downloaded data to the new folder?\n\n"
-            "Yes: move it.\nNo: leave the old data where it is and start fresh.\n"
-            "Cancel: keep the current folder.",
-            parent=root,
-        )
-        return None if answer is None else bool(answer)
-
-
-def _open_path(path: Path) -> None:
-    if sys.platform == "win32":
-        os.startfile(path)  # noqa: S606 - opens the user's own file with its default app
-    else:
-        opener = "open" if sys.platform == "darwin" else "xdg-open"
-        subprocess.Popen([opener, str(path)])  # noqa: S603 - fixed argv, no shell
-
-
-def _latest_file(folder: Path) -> Path | None:
-    try:
-        files = [p for p in folder.iterdir() if p.is_file()]
-    except OSError:
-        return None
-    return max(files, key=_modified, default=None)
-
-
-def _modified(path: Path) -> float:
-    try:
-        return path.stat().st_mtime
-    except OSError:
-        return float("-inf")
+def fit_utf16(text: str, limit: int = TOOLTIP_LIMIT) -> str:
+    """The longest prefix of `text` within `limit` UTF-16 units; an emoji (two units) is never
+    split in half."""
+    used = 0
+    for index, char in enumerate(text):
+        used += 2 if ord(char) > 0xFFFF else 1
+        if used > limit:
+            return text[:index]
+    return text
 
 
 class _Tray:
@@ -212,6 +162,7 @@ class _Tray:
             "chatimport", make_icon_image("running"), "ChatImport", self._build_menu()
         )
         self._service = threading.Thread(target=self._serve, name="chatimport-service")
+        self._warn_if_cloud_synced(self._root)
 
     def run(self) -> None:
         self._service.start()
@@ -307,6 +258,7 @@ class _Tray:
             self._paused = False
         elif command == "set_root":
             self._root = normalize_root(str(args["path"]))
+            self._warn_if_cloud_synced(self._root)
         if success_message:
             self._notifier.notify(Level.INFO, "ChatImport", result.message or success_message)
         self._refresh()
@@ -353,12 +305,13 @@ class _Tray:
             item("Exit", lambda: self._in_thread("exit", self._exit)),
         )
 
+    def _warn_if_cloud_synced(self, root: Path) -> None:
+        warning = cloud_sync_warning(root)
+        if warning is not None:
+            self._notifier.notify(Level.WARNING, "ChatImport", warning)
+
     def _read_status(self) -> dict[str, Any] | None:
-        try:
-            value: object = json.loads((self._root / STATUS_FILE).read_text(encoding="utf-8"))
-        except OSError, ValueError:
-            return None
-        return cast("dict[str, Any]", value) if isinstance(value, dict) else None
+        return read_snapshot(self._root)
 
     def _status_item_text(self, _item: object) -> str:
         return self._status_text()
@@ -370,7 +323,7 @@ class _Tray:
         data = self._read_status()
         if data is None:
             return "ChatImport · starting"
-        return " | ".join(format_status_lines(data))[:TOOLTIP_LIMIT]
+        return fit_utf16(" | ".join(format_status_lines(data)))
 
     def _current_state(self) -> IconState:
         data = self._read_status()
@@ -387,9 +340,12 @@ class _Tray:
                 self._state = state
                 self._icon.icon = make_icon_image(state)
             self._icon.title = self._status_text()
+        except Exception:
+            log.exception("tray refresh failed: icon")
+        try:
             self._icon.update_menu()
         except Exception:
-            log.exception("tray refresh failed")
+            log.exception("tray refresh failed: menu")
 
     def _refresh_loop(self) -> None:
         while not self._stop_refresh.wait(REFRESH_SECONDS):
@@ -401,6 +357,11 @@ class _Tray:
 
     def _open_library(self) -> None:
         library = self._ctx.library_file
+        if library.suffix.lower() != LIBRARY_SUFFIX:
+            self._notifier.notify(
+                Level.WARNING, "ChatImport", f"The library must be a {LIBRARY_SUFFIX} file"
+            )
+            return
         if not library.exists():
             library.parent.mkdir(parents=True, exist_ok=True)
             library.touch()
@@ -429,4 +390,5 @@ class _Tray:
 
 
 def run_tray(ctx: ServiceContext) -> None:
+    configure_logging(ctx.paths.log_dir, console=False)
     _Tray(ctx).run()
