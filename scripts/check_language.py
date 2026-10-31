@@ -16,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-ALLOWED_PREFIXES: tuple[str, ...] = ("tests/fixtures/",)
+ALLOWED_PREFIXES: tuple[str, ...] = ("tests/fixtures/", "src/chatimport/gui/locales/")
 BINARY_SUFFIXES = frozenset(
     {".png", ".jpg", ".jpeg", ".gif", ".ico", ".pdf", ".zip", ".gz", ".woff", ".woff2", ".db"}
 )
