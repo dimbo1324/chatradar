@@ -17,8 +17,10 @@ from chatimport.ports import (
     SessionRevoked,
 )
 from chatimport.runtime import Level
+from chatimport.status import StatusWriter
 from chatimport.storage.layout import chat_folder_name, iter_chat_folders
 from chatimport.storage.state import load_state
+from chatimport.supervisor import Supervisor
 from tests.fakes import NOW, RecordingNotifier, msg
 from tests.unit.service.harness import Env, ManualClock, SpyGateway, library_text, make_env
 
@@ -462,3 +464,30 @@ async def test_service_state_is_reported_while_running(tmp_path: Path) -> None:
     assert data["service"] == "running"
     assert data["disk"]["low_watermark_gb"] == 15
     assert set(data) == {"updated_at", "service", "disk", "total_bytes", "chats", "errors"}
+
+
+async def _boom(*args: object, **kwargs: object) -> None:
+    raise RuntimeError("cannot schedule new futures after shutdown")
+
+
+@pytest.mark.parametrize(
+    ("owner", "method"),
+    [
+        (StatusWriter, "write"),
+        (Supervisor, "stop_all"),
+        (ChatImportApp, "_stop_runtime"),
+    ],
+)
+async def test_a_failing_shutdown_step_still_disconnects_and_frees_the_lock(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, owner: type, method: str
+) -> None:
+    env = two_chats(tmp_path)
+    task = env.start()
+    await env.wait_live(A, B)
+    monkeypatch.setattr(owner, method, _boom)
+
+    env.app.request_shutdown()
+    await asyncio.wait_for(task, 10)
+
+    assert env.gateway.calls[-1] == ("disconnect", ())
+    assert not service_running(env.ctx.paths.lock_file)

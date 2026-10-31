@@ -34,7 +34,7 @@ from chatimport.setroot import move_root, validate_new_root
 from chatimport.supervisor import Supervisor
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Awaitable, Iterable
     from pathlib import Path
 
     from chatimport.commands import SetRootArgs
@@ -204,16 +204,25 @@ class ChatImportApp:
                 await gateway.disconnect()
 
     async def _teardown(self, core: Supervisor) -> None:
+        """Every step runs even when an earlier one fails: the gateway must disconnect and the
+        lock must be released however the shutdown goes."""
         self._service_state = "stopping"
-        await core.stop_all()
+        await self._teardown_step("control tasks", core.stop_all())
         if self._core_watch is not None:
             self._core_watch.cancel()
-        rt = await self._stop_runtime()
+        rt = await self._teardown_step("runtime", self._stop_runtime())
         self._service_state = "stopped"
         if rt is not None:
-            with contextlib.suppress(OSError):
-                await rt.status.write()
+            await self._teardown_step("final status", rt.status.write())
         log.info("service stopped")
+
+    @staticmethod
+    async def _teardown_step[T](name: str, step: Awaitable[T]) -> T | None:
+        try:
+            return await step
+        except Exception:
+            log.exception("shutdown step failed: %s", name)
+            return None
 
     async def _watch_fatal(self, supervisor: Supervisor) -> None:
         await supervisor.wait_fatal()
