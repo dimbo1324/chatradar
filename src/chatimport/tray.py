@@ -7,12 +7,14 @@ Menu items only forward a command and show its failure; they hold no business lo
 from __future__ import annotations
 
 import asyncio
+import functools
 import logging
 import threading
 from typing import TYPE_CHECKING, Any, Final, Literal, Protocol
 
 from PIL import Image, ImageDraw
 
+from chatimport.assets import ICON_PNG
 from chatimport.control import AlreadyRunning
 from chatimport.logging_setup import configure_logging
 from chatimport.paths import cloud_sync_warning, normalize_root
@@ -57,6 +59,9 @@ ALREADY_RUNNING_LINGER_SECONDS = 4.0
 TOOLTIP_LIMIT: Final = 127
 """In UTF-16 code units: Windows keeps the tooltip in a 128-unit wide-char buffer."""
 ICON_SIZE = 64
+BADGE_CENTER: Final = (ICON_SIZE - 14, ICON_SIZE - 14)
+BADGE_RADIUS: Final = 10
+BADGE_RING: Final = 2
 LIBRARY_SUFFIX: Final = ".toml"
 STATE_COLORS: dict[str, tuple[int, int, int, int]] = {
     "running": (46, 160, 67, 255),
@@ -83,10 +88,31 @@ class _TrayIcon(Protocol):
     def update_menu(self) -> None: ...
 
 
+@functools.cache
+def _logo() -> Image.Image:
+    """The application icon at tray size; a transparent square when the file is missing."""
+    try:
+        with Image.open(ICON_PNG) as source:
+            rgba: Image.Image = source.convert("RGBA")
+        return rgba.resize((ICON_SIZE, ICON_SIZE), Image.Resampling.LANCZOS)  # pyright: ignore[reportUnknownMemberType]
+    except OSError:
+        log.warning(
+            "the icon file %s cannot be read; the tray shows only the state badge", ICON_PNG
+        )
+        return Image.new("RGBA", (ICON_SIZE, ICON_SIZE), (0, 0, 0, 0))
+
+
 def make_icon_image(state: str) -> Image.Image:
-    image = Image.new("RGBA", (ICON_SIZE, ICON_SIZE), (0, 0, 0, 0))
+    """The logo with a state badge in the corner: green running, grey paused, red failed."""
+    image = _logo().copy()
     color = STATE_COLORS.get(state, STATE_COLORS["paused"])
-    ImageDraw.Draw(image).ellipse((6, 6, ICON_SIZE - 6, ICON_SIZE - 6), fill=color)
+    x, y = BADGE_CENTER
+    draw = ImageDraw.Draw(image)
+    ring = BADGE_RADIUS + BADGE_RING
+    draw.ellipse((x - ring, y - ring, x + ring, y + ring), fill=(255, 255, 255, 255))
+    draw.ellipse(
+        (x - BADGE_RADIUS, y - BADGE_RADIUS, x + BADGE_RADIUS, y + BADGE_RADIUS), fill=color
+    )
     return image
 
 

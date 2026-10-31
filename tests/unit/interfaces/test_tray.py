@@ -15,9 +15,11 @@ from concurrent.futures import Future
 from typing import TYPE_CHECKING, Any
 
 import pytest
+from PIL import Image
 
 from chatimport import app as app_module
 from chatimport import tray, tray_dialogs
+from chatimport.assets import ASSETS_DIR, ICON_ICO, ICON_PNG
 from chatimport.control import AlreadyRunning, CommandResult
 from chatimport.paths import normalize_root
 from chatimport.runtime import Level
@@ -255,23 +257,67 @@ def status_with(**overrides: Any) -> dict[str, Any]:
 
 
 @pytest.mark.parametrize("state", ["running", "paused", "error"])
-def test_icon_image_is_a_transparent_64px_rgba_disc_in_the_state_colour(state: str) -> None:
+def test_icon_image_is_the_logo_with_a_state_badge_in_the_corner(state: str) -> None:
     image = tray.make_icon_image(state)
 
     assert image.size == (64, 64)
     assert image.mode == "RGBA"
-    assert image.getpixel((32, 32)) == tray.STATE_COLORS[state]
+    assert image.getpixel(tray.BADGE_CENTER) == tray.STATE_COLORS[state]
     assert image.getpixel((0, 0)) == (0, 0, 0, 0)
-    assert image.getpixel((63, 63)) == (0, 0, 0, 0)
-    assert image.getpixel((12, 32)) == tray.STATE_COLORS[state]
-    assert image.getpixel((2, 32)) == (0, 0, 0, 0)
+    assert image.getpixel((63, 0)) == (0, 0, 0, 0)
+    centre = image.getpixel((32, 32))
+    assert isinstance(centre, tuple)
+    assert centre[3] == 255
+    assert centre not in tray.STATE_COLORS.values()
 
 
-def test_icon_colours_differ_per_state_and_unknown_state_looks_paused() -> None:
-    centres = {state: tray.make_icon_image(state).getpixel((32, 32)) for state in tray.STATE_COLORS}
+def test_icon_badge_colours_differ_per_state_and_unknown_state_looks_paused() -> None:
+    badges = {
+        state: tray.make_icon_image(state).getpixel(tray.BADGE_CENTER)
+        for state in tray.STATE_COLORS
+    }
 
-    assert len(set(centres.values())) == 3
-    assert tray.make_icon_image("bogus").getpixel((32, 32)) == centres["paused"]
+    assert len(set(badges.values())) == 3
+    assert tray.make_icon_image("bogus").getpixel(tray.BADGE_CENTER) == badges["paused"]
+
+
+def test_icon_images_are_independent_copies_of_one_logo() -> None:
+    first = tray.make_icon_image("running")
+    second = tray.make_icon_image("error")
+
+    assert first is not second
+    assert first.getpixel(tray.BADGE_CENTER) != second.getpixel(tray.BADGE_CENTER)
+    assert tray.make_icon_image("running").getpixel(tray.BADGE_CENTER) == first.getpixel(
+        tray.BADGE_CENTER
+    )
+
+
+def test_a_missing_icon_file_leaves_a_transparent_square_with_the_badge(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
+    tray._logo.cache_clear()  # pyright: ignore[reportPrivateUsage]
+    monkeypatch.setattr(tray, "ICON_PNG", tmp_path / "missing.png")
+    try:
+        with caplog.at_level("WARNING", logger="chatimport.tray"):
+            image = tray.make_icon_image("error")
+    finally:
+        tray._logo.cache_clear()  # pyright: ignore[reportPrivateUsage]
+
+    assert image.size == (64, 64)
+    assert image.getpixel((32, 32)) == (0, 0, 0, 0)
+    assert image.getpixel(tray.BADGE_CENTER) == tray.STATE_COLORS["error"]
+    assert any("icon file" in record.getMessage() for record in caplog.records)
+
+
+def test_the_bundled_icons_exist_and_have_the_expected_formats() -> None:
+    with Image.open(ICON_PNG) as png:
+        assert png.size == (512, 512)
+        assert png.mode == "RGBA"
+        assert png.getchannel("A").getpixel((2, 2)) == 0
+    with Image.open(ICON_ICO) as ico:
+        assert ico.format == "ICO"
+        assert {(16, 16), (32, 32), (48, 48), (256, 256)} <= set(ico.info["sizes"])
+    assert ICON_PNG.parent == ASSETS_DIR
 
 
 # ----------------------------------------------------------------------------- notifier
@@ -400,7 +446,7 @@ def test_the_icon_starts_green_with_the_application_name(parts: tray._Tray) -> N
 
     assert icon.name == "chatimport"
     assert icon.title == "ChatImport"
-    assert icon.icon.getpixel((32, 32)) == tray.STATE_COLORS["running"]
+    assert icon.icon.getpixel(tray.BADGE_CENTER) == tray.STATE_COLORS["running"]
 
 
 def test_status_line_and_toggle_text_follow_the_state(parts: tray._Tray, env: Env) -> None:
@@ -513,7 +559,7 @@ def test_refresh_swaps_the_image_only_when_the_state_changes(parts: tray._Tray, 
     parts._refresh()
 
     assert icon.icon is not first_image
-    assert icon.icon.getpixel((32, 32)) == tray.STATE_COLORS["error"]
+    assert icon.icon.getpixel(tray.BADGE_CENTER) == tray.STATE_COLORS["error"]
     assert icon.title == "2 chats \u00b7 live \u00b7 2.0 GB \u00b7 41.2 GB free | error [w]: bad"
     assert icon.menu_updates == 2
 
@@ -1212,7 +1258,9 @@ def test_a_crashed_service_shows_only_the_exception_type_and_keeps_the_tray(
 
     def script(icon: FakeIcon) -> None:
         assert wait_until(lambda: icon.toasts)
-        assert wait_until(lambda: icon.icon.getpixel((32, 32)) == tray.STATE_COLORS["error"])
+        assert wait_until(
+            lambda: icon.icon.getpixel(tray.BADGE_CENTER) == tray.STATE_COLORS["error"]
+        )
         assert not icon.stopped.is_set()
         icon.click("Exit")
 

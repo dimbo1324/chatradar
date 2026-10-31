@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="src/chatimport/assets/icon.png" alt="ChatImport" width="160">
+</p>
+
 # ChatImport
 
 A local background service that keeps the full text history of chosen Telegram groups and
@@ -63,6 +67,7 @@ Windows: Task Scheduler at logon running `.venv\Scripts\pythonw.exe -m chatimpor
 | Telegram session | `%LOCALAPPDATA%\ChatImport\session\chatimport.session` |
 | Log | `%LOCALAPPDATA%\ChatImport\logs\chatimport.log` (rotating) |
 | Exports | `<data root>\_exports\<chat folder>.json` |
+| Icon | `src/chatimport/assets/icon.png` (tray, README) and `icon.ico` (shortcuts, future executable) |
 
 The real config and library never reach git; the repository holds only the templates.
 

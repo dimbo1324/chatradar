@@ -61,3 +61,6 @@ desktop.ini
 .claude/settings.local.json
 .codex/config.local.toml
 pytest.log
+
+# Original artwork (large); the packaged icons live in src/chatimport/assets/
+/design/

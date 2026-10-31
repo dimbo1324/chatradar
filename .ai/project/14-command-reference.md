@@ -43,6 +43,7 @@ Resolved through `platformdirs`. Windows paths shown:
 | Config, library | `%LOCALAPPDATA%\ChatImport\config.toml`, `chats.toml` |
 | Session | `%LOCALAPPDATA%\ChatImport\session\chatimport.session` |
 | Log | `%LOCALAPPDATA%\ChatImport\logs\chatimport.log` (UTF-8, rotating 5 MiB x 5) |
+| Icon | `src/chatimport/assets/icon.png` and `icon.ico` (`chatimport.assets`); the tray draws the PNG with a state badge |
 | Lock, control queue | `%LOCALAPPDATA%\ChatImport\chatimport.lock`, `control\` |
 
 `run`, `status` and the tray warn when the data root is under OneDrive; `set-root` refuses

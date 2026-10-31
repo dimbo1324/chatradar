@@ -6,6 +6,16 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-31 — Application icon in the lookup table
+
+**What changed.** `project/14-command-reference.md`: one row in "Where things live" for the
+bundled icon (`src/chatimport/assets/icon.png`, `icon.ico`).
+
+**Why.** The owner supplied an icon and asked for it to be the project's main icon; the
+tray and README use it.
+
+**Decided by.** Owner (the icon), agent (wording), 2026-10-31.
+
 ## 2026-10-31 — Rules brought in line with the implemented service
 
 **What changed.** `project/10-project-map.md`: stage line (0.1-0.7 implemented and

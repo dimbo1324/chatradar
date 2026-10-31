@@ -28,6 +28,10 @@ fake of Telegram (3155 tests, 100 % line and branch coverage).
   the last 30 days.
 - A rotating log file `%LOCALAPPDATA%\ChatImport\logs\chatimport.log`.
 - `export-json --names/--no-names`.
+- Application icon (`src/chatimport/assets/icon.png` and `icon.ico`): the tray shows it with a
+  green, grey or red badge for running, paused or failed.
+- Application icon (`src/chatimport/assets/icon.png`, `icon.ico`): the tray shows it with a
+  green, grey or red badge for running, paused or failed.
 
 ### Changed
 
