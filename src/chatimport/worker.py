@@ -38,6 +38,7 @@ from chatimport.worker_backfill import (
 )
 from chatimport.worker_live import LiveIntake
 from chatimport.worker_signals import Refetch, Stop, WorkerSignals
+from chatimport.worker_status import BackfillSignals, backfill_info
 from chatimport.worker_store import OldestDate, WorkerStore
 
 if TYPE_CHECKING:
@@ -120,6 +121,7 @@ class ChatWorker:
             signals=self._signals,
             slot=SlotHolder(slots, chat.chat_id),
             adopt=self._adopt,
+            on_contact=self._touch,
         )
         self._tail = TailTask(
             self._tail_backfill,
@@ -131,6 +133,7 @@ class ChatWorker:
 
         self._state: ChatState | None = None
         self._oldest = OldestDate(self._store)
+        self._last_contact: datetime | None = None
         self._phase = PHASE_RECOVER
         self._error: str | None = None
         self._recheck_requested = False
@@ -154,6 +157,7 @@ class ChatWorker:
         return self._lock
 
     def submit(self, event: ChatEvent) -> None:
+        self._touch()
         self._intake.submit(event)
 
     def pause(self) -> None:
@@ -195,7 +199,25 @@ class ChatWorker:
             records=state.total_records if state is not None else 0,
             paused=self._signals.paused,
             error=self._error or self._tail.failure,
+            newest_date=state.newest_date if state is not None else None,
+            last_contact_at=self._last_contact,
+            backfill=backfill_info(state, self._backfill_signals()),
         )
+
+    def _backfill_signals(self) -> BackfillSignals:
+        tail_slot = self._tail_backfill.slot
+        signals = self._signals
+        return BackfillSignals(
+            paused=signals.paused or signals.backfill_paused,
+            slot_held=self._head_slot.active or tail_slot.active,
+            slot_waiting=self._head_slot.waiting or tail_slot.waiting,
+            month=self._tail_backfill.month,
+            retry_at=self._tail.retry_at,
+            detail=self._tail.detail,
+        )
+
+    def _touch(self) -> None:
+        self._last_contact = self._clock.now()
 
     async def stop(self) -> None:
         self._signals.stop()
@@ -312,6 +334,7 @@ class ChatWorker:
                 batch_size=self._config.backfill.batch_size,
                 between_batches=self._pause_between_requests,
             )
+        self._touch()
 
         async with self._lock:
             state = head_done_state(self._store.require(), newest, now)
@@ -337,7 +360,9 @@ class ChatWorker:
             if len(batch) >= batch_size:
                 await self._write_batch(batch)
                 batch = []
+                self._touch()
                 await self._pause_between_requests()
+        self._touch()
         await self._write_batch(batch)
 
     async def _write_batch(self, records: list[MessageRecord]) -> None:
@@ -414,6 +439,7 @@ class ChatWorker:
                 track_deletes=self._config.events.track_deletes,
             )
         )
+        self._touch()
         async with self._lock:
             state = replace(self._store.require(), last_recheck_at=self._clock.now())
             records = [

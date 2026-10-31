@@ -31,6 +31,7 @@ __all__ = [
     "Phase",
     "StateUnreadable",
     "atomic_write_bytes",
+    "later",
     "load_state",
     "new_state",
     "save_state",
@@ -138,6 +139,7 @@ class ChatState:
     floor_id: int = 0
     floor_reason: str | None = None
     last_recheck_at: datetime | None = None
+    newest_date: datetime | None = None
     backfill: BackfillState = field(default_factory=BackfillState)
     chunks: dict[str, ChunkInfo] = field(default_factory=dict[str, ChunkInfo])
     v: int = STATE_VERSION
@@ -157,6 +159,7 @@ class ChatState:
             "floor_id": self.floor_id,
             "floor_reason": self.floor_reason,
             "last_recheck_at": _fmt_opt(self.last_recheck_at),
+            "newest_date": _fmt_opt(self.newest_date),
             "backfill": self.backfill.to_dict(),
             "chunks": {key: info.to_dict() for key, info in sorted(self.chunks.items())},
             "updated_at": format_dt(self.updated_at),
@@ -174,6 +177,7 @@ class ChatState:
             floor_id=int(data.get("floor_id", 0)),
             floor_reason=data.get("floor_reason"),
             last_recheck_at=_opt_dt(data.get("last_recheck_at")),
+            newest_date=_opt_dt(data.get("newest_date")),
             backfill=BackfillState.from_dict(data.get("backfill") or {}),
             chunks=_valid_chunks(int(data["chat_id"]), dict[str, Any](data.get("chunks") or {})),
             updated_at=parse_dt(data["updated_at"]),
@@ -191,6 +195,13 @@ def _valid_chunks(chat_id: int, raw: dict[str, Any]) -> dict[str, ChunkInfo]:
             "state.json lists invalid part names", extra={"chat_id": chat_id, "keys": dropped}
         )
     return chunks
+
+
+def later(first: datetime | None, second: datetime | None) -> datetime | None:
+    """The later of two optional moments; None only when both are None."""
+    if first is None or second is None:
+        return first or second
+    return max(first, second)
 
 
 def new_state(chat_id: int, title: str, username: str | None, now: datetime) -> ChatState:

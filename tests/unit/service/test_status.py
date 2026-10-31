@@ -58,6 +58,7 @@ def test_build_has_the_shape_of_the_spec(tmp_path: Path) -> None:
         "service": "running",
         "disk": {"path": str(tmp_path), "free_gb": 41.0, "low_watermark_gb": 15},
         "total_bytes": 2254857830,
+        "backfill": {"limit": 1, "active": [], "waiting": []},
         "chats": [
             {
                 "chat_id": CHAT_ID,
@@ -68,6 +69,15 @@ def test_build_has_the_shape_of_the_spec(tmp_path: Path) -> None:
                 "oldest_date": None,
                 "records": 48210,
                 "paused": False,
+                "newest_date": None,
+                "last_contact_at": None,
+                "backfill": {
+                    "state": "idle",
+                    "progress": None,
+                    "month": None,
+                    "retry_at": None,
+                    "detail": None,
+                },
             }
         ],
         "errors": [],

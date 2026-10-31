@@ -15,10 +15,11 @@ from chatimport.storage.state import atomic_write_bytes
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+    from datetime import datetime
     from pathlib import Path
 
     from chatimport.ports import Clock, DiskUsage
-    from chatimport.runtime import ChatRegistry
+    from chatimport.runtime import BackfillSlots, ChatRegistry
     from chatimport.supervisor import Supervisor
 
 log = logging.getLogger(__name__)
@@ -39,6 +40,7 @@ class StatusWriter:
         disk: DiskUsage,
         low_watermark_gb: int,
         service_state: Callable[[], str],
+        slots: BackfillSlots | None = None,
     ) -> None:
         self._root = root
         self._registry = registry
@@ -47,6 +49,7 @@ class StatusWriter:
         self._disk = disk
         self._low_watermark_gb = low_watermark_gb
         self._service_state = service_state
+        self._slots = slots
         self._extra_errors: dict[str, str] = {}
         self._last_total: int | None = None
 
@@ -72,9 +75,18 @@ class StatusWriter:
                 "phase": status.phase,
                 "last_id": status.last_id,
                 "backfill_done": status.backfill_done,
-                "oldest_date": format_dt(status.oldest_date) if status.oldest_date else None,
+                "oldest_date": _fmt_opt(status.oldest_date),
                 "records": status.records,
                 "paused": status.paused,
+                "newest_date": _fmt_opt(status.newest_date),
+                "last_contact_at": _fmt_opt(status.last_contact_at),
+                "backfill": {
+                    "state": status.backfill.state.value,
+                    "progress": status.backfill.progress,
+                    "month": status.backfill.month,
+                    "retry_at": _fmt_opt(status.backfill.retry_at),
+                    "detail": status.backfill.detail,
+                },
             }
             if status.error:
                 chat["error"] = status.error
@@ -93,8 +105,19 @@ class StatusWriter:
                 "low_watermark_gb": self._low_watermark_gb,
             },
             "total_bytes": total_bytes,
+            "backfill": self._slots_block(),
             "chats": chats,
             "errors": errors,
+        }
+
+    def _slots_block(self) -> dict[str, Any]:
+        slots = self._slots
+        if slots is None:
+            return {"limit": 1, "active": [], "waiting": []}
+        return {
+            "limit": slots.limit,
+            "active": list(slots.holders),
+            "waiting": list(slots.waiting),
         }
 
     async def write(self) -> None:
@@ -112,6 +135,10 @@ class StatusWriter:
             except OSError:
                 log.exception("could not write %s", STATUS_FILE)
             await self._clock.sleep(INTERVAL_SECONDS)
+
+
+def _fmt_opt(value: datetime | None) -> str | None:
+    return format_dt(value) if value else None
 
 
 def _skipped_dir(name: str) -> bool:

@@ -89,6 +89,7 @@ def test_to_dict_has_exactly_the_documented_keys_and_z_dates() -> None:
         "floor_id",
         "floor_reason",
         "last_recheck_at",
+        "newest_date",
         "backfill",
         "chunks",
         "updated_at",

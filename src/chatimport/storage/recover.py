@@ -16,12 +16,13 @@ from typing import TYPE_CHECKING, Final
 from chatimport.records import DECODE_ERRORS
 from chatimport.storage.layout import list_parts
 from chatimport.storage.month_commit import replay_commits
-from chatimport.storage.reader import first_message, scan_part
+from chatimport.storage.reader import first_message, newest_message_date, scan_part
 from chatimport.storage.state import (
     PHASE_RECOVER,
     BackfillState,
     ChatState,
     ChunkInfo,
+    later,
     load_state,
     new_state,
     save_state,
@@ -159,6 +160,12 @@ def recover_chat(
             floor_reason=FLOOR_REASON_MANUAL_DELETE,
         )
 
-    repaired_state = replace(state, last_id=last_id, chunks=scanned, updated_at=now)
+    newest_date = state.newest_date
+    if newest_date is None or max_file_id > state.last_id:
+        newest_date = later(newest_date, newest_message_date(parts))
+
+    repaired_state = replace(
+        state, last_id=last_id, chunks=scanned, newest_date=newest_date, updated_at=now
+    )
     save_state(folder, repaired_state)
     return repaired_state

@@ -463,7 +463,15 @@ async def test_service_state_is_reported_while_running(tmp_path: Path) -> None:
     assert data is not None
     assert data["service"] == "running"
     assert data["disk"]["low_watermark_gb"] == 15
-    assert set(data) == {"updated_at", "service", "disk", "total_bytes", "chats", "errors"}
+    assert set(data) == {
+        "updated_at",
+        "service",
+        "disk",
+        "total_bytes",
+        "backfill",
+        "chats",
+        "errors",
+    }
 
 
 async def _boom(*args: object, **kwargs: object) -> None:

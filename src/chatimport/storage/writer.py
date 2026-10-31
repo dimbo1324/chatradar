@@ -34,10 +34,10 @@ from chatimport.storage.reader import (
     read_part_lines,
     scan_part,
 )
-from chatimport.storage.state import ChatState, atomic_write_bytes, save_state
+from chatimport.storage.state import ChatState, atomic_write_bytes, later, save_state
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Sequence
+    from collections.abc import Callable, Iterable, Sequence
     from datetime import datetime
     from pathlib import Path
 
@@ -66,6 +66,11 @@ class PartMissing(ChatImportError):
 
 def _message_order(record: Record) -> tuple[int, int]:
     return record_sort_id(record), 0 if isinstance(record, MessageRecord) else 1
+
+
+def _newest_message_date(records: Iterable[Record | None]) -> datetime | None:
+    dates = [r.date for r in records if isinstance(r, MessageRecord)]
+    return max(dates, default=None)
 
 
 def _sorted_lines(lines: Sequence[PartLine]) -> list[PartLine]:
@@ -122,7 +127,8 @@ class ChunkWriter:
             last_id = max(
                 [last_id, *(r.msg_id for r in batch if isinstance(r, MessageRecord))],
             )
-        return self.update_state(replace(state, chunks=chunks, last_id=last_id))
+        newest = later(state.newest_date, _newest_message_date(ordered))
+        return self.update_state(replace(state, chunks=chunks, last_id=last_id, newest_date=newest))
 
     def write_month(
         self, state: ChatState, month: str, records: Sequence[MessageRecord]
@@ -178,7 +184,8 @@ class ChunkWriter:
         for number, (group, payload) in enumerate(zip(groups, payloads, strict=True), start=1):
             records = [line.record for line in group if line.record is not None]
             chunks[f"{month}_{number:03d}"] = chunk_info(records, len(payload))
-        return self.update_state(replace(state, chunks=chunks))
+        newest = later(state.newest_date, _newest_message_date(line.record for line in lines))
+        return self.update_state(replace(state, chunks=chunks, newest_date=newest))
 
     def _append_target(self, month: str) -> Path:
         parts = month_parts(self.folder, month)

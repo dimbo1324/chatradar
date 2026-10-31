@@ -108,6 +108,7 @@ class ServiceRuntime:
             disk=disk,
             low_watermark_gb=config.disk.low_watermark_gb,
             service_state=service_state,
+            slots=self.slots,
         )
         self.scheduler = RecheckScheduler(self.registry, config.recheck, clock, _last_recheck_at)
         self._aux_tasks: list[asyncio.Task[None]] = []

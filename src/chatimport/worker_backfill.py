@@ -11,6 +11,7 @@ import asyncio
 import contextlib
 import logging
 from dataclasses import dataclass, field, replace
+from datetime import timedelta
 from typing import TYPE_CHECKING, Final
 
 from chatimport.ports import AccessLost, SessionRevoked
@@ -52,20 +53,34 @@ class SlotHolder:
         self._slots = slots
         self._chat_id = chat_id
         self._context: AbstractAsyncContextManager[None] | None = None
+        self._active = False
+        self.waiting = False
 
     @property
     def held(self) -> bool:
         return self._context is not None
 
+    @property
+    def active(self) -> bool:
+        """True while this chat is downloading, also when there are no shared slots."""
+        return self._active
+
     async def acquire(self) -> None:
-        if self._slots is None or self._context is not None:
+        if self._active:
             return
-        context = self._slots.acquire(self._chat_id)
-        await context.__aenter__()
-        self._context = context
+        if self._slots is not None:
+            context = self._slots.acquire(self._chat_id)
+            self.waiting = True
+            try:
+                await context.__aenter__()
+            finally:
+                self.waiting = False
+            self._context = context
+        self._active = True
 
     async def release(self) -> None:
         context, self._context = self._context, None
+        self._active = False
         if context is not None:
             await context.__aexit__(None, None, None)
 
@@ -81,7 +96,7 @@ class SlotHolder:
     async def suspended(self) -> AsyncGenerator[None]:
         """Give the slot back for the body; take it again only if the body ends normally
         (a stop must not wait for a slot)."""
-        held = self.held
+        held = self.active
         await self.release()
         yield
         if held:
@@ -165,7 +180,10 @@ class TailBackfill:
         signals: WorkerSignals,
         slot: SlotHolder,
         adopt: Callable[[ChatState], None],
+        on_contact: Callable[[], None] = lambda: None,
     ) -> None:
+        self.month: str | None = None
+        self._on_contact = on_contact
         self._chat_id = chat_id
         self._store = store
         self._gateway = gateway
@@ -175,6 +193,10 @@ class TailBackfill:
         self._signals = signals
         self._slot = slot
         self._adopt = adopt
+
+    @property
+    def slot(self) -> SlotHolder:
+        return self._slot
 
     async def run(self) -> None:
         while True:
@@ -192,6 +214,12 @@ class TailBackfill:
                 return
 
     async def _walk(self, offset: int, floor: int) -> None:
+        try:
+            await self._walk_months(offset, floor)
+        finally:
+            self.month = None
+
+    async def _walk_months(self, offset: int, floor: int) -> None:
         month: str | None = None
         pending: list[MessageRecord] = []
         seen = 0
@@ -205,13 +233,16 @@ class TailBackfill:
                 pending = []
             if month is None or key < month:
                 month = key
+                self.month = key
             pending.append(record)
             if len(pending) >= TAIL_FLUSH_RECORDS:
                 await self._write(month, pending)
                 pending = []
             seen += 1
             if seen % self._config.batch_size == 0:
+                self._on_contact()
                 await self._clock.sleep(self._config.pause_between_requests_sec)
+        self._on_contact()
         if month is not None and pending:
             await self._write(month, pending)
 
@@ -273,6 +304,8 @@ class TailTask:
         self._guard = guard
         self._wake = wake
         self.failure: str | None = None
+        self.retry_at: datetime | None = None
+        self.detail: str | None = None
         self._task: asyncio.Task[None] | None = None
         self._error: Exception | None = None
 
@@ -292,7 +325,7 @@ class TailTask:
     async def cancel(self) -> None:
         task, self._task = self._task, None
         self._error = None
-        self.failure = None
+        self.failure = self.retry_at = self.detail = None
         if task is None or task.done():
             return
         task.cancel()
@@ -311,7 +344,9 @@ class TailTask:
                 self._wake()
                 return
             except Exception as error:
-                self.failure = f"tail: {type(error).__name__}"
+                self.detail = type(error).__name__
+                self.failure = f"tail: {self.detail}"
+                self.retry_at = self._clock.now() + timedelta(seconds=delay)
                 log.warning(
                     "tail backfill of chat %s failed (%s); retrying in %s s",
                     self._chat_id,
@@ -319,8 +354,9 @@ class TailTask:
                     delay,
                 )
                 await self._clock.sleep(delay)
+                self.retry_at = None
                 delay = min(delay * 2, RETRY_MAX_SECONDS)
                 continue
-            self.failure = None
+            self.failure = self.detail = self.retry_at = None
             self._wake()
             return

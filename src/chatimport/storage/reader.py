@@ -12,11 +12,13 @@ from chatimport.storage.state import ChunkInfo
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
+    from datetime import datetime
     from pathlib import Path
 
 log = logging.getLogger(__name__)
 
 EMPTY_CHUNK: Final = ChunkInfo(records=0, first_id=0, last_id=0, bytes=0)
+_TAIL_WINDOW: Final = 64 * 1024
 
 
 @dataclass(frozen=True, slots=True)
@@ -120,4 +122,39 @@ def first_message(paths: Iterable[Path], *, skip_unreadable: bool = False) -> Me
         except OSError:
             if not skip_unreadable:
                 raise
+    return None
+
+
+def _newest_in_part(path: Path) -> datetime | None:
+    """Date of the last message line, found by reading only the end of the part."""
+    size = path.stat().st_size
+    window = _TAIL_WINDOW
+    while size:
+        start = max(0, size - window)
+        with path.open("rb") as handle:
+            handle.seek(start)
+            data = handle.read()
+        lines = data.split(b"\n")
+        if start:
+            lines = lines[1:]
+        for raw in reversed(lines):
+            record = decode_line(raw.strip()) if raw.strip() else None
+            if isinstance(record, MessageRecord):
+                return record.date
+        if not start:
+            return None
+        window *= 2
+    return None
+
+
+def newest_message_date(paths: Iterable[Path]) -> datetime | None:
+    """Date of the newest stored message: the last message of the last part that has one.
+    Lines ascend by `msg_id` inside a part, so only the end of a part is read."""
+    for path in reversed(list(paths)):
+        try:
+            found = _newest_in_part(path)
+        except OSError:
+            continue
+        if found is not None:
+            return found
     return None

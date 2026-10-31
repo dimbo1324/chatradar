@@ -66,6 +66,28 @@ class TrackedChat:
     folder_name: str  # the folder to create when none exists yet, `<slug>_<chat_id>`
 
 
+class BackfillState(StrEnum):
+    """What the history download of one chat is doing now; the values go into `_status.json`."""
+
+    RUNNING = "running"
+    WAITING = "waiting"
+    PAUSED = "paused"
+    DISK_STOPPED = "disk_stopped"
+    RETRYING = "retrying"
+    DONE = "done"
+    NO_ACCESS = "no_access"
+    IDLE = "idle"
+
+
+@dataclass(frozen=True, slots=True)
+class BackfillInfo:
+    state: BackfillState = BackfillState.IDLE
+    progress: float | None = None  # message ids are not dense, so this is only approximate
+    month: str | None = None  # `YYYY-MM` being fetched now
+    retry_at: datetime | None = None
+    detail: str | None = None  # an exception type name, never a message
+
+
 @dataclass(frozen=True, slots=True)
 class ChatStatus:
     chat_id: int
@@ -77,6 +99,9 @@ class ChatStatus:
     records: int
     paused: bool
     error: str | None = None
+    newest_date: datetime | None = None
+    last_contact_at: datetime | None = None
+    backfill: BackfillInfo = field(default_factory=BackfillInfo)
 
 
 class ChatHandle(Protocol):
