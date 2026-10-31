@@ -13,6 +13,8 @@
 /ChatImport/
 /_status.json
 /_trim_log.jsonl
+/_unrouted_deletes.jsonl
+/_exports/
 
 # Leftovers of the ChatRadar line of work on this machine
 data/

@@ -338,24 +338,47 @@ This is branch `chatimport`, a parallel line to ChatRadar on `main`. The two are
 become one product later (`docs/architecture.md` §15): ChatImport's JSONL folder is a
 candidate raw store for ChatRadar.
 
-**Stage: 0.0 — repository prepared, no service code yet; stage 0.1 is next.**
+**Stage: 0.1-0.7 implemented and hardened (2026-10-30); the owner's live check with a real
+account is next, then 1.0 (ChatRadar integration).**
 
 ## Repository map
 
-Single uv project on Python 3.14+ (`src/` layout, package `chatimport`):
+Single uv project on Python 3.14+ (`src/` layout, package `chatimport`). `src/chatimport/`:
 
-- `src/chatimport/cli.py` — Typer entry point `chatimport`; thin wrappers only.
-- Planned modules (spec layout, `docs/architecture.md` §12): `config.py`, `paths.py`,
-  `library.py`, `app.py`, `telegram/` (`client.py`, `resolve.py`, `mapper.py`),
-  `storage/` (`layout.py`, `writer.py`, `state.py`, `recover.py`), `worker.py`,
-  `recheck.py`, `trim.py`, `guards/` (`disk.py`, `folders.py`), `control.py`, `tray.py`,
-  `media.py`. A module joins this list when it exists.
+- **Core:** `config` (TOML to dataclasses), `config_edit` (writes `output.root_dir`),
+  `toml_edit` (comment-keeping line edits), `paths` (app folders, data root, OneDrive check),
+  `records` (record types, JSONL lines), `ports` (gateway, clock, disk protocols, errors),
+  `runtime` (chat handles, registry, notifier, `BackfillSlots`), `textnorm` (`fold`,
+  `transliterate`), `refs` (the one ref parser), `logging_setup` (rotating file log).
+- **Library:** `library` (`chats.toml` parse, diff, watch, add/enable), `resolution` (entries
+  to chats, error book), `offline` (CLI work without the service: trim, floor, selector).
+- **Service:** `app` (facade: run, run --once, library loop, set-root), `context` (config,
+  folders, gateway), `service_runtime` (everything on one data root), `supervisor`
+  (restarts with backoff), `router` (events to workers, `_unrouted_deletes.jsonl`),
+  `commands` (command registry), `control` (control folder, instance lock), `status`
+  (`_status.json`), `recheck` (daily comparison and scheduler).
+- **Worker:** `worker` (`ChatWorker` facade), `worker_signals` (flags), `worker_live` and
+  `worker_buffer` (live intake), `worker_backfill` (head and tail), `worker_store` (folder
+  access, threads), `flood` (FloodWait).
+- **Maintenance:** `trim`, `media` (downloader), `integrity` (`check`), `export`
+  (`export-json`), `setroot`, `guards/disk` (disk guard, media gate), `guards/folders`.
+- **Storage:** `layout`, `state`, `writer`, `reader`, `recover`, `fileio` (atomic and
+  retried file primitives), `chat_store` (one chat folder), `month_commit` (journalled
+  month rewrite), `media_files` (media names, safe extensions).
+- **Telegram (only Telethon user):** `client` (gateway, login), `resolve`, `mapper` (pure).
+- **Interfaces:** `cli` (entry point) with `cli_support`, `cli_chats`, `cli_service`,
+  `cli_data`; `tray` with `tray_dialogs`; `__main__`.
+
+Elsewhere:
+
 - `config.example.toml`, `chats.example.toml` — templates; the real files live in the
   application data folder and are never tracked.
-- `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only).
+- `tests/unit/<area>`, `tests/integration`, `tests/fakes.py` (clock, disk, scripted gateway);
+  `tests/fixtures/` is reserved for anonymized data and does not exist yet.
 - `scripts/` — stdlib-only repo tooling: `sync_agents.py`, `check_language.py`, `doctor.py`.
 - `justfile`, `.pre-commit-config.yaml`, `.github/`.
-- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`.
+- `docs/` — `vision.md`, `architecture.md` (§12 lists every module), `ROADMAP.md`,
+  `decisions.md`, `backlog.md`, `adr/`.
 - `.ai/`, `.claude/`, `.codex/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` — assistant rules.
 
 ## Language policy
@@ -461,8 +484,8 @@ These sharpen the universal rules for this codebase. Stricter wins.
 - Python 3.14+, full type hints, pyright strict is a gate. A `# type: ignore` or
   `# pyright: ignore` names its rule; a `# noqa` names its code and says why.
 - Ruff rules in `pyproject.toml` are binding; `T20` bans `print`, `DTZ` bans naive datetimes.
-- A module past roughly 500 lines is split by meaning. `cli.py` and `tray.py` hold argument
-  parsing, menus and wiring only.
+- A module past roughly 500 lines is split by meaning. `cli*.py` and `tray*.py` hold
+  argument parsing, menus and wiring only.
 - Dependencies only through `uv add` / `uv add --dev`; `uv.lock` is committed. Only free
   open-source dependencies; a new one is added with the code that first uses it.
 
@@ -478,7 +501,9 @@ These sharpen the universal rules for this codebase. Stricter wins.
 
 - **One writer.** Only the service process writes into the `ChatImport` folder, and inside
   it only the chat's worker (or the trimmer holding that chat's lock). CLI and tray send
-  commands through the control folder; they never write data files.
+  commands through the control folder; the service claims each command file by renaming it
+  and runs it at most once. Without a running service the CLI takes the instance lock and
+  is that one writer.
 - Records are JSONL, one object per line, schema field `v`. Adding a field keeps `v`;
   removing or changing meaning bumps it. History is append-only: edits and deletions are
   new `edit`/`delete` records, never rewrites.
@@ -487,7 +512,9 @@ These sharpen the universal rules for this codebase. Stricter wins.
 - At-least-once intake plus deduplication by `msg_id` (`last_id` in `state.json`): no
   duplicates and no gaps after a crash or restart.
 - `state.json` is a cache; the JSONL files are the truth. It is written atomically
-  (temp file, `fsync`, `os.replace`) and rebuilt from the files when missing or broken.
+  (temp file, `fsync`, `os.replace`) and rebuilt from the files when missing or broken,
+  never when it exists but cannot be read now (`StateUnreadable`). A month of several parts
+  is rewritten only through the journal in `storage/month_commit.py`.
 - Data files are never held open between writes (Windows must be able to delete a folder).
 - Trimming removes oldest first, never selectively, and raises `floor_id`; the service
   never backfills below `floor_id` on its own.
@@ -499,14 +526,15 @@ These sharpen the universal rules for this codebase. Stricter wins.
   is never read into a transcript, logged, committed or copied.
 - `api_id`/`api_hash` live only in the real `config.toml`; the repository holds
   `config.example.toml`.
-- Respect FloodWait, pause between requests and chats, backfill one chat at a time; do not
-  shorten pauses for speed.
-- Logs carry chat ids, message ids and counts, never message text or sender names.
+- Respect FloodWait, pause between requests and chats, backfill one chat at a time
+  (`runtime.BackfillSlots`, `backfill.max_parallel_chats = 1`); do not shorten pauses.
+- Logs carry chat ids, message ids and counts, never message text, sender names or invite
+  hashes.
 
 ## Tests
 
-- Telegram is never called in tests: a fake client (`tests/fakes.py`) replays history and
-  events from fixtures.
+- Telegram is never called in tests: a scripted gateway (`tests/fakes.py`) replays history
+  and events.
 - Unit tests need no network and touch only `tmp_path`: the autouse fixture in
   `tests/conftest.py` isolates `CHATIMPORT_*` variables and the working directory.
 - Mapper, chunking, recover and trim are table-driven; size thresholds are shrunk in tests
@@ -608,4 +636,4 @@ Read and report every date at full precision — hours, minutes, seconds, zone. 
 
 File: `.ai/project/14-command-reference.md`
 
-Lookup material — the planned `chatimport` commands, where configuration and data live, CI jobs and the Windows notes (UTF-8 consoles, `pythonw` autostart, files closed between writes, `os.replace` within one volume); the always-apply policies live in `11-commands.md`.
+Lookup material — every `chatimport` command (all implemented) and whether it needs the running service, where configuration, data and logs live, the control-queue protocol (claimed by rename, run at most once), CI jobs (pyright on Linux) and the Windows notes (UTF-8 consoles, `pythonw` autostart, files closed between writes, `os.replace` within one volume); the always-apply policies live in `11-commands.md`.

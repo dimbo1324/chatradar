@@ -15,8 +15,10 @@ For the assigned stage, define:
 
 - **Boundaries.** What is in and what is explicitly out (for example, 0.1 has no live mode,
   tray or trimming). Skipping ahead is forbidden without an owner decision.
-- **Ownership.** Which module owns each new piece (`telegram/`, `storage/`, `worker`,
-  `library`, `config`, `guards/`, `control`, `cli`, `tray`).
+- **Ownership.** Which module owns each new piece (map: `.ai/project/10-project-map.md`).
+  Service wiring (`app`, `context`, `resolution`, `service_runtime`, `supervisor`) and the
+  shared core (`config`, `paths`, `ports`, `runtime`, `textnorm`, `logging_setup`) have no
+  dedicated agent; name who changes them.
 - **Data formats.** Every record field, file name rule, `state.json` key and config setting
   the stage adds or changes, and how existing files keep loading.
 - **Risks.** Privacy (sessions, sender names), Telegram limits, crash safety (atomic writes,

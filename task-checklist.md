@@ -1,46 +1,50 @@
-# Task: prepare branch `chatimport` for the ChatImport service
+# Task: bring the ChatImport documentation in line with the code
 
-Owner instruction of 2026-10-29: create a parallel branch `chatimport` from `main`, remove
-everything ChatRadar-specific, and prepare the repository for the stack and tasks of the
-ChatImport spec v1.2 (local reactive export of Telegram groups and channels to chunked JSONL).
-The branch stays separate from `main`; the two products are meant to merge later.
+Owner request of 2026-10-31: the documents still described stage 0.0 although the service
+(spec stages 0.1–0.7) was implemented on 2026-10-29 and audited and refactored on
+2026-10-30. Update every state, rule and user document from the code; no code changes under
+`src/` or `tests/`; the lead reviews and commits.
 
 Marks: `[ ]` open, `+` done, `-` not done or partially done (with a note).
 
 ## 1. Preparation
 
-+ Spec read in full; branch `chatimport` created from `main`
-- Old branch `feat/chatimport` deleted — not done: `git branch -D` is on the deny list in
-  `.claude/settings.json`; the owner deletes it by hand
-+ This checklist committed before the main work
++ Orientation: git status and log with full timestamps, ROADMAP, checklist, decisions,
+  architecture
++ Commit messages of 2026-10-29/30 and the audit reports and fix brief read
++ Code read for every claim (modules, CLI options, control protocol, storage, worker,
+  guards, media, logging)
+- This checklist committed before the work — not done: the lead commits this task as a
+  whole (instruction: do not commit)
 
 ## 2. Implementation
 
-+ ChatRadar code, tests, migrations, Docker, web panel, synthetic data and docs removed
-+ `pyproject.toml` for `chatimport`: Python 3.14, Telethon, platformdirs, filelock, Typer;
-  dev tools; `uv.lock` regenerated
-+ Package skeleton `src/chatimport/` with a Typer entry point and a smoke test
-+ `config.example.toml`, `chats.example.toml`; `.gitignore` and the secrets hook cover
-  `config.toml`, `chats.toml`, `*.session`, `ChatImport/`
-+ Tooling adapted: `justfile`, CI, CodeQL, Dependabot, pre-commit, `scripts/`
-+ Rule modules, agents and skills rewritten for ChatImport; `AGENTS.md` and `.codex/`
-  regenerated; `.ai/CHANGELOG.md` entry
-+ Docs: README, CONTRIBUTING, SECURITY, CHANGELOG, `docs/vision.md`,
-  `docs/architecture.md` (English version of the spec), `docs/ROADMAP.md`, `docs/decisions.md`
++ `.ai/project/10-project-map.md`: stage line and the actual module map
++ `.ai/project/12-domain-rules.md`: false or stale statements corrected (no rule loosened)
++ `.ai/project/14-command-reference.md`: every command implemented, logs, control queue,
+  CI note, new Essence line
++ `.ai/project/11-commands.md` reviewed: nothing false found, left unchanged
++ Agents `chatimport-interfaces`, `-storage`, `-telegram`, `-step-planner`: ownership lists
++ `.ai/CHANGELOG.md` entry; `AGENTS.md` and `.codex/` regenerated
++ `docs/ROADMAP.md`: status lines for 0.1–0.7 and the hardening pass, the live check named
+  as the next step, 1.0 open
++ `docs/architecture.md`: §4–§12 and §14–§15 updated to the code; §12 actual module layout
++ `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`
++ `docs/decisions.md`: the implicit choices of 2026-10-30 as agent proposals
++ `docs/backlog.md`: deferred findings with reasons; solved items removed
++ `.gitignore`: `/_unrouted_deletes.jsonl` and `/_exports/`
 
 ## 3. Verification
 
-+ Project `.venv` rebuilt on Python 3.14 (`uv sync`), pre-commit hook reinstalled
-+ `just check`: ruff, format, pyright strict (0 errors), agents sync, language green;
-  pytest 13 passed
-- `just test` exits 1 after the tests pass: pytest cannot clean up a stale
-  `%TEMP%\pytest-of-dimbo1324\pytest-current` link (dated 2026-10-26, access denied even
-  to `rmdir`). A machine problem, not the code: the owner removes it from an elevated shell;
-  with `--basetemp` elsewhere the same 13 tests pass
-+ `uv run chatimport --version` prints `0.0.1`
++ `scripts/check_language.py` green
++ `scripts/sync_agents.py --check` green (AGENTS.md 29.7 of 30 KiB)
++ `ruff format --check .` green
++ pre-commit hooks on the changed files green
++ Tests re-run for the coverage claim: 3155 passed, 3 skipped, 100 % line and branch
+  (Windows)
+- Live behaviour against Telegram not verified — out of scope; the owner's next step
 
 ## 4. Completion
 
-+ Checklist marked; work committed on `chatimport`; nothing pushed, `main` untouched
-- `.claude/settings.json` still lists ChatRadar-only allow entries (recorded in
-  `docs/backlog.md`; editing it needs owner approval)
++ Checklist marked
+- Nothing committed or pushed — by instruction; the lead reviews and commits

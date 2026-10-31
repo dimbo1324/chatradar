@@ -6,6 +6,25 @@ History of changes to the AI assistant rule system (`.ai/`, `CLAUDE.md`, `AGENTS
 
 Format: date, what changed, why, who decided. Newest first.
 
+## 2026-10-31 — Rules brought in line with the implemented service
+
+**What changed.** `project/10-project-map.md`: stage line (0.1-0.7 implemented and
+hardened) and the actual module map instead of the planned one. `project/12-domain-rules.md`:
+`cli*.py`/`tray*.py`; the one-writer rule names the claimed-command protocol (at most once)
+and the offline CLI under the instance lock; `StateUnreadable` is never rebuilt over; a
+multi-part month is rewritten only through `storage/month_commit.py`; one backfill at a time
+names `runtime.BackfillSlots`; logs never carry invite hashes; tests use the scripted gateway.
+`project/14-command-reference.md`: every command listed as implemented with its real options
+and its behaviour with and without a running service, log location, control-queue protocol,
+pyright-on-Linux CI note, new Essence line. Agents `chatimport-interfaces`, `-storage`,
+`-telegram`, `-step-planner`: ownership lists match the split modules; the tray is tested
+through a fake `pystray`. No rule was loosened.
+
+**Why.** The documents still described stage 0.0 although the service was implemented,
+tested and refactored on 2026-10-29/30; the code is the fact.
+
+**Decided by.** Owner asked for a documentation refresh; agent wording, 2026-10-31.
+
 ## 2026-10-29 — `chatimport` is the main branch
 
 **What changed.** `project/11-commands.md`: a strict section making `chatimport` the main

@@ -1,10 +1,12 @@
 ---
 name: chatimport-interfaces
-description: Use for user-facing adapters — the Typer CLI, the control-folder command queue, _status.json, and the pystray tray with notifications and tkinter dialogs. Keeps them thin wrappers.
+description: Use for user-facing adapters — the Typer CLI, the control-folder command queue and command registry, _status.json, the pystray tray with notifications and tkinter dialogs, and the chats.toml library with its editors. Keeps them thin wrappers.
 tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 
-You own `src/chatimport/cli.py`, `control.py` and `tray.py`.
+You own `src/chatimport/cli.py`, `cli_support.py`, `cli_chats.py`, `cli_service.py`,
+`cli_data.py`, `tray.py`, `tray_dialogs.py`, `control.py`, `commands.py`, `status.py`,
+`library.py`, `toml_edit.py`, `config_edit.py` and `offline.py`.
 
 Read `AGENTS.md`, then `docs/architecture.md` §9 (control: CLI and tray).
 
@@ -13,12 +15,14 @@ Rules you enforce:
 - No business logic in a command or a menu item: each calls one function of a service
   module.
 - CLI and tray never write data files. When the service runs, they drop a command file into
-  the control folder and wait for its result; when it does not, the CLI takes the
-  single-instance lock and runs the command itself. No network ports.
+  the control folder and wait for its result; the service claims the file by renaming it
+  and runs it at most once. When it does not run, the CLI takes the single-instance lock
+  and runs the command itself. No network ports.
 - Destructive actions (`trim`, `set-root` without `--move`) ask for confirmation:
   `y/N` in the CLI (`--yes` for scripts), a dialog in the tray.
 - CLI text, help, logs and status fields are English.
 - The entry point is `cli.run` (UTF-8 consoles on Windows).
-- Test commands with Typer's `CliRunner`; the tray is a thin layer kept out of unit tests.
+- Test commands with Typer's `CliRunner`; test the tray through a fake `pystray` (it must
+  import on a machine without a display).
 
 Return the diff summary and the tests you added.

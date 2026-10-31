@@ -12,24 +12,47 @@ This is branch `chatimport`, a parallel line to ChatRadar on `main`. The two are
 become one product later (`docs/architecture.md` §15): ChatImport's JSONL folder is a
 candidate raw store for ChatRadar.
 
-**Stage: 0.0 — repository prepared, no service code yet; stage 0.1 is next.**
+**Stage: 0.1-0.7 implemented and hardened (2026-10-30); the owner's live check with a real
+account is next, then 1.0 (ChatRadar integration).**
 
 ## Repository map
 
-Single uv project on Python 3.14+ (`src/` layout, package `chatimport`):
+Single uv project on Python 3.14+ (`src/` layout, package `chatimport`). `src/chatimport/`:
 
-- `src/chatimport/cli.py` — Typer entry point `chatimport`; thin wrappers only.
-- Planned modules (spec layout, `docs/architecture.md` §12): `config.py`, `paths.py`,
-  `library.py`, `app.py`, `telegram/` (`client.py`, `resolve.py`, `mapper.py`),
-  `storage/` (`layout.py`, `writer.py`, `state.py`, `recover.py`), `worker.py`,
-  `recheck.py`, `trim.py`, `guards/` (`disk.py`, `folders.py`), `control.py`, `tray.py`,
-  `media.py`. A module joins this list when it exists.
+- **Core:** `config` (TOML to dataclasses), `config_edit` (writes `output.root_dir`),
+  `toml_edit` (comment-keeping line edits), `paths` (app folders, data root, OneDrive check),
+  `records` (record types, JSONL lines), `ports` (gateway, clock, disk protocols, errors),
+  `runtime` (chat handles, registry, notifier, `BackfillSlots`), `textnorm` (`fold`,
+  `transliterate`), `refs` (the one ref parser), `logging_setup` (rotating file log).
+- **Library:** `library` (`chats.toml` parse, diff, watch, add/enable), `resolution` (entries
+  to chats, error book), `offline` (CLI work without the service: trim, floor, selector).
+- **Service:** `app` (facade: run, run --once, library loop, set-root), `context` (config,
+  folders, gateway), `service_runtime` (everything on one data root), `supervisor`
+  (restarts with backoff), `router` (events to workers, `_unrouted_deletes.jsonl`),
+  `commands` (command registry), `control` (control folder, instance lock), `status`
+  (`_status.json`), `recheck` (daily comparison and scheduler).
+- **Worker:** `worker` (`ChatWorker` facade), `worker_signals` (flags), `worker_live` and
+  `worker_buffer` (live intake), `worker_backfill` (head and tail), `worker_store` (folder
+  access, threads), `flood` (FloodWait).
+- **Maintenance:** `trim`, `media` (downloader), `integrity` (`check`), `export`
+  (`export-json`), `setroot`, `guards/disk` (disk guard, media gate), `guards/folders`.
+- **Storage:** `layout`, `state`, `writer`, `reader`, `recover`, `fileio` (atomic and
+  retried file primitives), `chat_store` (one chat folder), `month_commit` (journalled
+  month rewrite), `media_files` (media names, safe extensions).
+- **Telegram (only Telethon user):** `client` (gateway, login), `resolve`, `mapper` (pure).
+- **Interfaces:** `cli` (entry point) with `cli_support`, `cli_chats`, `cli_service`,
+  `cli_data`; `tray` with `tray_dialogs`; `__main__`.
+
+Elsewhere:
+
 - `config.example.toml`, `chats.example.toml` — templates; the real files live in the
   application data folder and are never tracked.
-- `tests/unit`, `tests/integration`, `tests/fixtures` (anonymized data only).
+- `tests/unit/<area>`, `tests/integration`, `tests/fakes.py` (clock, disk, scripted gateway);
+  `tests/fixtures/` is reserved for anonymized data and does not exist yet.
 - `scripts/` — stdlib-only repo tooling: `sync_agents.py`, `check_language.py`, `doctor.py`.
 - `justfile`, `.pre-commit-config.yaml`, `.github/`.
-- `docs/` — `vision.md`, `architecture.md`, `ROADMAP.md`, `decisions.md`.
+- `docs/` — `vision.md`, `architecture.md` (§12 lists every module), `ROADMAP.md`,
+  `decisions.md`, `backlog.md`, `adr/`.
 - `.ai/`, `.claude/`, `.codex/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` — assistant rules.
 
 ## Language policy

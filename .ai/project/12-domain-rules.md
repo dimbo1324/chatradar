@@ -7,8 +7,8 @@ These sharpen the universal rules for this codebase. Stricter wins.
 - Python 3.14+, full type hints, pyright strict is a gate. A `# type: ignore` or
   `# pyright: ignore` names its rule; a `# noqa` names its code and says why.
 - Ruff rules in `pyproject.toml` are binding; `T20` bans `print`, `DTZ` bans naive datetimes.
-- A module past roughly 500 lines is split by meaning. `cli.py` and `tray.py` hold argument
-  parsing, menus and wiring only.
+- A module past roughly 500 lines is split by meaning. `cli*.py` and `tray*.py` hold
+  argument parsing, menus and wiring only.
 - Dependencies only through `uv add` / `uv add --dev`; `uv.lock` is committed. Only free
   open-source dependencies; a new one is added with the code that first uses it.
 
@@ -24,7 +24,9 @@ These sharpen the universal rules for this codebase. Stricter wins.
 
 - **One writer.** Only the service process writes into the `ChatImport` folder, and inside
   it only the chat's worker (or the trimmer holding that chat's lock). CLI and tray send
-  commands through the control folder; they never write data files.
+  commands through the control folder; the service claims each command file by renaming it
+  and runs it at most once. Without a running service the CLI takes the instance lock and
+  is that one writer.
 - Records are JSONL, one object per line, schema field `v`. Adding a field keeps `v`;
   removing or changing meaning bumps it. History is append-only: edits and deletions are
   new `edit`/`delete` records, never rewrites.
@@ -33,7 +35,9 @@ These sharpen the universal rules for this codebase. Stricter wins.
 - At-least-once intake plus deduplication by `msg_id` (`last_id` in `state.json`): no
   duplicates and no gaps after a crash or restart.
 - `state.json` is a cache; the JSONL files are the truth. It is written atomically
-  (temp file, `fsync`, `os.replace`) and rebuilt from the files when missing or broken.
+  (temp file, `fsync`, `os.replace`) and rebuilt from the files when missing or broken,
+  never when it exists but cannot be read now (`StateUnreadable`). A month of several parts
+  is rewritten only through the journal in `storage/month_commit.py`.
 - Data files are never held open between writes (Windows must be able to delete a folder).
 - Trimming removes oldest first, never selectively, and raises `floor_id`; the service
   never backfills below `floor_id` on its own.
@@ -45,14 +49,15 @@ These sharpen the universal rules for this codebase. Stricter wins.
   is never read into a transcript, logged, committed or copied.
 - `api_id`/`api_hash` live only in the real `config.toml`; the repository holds
   `config.example.toml`.
-- Respect FloodWait, pause between requests and chats, backfill one chat at a time; do not
-  shorten pauses for speed.
-- Logs carry chat ids, message ids and counts, never message text or sender names.
+- Respect FloodWait, pause between requests and chats, backfill one chat at a time
+  (`runtime.BackfillSlots`, `backfill.max_parallel_chats = 1`); do not shorten pauses.
+- Logs carry chat ids, message ids and counts, never message text, sender names or invite
+  hashes.
 
 ## Tests
 
-- Telegram is never called in tests: a fake client (`tests/fakes.py`) replays history and
-  events from fixtures.
+- Telegram is never called in tests: a scripted gateway (`tests/fakes.py`) replays history
+  and events.
 - Unit tests need no network and touch only `tmp_path`: the autouse fixture in
   `tests/conftest.py` isolates `CHATIMPORT_*` variables and the working directory.
 - Mapper, chunking, recover and trim are table-driven; size thresholds are shrunk in tests
