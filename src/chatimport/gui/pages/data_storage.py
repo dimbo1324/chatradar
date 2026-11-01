@@ -38,7 +38,7 @@ _ = _data_strings
 LOW_DISK_WARNING_FACTOR: Final = 1.5
 COLUMNS: Final = 4
 SHARE_WIDTH: Final = 150
-NUMBER_WIDTHS: Final = {UsageColumn.SIZE: 80, UsageColumn.MESSAGES: 104, UsageColumn.PARTS: 64}
+NUMBER_WIDTHS: Final = {UsageColumn.SIZE: 80, UsageColumn.MESSAGES: 128, UsageColumn.PARTS: 64}
 
 
 def free_disk_tone(free_bytes: int | None, low_bytes: int) -> Tone:
