@@ -35,7 +35,17 @@ if TYPE_CHECKING:
     from chatimport.ports import Clock
     from chatimport.runtime import ChatHandle, ChatRegistry
 
-__all__ = ["ALLOWED_PERCENTS", "MEDIA_DIR", "TRIM_LOG", "TrimReport", "TrimmedPart", "Trimmer"]
+__all__ = [
+    "ALLOWED_PERCENTS",
+    "MEDIA_DIR",
+    "TRIM_LOG",
+    "ChatTrimPreview",
+    "TrimPreview",
+    "TrimReport",
+    "TrimmedPart",
+    "Trimmer",
+    "preview_percent",
+]
 
 log = logging.getLogger(__name__)
 
@@ -60,6 +70,62 @@ class TrimReport:
     trimmed_records: int = 0
     freed_bytes: int = 0
     per_chat: dict[int, int] = field(default_factory=dict[int, int])
+
+
+@dataclass(frozen=True, slots=True)
+class ChatTrimPreview:
+    """What a manual trim would do to one chat; `bytes_freed` is approximate for the cut part."""
+
+    chat_id: int
+    title: str
+    records_total: int
+    records_deleted: int
+    parts_deleted: int
+    bytes_freed: int
+    oldest_after: datetime | None
+
+
+@dataclass(frozen=True, slots=True)
+class TrimPreview:
+    pct: int
+    chats: tuple[ChatTrimPreview, ...]
+
+    @property
+    def records_deleted(self) -> int:
+        return sum(chat.records_deleted for chat in self.chats)
+
+    @property
+    def parts_deleted(self) -> int:
+        return sum(chat.parts_deleted for chat in self.chats)
+
+    @property
+    def bytes_freed(self) -> int:
+        return sum(chat.bytes_freed for chat in self.chats)
+
+
+@dataclass(frozen=True, slots=True)
+class _TrimPlan:
+    """The parts a manual trim removes whole and the part it cuts: the rule of `trim_percent`."""
+
+    target: int
+    whole: tuple[str, ...]
+    boundary: str | None
+    skip: int
+
+
+def _plan_trim(chunks: dict[str, ChunkInfo], pct: int) -> _TrimPlan | None:
+    target = sum(c.records for c in chunks.values()) * pct // 100
+    if target <= 0:
+        return None
+    whole: list[str] = []
+    removed = 0
+    for key, info in chunks.items():
+        if removed + info.records > target:
+            skip = target - removed
+            return _TrimPlan(target, tuple(whole), key if skip > 0 else None, skip)
+        whole.append(key)
+        removed += info.records
+    return _TrimPlan(target, tuple(whole), None, 0)
 
 
 @dataclass(frozen=True, slots=True)
@@ -211,26 +277,24 @@ class Trimmer:
         if state is None:
             return
         chunks = _existing_chunks(folder, state)
-        target = sum(c.records for c in chunks.values()) * pct // 100
-        if target <= 0:
+        plan = _plan_trim(chunks, pct)
+        if plan is None:
             return
         done = _ChatTrim()
-        keys = iter(chunks)
         try:
-            key = next(keys)
-            while done.removed + chunks[key].records <= target:
+            for key in plan.whole:
                 part = _drop_part(folder, handle.chat_id, key, chunks[key])
                 done.deleted.append(part)
                 done.removed += part.records
                 done.freed += part.bytes
-                key = next(keys)
-            skip = target - done.removed
-            if skip > 0:
-                freed_cut, cut_ids = self._cut_boundary(folder / f"{key}.jsonl", skip)
-                done.boundary_key = key
-                done.removed += skip
+            if plan.boundary is not None:
+                freed_cut, cut_ids = self._cut_boundary(
+                    folder / f"{plan.boundary}.jsonl", plan.skip
+                )
+                done.boundary_key = plan.boundary
+                done.removed += plan.skip
                 done.freed += freed_cut
-                delete_media(folder, _month_of(key), cut_ids)
+                delete_media(folder, _month_of(plan.boundary), cut_ids)
         except BaseException:
             if done.changed:
                 self._save_manual_trim(handle, state, chunks, pct, done, report)
@@ -414,3 +478,61 @@ class Trimmer:
         }
         line = escape_line_breaks(json.dumps(entry, ensure_ascii=False)) + "\n"
         append_line(self.root / TRIM_LOG, line.encode("utf-8"))
+
+
+def _first_message_date(folder: Path, keys: list[str], skip: int) -> datetime | None:
+    """Date of the first message left after dropping the first `skip` records of `keys`."""
+    for key in keys:
+        for record in iter_part_records(folder / f"{key}.jsonl"):
+            if skip > 0:
+                skip -= 1
+            elif isinstance(record, MessageRecord):
+                return record.date
+    return None
+
+
+def _part_size(folder: Path, key: str, info: ChunkInfo) -> int:
+    try:
+        return (folder / f"{key}.jsonl").stat().st_size
+    except OSError:
+        return info.bytes
+
+
+def _preview_chat(folder: Path, state: ChatState, pct: int) -> ChatTrimPreview:
+    chunks = _existing_chunks(folder, state)
+    total = sum(c.records for c in chunks.values())
+    plan = _plan_trim(chunks, pct)
+    if plan is None:
+        return ChatTrimPreview(state.chat_id, state.title, total, 0, 0, 0, None)
+    freed = sum(_part_size(folder, key, chunks[key]) for key in plan.whole)
+    if plan.boundary is not None:
+        cut = chunks[plan.boundary]
+        freed += _part_size(folder, plan.boundary, cut) * plan.skip // max(cut.records, 1)
+    keys = list(chunks)
+    rest = keys[len(plan.whole) :]
+    return ChatTrimPreview(
+        chat_id=state.chat_id,
+        title=state.title,
+        records_total=total,
+        records_deleted=plan.target,
+        parts_deleted=len(plan.whole),
+        bytes_freed=freed,
+        oldest_after=_first_message_date(folder, rest, plan.skip),
+    )
+
+
+def preview_percent(root: Path, pct: int, chat_id: int | None = None) -> TrimPreview:
+    """What `Trimmer.trim_percent` would remove, read-only and lock-free (an estimate: the
+    service may append while it is computed). Chats whose state is unreadable are left out."""
+    if pct not in ALLOWED_PERCENTS:
+        raise ValueError(f"pct must be one of {ALLOWED_PERCENTS}, got {pct}")
+    previews: list[ChatTrimPreview] = []
+    for folder in iter_chat_folders(root):
+        try:
+            state = load_state(folder)
+        except StateUnreadable:
+            continue
+        if state is None or (chat_id is not None and state.chat_id != chat_id):
+            continue
+        previews.append(_preview_chat(folder, state, pct))
+    return TrimPreview(pct, tuple(previews))
