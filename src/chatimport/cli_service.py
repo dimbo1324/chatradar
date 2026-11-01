@@ -66,12 +66,14 @@ def window(
         bool, typer.Option("--hidden", help="Start in the tray without opening the window.")
     ] = False,
 ) -> None:
-    """Run the service with the desktop window (and a tray icon)."""
+    """Run the service with the desktop window (and a tray icon).
+
+    The window opens without Telegram credentials: it asks for them in Settings.
+    """
     from chatimport.gui.launch import run_gui
 
     with handled():
         ctx = load(context)
-        require_telegram(ctx)
         refuse_second_instance(ctx)
         code = run_gui(ctx, start_hidden=hidden)
     if code:
