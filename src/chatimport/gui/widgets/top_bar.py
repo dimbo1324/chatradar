@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QVBoxLayout, QWidget
 
 from chatimport.gui.i18n import tr
@@ -116,7 +117,7 @@ class TopBar(QFrame):
         self.language_switcher = LanguageSwitcher(kit) if switchers else None
         for switcher in (self.language_switcher, self.theme_switcher):
             if switcher is not None:
-                self._row.addWidget(switcher)
+                self._row.addWidget(switcher, 0, Qt.AlignmentFlag.AlignVCenter)
         bind_kit(kit, zoom=self._restyle)
         self._restyle()
 

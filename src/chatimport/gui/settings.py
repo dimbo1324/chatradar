@@ -46,6 +46,9 @@ class GuiSettings:
     theme: ThemePreference = "system"
     zoom: float | None = None
     sidebar_collapsed: bool = False
+    close_to_tray: bool = True
+    start_hidden: bool = False
+    last_page: str = "overview"
     geometry: WindowGeometry | None = None
     freshness: FreshnessThresholds = field(default_factory=FreshnessThresholds)
     freshness_per_chat: dict[str, FreshnessThresholds] = field(
@@ -99,6 +102,7 @@ def settings_from_json(raw: Any) -> GuiSettings:
     data = cast("dict[str, Any]", raw)
     language = data.get("language")
     theme = data.get("theme")
+    last_page = data.get("last_page")
     per_chat_raw = data.get("freshness_per_chat")
     per_chat: dict[str, FreshnessThresholds] = {}
     if isinstance(per_chat_raw, dict):
@@ -109,6 +113,9 @@ def settings_from_json(raw: Any) -> GuiSettings:
         theme=theme if theme in THEME_PREFERENCES else defaults.theme,
         zoom=_zoom(data.get("zoom")),
         sidebar_collapsed=data.get("sidebar_collapsed") is True,
+        close_to_tray=data.get("close_to_tray") is not False,
+        start_hidden=data.get("start_hidden") is True,
+        last_page=last_page if isinstance(last_page, str) else defaults.last_page,
         geometry=_geometry(data.get("geometry")),
         freshness=_thresholds(data.get("freshness"), defaults.freshness),
         freshness_per_chat=per_chat,

@@ -1,4 +1,4 @@
-"""CLI commands that run or steer the service: run, tray, status, pause, resume, recheck."""
+"""CLI commands that run or steer the service: run, tray, window, status, pause, resume, recheck."""
 
 from __future__ import annotations
 
@@ -57,6 +57,25 @@ def tray(context: typer.Context) -> None:
         require_telegram(ctx)
         refuse_second_instance(ctx)
         run_tray(ctx)
+
+
+@app.command()
+def window(
+    context: typer.Context,
+    hidden: Annotated[
+        bool, typer.Option("--hidden", help="Start in the tray without opening the window.")
+    ] = False,
+) -> None:
+    """Run the service with the desktop window (and a tray icon)."""
+    from chatimport.gui.launch import run_gui
+
+    with handled():
+        ctx = load(context)
+        require_telegram(ctx)
+        refuse_second_instance(ctx)
+        code = run_gui(ctx, start_hidden=hidden)
+    if code:
+        raise typer.Exit(code)
 
 
 @app.command()
