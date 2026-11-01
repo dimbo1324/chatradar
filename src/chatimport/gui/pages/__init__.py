@@ -5,8 +5,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from chatimport.gui.pages.chats import ChatsPage
+from chatimport.gui.pages.data import DataPage
+from chatimport.gui.pages.log import LogPage
 from chatimport.gui.pages.overview import OverviewPage
-from chatimport.gui.pages.placeholder import PlaceholderPage
+from chatimport.gui.pages.settings import SettingsPage
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QWidget
@@ -20,7 +22,7 @@ def build_pages(gui: GuiContext) -> dict[str, QWidget]:
     return {
         "overview": OverviewPage(gui),
         "chats": ChatsPage(gui),
-        "log": PlaceholderPage(gui, "log"),
-        "data": PlaceholderPage(gui, "data"),
-        "settings": PlaceholderPage(gui, "settings"),
+        "log": LogPage(gui),
+        "data": DataPage(gui),
+        "settings": SettingsPage(gui),
     }

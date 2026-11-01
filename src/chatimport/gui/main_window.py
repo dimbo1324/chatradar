@@ -62,9 +62,9 @@ SECTIONS: Final = (
     NavSection(
         "nav.section.system",
         (
-            NavEntry("log", "nav.log", "log", "nav.soon", "shell.locked.log"),
-            NavEntry("data", "nav.data", "data", "nav.soon", "shell.locked.data"),
-            NavEntry("settings", "nav.settings", "settings", "nav.soon", "shell.locked.settings"),
+            NavEntry("log", "nav.log", "log"),
+            NavEntry("data", "nav.data", "data"),
+            NavEntry("settings", "nav.settings", "settings"),
         ),
     ),
 )
