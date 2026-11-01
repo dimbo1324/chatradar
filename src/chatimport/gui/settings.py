@@ -49,6 +49,7 @@ class GuiSettings:
     close_to_tray: bool = True
     start_hidden: bool = False
     last_page: str = "overview"
+    chats_absolute_time: bool = False
     geometry: WindowGeometry | None = None
     freshness: FreshnessThresholds = field(default_factory=FreshnessThresholds)
     freshness_per_chat: dict[str, FreshnessThresholds] = field(
@@ -116,6 +117,7 @@ def settings_from_json(raw: Any) -> GuiSettings:
         close_to_tray=data.get("close_to_tray") is not False,
         start_hidden=data.get("start_hidden") is True,
         last_page=last_page if isinstance(last_page, str) else defaults.last_page,
+        chats_absolute_time=data.get("chats_absolute_time") is True,
         geometry=_geometry(data.get("geometry")),
         freshness=_thresholds(data.get("freshness"), defaults.freshness),
         freshness_per_chat=per_chat,
