@@ -46,6 +46,7 @@ class GuiSettings:
     theme: ThemePreference = "system"
     zoom: float | None = None
     sidebar_collapsed: bool = False
+    chats_absolute_time: bool = False
     geometry: WindowGeometry | None = None
     freshness: FreshnessThresholds = field(default_factory=FreshnessThresholds)
     freshness_per_chat: dict[str, FreshnessThresholds] = field(
@@ -109,6 +110,7 @@ def settings_from_json(raw: Any) -> GuiSettings:
         theme=theme if theme in THEME_PREFERENCES else defaults.theme,
         zoom=_zoom(data.get("zoom")),
         sidebar_collapsed=data.get("sidebar_collapsed") is True,
+        chats_absolute_time=data.get("chats_absolute_time") is True,
         geometry=_geometry(data.get("geometry")),
         freshness=_thresholds(data.get("freshness"), defaults.freshness),
         freshness_per_chat=per_chat,
