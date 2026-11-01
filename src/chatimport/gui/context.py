@@ -47,5 +47,11 @@ class GuiContext:
     bridge: ServiceBridge
 
     @property
+    def current(self) -> ServiceContext:
+        """The service context as it is now (`service` is frozen at window start)."""
+        live = getattr(self.bridge, "context", None)
+        return live if live is not None else self.service
+
+    @property
     def kit(self) -> UiKit:
         return UiKit(theme=self.theme, language=self.language, zoom=self.zoom)

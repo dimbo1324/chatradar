@@ -199,6 +199,9 @@ class ServiceCommands:
             return CommandResult(False, f"unknown command: {name!r}")
         try:
             return await runner(self, args)
+        except ChatImportError as error:
+            log.info("command %s refused: %s", name, error)
+            return CommandResult(False, f"{type(error).__name__}: {error}")
         except Exception as error:
             log.exception("command %s failed", name)
             return CommandResult(False, f"{type(error).__name__}: {error}")

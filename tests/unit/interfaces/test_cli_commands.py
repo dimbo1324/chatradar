@@ -440,38 +440,6 @@ def test_run_reports_a_service_error_without_a_traceback(
     assert "session revoked" in result.output
 
 
-def test_tray_command_starts_the_tray_with_the_context(
-    env: Env, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    from chatimport import tray
-
-    started: list[Any] = []
-    monkeypatch.setattr(tray, "run_tray", started.append)
-
-    result = invoke(env, "tray")
-
-    assert result.exit_code == 0
-    assert started[0].root == env.ctx.root
-
-
-def test_tray_command_refuses_a_second_instance(
-    env: Env, running_service: FileLock, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    from chatimport import tray
-
-    started: list[Any] = []
-    monkeypatch.setattr(tray, "run_tray", started.append)
-
-    assert_clean_failure(invoke(env, "tray"))
-    assert started == []
-
-
-def test_tray_command_without_credentials_exits_2(env: Env) -> None:
-    configure_without_credentials(env)
-
-    assert_clean_failure(invoke(env, "tray"), 2)
-
-
 # ----------------------------------------------------------------------------- status
 
 

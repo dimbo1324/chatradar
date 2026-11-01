@@ -48,18 +48,6 @@ def run_service(
 
 
 @app.command()
-def tray(context: typer.Context) -> None:
-    """Run the service with a tray icon (normal mode)."""
-    from chatimport.tray import run_tray
-
-    with handled():
-        ctx = load(context)
-        require_telegram(ctx)
-        refuse_second_instance(ctx)
-        run_tray(ctx)
-
-
-@app.command()
 def window(
     context: typer.Context,
     hidden: Annotated[
@@ -130,3 +118,9 @@ def recheck(
         need_service(ctx, "recheck")
         result = send(ctx, "recheck", {"chat": chat, "days": days})
         typer.echo(result.message or "Recheck scheduled")
+
+
+@app.command(hidden=True)
+def tray(context: typer.Context) -> None:
+    """Old name of `window --hidden`; keeps an autostart task made by an earlier version working."""
+    window(context, hidden=True)

@@ -116,6 +116,16 @@ QComboBox:focus { border: 2px solid @border_focus; padding: 0 @space_4_less; }
 QComboBox:disabled { background: @surface_sunken; color: @fg_faint; border-color: @border; }
 QComboBox::drop-down { border: none; width: @space_8; }
 QComboBox::down-arrow { image: @arrow_down; width: @icon_sm; height: @icon_sm; }
+QSpinBox, QDoubleSpinBox { padding-right: @space_8; }
+QSpinBox::up-button, QDoubleSpinBox::up-button, QSpinBox::down-button, QDoubleSpinBox::down-button {
+    subcontrol-origin: border; width: @space_7; border: none; background: transparent;
+}
+QSpinBox::up-button, QDoubleSpinBox::up-button { subcontrol-position: top right; }
+QSpinBox::down-button, QDoubleSpinBox::down-button { subcontrol-position: bottom right; }
+QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover,
+QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover { background: @surface_sunken; }
+QSpinBox::up-arrow, QDoubleSpinBox::up-arrow { image: @arrow_up; width: @icon_sm; height: @icon_sm; }
+QSpinBox::down-arrow, QDoubleSpinBox::down-arrow { image: @arrow_down; width: @icon_sm; height: @icon_sm; }
 QComboBox QAbstractItemView {
     background: @surface_raised; border: 1px solid @border_strong; padding: @space_2;
     selection-background-color: @accent_soft; selection-color: @accent_fg;

@@ -98,7 +98,7 @@ def sent(monkeypatch: pytest.MonkeyPatch) -> SentCommands:
 @pytest.fixture(autouse=True)
 def logging_setups(monkeypatch: pytest.MonkeyPatch) -> list[tuple[Path | None, bool]]:
     """Commands configure process-wide logging; tests record the call instead."""
-    from chatimport import cli_service, tray
+    from chatimport import cli_service
 
     calls: list[tuple[Path | None, bool]] = []
 
@@ -106,7 +106,6 @@ def logging_setups(monkeypatch: pytest.MonkeyPatch) -> list[tuple[Path | None, b
         calls.append((log_dir, console))
 
     monkeypatch.setattr(cli_service, "configure_logging", record)
-    monkeypatch.setattr(tray, "configure_logging", record)
     return calls
 
 

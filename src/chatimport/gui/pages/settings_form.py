@@ -23,6 +23,8 @@ from chatimport.gui.widgets.card import Card
 from chatimport.gui.widgets.labels import make_label
 
 if TYPE_CHECKING:
+    from PySide6.QtGui import QResizeEvent
+
     from chatimport.gui.kit import UiKit
     from chatimport.gui.widgets.button import Button
 
@@ -67,6 +69,13 @@ class FieldRow(QWidget):
         self._row.addWidget(editor, 0, Qt.AlignmentFlag.AlignTop)
         bind_kit(kit, zoom=self._restyle)
         self._restyle()
+
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        super().resizeEvent(event)
+        for label in (self._label, self._hint):
+            needed = label.heightForWidth(label.width())
+            if needed > 0 and needed != label.minimumHeight():
+                label.setMinimumHeight(needed)
 
     def set_texts(self, label: str, hint: str = "") -> None:
         self._label.setText(label)

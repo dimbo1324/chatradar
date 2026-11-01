@@ -61,7 +61,7 @@ class DataEnv(QObject):
         self.gui = gui
         self.page = page
         self.runner = MainThreadRunner(self)
-        self.root: Path = gui.service.root
+        self.root: Path = gui.current.root
         self.usage: ArchiveUsage | None = None
 
     def set_usage(self, usage: ArchiveUsage) -> None:

@@ -68,11 +68,11 @@ class ChatActions(QObject):
             self._send("trim", rows, {"pct": pct})
 
     def open_folder(self, row: ChatRow) -> None:
-        root = self._gui.service.root
+        root = self._gui.current.root
         self._runner.submit(lambda: find_chat_folder(root, row.chat_id), self._opened)
 
     def export(self, row: ChatRow) -> None:
-        root = self._gui.service.root
+        root = self._gui.current.root
 
         def work() -> Path | None:
             folder = find_chat_folder(root, row.chat_id)

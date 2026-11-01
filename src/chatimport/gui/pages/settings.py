@@ -10,7 +10,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Any, Final
 
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QScrollArea, QVBoxLayout, QWidget
 
 from chatimport.config import Config, ConfigError, load_config
@@ -37,7 +37,7 @@ if TYPE_CHECKING:
 _ = _settings_strings
 log = logging.getLogger(__name__)
 
-NAV_WIDTH: Final = 156
+NAV_WIDTH: Final = 200
 CONTENT_WIDTH: Final = 760
 SPY_MARGIN: Final = 60
 RUNNING: Final = ("running", "starting")
@@ -128,6 +128,7 @@ class SettingsPage(QWidget):
         host.setLayout(wrap)
         self._scroll = QScrollArea()
         self._scroll.setWidgetResizable(True)
+        self._scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self._scroll.setWidget(host)
         self._scroll.verticalScrollBar().valueChanged.connect(self._spy)
 

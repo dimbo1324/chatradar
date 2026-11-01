@@ -120,7 +120,7 @@ def confirm(question: str, yes: bool) -> None:
 
 def need_service(ctx: ServiceContext, what: str) -> None:
     if not running(ctx):
-        fail(f"{what} needs the service: start it with `chatimport tray` or `chatimport run`")
+        fail(f"{what} needs the service: start it with `chatimport window` or `chatimport run`")
 
 
 def library_file(ctx: ServiceContext) -> Path:
