@@ -31,6 +31,7 @@ STATE_TONES: Final[dict[str, Tone]] = {
     "stopping": "warning",
     "stopped": "muted",
     "failed": "danger",
+    "needs_setup": "warning",
 }
 _MAX_TEXT: Final = 380
 _STRIPE_WIDTH: Final = 56

@@ -23,6 +23,8 @@ from chatimport.gui.pages import PAGE_KEYS
 from chatimport.gui.settings import WindowGeometry
 from chatimport.gui.shell_state import chats_of, service_state
 from chatimport.gui.shell_widgets import DownloadIndicator, ServiceChip
+from chatimport.gui.widgets.button import Button
+from chatimport.gui.widgets.callout import Callout
 from chatimport.gui.widgets.sidebar import NavEntry, NavSection, Sidebar
 from chatimport.gui.widgets.status_bar import StatusBar
 from chatimport.gui.widgets.toast import ToastHost
@@ -98,6 +100,7 @@ class MainWindow(QMainWindow):
         self._wire(notifier)
         self._restore_geometry()
         self._retitle()
+        self._retranslate_banner()
         start = gui.settings.settings.last_page
         self.show_page(start if start in RESTORABLE_PAGES else "overview")
         snapshot = gui.bridge.last_snapshot
@@ -138,10 +141,15 @@ class MainWindow(QMainWindow):
         right = QVBoxLayout()
         right.setSpacing(0)
         self._top = TopBar(self.kit)
+        self._setup_button = Button(self.kit, variant="primary")
+        self._setup_button.clicked.connect(self.open_telegram_setup)
+        self._banner = Callout(self.kit, "warning", "", action=self._setup_button)
+        self._banner.hide()
         self._stack = QStackedWidget()
         for key in PAGE_KEYS:
             self._stack.addWidget(self._pages[key])
         right.addWidget(self._top)
+        right.addWidget(self._banner)
         right.addWidget(self._stack, 1)
         body.addWidget(self._sidebar)
         body.addLayout(right, 1)
@@ -162,6 +170,7 @@ class MainWindow(QMainWindow):
         self.gui.bridge.snapshot.connect(self._on_snapshot)
         notifier.delivered.connect(self._on_note)
         self.kit.language.changed.connect(self._retitle)
+        self.kit.language.changed.connect(self._retranslate_banner)
         install_zoom_inputs(self.kit.zoom, self)
         for index, key in enumerate(PAGE_KEYS, start=1):
             self._bind(f"Ctrl+{index}", lambda key=key: self._shortcut_page(key))
@@ -219,10 +228,18 @@ class MainWindow(QMainWindow):
             self._toasts.push("danger", tr("shell.notice.command_failed"))
 
     def _shortcut_page(self, key: str) -> None:
-        if key in RESTORABLE_PAGES:
-            self.show_page(key)
-        else:
-            self._on_locked(key, tr(f"shell.locked.{key}"))
+        self.show_page(key)
+
+    def open_telegram_setup(self) -> None:
+        self.show_page("settings")
+        show_section = getattr(self._pages["settings"], "show_section", None)
+        if callable(show_section):
+            show_section("telegram")
+
+    def _retranslate_banner(self) -> None:
+        self._banner.set_title(tr("shell.banner.title"))
+        self._banner.set_body(tr("shell.banner.text"))
+        self._setup_button.setText(tr("shell.banner.action"))
 
     def _focus_search(self) -> None:
         hook = getattr(self._pages[self._current], "focus_search", None)
@@ -251,6 +268,7 @@ class MainWindow(QMainWindow):
 
     def _on_snapshot(self, snapshot: dict[str, Any]) -> None:
         chats = chats_of(snapshot)
+        self._banner.setVisible(snapshot.get("service") == "needs_setup")
         self._sidebar.set_badge("chats", str(len(chats)) if chats else None)
         self._chip.update_from(snapshot, self._failed_type is not None)
         self._download.update_from(snapshot)

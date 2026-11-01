@@ -5,12 +5,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Final, Literal, cast
 
-type ServiceState = Literal["starting", "running", "paused", "stopping", "stopped", "failed"]
+type ServiceState = Literal[
+    "starting", "running", "paused", "stopping", "stopped", "failed", "needs_setup"
+]
 type DownloadKind = Literal["active", "queued", "retrying", "disk", "paused", "done", "empty"]
 
 Snapshot = dict[str, Any]
 
-_KNOWN: Final = ("starting", "running", "stopping", "stopped")
+_KNOWN: Final = ("starting", "running", "stopping", "stopped", "needs_setup")
 _IDLE_KINDS: Final[tuple[tuple[str, DownloadKind], ...]] = (
     ("retrying", "retrying"),
     ("disk_stopped", "disk"),
