@@ -204,7 +204,7 @@ class ChatsTableModel(QAbstractTableModel):
                 return last_message_text(row, now, self._absolute, language)
             case Column.MESSAGES:
                 return format_count(row.records, language)
-            case Column.SPAN:
+            case _:
                 return span_text(row)
 
     def _tooltip(self, row: ChatRow, column: Column, now: datetime) -> str | None:
@@ -234,7 +234,7 @@ class ChatsTableModel(QAbstractTableModel):
                 return INFINITY if row.newest_date is None else -row.newest_date.timestamp()
             case Column.MESSAGES:
                 return float(row.records)
-            case Column.SPAN:
+            case _:
                 return INFINITY if row.oldest_date is None else row.oldest_date.timestamp()
 
 
@@ -291,16 +291,20 @@ class ChatsFilterProxy(QSortFilterProxyModel):
         folded = fold(text)
         if folded != self._query:
             self._query = folded
-            self.invalidateFilter()
+            self._refilter()
 
     def set_mode(self, mode: FilterMode) -> None:
         if mode is not self._mode:
             self._mode = mode
-            self.invalidateFilter()
+            self._refilter()
 
     def refresh_time(self) -> None:
         if self._mode in SILENT_SECONDS:
-            self.invalidateFilter()
+            self._refilter()
+
+    def _refilter(self) -> None:
+        self.beginFilterChange()
+        self.endFilterChange(QSortFilterProxyModel.Direction.Rows)
 
     def filterAcceptsRow(self, source_row: int, source_parent: _AnyIndex) -> bool:
         model = self.sourceModel()
