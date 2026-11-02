@@ -32,7 +32,7 @@ def test_every_registered_command_is_routable(tmp_path: Path) -> None:
     handlers = make_env(tmp_path).app.build_handlers()
 
     assert set(control.COMMANDS) == set(handlers) == set(COMMANDS) == set(COMMAND_NAMES)
-    assert len(COMMAND_NAMES) == 11
+    assert len(COMMAND_NAMES) == 12
 
 
 async def test_trim_without_pct_reports_clear_error(tmp_path: Path) -> None:

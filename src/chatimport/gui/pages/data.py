@@ -13,6 +13,7 @@ from chatimport.gui.pages.data_common import DataEnv
 from chatimport.gui.pages.data_export import ExportCard
 from chatimport.gui.pages.data_folder import FolderCard
 from chatimport.gui.pages.data_integrity import IntegrityCard
+from chatimport.gui.pages.data_merged import MergedCard
 from chatimport.gui.pages.data_storage import StorageCard
 from chatimport.gui.tokens import LAYOUT, SPACE
 from chatimport.gui.widgets.base import bind_kit
@@ -44,12 +45,14 @@ class DataPage(QWidget):
         self.integrity = IntegrityCard(self.env)
         self.folder = FolderCard(self.env)
         self.export = ExportCard(self.env)
+        self.merged = MergedCard(self.env)
 
         content = QWidget()
         content.setObjectName("DataContent")
         self._content = content
         self._stack = QVBoxLayout(content)
-        for card in (self.storage, self.cleanup, self.integrity, self.folder, self.export):
+        cards = (self.storage, self.cleanup, self.integrity, self.folder, self.export, self.merged)
+        for card in cards:
             self._stack.addWidget(card)
         self._stack.addStretch(1)
         wrap = QHBoxLayout()

@@ -41,6 +41,7 @@ class StatusWriter:
         low_watermark_gb: int,
         service_state: Callable[[], str],
         slots: BackfillSlots | None = None,
+        merged: Callable[[], dict[str, Any]] | None = None,
     ) -> None:
         self._root = root
         self._registry = registry
@@ -50,6 +51,7 @@ class StatusWriter:
         self._low_watermark_gb = low_watermark_gb
         self._service_state = service_state
         self._slots = slots
+        self._merged = merged
         self._extra_errors: dict[str, str] = {}
         self._last_total: int | None = None
 
@@ -96,7 +98,7 @@ class StatusWriter:
             for key, text in {**self._supervisor.errors(), **self._extra_errors}.items()
         ]
         free_bytes = self._disk.free_bytes(self._root)
-        return {
+        data: dict[str, Any] = {
             "updated_at": format_dt(self._clock.now()),
             "service": self._service_state(),
             "disk": {
@@ -109,6 +111,9 @@ class StatusWriter:
             "chats": chats,
             "errors": errors,
         }
+        if self._merged is not None:
+            data["merged"] = self._merged()
+        return data
 
     def _slots_block(self) -> dict[str, Any]:
         slots = self._slots
@@ -197,5 +202,10 @@ def format_status_lines(data: dict[str, Any]) -> list[str]:
     free_gb = data.get("disk", {}).get("free_gb", 0)
     noun = "chat" if len(chats) == 1 else "chats"
     lines = [f"{len(chats)} {noun} · {state} · {total_gb:.1f} GB · {free_gb:g} GB free"]
+    merged: dict[str, Any] = data.get("merged") or {}
+    if merged.get("enabled") or merged.get("last_built_at"):
+        built = merged.get("last_built_at") or "never"
+        state = "building" if merged.get("building") else f"built {built}"
+        lines.append(f"combined file: {merged.get('records', 0)} records, {state}")
     lines.extend(f"error [{e['source']}]: {e['message']}" for e in data.get("errors", []))
     return lines
