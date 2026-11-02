@@ -145,13 +145,6 @@ class ChatSelector(QComboBox):
         return self.currentText()
 
 
-def column(parent: QWidget, *, spacing: int = 0) -> QVBoxLayout:
-    layout = QVBoxLayout(parent)
-    layout.setContentsMargins(0, 0, 0, 0)
-    layout.setSpacing(spacing)
-    return layout
-
-
 class FieldRow(QWidget):
     """A small caption above a control, so toolbars of cards line up."""
 
