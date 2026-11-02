@@ -7,11 +7,11 @@ from typing import TYPE_CHECKING, Any
 import pytest
 import shiboken6
 from PySide6.QtCore import QObject
-from PySide6.QtGui import QCloseEvent
+from PySide6.QtGui import QCloseEvent, QShortcut
 from PySide6.QtWidgets import QApplication, QWidget
 
 from chatimport.commands import CommandResult
-from chatimport.gui.main_window import MainWindow
+from chatimport.gui.main_window import SECTIONS, MainWindow
 from chatimport.gui.notifier import QtNotifier
 from chatimport.gui.pages import PAGE_KEYS
 from chatimport.gui.settings import WindowGeometry
@@ -133,12 +133,8 @@ def test_open_telegram_setup_and_search(window: MainWindow) -> None:
     settings = window._pages["settings"]
     assert isinstance(settings, StubPage)
     assert settings.sections == ["telegram"]
-    window._focus_search()
-    assert settings.searched == 1
     window.show_page("log")
     window.open_telegram_setup()
-    window.show_page("log")
-    window._focus_search()
 
 
 def test_open_telegram_setup_without_hook(gui: GuiContext, qapp: QApplication) -> None:
@@ -292,3 +288,35 @@ def test_close_event_quits_otherwise(
     window.closeEvent(event)
     assert event.isAccepted()
     assert window._quitting
+
+
+def test_ctrl_f_opens_search_from_any_page(window: MainWindow) -> None:
+    search = window._pages["search"]
+    assert isinstance(search, StubPage)
+    window.show_page("settings")
+    window._focus_search()
+    assert window.current_page == "search"
+    assert search.searched == 1
+    window._focus_search()
+    assert window.current_page == "search"
+    assert search.searched == 2
+
+
+def test_ctrl_f_without_a_focus_hook(gui: GuiContext, qapp: QApplication) -> None:
+    pages = make_pages()
+    pages["search"] = QWidget()
+    window = MainWindow(gui, pages, QtNotifier())
+    window._focus_search()
+    assert window.current_page == "search"
+
+
+def test_search_shortcuts_and_nav_entry(window: MainWindow) -> None:
+    sequences = {s.key().toString() for s in window.findChildren(QShortcut)}
+    assert "Ctrl+F" in sequences
+    assert f"Ctrl+{PAGE_KEYS.index('search') + 1}" in sequences
+    assert PAGE_KEYS[2] == "search"
+    entry = next(e for section in SECTIONS for e in section.entries if e.key == "search")
+    assert entry.label_key == "nav.search"
+    assert entry.icon == "search"
+    window._shortcut_page("search")
+    assert window.current_page == "search"

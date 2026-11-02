@@ -12,6 +12,7 @@ RU: Final[dict[str, str | tuple[str, ...]]] = {
     "nav.section.system": "Система",
     "nav.overview": "Обзор",
     "nav.chats": "Чаты",
+    "nav.search": "Поиск",
     "nav.log": "Журнал",
     "nav.data": "Данные",
     "nav.settings": "Настройки",

@@ -61,6 +61,7 @@ SECTIONS: Final = (
         (
             NavEntry("overview", "nav.overview", "home"),
             NavEntry("chats", "nav.chats", "chats"),
+            NavEntry("search", "nav.search", "search"),
         ),
     ),
     NavSection(
@@ -259,7 +260,10 @@ class MainWindow(QMainWindow):
         self._setup_button.setText(tr("shell.banner.action"))
 
     def _focus_search(self) -> None:
-        hook = getattr(self._pages[self._current], "focus_search", None)
+        """Ctrl+F: open the Search page from anywhere and put the cursor in its query box."""
+        if self._current != "search":
+            self.show_page("search")
+        hook = getattr(self._pages["search"], "focus_search", None)
         if callable(hook):
             hook()
 

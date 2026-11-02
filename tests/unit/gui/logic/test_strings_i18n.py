@@ -22,7 +22,7 @@ from chatimport.gui.strings import (
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-LOCALE_MODULES = ("chats", "data", "log", "overview", "placeholder", "settings", "shell")
+LOCALE_MODULES = ("chats", "data", "log", "overview", "placeholder", "search", "settings", "shell")
 
 
 @pytest.fixture(autouse=True)

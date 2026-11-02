@@ -11,6 +11,7 @@ EN: Final[dict[str, str | tuple[str, ...]]] = {
     "nav.section.system": "System",
     "nav.overview": "Overview",
     "nav.chats": "Chats",
+    "nav.search": "Search",
     "nav.log": "Log",
     "nav.data": "Data",
     "nav.settings": "Settings",

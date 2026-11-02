@@ -8,6 +8,7 @@ from chatimport.gui.pages.chats import ChatsPage
 from chatimport.gui.pages.data import DataPage
 from chatimport.gui.pages.log import LogPage
 from chatimport.gui.pages.overview import OverviewPage
+from chatimport.gui.pages.search import SearchPage
 from chatimport.gui.pages.settings import SettingsPage
 
 if TYPE_CHECKING:
@@ -15,13 +16,14 @@ if TYPE_CHECKING:
 
     from chatimport.gui.context import GuiContext
 
-PAGE_KEYS = ("overview", "chats", "log", "data", "settings")
+PAGE_KEYS = ("overview", "chats", "search", "log", "data", "settings")
 
 
 def build_pages(gui: GuiContext) -> dict[str, QWidget]:
     return {
         "overview": OverviewPage(gui),
         "chats": ChatsPage(gui),
+        "search": SearchPage(gui),
         "log": LogPage(gui),
         "data": DataPage(gui),
         "settings": SettingsPage(gui),
