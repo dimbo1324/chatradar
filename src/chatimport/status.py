@@ -42,6 +42,7 @@ class StatusWriter:
         service_state: Callable[[], str],
         slots: BackfillSlots | None = None,
         merged: Callable[[], dict[str, Any]] | None = None,
+        search: Callable[[], dict[str, Any]] | None = None,
     ) -> None:
         self._root = root
         self._registry = registry
@@ -52,6 +53,7 @@ class StatusWriter:
         self._service_state = service_state
         self._slots = slots
         self._merged = merged
+        self._search = search
         self._extra_errors: dict[str, str] = {}
         self._last_total: int | None = None
 
@@ -113,6 +115,8 @@ class StatusWriter:
         }
         if self._merged is not None:
             data["merged"] = self._merged()
+        if self._search is not None:
+            data["search"] = self._search()
         return data
 
     def _slots_block(self) -> dict[str, Any]:
@@ -207,5 +211,11 @@ def format_status_lines(data: dict[str, Any]) -> list[str]:
         built = merged.get("last_built_at") or "never"
         state = "building" if merged.get("building") else f"built {built}"
         lines.append(f"combined file: {merged.get('records', 0)} records, {state}")
+    search: dict[str, Any] = data.get("search") or {}
+    if search.get("state") == "building":
+        done, total = search.get("indexed", 0), search.get("total", 0)
+        lines.append(f"search index: building, {done} of {total} messages")
+    elif search.get("state") == "ready":
+        lines.append(f"search index: ready, {search.get('indexed', 0)} messages")
     lines.extend(f"error [{e['source']}]: {e['message']}" for e in data.get("errors", []))
     return lines

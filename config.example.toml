@@ -59,3 +59,7 @@ enabled = false                 # keep one combined file of every chat, sorted b
 format = "json"                 # "json" (one array) or "jsonl" (one object per line)
 every_minutes = 10              # rebuilt at most this often, and only if some chat changed
 include_names = false           # sender names and raw Telegram data stay out unless true
+
+[search]
+enabled = true                  # keep a search index (_search.db) of every stored message
+interval_seconds = 5            # how often new messages are added to the index

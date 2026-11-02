@@ -124,6 +124,12 @@ class MergedConfig:
 
 
 @dataclass(frozen=True, slots=True)
+class SearchConfig:
+    enabled: bool = True
+    interval_seconds: int = 5
+
+
+@dataclass(frozen=True, slots=True)
 class Config:
     telegram: TelegramConfig = field(default_factory=TelegramConfig)
     output: OutputConfig = field(default_factory=OutputConfig)
@@ -136,6 +142,7 @@ class Config:
     media: MediaConfig = field(default_factory=MediaConfig)
     events: EventsConfig = field(default_factory=EventsConfig)
     merged: MergedConfig = field(default_factory=MergedConfig)
+    search: SearchConfig = field(default_factory=SearchConfig)
 
 
 def _build[T](cls: type[T], raw: dict[str, Any], section: str) -> T:
@@ -171,6 +178,7 @@ _SECTIONS: dict[str, type[Any]] = {
     "media": MediaConfig,
     "events": EventsConfig,
     "merged": MergedConfig,
+    "search": SearchConfig,
 }
 
 
@@ -211,6 +219,7 @@ def _validate(config: Config) -> None:
         "[disk] check_every_minutes": config.disk.check_every_minutes,
         "[live] reconcile_every_minutes": config.live.reconcile_every_minutes,
         "[merged] every_minutes": config.merged.every_minutes,
+        "[search] interval_seconds": config.search.interval_seconds,
     }
     for name, value in intervals.items():
         if value < 1:

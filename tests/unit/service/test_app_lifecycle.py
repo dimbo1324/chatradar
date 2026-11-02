@@ -472,6 +472,7 @@ async def test_service_state_is_reported_while_running(tmp_path: Path) -> None:
         "chats",
         "errors",
         "merged",
+        "search",
     }
 
 
