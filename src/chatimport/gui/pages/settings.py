@@ -87,6 +87,7 @@ class SettingsPage(QWidget):
             "about": self.about,
         }
         self.telegram.saved.connect(self._on_config_saved)
+        self.about.wizard_finished.connect(self._on_wizard_finished)
         for card in self.config_cards:
             card.saved.connect(self._on_config_saved)
 
@@ -221,6 +222,12 @@ class SettingsPage(QWidget):
         self.telegram.set_service_state(service)
         if service not in RUNNING:
             self._restart_note.hide()
+
+    def _on_wizard_finished(self) -> None:
+        self.reload()
+        self.startup.refresh()
+        self.telegram.refresh_session()
+        self.about.retranslate()
 
     def _on_config_saved(self) -> None:
         if self._service in RUNNING and self._control is not None:

@@ -41,6 +41,7 @@ QLabel[role="secondary"] { color: @fg_secondary; }
 QLabel[role="faint"] { color: @fg_faint; }
 QLabel[role="sm"] { font-size: @text_sm; }
 QLabel[role="caption"] { color: @fg_muted; font-size: @text_xs; }
+QLabel[role="error"] { color: @danger; font-size: @text_xs; }
 QLabel[role="eyebrow"] { color: @fg_faint; font-size: @text_2xs; font-weight: @weight_semibold; }
 QLabel[role="section"] { font-family: @font_display; font-size: @text_md; font-weight: @weight_semibold; }
 QLabel[role="title"] { font-family: @font_display; font-size: @text_xl; font-weight: @weight_semibold; }

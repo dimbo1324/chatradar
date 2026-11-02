@@ -3,17 +3,17 @@
 from __future__ import annotations
 
 import logging
-import re
 from dataclasses import replace
 from typing import TYPE_CHECKING, Final
 
 from PySide6.QtCore import QRegularExpression, Signal
 from PySide6.QtGui import QRegularExpressionValidator
-from PySide6.QtWidgets import QHBoxLayout, QLineEdit, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QLineEdit, QVBoxLayout, QWidget
 
 from chatimport.config import ConfigError, load_config
 from chatimport.config_edit import update_config
 from chatimport.gui.i18n import tr
+from chatimport.gui.key_validation import validate_api_hash, validate_api_id
 from chatimport.gui.login_flow import LoginDialog
 from chatimport.gui.pages.settings_form import WIDE_EDITOR_WIDTH, FieldRow, SettingsCard
 from chatimport.gui.pages.settings_support import (
@@ -27,6 +27,7 @@ from chatimport.gui.tokens import SPACE
 from chatimport.gui.widgets.base import Tone, bind_kit
 from chatimport.gui.widgets.button import Button, IconButton
 from chatimport.gui.widgets.chip import Chip
+from chatimport.gui.widgets.labels import make_label
 
 if TYPE_CHECKING:
     from concurrent.futures import Future
@@ -38,7 +39,6 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 TELEGRAM_APPS_URL: Final = "https://my.telegram.org/apps"
-API_HASH_PATTERN: Final = re.compile(r"[0-9A-Za-z]{16,64}")
 BUSY_SERVICE: Final = ("running", "starting", "stopping")
 
 type SessionState = str
@@ -70,6 +70,7 @@ class TelegramCard(SettingsCard):
         self._handle: str | None = None
         self._probing = False
         self._baseline = ("", "")
+        self._inputs_ok = True
         kit = gui.kit
 
         self._api_id = QLineEdit()
@@ -93,12 +94,21 @@ class TelegramCard(SettingsCard):
         for edit in (self._api_id, self._api_hash):
             edit.textChanged.connect(self._on_edited)
 
-        self._id_row = FieldRow(kit, self._api_id, editor_width=WIDE_EDITOR_WIDTH)
-        self._hash_row = FieldRow(kit, hash_box, editor_width=WIDE_EDITOR_WIDTH)
+        self._id_error = make_label("", "error", wrap=True)
+        self._hash_error = make_label("", "error", wrap=True)
+        self._id_row = FieldRow(
+            kit, self._with_error(self._api_id, self._id_error), editor_width=WIDE_EDITOR_WIDTH
+        )
+        self._hash_row = FieldRow(
+            kit, self._with_error(hash_box, self._hash_error), editor_width=WIDE_EDITOR_WIDTH
+        )
         self._link = Button(kit, variant="ghost", icon_name="external")
         self._link.clicked.connect(lambda: open_link(TELEGRAM_APPS_URL))
+        self._guide = Button(kit, variant="ghost", icon_name="info")
+        self._guide.clicked.connect(self._open_guide)
         link_row = QHBoxLayout()
         link_row.addStretch(1)
+        link_row.addWidget(self._guide)
         link_row.addWidget(self._link)
         link_box = QWidget()
         link_box.setLayout(link_row)
@@ -130,6 +140,17 @@ class TelegramCard(SettingsCard):
         self.load()
         self.retranslate()
 
+    @staticmethod
+    def _with_error(editor: QWidget, error: QLabel) -> QWidget:
+        box = QWidget()
+        column = QVBoxLayout(box)
+        column.setContentsMargins(0, 0, 0, 0)
+        column.setSpacing(0)
+        column.addWidget(editor)
+        column.addWidget(error)
+        error.hide()
+        return box
+
     def load(self) -> None:
         """Read the credentials from `config.toml` (the file is the source of truth)."""
         try:
@@ -151,10 +172,11 @@ class TelegramCard(SettingsCard):
         self._hash_row.set_texts(tr("settings.tg.api_hash"), tr("settings.tg.api_hash_hint"))
         self._session_row.set_texts(tr("settings.tg.session"), tr("settings.tg.session_hint"))
         self._link.setText(tr("settings.tg.get_credentials"))
+        self._guide.setText(tr("setup.keys.guide"))
         self._save.setText(tr("common.save"))
         self._recheck.setText(tr("settings.tg.check_again"))
         self._on_reveal(self._reveal.isChecked())
-        self._render_session()
+        self._refresh_validation()
 
     def set_service_state(self, service: str) -> None:
         previous, self._service = self._service, service
@@ -219,7 +241,7 @@ class TelegramCard(SettingsCard):
             {"signed_in": "check-circle", "signed_out": "alert", "unknown": "info"}.get(state)
         )
         self._sign_in.setVisible(state in ("signed_out", "unknown", "no_credentials"))
-        self._sign_in.setEnabled(state in ("signed_out", "unknown"))
+        self._sign_in.setEnabled(state in ("signed_out", "unknown") and self._inputs_ok)
         self._sign_in.setText(tr("settings.tg.sign_in"))
         self._sign_in.setToolTip(
             tr("settings.tg.sign_in_needs_credentials") if state == "no_credentials" else ""
@@ -235,20 +257,34 @@ class TelegramCard(SettingsCard):
         self._reveal.set_icon_name("lock" if shown else "eye")
         self._reveal.set_tooltip(tr("settings.tg.hide" if shown else "settings.tg.show"))
 
+    def _refresh_validation(self) -> None:
+        checks = (
+            (self._api_id, self._id_error, validate_api_id(self._api_id.text())),
+            (self._api_hash, self._hash_error, validate_api_hash(self._api_hash.text())),
+        )
+        for edit, label, error in checks:
+            shown = bool(error) and bool(edit.text().strip())
+            label.setText(tr(error) if error and shown else "")
+            label.setVisible(shown)
+        self._inputs_ok = not any(error for _, _, error in checks)
+        self._save.setEnabled(self.dirty and self._inputs_ok)
+        self._render_session()
+
     def _on_edited(self, *_: object) -> None:
         self.clear_message()
-        current = (self._api_id.text().strip(), self._api_hash.text().strip())
-        dirty = current != self._baseline
-        self._save.setEnabled(dirty)
-        self.set_status(tr("settings.unsaved") if dirty else "")
+        self.set_status(tr("settings.unsaved") if self.dirty else "")
+        self._refresh_validation()
+
+    def _open_guide(self) -> None:
+        from chatimport.gui.key_guide import KeyGuideDialog
+
+        KeyGuideDialog(self.gui, self.window()).exec()
 
     def save(self) -> None:
         api_id, api_hash = self._api_id.text().strip(), self._api_hash.text().strip()
-        if not api_id.isdigit() or int(api_id) <= 0:
-            self.show_message("danger", tr("settings.tg.err.api_id"))
-            return
-        if API_HASH_PATTERN.fullmatch(api_hash) is None:
-            self.show_message("danger", tr("settings.tg.err.api_hash"))
+        error = validate_api_id(api_id) or validate_api_hash(api_hash)
+        if error is not None:
+            self.show_message("danger", tr(error))
             return
         try:
             update_config(

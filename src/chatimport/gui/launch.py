@@ -105,6 +105,7 @@ def run_gui(
             window.show_window()
     else:
         window.show_window()
+    QTimer.singleShot(0, window.offer_setup_wizard)
     warning = cloud_sync_warning(ctx.root)
     if warning is not None:
         QTimer.singleShot(0, lambda: window.toasts.push("warning", tr("shell.notice.cloud")))

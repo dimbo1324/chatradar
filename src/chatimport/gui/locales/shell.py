@@ -38,7 +38,7 @@ EN: Final[dict[str, str | tuple[str, ...]]] = {
     "notice.command_failed": "The command did not complete.",
     "banner.title": "Connect your Telegram account",
     "banner.text": "The archive cannot start until you enter your API credentials and sign in.",
-    "banner.action": "Set up Telegram",
+    "banner.action": "Run setup",
     "dialog.running_title": "ChatImport is already running",
     "dialog.running_text": "Another ChatImport instance holds the archive. Close it first.",
 }
@@ -76,7 +76,7 @@ RU: Final[dict[str, str | tuple[str, ...]]] = {
     "notice.command_failed": "Команда не выполнена.",
     "banner.title": "Подключите аккаунт Telegram",
     "banner.text": "Архив не запустится, пока вы не введёте данные API и не войдёте в аккаунт.",
-    "banner.action": "Настроить Telegram",
+    "banner.action": "Начать настройку",
     "dialog.running_title": "ChatImport уже запущен",
     "dialog.running_text": "Другой экземпляр ChatImport владеет архивом. Сначала закройте его.",
 }

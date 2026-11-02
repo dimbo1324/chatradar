@@ -30,6 +30,7 @@ class Captured:
         self.tray: QtTray | None = None
         self.tray_visible = False
         self.shown = 0
+        self.offered = 0
         self.warnings: list[str] = []
         self.exec_calls = 0
 
@@ -50,6 +51,9 @@ def captured(qapp: QApplication, monkeypatch: pytest.MonkeyPatch) -> Iterator[Ca
 
         def show_window(self) -> None:
             state.shown += 1
+
+        def offer_setup_wizard(self) -> None:
+            state.offered += 1
 
     class SpyTray(QtTray):
         @property
@@ -91,12 +95,17 @@ def set_exec(
 
 
 def test_run_gui_shows_window(
-    service_context: ServiceContext, captured: Captured, monkeypatch: pytest.MonkeyPatch
+    service_context: ServiceContext,
+    captured: Captured,
+    monkeypatch: pytest.MonkeyPatch,
+    qapp: QApplication,
 ) -> None:
     set_exec(monkeypatch, captured)
     assert run_gui(service_context) == 0
     assert captured.exec_calls == 1
     assert captured.shown == 1
+    qapp.processEvents()
+    assert captured.offered == 1
     assert captured.host is not None
     assert captured.host._closed
     assert QApplication.applicationName() == "ChatImport"

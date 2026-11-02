@@ -6,6 +6,7 @@ import logging
 import sys
 from typing import TYPE_CHECKING, Final
 
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QApplication, QHBoxLayout, QVBoxLayout, QWidget
 
 from chatimport import __version__, autostart
@@ -176,6 +177,8 @@ class PathRow(QWidget):
 
 
 class AboutCard(SettingsCard):
+    wizard_finished = Signal()
+
     def __init__(
         self, gui: GuiContext, hooks: SettingsHooks, parent: QWidget | None = None
     ) -> None:
@@ -183,10 +186,15 @@ class AboutCard(SettingsCard):
         self.gui = gui
         self._hooks = hooks
         self._version = make_label("", "secondary")
+        self._rerun = Button(gui.kit, variant="secondary", icon_name="play")
+        self._rerun.clicked.connect(self._run_wizard)
+        self._rerun_hint = make_label("", "caption", wrap=True)
         self._rows = {name: PathRow(gui.kit) for name in ("data", "config", "library", "logs")}
         self.add_plain(self._version)
         for row in self._rows.values():
             self.add_plain(row)
+        self.add_plain(self._rerun_hint)
+        self.add_plain(self._rerun)
         bind_kit(gui.kit, language=self.retranslate)
         self.retranslate()
 
@@ -194,6 +202,8 @@ class AboutCard(SettingsCard):
         ctx = context_of(self.gui, self._hooks)
         self.set_texts(tr("settings.card.about.title"), tr("settings.card.about.lede"))
         self._version.setText(tr("settings.about.version", version=__version__))
+        self._rerun.setText(tr("setup.about.rerun"))
+        self._rerun_hint.setText(tr("setup.about.rerun_hint"))
         paths = {
             "data": ctx.root,
             "config": ctx.paths.config_file,
@@ -202,3 +212,9 @@ class AboutCard(SettingsCard):
         }
         for name, row in self._rows.items():
             row.set_path(tr(f"settings.about.{name}"), paths[name])
+
+    def _run_wizard(self) -> None:
+        from chatimport.gui.setup_wizard import SetupWizard
+
+        if SetupWizard(self.gui, self._hooks, self.window()).exec():
+            self.wizard_finished.emit()

@@ -21,6 +21,7 @@ from chatimport.gui.i18n import plural, register_strings, tr
 from chatimport.gui.locales import shell as shell_strings
 from chatimport.gui.pages import PAGE_KEYS
 from chatimport.gui.settings import WindowGeometry
+from chatimport.gui.setup_wizard import SetupWizard
 from chatimport.gui.shell_state import chats_of, service_state
 from chatimport.gui.shell_widgets import DownloadIndicator, ServiceChip
 from chatimport.gui.widgets.button import Button
@@ -38,6 +39,7 @@ if TYPE_CHECKING:
     from chatimport.commands import CommandResult
     from chatimport.gui.context import GuiContext
     from chatimport.gui.notifier import QtNotifier
+    from chatimport.gui.pages.settings_support import SettingsHooks
     from chatimport.gui.tray import QtTray
     from chatimport.gui.widgets.base import Tone
 
@@ -83,9 +85,12 @@ class MainWindow(QMainWindow):
         notifier: QtNotifier,
         *,
         tray: QtTray | None = None,
+        hooks: SettingsHooks | None = None,
     ) -> None:
         super().__init__()
         self.gui = gui
+        self._hooks = hooks
+        self._wizard_offered = False
         self.kit = gui.kit
         self._pages = pages
         self._tray = tray
@@ -142,7 +147,7 @@ class MainWindow(QMainWindow):
         right.setSpacing(0)
         self._top = TopBar(self.kit)
         self._setup_button = Button(self.kit, variant="primary")
-        self._setup_button.clicked.connect(self.open_telegram_setup)
+        self._setup_button.clicked.connect(self.open_setup_wizard)
         self._banner = Callout(self.kit, "warning", "", action=self._setup_button)
         self._banner.hide()
         self._stack = QStackedWidget()
@@ -235,6 +240,18 @@ class MainWindow(QMainWindow):
         show_section = getattr(self._pages["settings"], "show_section", None)
         if callable(show_section):
             show_section("telegram")
+
+    def open_setup_wizard(self) -> None:
+        SetupWizard(self.gui, self._hooks, self).exec()
+
+    def offer_setup_wizard(self) -> None:
+        """Open the wizard once per run when the service needs setup and it was never finished."""
+        snapshot = self.gui.bridge.last_snapshot
+        needed = snapshot is not None and snapshot.get("service") == "needs_setup"
+        if self._wizard_offered or self.gui.settings.settings.setup_completed or not needed:
+            return
+        self._wizard_offered = True
+        self.open_setup_wizard()
 
     def _retranslate_banner(self) -> None:
         self._banner.set_title(tr("shell.banner.title"))
