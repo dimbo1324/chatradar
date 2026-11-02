@@ -290,17 +290,20 @@ class ChatsFilterProxy(QSortFilterProxyModel):
     def set_query(self, text: str) -> None:
         folded = fold(text)
         if folded != self._query:
+            self.beginFilterChange()
             self._query = folded
-            self.invalidateFilter()
+            self.endFilterChange()
 
     def set_mode(self, mode: FilterMode) -> None:
         if mode is not self._mode:
+            self.beginFilterChange()
             self._mode = mode
-            self.invalidateFilter()
+            self.endFilterChange()
 
     def refresh_time(self) -> None:
         if self._mode in SILENT_SECONDS:
-            self.invalidateFilter()
+            self.beginFilterChange()
+            self.endFilterChange()
 
     def filterAcceptsRow(self, source_row: int, source_parent: _AnyIndex) -> bool:
         model = self.sourceModel()
