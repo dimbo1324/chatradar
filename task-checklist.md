@@ -17,28 +17,28 @@ Marks: `[ ]` open, `+` done, `-` not done or partially done (with a note).
 
 ## 2. Key guide (stage 0.8a)
 
-[ ] Guide dialog with numbered steps, schemes, link to my.telegram.org, ERROR hints
-[ ] `api_id` / `api_hash` validation on paste (Settings and wizard)
-[ ] README section with the same steps
-[ ] Tests at full coverage
++ Guide dialog with numbered steps, schemes, link to my.telegram.org, ERROR hints
++ `api_id` / `api_hash` validation on paste (Settings and wizard)
+- README section with the same steps — written, then removed: owner asked to hold all documentation
++ Tests at full coverage
 
 ## 3. First-run wizard (stage 0.8b)
 
-[ ] Five steps: keys, sign-in, chats, data folder, run mode
-[ ] Shown when the service needs setup; reachable again from Settings
-[ ] Default run mode: autostart and background; default folder Desktop\ChatImport
-[ ] Tests at full coverage
++ Five steps: keys, sign-in, chats, data folder, run mode
++ Shown when the service needs setup; reachable again from Settings
++ Default run mode: autostart and background; default folder Desktop\ChatImport
++ Tests at full coverage
 
 ## 4. Combined file (stage 0.8c)
 
-[ ] Backend: merge parts of all chats by time into one atomic file (`_exports/`)
-[ ] `[merged]` config (enabled, format, interval, names), service timer, rebuild only when
++ Backend: merge parts of all chats by time into one atomic file (`_exports/`)
++ `[merged]` config (enabled, format, interval, names), service timer, rebuild only when
     something changed, command `export_all`, CLI `export-all`
-[ ] Data page: card with status, "Build now", settings toggle
-[ ] Tests at full coverage
++ Data page: card with status, "Build now", settings toggle
++ Tests at full coverage
 
 ## 5. Verification and completion
 
-[ ] `just check` equivalent green: ruff, pyright, language, agents sync, full pytest
-[ ] Docs: ROADMAP, architecture, project map, command reference, README, CHANGELOG
-[ ] Final report
++ `just check` equivalent green: ruff, pyright, language, agents sync, full pytest
+- Docs: ROADMAP, architecture, project map, command reference, README, CHANGELOG — not done on purpose (owner: documentation later); only the plan entries in ROADMAP and decisions exist
++ Final report (in the conversation)
