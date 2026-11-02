@@ -92,6 +92,14 @@ rotating log file; modules split under 500 lines. Re-measured 2026-10-31 on Wind
 3155 tests passed, 3 skipped (POSIX-only), 100 % line and branch coverage. Deferred findings:
 `docs/backlog.md`.
 
+### Stage 0.8 — First-run experience and the combined file
+
+Planned 2026-11-02 (owner request): **0.8a** API key guide with validation and README
+section; **0.8b** five-step first-run wizard (keys, sign-in, chats, data folder, run mode);
+**0.8c** combined file of all chats, rebuilt on a timer and on demand
+(`docs/decisions.md` 2026-11-02). Later, in this order: PyInstaller build, Inno Setup
+installer.
+
 ### Stage 1.0 — Integration with ChatRadar
 
 Open: variant A or B (`docs/architecture.md` §15) is an open owner question

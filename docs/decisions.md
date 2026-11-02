@@ -56,6 +56,21 @@ The repository is public under MIT.
 
 Everything tracked by git is English; reports to the owner are in Russian.
 
+### 2026-11-02 — Combined archive file
+
+One extra file holds every chat's messages sorted by time. It is **rebuilt from the stored
+parts** (streamed k-way merge, atomic replace into `<root>/_exports/`), never appended to:
+JSON cannot be appended to, and old history arrives after new messages. It is rebuilt on a
+timer and on demand, and only when some chat changed since the last build. Sender names and
+`raw` are left out unless the owner enables them (same rule as `export-json`). Per-chat
+files stay the source of truth; the combined file is a derived copy. Like `export-json` it
+reads parts without the instance lock, the same narrow exception to the one-writer rule.
+
+### 2026-11-02 — API keys are the user's own
+
+The application never ships `api_id`/`api_hash`; each user creates their own at
+my.telegram.org. The window carries a step-by-step guide instead.
+
 ## Open questions
 
 - Variant A or B for the ChatRadar integration (`docs/architecture.md` §15).
