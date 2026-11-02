@@ -173,20 +173,24 @@ class LogFilterProxy(QSortFilterProxyModel):
         return self._level
 
     def set_level(self, level: Level) -> None:
+        self.beginFilterChange()
         self._level = level
-        self.invalidateFilter()
+        self.endFilterChange()
 
     def set_query(self, text: str) -> None:
+        self.beginFilterChange()
         self._words = fold(text).split()
-        self.invalidateFilter()
+        self.endFilterChange()
 
     def set_show_tracebacks(self, show: bool) -> None:
+        self.beginFilterChange()
         self._tracebacks = show
-        self.invalidateFilter()
+        self.endFilterChange()
 
     def set_logger_prefix(self, prefix: str) -> None:
+        self.beginFilterChange()
         self._prefix = prefix
-        self.invalidateFilter()
+        self.endFilterChange()
 
     def accepts(self, record: LogRecord) -> bool:
         if record.level < self._level:
