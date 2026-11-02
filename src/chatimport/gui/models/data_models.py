@@ -56,8 +56,7 @@ class _Base(QAbstractTableModel):
         return None
 
     def retranslate(self) -> None:
-        if self.columnCount():
-            self.headerDataChanged.emit(Qt.Orientation.Horizontal, 0, self.columnCount() - 1)
+        self.headerDataChanged.emit(Qt.Orientation.Horizontal, 0, self.columnCount() - 1)
         if self.rowCount():
             self.dataChanged.emit(
                 self.index(0, 0), self.index(self.rowCount() - 1, self.columnCount() - 1)

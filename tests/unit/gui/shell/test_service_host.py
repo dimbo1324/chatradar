@@ -199,8 +199,9 @@ def test_running_service_lifecycle(
     host.stop_service()
     host.stop_service(lambda: stopped_calls.append(2))
     assert stopped_calls == [1, 2]
-    snapshot_after = seen[-1]
-    assert snapshot_after["service"] in {"stopped", "starting"}
+    host._polling = False
+    host._poll()
+    pump(qapp, lambda: seen[-1]["service"] in {"stopped", "starting"})
 
 
 def test_restart_starts_a_new_generation(
