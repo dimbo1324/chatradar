@@ -1,44 +1,35 @@
-# Task: API key guide, first-run wizard, combined archive file
+# Task: fast substring search over the archive
 
-Owner request of 2026-11-02: (0) a step-by-step guide for getting Telegram `api_id` and
-`api_hash`, with validation of pasted values and a README section; (1) a five-step first-run
-wizard (keys with the guide, Telegram sign-in, chat links, data folder, run mode); (2) one
-combined file with every chat's messages sorted by time, rebuilt in the background and on
-demand. Per-chat files stay as they are.
+Owner request of 2026-11-02: search every message for a word, as fast as Ctrl+F in a browser
+(substring, any language, results while typing), shown stylishly in the desktop window.
+Owner instruction for this task: write the business logic and the tests in full, but do NOT
+run the tests and do NOT touch documentation.
 
 Marks: `[ ]` open, `+` done, `-` not done or partially done (with a note).
 
 ## 1. Preparation
 
-+ Orientation (git status and log, ROADMAP, decisions, architecture)
-+ Decisions recorded in `docs/decisions.md` (combined file is rebuilt from the parts, never
-  appended to; names stripped by default)
++ Orientation, design agreed with the owner (SQLite FTS5 trigram index, derived cache,
+  read-only access for CLI and window)
++ Contract written: `src/chatimport/search_types.py`
 + This checklist committed before the work
 
-## 2. Key guide (stage 0.8a)
+## 2. Backend (agent 1)
 
-+ Guide dialog with numbered steps, schemes, link to my.telegram.org, ERROR hints
-+ `api_id` / `api_hash` validation on paste (Settings and wizard)
-- README section with the same steps — written, then removed: owner asked to hold all documentation
-+ Tests at full coverage
+[ ] `search_index.py`: schema, indexing, search (trigram, short-query scan), context, chats,
+    status, read-only opener
+[ ] Incremental, crash-safe indexer in the service (backfill of the existing archive,
+    new messages, edits, deletions, trim); config `[search]`; status block
+[ ] CLI `chatimport search`
+[ ] Tests written (not run)
 
-## 3. First-run wizard (stage 0.8b)
+## 3. Desktop page (agent 2)
 
-+ Five steps: keys, sign-in, chats, data folder, run mode
-+ Shown when the service needs setup; reachable again from Settings
-+ Default run mode: autostart and background; default folder Desktop\ChatImport
-+ Tests at full coverage
+[ ] Search page: type-ahead, lazy results, highlight, filters, counter, index progress
+[ ] Ctrl+F from any page, navigation entry, context panel, Telegram link
+[ ] Tests written (not run)
 
-## 4. Combined file (stage 0.8c)
+## 4. Completion
 
-+ Backend: merge parts of all chats by time into one atomic file (`_exports/`)
-+ `[merged]` config (enabled, format, interval, names), service timer, rebuild only when
-    something changed, command `export_all`, CLI `export-all`
-+ Data page: card with status, "Build now", settings toggle
-+ Tests at full coverage
-
-## 5. Verification and completion
-
-+ `just check` equivalent green: ruff, pyright, language, agents sync, full pytest
-- Docs: ROADMAP, architecture, project map, command reference, README, CHANGELOG — not done on purpose (owner: documentation later); only the plan entries in ROADMAP and decisions exist
-+ Final report (in the conversation)
+[ ] Merge, lint, types, language check (tests deliberately not run per owner)
+[ ] Final report
