@@ -13,7 +13,7 @@ Marks: `[ ]` open, `+` done, `-` not done or partially done (with a note).
 + Orientation (git status and log, ROADMAP, decisions, architecture)
 + Decisions recorded in `docs/decisions.md` (combined file is rebuilt from the parts, never
   appended to; names stripped by default)
-[ ] This checklist committed before the work
++ This checklist committed before the work
 
 ## 2. Key guide (stage 0.8a)
 
