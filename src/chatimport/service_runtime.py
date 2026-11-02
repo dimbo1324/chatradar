@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING
 from chatimport.guards.disk import DiskGuard, MediaDiskGate
 from chatimport.guards.folders import FolderWatcher
 from chatimport.media import MediaDownloader
+from chatimport.merged_service import MergedExporter
 from chatimport.recheck import RecheckScheduler, compute_recheck
 from chatimport.resolution import tracked_chat
 from chatimport.router import Router
@@ -100,6 +101,7 @@ class ServiceRuntime:
         self.trimmer = Trimmer(
             root, self.registry, clock=clock, max_chunk_bytes=config.output.max_chunk_bytes
         )
+        self.merged = MergedExporter(root, lambda: self.config.merged, clock)
         self.status = StatusWriter(
             root,
             self.registry,
@@ -109,6 +111,7 @@ class ServiceRuntime:
             low_watermark_gb=config.disk.low_watermark_gb,
             service_state=service_state,
             slots=self.slots,
+            merged=self.merged.snapshot,
         )
         self.scheduler = RecheckScheduler(self.registry, config.recheck, clock, _last_recheck_at)
         self._aux_tasks: list[asyncio.Task[None]] = []
@@ -134,6 +137,7 @@ class ServiceRuntime:
         self._spawn_aux("disk-guard", guard.run)
         self._spawn_aux("recheck", self.scheduler.run)
         self._spawn_aux("status", self.status.run)
+        self._spawn_aux("merged", self.merged.run)
         if config.media.enabled:
             downloader = MediaDownloader(
                 self.registry,

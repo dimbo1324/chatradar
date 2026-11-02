@@ -14,6 +14,8 @@ if TYPE_CHECKING:
 MIB: Final = 1024 * 1024
 GIB: Final = 1024 * MIB
 
+MERGED_FORMATS: Final = ("json", "jsonl")
+
 _DAILY_AT = re.compile(r"(?P<hour>[0-9]{1,2}):(?P<minute>[0-9]{2})")
 
 
@@ -114,6 +116,14 @@ class EventsConfig:
 
 
 @dataclass(frozen=True, slots=True)
+class MergedConfig:
+    enabled: bool = False
+    format: str = "json"
+    every_minutes: int = 10
+    include_names: bool = False
+
+
+@dataclass(frozen=True, slots=True)
 class Config:
     telegram: TelegramConfig = field(default_factory=TelegramConfig)
     output: OutputConfig = field(default_factory=OutputConfig)
@@ -125,6 +135,7 @@ class Config:
     watch: WatchConfig = field(default_factory=WatchConfig)
     media: MediaConfig = field(default_factory=MediaConfig)
     events: EventsConfig = field(default_factory=EventsConfig)
+    merged: MergedConfig = field(default_factory=MergedConfig)
 
 
 def _build[T](cls: type[T], raw: dict[str, Any], section: str) -> T:
@@ -159,6 +170,7 @@ _SECTIONS: dict[str, type[Any]] = {
     "watch": WatchConfig,
     "media": MediaConfig,
     "events": EventsConfig,
+    "merged": MergedConfig,
 }
 
 
@@ -198,10 +210,13 @@ def _validate(config: Config) -> None:
         "[watch] check_every_seconds": config.watch.check_every_seconds,
         "[disk] check_every_minutes": config.disk.check_every_minutes,
         "[live] reconcile_every_minutes": config.live.reconcile_every_minutes,
+        "[merged] every_minutes": config.merged.every_minutes,
     }
     for name, value in intervals.items():
         if value < 1:
             raise ConfigError(f"{name} must be at least 1")
+    if config.merged.format not in MERGED_FORMATS:
+        raise ConfigError('[merged] format must be "json" or "jsonl"')
     if config.backfill.pause_between_requests_sec < 0 or config.recheck.pause_between_chats_sec < 0:
         raise ConfigError("pauses must not be negative")
     if config.backfill.pause_between_chats_sec < 0:

@@ -53,3 +53,9 @@ max_file_mb = 50
 [events]
 track_edits = true
 track_deletes = true
+
+[merged]
+enabled = false                 # keep one combined file of every chat, sorted by time
+format = "json"                 # "json" (one array) or "jsonl" (one object per line)
+every_minutes = 10              # rebuilt at most this often, and only if some chat changed
+include_names = false           # sender names and raw Telegram data stay out unless true

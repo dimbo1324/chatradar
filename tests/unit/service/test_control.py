@@ -521,6 +521,7 @@ def test_command_result_defaults_are_not_shared() -> None:
 
 def test_commands_constant_lists_every_documented_name() -> None:
     assert set(COMMANDS) == {
+        "export_all",
         "trim",
         "pause",
         "resume",

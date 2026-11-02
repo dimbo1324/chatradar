@@ -53,6 +53,7 @@ COMMAND_TIMEOUTS: Final[dict[str, float]] = {
     "trim": 600.0,
     "deeper": 600.0,
     "recheck": 600.0,
+    "export_all": 600.0,
 }
 
 

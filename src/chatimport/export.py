@@ -29,7 +29,7 @@ def default_export_path(folder: Path) -> Path:
     return folder.parent / EXPORTS_DIR / f"{folder.name}.json"
 
 
-def _export_dict(record: Record, *, include_names: bool) -> dict[str, Any]:
+def export_dict(record: Record, *, include_names: bool) -> dict[str, Any]:
     data = record.to_dict()
     if not include_names and data.get("kind") == KIND_MESSAGE:
         data.update(dict.fromkeys(_NAME_FIELDS))
@@ -46,7 +46,7 @@ def export_chat_json(folder: Path, out: Path | None = None, *, include_names: bo
         first = True
         for record in iter_records(folder):
             handle.write(b"\n" if first else b",\n")
-            text = json.dumps(_export_dict(record, include_names=include_names), ensure_ascii=False)
+            text = json.dumps(export_dict(record, include_names=include_names), ensure_ascii=False)
             handle.write(escape_line_breaks(text).encode("utf-8"))
             first = False
         handle.write(b"]\n" if first else b"\n]\n")

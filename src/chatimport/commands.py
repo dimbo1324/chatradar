@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 from types import MappingProxyType
 from typing import TYPE_CHECKING, Any, Final, Protocol, Self
 
+from chatimport.config import MERGED_FORMATS
 from chatimport.integrity import ERROR, INFO, WARNING, check_folder
 from chatimport.offline import lower_floor_state, resolve_chat_selector
 from chatimport.ports import ChatImportError
@@ -133,6 +134,20 @@ class CheckArgs:
     @classmethod
     def parse(cls, args: Mapping[str, Any]) -> Self:
         return cls(bool(args.get("repair", False)))
+
+
+@dataclass(frozen=True, slots=True)
+class ExportAllArgs:
+    format: str | None = None
+    names: bool | None = None
+
+    @classmethod
+    def parse(cls, args: Mapping[str, Any]) -> Self:
+        fmt = args.get("format")
+        if fmt is not None and fmt not in MERGED_FORMATS:
+            raise ChatImportError(f"format must be one of {', '.join(MERGED_FORMATS)}")
+        names = args.get("names")
+        return cls(fmt, None if names is None else bool(names))
 
 
 @dataclass(frozen=True, slots=True)
@@ -270,6 +285,13 @@ class ServiceCommands:
     @_command("set_root", SetRootArgs.parse)
     async def set_root(self, args: SetRootArgs) -> CommandResult:
         return await self._host.change_root(args)
+
+    @_command("export_all", ExportAllArgs.parse)
+    async def export_all(self, args: ExportAllArgs) -> CommandResult:
+        result = await self._host.runtime().merged.build(args.format, args.names, force=True)
+        return CommandResult(
+            True, f"wrote {result.path} ({result.records} records)", result.to_dict()
+        )
 
     @_command("shutdown", NoArgs.parse)
     async def shutdown(self, args: NoArgs) -> CommandResult:

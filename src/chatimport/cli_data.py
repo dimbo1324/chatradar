@@ -151,6 +151,40 @@ def export_json(
         typer.echo(f"Wrote {export_chat_json(folder, out, include_names=names)}")
 
 
+@app.command("export-all")
+def export_all(
+    context: typer.Context,
+    fmt: Annotated[
+        str | None, typer.Option("--format", help="json (one array) or jsonl; default from config.")
+    ] = None,
+    names: Annotated[
+        bool | None,
+        typer.Option("--names/--no-names", help="Keep sender names; default from config."),
+    ] = None,
+) -> None:
+    """Build the combined file of every chat, sorted by time."""
+    from chatimport.config import MERGED_FORMATS
+    from chatimport.merged_export import build_merged
+
+    with handled():
+        if fmt is not None and fmt not in MERGED_FORMATS:
+            fail(f"--format must be one of {', '.join(MERGED_FORMATS)}", EXIT_NOT_CONFIGURED)
+        ctx = load(context)
+        if running(ctx):
+            args = {"format": fmt, "names": names}
+            typer.echo(send(ctx, "export_all", args).message or "Combined file built")
+            return
+        merged = ctx.config.merged
+        result = build_merged(
+            ctx.root,
+            now=datetime.now(UTC),
+            fmt=fmt or merged.format,
+            include_names=merged.include_names if names is None else names,
+            force=True,
+        )
+        typer.echo(f"Wrote {result.path} ({result.records} records)")
+
+
 @app.command("set-root")
 def set_root(
     context: typer.Context,
