@@ -1082,6 +1082,7 @@ def test_root_option_overrides_the_environment(env: Env) -> None:
         "backfill",
         "check",
         "export-json",
+        "search",
         "set-root",
     ],
 )

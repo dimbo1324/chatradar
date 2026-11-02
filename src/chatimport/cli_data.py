@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path  # noqa: TC003 - Typer reads annotations at runtime
 from typing import TYPE_CHECKING, Annotated
 
@@ -30,7 +30,12 @@ from chatimport.paths import normalize_root
 from chatimport.storage.layout import find_chat_folder
 
 if TYPE_CHECKING:
+    from chatimport.search_types import SearchHit
     from chatimport.trim import TrimReport
+
+SEARCH_DEFAULT_LIMIT = 20
+SEARCH_MAX_LIMIT = 1000
+_DATE_ONLY_LENGTH = 10
 
 
 def _check_pct(value: int) -> int:
@@ -216,3 +221,84 @@ def set_root(
                 asyncio.run(move_root(ctx.root, new, move=True))
             set_output_root(ctx.paths.config_file, new)
         typer.echo(f"Output folder is now {new}")
+
+
+def _when(text: str, option: str, *, whole_day: bool) -> datetime:
+    value = text.strip()
+    try:
+        moment = datetime.fromisoformat(value)
+    except ValueError:
+        fail(
+            f"{option} must be a date like 2026-10-31 or a moment like 2026-10-31T12:00:00Z",
+            EXIT_NOT_CONFIGURED,
+        )
+    moment = moment.replace(tzinfo=UTC) if moment.tzinfo is None else moment.astimezone(UTC)
+    if whole_day and len(value) <= _DATE_ONLY_LENGTH:
+        moment += timedelta(days=1)
+    return moment
+
+
+def _one_line(text: str) -> str:
+    return "\\n".join(text.splitlines())
+
+
+def _hit_line(hit: SearchHit) -> str:
+    from chatimport.records import format_dt
+
+    return (
+        f"{_one_line(hit.chat_title)} | {format_dt(hit.date)} | {hit.link or '-'} | "
+        f"{_one_line(hit.text)}"
+    )
+
+
+@app.command()
+def search(
+    context: typer.Context,
+    text: Annotated[str, typer.Argument(help="Text to find; case, accents and yo do not matter.")],
+    chat: ChatOption = None,
+    since: Annotated[
+        str | None, typer.Option("--since", help="Only messages from this UTC date or moment.")
+    ] = None,
+    until: Annotated[
+        str | None,
+        typer.Option(
+            "--until",
+            help="Only messages before this UTC moment; a plain date includes that whole day.",
+        ),
+    ] = None,
+    limit: Annotated[
+        int,
+        typer.Option("--limit", min=1, max=SEARCH_MAX_LIMIT, help="How many matches to print."),
+    ] = SEARCH_DEFAULT_LIMIT,
+) -> None:
+    """Search every stored message (newest first); reads the index, works while the service runs."""
+    from chatimport.offline import resolve_chat_selector
+    from chatimport.search_index import open_reader
+    from chatimport.search_types import IndexState, SearchQuery
+
+    with handled():
+        since_at = None if since is None else _when(since, "--since", whole_day=False)
+        until_at = None if until is None else _when(until, "--until", whole_day=True)
+        ctx = load(context)
+        chat_ids = None if chat is None else frozenset({resolve_chat_selector(ctx, chat)})
+        backend = open_reader(ctx.root)
+        if backend is None:
+            if not ctx.config.search.enabled:
+                fail("search is turned off: set enabled = true in the [search] section")
+            fail(
+                "there is no search index yet: start the service (`chatimport run` or "
+                "`chatimport window`) and give it a moment to build one"
+            )
+        try:
+            status = backend.status()
+            if status.state is IndexState.BUILDING:
+                warn(
+                    f"the index is still being built ({status.indexed} of {status.total} "
+                    "messages); results may be incomplete"
+                )
+            page = backend.search(SearchQuery(text, chat_ids, since_at, until_at, limit))
+        finally:
+            backend.close()
+        for hit in page.hits:
+            typer.echo(_hit_line(hit))
+        typer.echo(f"{len(page.hits)} of {page.total} matches" if page.total else "No matches")

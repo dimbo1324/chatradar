@@ -15,6 +15,7 @@ from chatimport.recheck import RecheckScheduler, compute_recheck
 from chatimport.resolution import tracked_chat
 from chatimport.router import Router
 from chatimport.runtime import BackfillSlots, ChatRegistry
+from chatimport.search_service import SearchIndexer
 from chatimport.status import StatusWriter
 from chatimport.storage.state import StateUnreadable, load_state
 from chatimport.supervisor import Supervisor
@@ -102,6 +103,7 @@ class ServiceRuntime:
             root, self.registry, clock=clock, max_chunk_bytes=config.output.max_chunk_bytes
         )
         self.merged = MergedExporter(root, lambda: self.config.merged, clock)
+        self.search = SearchIndexer(root, lambda: self.config.search, clock)
         self.status = StatusWriter(
             root,
             self.registry,
@@ -112,6 +114,7 @@ class ServiceRuntime:
             service_state=service_state,
             slots=self.slots,
             merged=self.merged.snapshot,
+            search=self.search.snapshot,
         )
         self.scheduler = RecheckScheduler(self.registry, config.recheck, clock, _last_recheck_at)
         self._aux_tasks: list[asyncio.Task[None]] = []
@@ -138,6 +141,7 @@ class ServiceRuntime:
         self._spawn_aux("recheck", self.scheduler.run)
         self._spawn_aux("status", self.status.run)
         self._spawn_aux("merged", self.merged.run)
+        self._spawn_aux("search", self.search.run)
         if config.media.enabled:
             downloader = MediaDownloader(
                 self.registry,

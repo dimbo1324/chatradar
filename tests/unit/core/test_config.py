@@ -112,6 +112,7 @@ INT_FIELDS = [
     ("live", "flush_every_seconds"),
     ("live", "reconcile_every_minutes"),
     ("merged", "every_minutes"),
+    ("search", "interval_seconds"),
     ("backfill", "batch_size"),
     ("backfill", "pause_between_chats_sec"),
     ("backfill", "max_parallel_chats"),
@@ -140,6 +141,7 @@ BOOL_FIELDS = [
     ("media", "enabled"),
     ("events", "track_edits"),
     ("events", "track_deletes"),
+    ("search", "enabled"),
 ]
 
 
@@ -321,6 +323,7 @@ def test_daily_at_rejects_everything_but_ascii_hh_mm(daily_at: str) -> None:
         {"disk": {"check_every_minutes": 0}},
         {"live": {"reconcile_every_minutes": 0}},
         {"merged": {"every_minutes": 0}},
+        {"search": {"interval_seconds": 0}},
         {"backfill": {"pause_between_requests_sec": -1}},
     ],
 )
