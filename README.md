@@ -58,30 +58,6 @@ Other commands: `run` (console mode), `pause`/`resume`, `recheck`, `trim 25|50|7
 Windows: Task Scheduler at logon running `.venv\Scripts\pythonw.exe -m chatimport tray`
 ([docs/architecture.md](docs/architecture.md) §14).
 
-## Getting your Telegram API keys
-
-Telegram gives every program its own free `api_id` and `api_hash`. You create them once. The
-window's first-run wizard and its Telegram settings card have a "How do I get these keys?"
-guide with the same steps.
-
-1. Open <https://my.telegram.org> in any browser.
-2. Enter the phone number of your Telegram account in international format, for example
-   `+598 99 123 456`.
-3. Telegram sends a login code inside the Telegram app on your phone (not as an SMS). Enter it.
-4. Click "API development tools".
-5. Fill in the form: App title is any text in Latin letters; Short name is 5 to 32 Latin letters
-   or digits; Platform is Desktop; URL and Description may stay empty.
-6. Click "Create application".
-7. Copy `api_id` (a number) and `api_hash` (32 hexadecimal characters) into the wizard, the
-   Settings page or `config.toml`.
-
-If the site answers with "ERROR" when you create the application, turn off any VPN, proxy and
-ad blocker for the site, try another browser or a private window, use Latin letters and digits
-only in every field, and try again after some time.
-
-Keep `api_hash` secret: anyone who has it can act as an application on your account. ChatImport
-stores it only in `config.toml` on your computer.
-
 ## Where things live (Windows)
 
 | What | Where |
