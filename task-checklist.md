@@ -16,20 +16,20 @@ Marks: `[ ]` open, `+` done, `-` not done or partially done (with a note).
 
 ## 2. Backend (agent 1)
 
-[ ] `search_index.py`: schema, indexing, search (trigram, short-query scan), context, chats,
++ `search_index.py`: schema, indexing, search (trigram, short-query scan), context, chats,
     status, read-only opener
-[ ] Incremental, crash-safe indexer in the service (backfill of the existing archive,
++ Incremental, crash-safe indexer in the service (backfill of the existing archive,
     new messages, edits, deletions, trim); config `[search]`; status block
-[ ] CLI `chatimport search`
-[ ] Tests written (not run)
++ CLI `chatimport search`
+- Tests written, NOT run (owner instruction)
 
 ## 3. Desktop page (agent 2)
 
-[ ] Search page: type-ahead, lazy results, highlight, filters, counter, index progress
-[ ] Ctrl+F from any page, navigation entry, context panel, Telegram link
-[ ] Tests written (not run)
++ Search page: type-ahead, lazy results, highlight, filters, counter, index progress
++ Ctrl+F from any page, navigation entry, context panel, Telegram link
+- Tests written, NOT run (owner instruction)
 
 ## 4. Completion
 
-[ ] Merge, lint, types, language check (tests deliberately not run per owner)
-[ ] Final report
++ Merge, lint, types, language check; the tests were deliberately not run (owner instruction)
++ Final report
