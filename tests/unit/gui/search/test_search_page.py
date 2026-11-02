@@ -490,8 +490,8 @@ def test_a_failed_fetch_does_not_leave_the_page_waiting(
     backend.hits = reviews(250)
     page = make_page()
     search_for(page, "review")
-    page._select_row(99)
     backend.fail_search = True
+    page._select_row(99)
     page.select_next()
     assert row(page) == 99
     assert not page._advance_after_fetch

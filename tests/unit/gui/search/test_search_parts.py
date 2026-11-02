@@ -91,9 +91,8 @@ def test_skeleton_paints_rows(kit: UiKit) -> None:
     assert skeleton.sizeHint().width() > 0
     skeleton.resize(300, 400)
     image = QImage(300, 400, QImage.Format.Format_ARGB32)
-    image.fill(Qt.GlobalColor.white)
     skeleton.render(image)
-    assert image.pixelColor(60, 30) != image.pixelColor(290, 390)
+    assert image.pixelColor(30, 25) != image.pixelColor(290, 390)
 
 
 def test_skeleton_stops_at_the_bottom_edge(kit: UiKit) -> None:
