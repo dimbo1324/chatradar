@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------- secrets and data
+# A Telegram session file is full access to the account. Never commit it.
+*.session
+*.session-journal
+.env
+.env.*
+
+# Real configuration and chat library: only the *.example.toml templates are tracked
+/config.toml
+/chats.toml
+
+# Exported chats (personal data of chat members) dropped into the repository by accident
+/ChatImport/
+/_status.json
+/_trim_log.jsonl
+/_unrouted_deletes.jsonl
+/_exports/
+
+# Leftovers of the ChatRadar line of work on this machine
+data/
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+
+# ---------------------------------------------------------------- Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# ---------------------------------------------------------------- tools
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.pyright/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.cache/
+
+# ---------------------------------------------------------------- IDE and OS
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------------------------------------------------------------- local notes and settings
+*.local.md
+.claude/settings.local.json
+.codex/config.local.toml
+pytest.log
+
+# Original artwork (large); the packaged icons live in src/chatimport/assets/
+/design/

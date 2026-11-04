@@ -1,0 +1,10 @@
+=== Docker / Infrastructure Report ===
+Generated: 2026-11-04 15:23:41 UTC
+Compose parsing is heuristic and works best with simple YAML files.
+====================================================================================================
+
+--- Dockerfiles ---
+None detected.
+
+--- Compose files ---
+None detected.

@@ -1,0 +1,544 @@
+=== Enhanced Security Scan v3 ===
+Generated: 2026-11-04 15:23:41 UTC
+This is a heuristic scanner, not a professional secret scanner or SAST engine. Values are redacted.
+Machine-readable outputs are written next to this report: matching .json and .sarif files.
+Findings are grouped by confidence/severity to reduce noise.
+====================================================================================================
+
+--- Sensitive-looking files ---
+[critical] .\.env
+
+--- Potential secret-like lines ---
+[high] .\.env:15: # Postgres later: postgresql+asyncpg://user:<REDACTED_SECRET>@db:5432/chatradar
+[high] .\src\chatimport\telegram\client.py:349: phone=<REDACTED>
+[high] .\tests\unit\core\test_library_refs.py:24: SECRET=<REDACTED>
+[high] .\tests\unit\storage\test_fileio.py:100: atomic_write_bytes(target, b"secret=<REDACTED>
+[high] .\tests\unit\storage\test_fileio.py:101: assert target.read_bytes()=<REDACTED>
+[medium] .\.github\workflows\codeql.yml:27: - uses: <REDACTED>@v3
+[medium] .\tests\integration\test_end_to_end.py:94: async def <REDACTED>(
+[medium] .\tests\integration\test_end_to_end.py:187: async def <REDACTED>(
+[medium] .\tests\integration\test_end_to_end.py:239: async def <REDACTED>(
+[medium] .\tests\integration\test_end_to_end.py:293: async def <REDACTED>(
+[medium] .\tests\unit\core\test_assets.py:6: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_config.py:71: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_config.py:276: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_config.py:313: def <REDACTED>(daily_at: str) -> None:
+[medium] .\tests\unit\core\test_config.py:330: def <REDACTED>(data: dict[str, Any]) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:42: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:54: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:60: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:72: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:95: def <REDACTED>(
+[medium] .\tests\unit\core\test_config_edit.py:109: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:115: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:139: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:146: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:155: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:182: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:231: def <REDACTED>(
+[medium] .\tests\unit\core\test_config_edit.py:239: def <REDACTED>(
+[medium] .\tests\unit\core\test_config_edit.py:273: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:288: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit.py:331: def <REDACTED>(
+[medium] .\tests\unit\core\test_config_edit_literals.py:78: def <REDACTED>(config_file: Path) -> None:
+[medium] .\tests\unit\core\test_config_edit_literals.py:91: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_config_search.py:12: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_config_units.py:11: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_gaps.py:24: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_gaps.py:28: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_gaps.py:49: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_gaps.py:60: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_gaps.py:81: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library.py:106: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:129: def <REDACTED>(name: str) -> None:
+[medium] .\tests\unit\core\test_library.py:146: def <REDACTED>(second: str) -> None:
+[medium] .\tests\unit\core\test_library.py:152: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:158: def <REDACTED>(
+[medium] .\tests\unit\core\test_library.py:171: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:180: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:196: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:273: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:282: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:304: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:313: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library.py:347: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library.py:374: def <REDACTED>(
+[medium] .\tests\unit\core\test_library.py:392: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library.py:418: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library.py:428: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library.py:458: def <REDACTED>(
+[medium] .\tests\unit\core\test_library.py:475: def <REDACTED>(
+[medium] .\tests\unit\core\test_library.py:494: def <REDACTED>(
+[medium] .\tests\unit\core\test_library.py:509: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library.py:524: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library.py:531: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library.py:538: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:70: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:82: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:104: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:110: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:131: def <REDACTED>(path: Path, second: str) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:139: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:147: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:206: def <REDACTED>(path: Path, ref: str) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:225: def <REDACTED>(
+[medium] .\tests\unit\core\test_library_edit.py:236: def <REDACTED>(path: Path, failing_replace: None) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:242: def <REDACTED>(
+[medium] .\tests\unit\core\test_library_edit.py:254: def <REDACTED>(
+[medium] .\tests\unit\core\test_library_edit.py:283: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:289: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:298: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:338: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:351: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:358: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:382: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:394: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:402: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:410: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:419: def <REDACTED>(path: Path, failing_replace: None) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:427: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:433: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_edit.py:443: def <REDACTED>(
+[medium] .\tests\unit\core\test_library_refs.py:39: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library_refs.py:44: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_refs.py:59: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_library_refs.py:69: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_library_refs.py:102: def <REDACTED>(path: Path) -> None:
+[medium] .\tests\unit\core\test_logging_setup.py:51: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_logging_setup.py:66: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_logging_setup.py:87: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_paths.py:67: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_paths.py:77: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_paths.py:104: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_paths.py:136: def <REDACTED>(
+[medium] .\tests\unit\core\test_paths.py:143: def <REDACTED>(
+[medium] .\tests\unit\core\test_paths.py:173: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_paths_cloud.py:21: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_paths_cloud.py:44: def <REDACTED>(
+[medium] .\tests\unit\core\test_paths_cloud.py:64: def <REDACTED>(
+[medium] .\tests\unit\core\test_records.py:89: def <REDACTED>(record: Record) -> None:
+[medium] .\tests\unit\core\test_records.py:170: def <REDACTED>(raw: dict[str, Any]) -> None:
+[medium] .\tests\unit\core\test_records.py:176: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records.py:216: def <REDACTED>(tmp_path: Any) -> None:
+[medium] .\tests\unit\core\test_records.py:235: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records.py:265: def <REDACTED>(
+[medium] .\tests\unit\core\test_records.py:282: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records.py:291: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records.py:343: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records.py:413: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records.py:450: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records.py:457: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records_lines.py:23: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records_lines.py:43: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_records_lines.py:48: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_refs.py:40: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_runtime_ports.py:90: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_runtime_ports.py:145: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_runtime_ports.py:155: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_runtime_ports.py:162: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_runtime_ports.py:170: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_runtime_ports.py:193: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\core\test_runtime_ports.py:226: def <REDACTED>(
+[medium] .\tests\unit\core\test_runtime_ports.py:282: def <REDACTED>(
+[medium] .\tests\unit\core\test_runtime_slots.py:53: async def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_runtime_slots.py:75: async def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_runtime_slots.py:106: async def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_textnorm.py:82: def <REDACTED>(name: str, expected: str) -> None:
+[medium] .\tests\unit\core\test_textnorm.py:86: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_textnorm.py:111: def <REDACTED>(left: str, right: str) -> None:
+[medium] .\tests\unit\core\test_toml_edit.py:50: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_toml_edit.py:56: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_toml_edit.py:62: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_toml_edit.py:68: def <REDACTED>() -> None:
+[medium] .\tests\unit\core\test_toml_edit.py:77: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_chats_model.py:237: def <REDACTED>(qapp: object) -> None:
+[medium] .\tests\unit\gui\logic\test_chats_model.py:420: def <REDACTED>(qapp: object) -> None:
+[medium] .\tests\unit\gui\logic\test_chats_model.py:436: def <REDACTED>(qapp: object) -> None:
+[medium] .\tests\unit\gui\logic\test_data_models.py:88: def <REDACTED>(qapp: object) -> None:
+[medium] .\tests\unit\gui\logic\test_data_models.py:146: def <REDACTED>(qapp: object) -> None:
+[medium] .\tests\unit\gui\logic\test_format.py:169: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\logic\test_format.py:212: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\logic\test_format.py:226: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\logic\test_log_parser.py:142: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:80: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:87: def <REDACTED>(
+[medium] .\tests\unit\gui\logic\test_log_tail.py:113: def <REDACTED>(
+[medium] .\tests\unit\gui\logic\test_log_tail.py:136: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:168: def <REDACTED>(
+[medium] .\tests\unit\gui\logic\test_log_tail.py:217: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:231: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:241: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:278: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:291: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:301: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:321: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:331: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:356: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_log_tail.py:364: def <REDACTED>(log: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_settings_zoom.py:147: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_settings_zoom.py:218: def <REDACTED>(
+[medium] .\tests\unit\gui\logic\test_setup_logic.py:86: def <REDACTED>(
+[medium] .\tests\unit\gui\logic\test_setup_logic.py:113: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_setup_logic.py:123: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_setup_logic.py:186: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_snapshot_feed.py:244: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\logic\test_strings_i18n.py:70: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\logic\test_strings_i18n.py:133: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\logic\test_strings_i18n.py:202: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\logic\test_theme_kit.py:100: def <REDACTED>(
+[medium] .\tests\unit\gui\logic\test_theme_kit.py:189: def <REDACTED>(
+[medium] .\tests\unit\gui\logic\test_ticker_source.py:53: def <REDACTED>(qapp: QApplication) -> None:
+[medium] .\tests\unit\gui\logic\test_ticker_source.py:185: def <REDACTED>(clock: SecondTicker, tmp_path: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_ticker_source.py:240: def <REDACTED>(
+[medium] .\tests\unit\gui\logic\test_ticker_source.py:253: def <REDACTED>(clock: SecondTicker, tmp_path: Path) -> None:
+[medium] .\tests\unit\gui\logic\test_ticker_source.py:271: def <REDACTED>(
+[medium] .\tests\unit\gui\onboarding\test_steps.py:69: def <REDACTED>(
+[medium] .\tests\unit\gui\onboarding\test_steps.py:85: def <REDACTED>(
+[medium] .\tests\unit\gui\onboarding\test_steps.py:186: def <REDACTED>(gui: GuiContext) -> None:
+[medium] .\tests\unit\gui\onboarding\test_steps.py:216: def <REDACTED>(gui: GuiContext, tmp_path: Path) -> None:
+[medium] .\tests\unit\gui\onboarding\test_wizard.py:122: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_a\test_chats.py:75: def <REDACTED>(gui: GuiContext, bridge: FakeBridge) -> None:
+[medium] .\tests\unit\gui\pages_a\test_chats.py:83: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_a\test_chats.py:190: def <REDACTED>(page: ChatsPage) -> None:
+[medium] .\tests\unit\gui\pages_a\test_chats.py:257: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_a\test_chats_actions.py:247: def <REDACTED>(actions: ChatActions) -> None:
+[medium] .\tests\unit\gui\pages_a\test_chats_delegate.py:72: def <REDACTED>(page: ChatsPage) -> None:
+[medium] .\tests\unit\gui\pages_a\test_chats_delegate.py:87: def <REDACTED>(page: ChatsPage) -> None:
+[medium] .\tests\unit\gui\pages_a\test_library_dialog.py:87: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_a\test_overview.py:47: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:34: def <REDACTED>(data_page: DataPage) -> None:
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:46: def <REDACTED>(data_page: DataPage) -> None:
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:56: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:68: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:85: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:94: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:109: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:199: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_b\test_data_merged.py:215: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_c\test_settings_appearance.py:21: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_c\test_settings_appearance.py:98: def <REDACTED>(
+[medium] .\tests\unit\gui\pages_c\test_settings_page.py:44: def <REDACTED>(gui: GuiContext) -> None:
+[medium] .\tests\unit\gui\pages_c\test_settings_page.py:140: def <REDACTED>(gui: GuiContext) -> None:
+[medium] .\tests\unit\gui\pages_c\test_settings_telegram.py:74: def <REDACTED>(gui: GuiContext, probe: Probe) -> None:
+[medium] .\tests\unit\gui\pages_c\test_settings_telegram_validation.py:48: def <REDACTED>(gui: GuiContext, probe: Probe) -> None:
+[medium] .\tests\unit\gui\search\test_search_context.py:27: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_context.py:37: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_context.py:50: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_context.py:59: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_context.py:122: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_delegate.py:109: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_delegate.py:114: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_filters.py:1: # pyright: <REDACTED>, <REDACTED>
+[medium] .\tests\unit\gui\search\test_search_filters.py:55: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_filters.py:87: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_model.py:1: # pyright: <REDACTED>, <REDACTED>
+[medium] .\tests\unit\gui\search\test_search_model.py:82: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\search\test_search_model.py:105: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\search\test_search_model.py:130: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\search\test_search_page.py:73: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page.py:183: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page.py:235: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page.py:247: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page.py:267: def <REDACTED>(make_page: Maker) -> None:
+[medium] .\tests\unit\gui\search\test_search_page.py:353: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page.py:443: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page.py:487: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page_actions.py:87: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page_actions.py:96: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page_actions.py:261: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_page_actions.py:329: def <REDACTED>(
+[medium] .\tests\unit\gui\search\test_search_parts.py:52: def <REDACTED>(kit: UiKit) -> None:
+[medium] .\tests\unit\gui\search\test_search_spans.py:82: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\search\test_search_spans.py:107: def <REDACTED>() -> None:
+[medium] .\tests\unit\gui\search\test_search_worker.py:1: # pyright: <REDACTED>, <REDACTED>
+[medium] .\tests\unit\gui\search\test_search_worker.py:132: def <REDACTED>(
+[medium] .\tests\unit\gui\shell\test_launch.py:187: def <REDACTED>(
+[medium] .\tests\unit\gui\shell\test_login_flow.py:183: def <REDACTED>(
+[medium] .\tests\unit\gui\shell\test_login_flow.py:355: def <REDACTED>(gui: GuiContext) -> None:
+[medium] .\tests\unit\gui\shell\test_login_flow.py:368: def <REDACTED>(gui: GuiContext) -> None:
+[medium] .\tests\unit\gui\shell\test_login_flow.py:402: def <REDACTED>(
+[medium] .\tests\unit\gui\shell\test_service_host.py:374: def <REDACTED>(
+[medium] .\tests\unit\gui\shell\test_service_host.py:436: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_autostart.py:109: def <REDACTED>(python: str) -> None:
+[medium] .\tests\unit\interfaces\test_autostart.py:117: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_autostart.py:121: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_autostart.py:139: def <REDACTED>(schtasks: FakeSchtasks) -> None:
+[medium] .\tests\unit\interfaces\test_autostart.py:174: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_autostart.py:227: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_autostart.py:255: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_autostart.py:271: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:75: def <REDACTED>(char: str) -> None:
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:79: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:107: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:126: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:135: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:142: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:152: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:160: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:184: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:195: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:203: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:217: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_check_language_extra.py:230: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:58: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:73: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:85: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:102: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:112: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:129: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:186: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:197: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:219: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:227: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:233: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:281: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:293: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:303: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:330: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:347: def <REDACTED>(env: Env, verb: str) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:401: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:426: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:468: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:486: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:497: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:505: def <REDACTED>(env: Env, content: str) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:515: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:526: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:536: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:566: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:577: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:588: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:599: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:609: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:638: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:651: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:712: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:758: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:768: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:778: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:800: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:809: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:819: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:829: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:836: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:880: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:892: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:904: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:914: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:923: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_commands.py:950: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:967: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:988: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:1001: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:1010: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:1035: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_commands.py:1096: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_export_all.py:15: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:68: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:122: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:140: def <REDACTED>(env: Env, cloud_root: None) -> None:
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:146: def <REDACTED>(env: Env, local_root: None) -> None:
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:171: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:190: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:200: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:214: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_hardening.py:235: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_cli_search.py:51: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_search.py:65: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_search.py:153: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_search.py:168: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_search.py:178: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_search.py:189: def <REDACTED>(env: Env) -> None:
+[medium] .\tests\unit\interfaces\test_cli_search.py:199: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_search.py:224: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_cli_window.py:62: def <REDACTED>(env: Env, launches: Launches) -> None:
+[medium] .\tests\unit\interfaces\test_doctor.py:62: def <REDACTED>(machine: Machine) -> None:
+[medium] .\tests\unit\interfaces\test_doctor.py:66: def <REDACTED>(machine: Machine) -> None:
+[medium] .\tests\unit\interfaces\test_doctor.py:78: def <REDACTED>(machine: Machine) -> None:
+[medium] .\tests\unit\interfaces\test_doctor.py:123: def <REDACTED>(machine: Machine) -> None:
+[medium] .\tests\unit\interfaces\test_doctor.py:158: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_doctor.py:173: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_doctor.py:201: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_entry_points.py:23: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_entry_points.py:75: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_entry_points.py:88: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_entry_points.py:96: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_entry_points.py:114: def <REDACTED>(monkeypatch: pytest.MonkeyPatch) -> None:
+[medium] .\tests\unit\interfaces\test_status_snapshot.py:84: async def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:54: def <REDACTED>(body: str, extended: bool) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:91: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:101: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:123: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:134: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:177: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:191: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:200: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:205: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:216: def <REDACTED>() -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:224: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:234: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:264: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:284: def <REDACTED>(repo: Path, name: str) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:301: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:319: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:333: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:347: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:359: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:369: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:414: def <REDACTED>(
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:446: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:454: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:464: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:483: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:495: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\interfaces\test_sync_agents_extra.py:506: def <REDACTED>(repo: Path) -> None:
+[medium] .\tests\unit\maintenance\test_disk_guard.py:74: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_disk_guard.py:105: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_disk_guard.py:120: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_disk_guard.py:128: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_disk_guard.py:141: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_disk_guard.py:155: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_disk_guard.py:178: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_disk_guard.py:285: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:64: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:87: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:104: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:126: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:193: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:211: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:231: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:243: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:270: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:287: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:302: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:332: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:367: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_folder_watcher.py:387: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_guards_hardening.py:79: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_guards_hardening.py:177: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:79: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_media.py:102: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_media.py:145: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_media.py:169: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_media.py:181: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:209: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:253: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:277: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:313: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:326: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:345: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:364: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_media.py:399: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_media.py:441: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:455: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:469: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:482: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:498: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_media.py:525: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_media.py:547: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_media_hardening.py:73: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_offline.py:60: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:132: def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_offline.py:142: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:176: def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_offline.py:182: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:194: def <REDACTED>(tmp_path: Path, text: str) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:209: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:219: def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_offline.py:230: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:239: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:255: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:261: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:268: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:284: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:292: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:308: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:329: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:338: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:346: def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_offline.py:356: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_offline.py:398: def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_offline.py:422: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_router_cap.py:29: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:50: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:75: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:85: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:94: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:105: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:128: def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot.py:146: def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot.py:167: def <REDACTED>(tmp_path: Path, name: str) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:185: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:257: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:284: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot.py:313: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot.py:328: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot.py:340: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot.py:390: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot.py:440: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot.py:463: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot_hardening.py:28: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_setroot_hardening.py:40: def <REDACTED>(tmp_path: Path, marker: str) -> None:
+[medium] .\tests\unit\maintenance\test_setroot_hardening.py:56: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_setroot_hardening.py:81: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:82: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:107: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:121: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:133: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:149: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:162: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:173: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:196: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:324: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:345: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:359: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:382: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:436: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:453: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:478: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:501: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:526: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:583: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:610: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:640: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:651: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim.py:690: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim.py:708: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim_hardening.py:79: def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim_hardening.py:89: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim_hardening.py:117: async def <REDACTED>(tmp_path: Path) -> None:
+[medium] .\tests\unit\maintenance\test_trim_hardening.py:130: async def <REDACTED>(
+[medium] .\tests\unit\maintenance\test_trim_hardening.py:153: async def <REDACTED>(tmp_path: Path) -> None:
+... and 2233 more
+
+--- Risky code patterns ---
+[critical] .\src\chatimport\gui\launch.py:113: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\main_window.py:246: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\chats.py:211: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\chats.py:232: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\chats.py:236: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\chats_actions.py:128: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\data_common.py:103: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\data_folder.py:104: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\data_folder_dialog.py:33: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\log.py:432: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\settings_system.py:219: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\settings_telegram.py:281: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\pages\settings_telegram.py:314: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\setup_steps.py:175: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\src\chatimport\gui\setup_steps.py:266: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\tests\unit\gui\onboarding\conftest.py:37: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\tests\unit\gui\pages_a\test_chats.py:27: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\tests\unit\gui\pages_b\test_data_folder.py:30: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\tests\unit\gui\pages_b\test_log_page.py:139: [python-exec] Python exec() can execute arbitrary code.
+[critical] .\tests\unit\gui\pages_c\test_settings_telegram.py:268: [python-exec] Python exec() can execute arbitrary code.
+
+--- Partially scanned files ---
+None detected.
+
+--- Recommended actions before sharing ---
+- Keep Safe Export mode enabled for external AI/code-review handoffs.
+- Review all critical/high findings before sharing the archive.
+- Rotate any secret that may have been committed or exported by mistake.
+- Prefer `.env.example` with placeholder values for shared exports.
+- Manually review risky code findings before treating them as vulnerabilities.

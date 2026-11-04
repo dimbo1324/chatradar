@@ -52,7 +52,8 @@ default-groups = ["dev"]
 target-version = "py314"
 line-length = 100
 src = ["src", "tests", "scripts"]
-extend-exclude = ["docs"]
+extend-exclude = ["docs", "\u0430\u0443\u0434\u0438\u0442"]
+force-exclude = true
 
 [tool.ruff.lint]
 select = [

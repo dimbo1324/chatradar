@@ -1,0 +1,50 @@
+=== Git Report ===
+Source root: <chatradar>
+Generated: 2026-11-04 15:23:40
+Patch included: no
+Git commands are read-only. The .git directory is not copied.
+Secret redaction is applied to command output.
+====================================================================================================
+
+$ git status --short --branch
+## main
+
+----------------------------------------------------------------------------------------------------
+
+$ git branch --show-current
+main
+
+----------------------------------------------------------------------------------------------------
+
+$ git log -5 --date=iso-strict --pretty=%h %cd %s
+1dc832f 2026-11-02 19:37:37 UTC ci: install the Qt system libraries on Linux and fix two search tests
+04eae1a 2026-11-02 15:39:58 UTC docs: fill in the search task checklist
+85fd6e5 2026-11-02 15:39:16 UTC Merge branch 'worktree-agent-ae686d55a470f9fce' into feat/search
+2cdf860 2026-11-02 15:38:02 UTC feat: incremental search index, indexer service task, search command and tests
+f7997a1 2026-11-02 15:34:34 UTC feat: desktop Search page with type-ahead, lazy results, context drawer and Ctrl+F
+
+----------------------------------------------------------------------------------------------------
+
+$ git show --stat --name-status HEAD
+commit 1dc832f9aad64d7f4ad02c66ac6ea54d2d603a29
+Author: dimbo1324 <dimaprihodko180@gmail.com>
+Date:   2026-11-02 19:37:37 UTC
+
+ci: install the Qt system libraries on Linux and fix two search tests
+
+PySide6 imports need libEGL and friends, which the Ubuntu runner lacks, so pytest
+stopped at collection. The failed-fetch test now fails the backend before scrolling
+(scrolling already starts the next page) and the skeleton test samples a bar pixel.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+
+M	.github/workflows/ci.yml
+M	tests/unit/gui/search/test_search_page.py
+M	tests/unit/gui/search/test_search_parts.py
+
+.github/workflows/ci.yml | +5 -0
+tests/unit/gui/search/test_search_page.py | +1 -1
+tests/unit/gui/search/test_search_parts.py | +1 -2
+3 file(s) changed, 7 insertion(s)(+), 3 deletion(s)(-)
+
+----------------------------------------------------------------------------------------------------

@@ -1,0 +1,38 @@
+
+ Usage: chatimport [OPTIONS] COMMAND [ARGS]...
+
+ ChatImport — local export of Telegram chats to JSONL.
+
+┌─ Options ───────────────────────────────────────────────────────────────────┐
+│ --version                          Version.                                 │
+│ --root                      <str>  Output folder for this run (overrides    │
+│                                    config and env).                         │
+│ --install-completion               Install completion for the current       │
+│                                    shell.                                   │
+│ --show-completion                  Show completion for the current shell,   │
+│                                    to copy it or customize the              │
+│                                    installation.                            │
+│ --help                             Show this message and exit.              │
+└─────────────────────────────────────────────────────────────────────────────┘
+┌─ Commands ──────────────────────────────────────────────────────────────────┐
+│ login        First login: phone, code and 2FA password; creates the         │
+│              session.                                                       │
+│ dialogs      List the groups and channels of the account.                   │
+│ trim         Delete the oldest share of the stored history.                 │
+│ backfill     Fetch older history than the current floor.                    │
+│ check        Check the integrity of the stored files and state.json.        │
+│ export-json  Assemble a classic JSON array from the stored parts of one     │
+│              chat.                                                          │
+│ export-all   Build the combined file of every chat, sorted by time.         │
+│ set-root     Change the output folder.                                      │
+│ search       Search every stored message (newest first); reads the index,   │
+│              works while the service runs.                                  │
+│ run          Run the service in this console.                               │
+│ window       Run the service with the desktop window (and a tray icon).     │
+│ status       Show the service status.                                       │
+│ pause        Stop collecting (all chats or one).                            │
+│ resume       Continue collecting (all chats or one).                        │
+│ recheck      Compare recent days with Telegram now and fix differences.     │
+│ chats        Manage the chat library.                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+

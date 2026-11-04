@@ -1,0 +1,108 @@
+=== File Statistics ===
+Generated: 2026-11-04 15:23:41 UTC
+====================================================================================================
+
+--- Files by extension ---
+Extension                 Files     Total size
+-------------------- ---------- --------------
+py                          386        2.49 MB
+md                           53      198.22 KB
+jsonl                        16        3.77 MB
+toml                         12       20.47 KB
+[no extension]                9     1017.99 KB
+json                          7        3.27 KB
+yml                           6        5.42 KB
+db                            1        1.69 MB
+db-shm                        1       32.00 KB
+db-wal                        1       36.24 KB
+ico                           1       92.28 KB
+jpg                           1        1.44 MB
+lock                          1       62.27 KB
+png                           1      193.63 KB
+typed                         1            0 B
+yaml                          1        1.98 KB
+
+--- Top 25 largest files ---
+     1.69 MB  data\chatradar.db
+     1.44 MB  design\icon-source.jpg
+  1012.00 KB  .coverage
+   423.54 KB  data\raw\telegram\-1001800000001\20261019T223033847150Z-000000.jsonl
+   423.54 KB  data\raw\telegram\-1001800000001\20261019T223151138816Z-000000.jsonl
+   423.54 KB  data\raw\telegram\-1001800000001\20261019T223250574045Z-000000.jsonl
+   423.54 KB  data\raw\telegram\-1001800000001\20261021T130817945548Z-000000.jsonl
+   223.15 KB  data\raw\telegram\-1001800000002\20261019T223036883309Z-000000.jsonl
+   223.15 KB  data\raw\telegram\-1001800000002\20261019T223153322829Z-000000.jsonl
+   223.15 KB  data\raw\telegram\-1001800000002\20261019T223252651019Z-000000.jsonl
+   223.15 KB  data\raw\telegram\-1001800000002\20261021T130819551506Z-000000.jsonl
+   193.63 KB  src\chatimport\assets\icon.png
+   171.85 KB  data\raw\telegram\-1001800000004\20261019T223041974062Z-000000.jsonl
+   171.85 KB  data\raw\telegram\-1001800000004\20261019T223157517096Z-000000.jsonl
+   171.85 KB  data\raw\telegram\-1001800000004\20261019T223256639657Z-000000.jsonl
+   171.85 KB  data\raw\telegram\-1001800000004\20261021T130824068342Z-000000.jsonl
+   147.72 KB  data\raw\telegram\-1001800000003\20261019T223039380275Z-000000.jsonl
+   147.72 KB  data\raw\telegram\-1001800000003\20261019T223155382312Z-000000.jsonl
+   147.72 KB  data\raw\telegram\-1001800000003\20261019T223254644342Z-000000.jsonl
+   147.72 KB  data\raw\telegram\-1001800000003\20261021T130820943775Z-000000.jsonl
+    92.28 KB  src\chatimport\assets\icon.ico
+    62.27 KB  uv.lock
+    44.09 KB  docs\architecture.md
+    42.58 KB  tests\unit\telegram\test_client.py
+    36.24 KB  data\chatradar.db-wal
+
+--- Top 25 deepest files ---
+depth= 5  data\raw\telegram\-1001800000001\20261019T223033847150Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000001\20261019T223151138816Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000001\20261019T223250574045Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000001\20261021T130817945548Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000001\chat.json
+depth= 5  data\raw\telegram\-1001800000002\20261019T223036883309Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000002\20261019T223153322829Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000002\20261019T223252651019Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000002\20261021T130819551506Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000002\chat.json
+depth= 5  data\raw\telegram\-1001800000003\20261019T223039380275Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000003\20261019T223155382312Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000003\20261019T223254644342Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000003\20261021T130820943775Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000003\chat.json
+depth= 5  data\raw\telegram\-1001800000004\20261019T223041974062Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000004\20261019T223157517096Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000004\20261019T223256639657Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000004\20261021T130824068342Z-000000.jsonl
+depth= 5  data\raw\telegram\-1001800000004\chat.json
+depth= 5  src\chatimport\gui\locales\chats.py
+depth= 5  src\chatimport\gui\locales\data.py
+depth= 5  src\chatimport\gui\locales\data_merged.py
+depth= 5  src\chatimport\gui\locales\en.py
+depth= 5  src\chatimport\gui\locales\log.py
+
+--- Empty files ---
+scripts\__init__.py
+src\chatimport\py.typed
+tests\__init__.py
+tests\integration\__init__.py
+tests\unit\__init__.py
+tests\unit\core\__init__.py
+tests\unit\gui\__init__.py
+tests\unit\gui\logic\__init__.py
+tests\unit\gui\onboarding\__init__.py
+tests\unit\gui\pages_a\__init__.py
+tests\unit\gui\pages_b\__init__.py
+tests\unit\gui\pages_c\__init__.py
+tests\unit\gui\search\__init__.py
+tests\unit\gui\shell\__init__.py
+tests\unit\interfaces\__init__.py
+tests\unit\maintenance\__init__.py
+tests\unit\service\__init__.py
+tests\unit\storage\__init__.py
+tests\unit\telegram\__init__.py
+tests\unit\worker\__init__.py
+
+--- Files with spaces in names ---
+None detected.
+
+--- Files with non-ASCII paths ---
+None detected.
+
+--- Potential Windows long-path risks >= 240 characters ---
+None detected.

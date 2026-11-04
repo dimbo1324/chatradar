@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-11-04 15:23:44 UTC",
+  "split_planned": false,
+  "limit_bytes": 536870912,
+  "limit_human": "512.00 MB",
+  "target_bytes": 524288000,
+  "target_human": "500.00 MB",
+  "estimated_total_bytes": 17272836,
+  "estimated_total_human": "16.47 MB",
+  "files": 554,
+  "skipped_project_files": 0,
+  "parts": [
+    {
+      "index": 1,
+      "group_hint": "single",
+      "groups": [
+        "00_metadata",
+        "01_reports",
+        "02_ai_context",
+        "03_ai_prompts",
+        "20_tests",
+        "30_docs",
+        "40_python_source",
+        "50_config_and_locks",
+        "60_assets_and_binary_docs",
+        "80_other_project_files"
+      ],
+      "files": 554,
+      "estimated_bytes": 17272836,
+      "estimated_human": "16.47 MB"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+=== Code Metrics ===
+Generated: 2026-11-04 15:23:41 UTC
+Line classification is heuristic.
+====================================================================================================
+
+Source files analysed           : 386
+Total lines                     : 73798
+Code lines                      : 59431
+Comment-like lines              : 173
+Blank lines                     : 14194
+Files >= 500 lines              : 20
+Files >= 1000 lines             : 2
+
+--- Metrics by extension ---
+Ext                 Files        Lines         Code
+py                    386        73798        59431
+
+--- Largest files by line count ---
+    1100 lines  code=     729  tests\unit\interfaces\test_cli_commands.py
+    1054 lines  code=     890  tests\unit\telegram\test_client.py
+     765 lines  code=     641  tests\unit\storage\test_search_indexer.py
+     743 lines  code=     571  tests\unit\worker\test_live.py
+     721 lines  code=     531  tests\unit\maintenance\test_trim.py
+     584 lines  code=     478  tests\unit\storage\test_search_index.py
+     583 lines  code=     431  tests\unit\service\test_control.py
+     569 lines  code=     421  tests\unit\maintenance\test_media.py
+     548 lines  code=     410  tests\unit\core\test_library.py
+     541 lines  code=     442  tests\unit\telegram\test_mapper.py
+     538 lines  code=     463  src\chatimport\trim.py
+     534 lines  code=     476  src\chatimport\gui\pages\log.py
+     531 lines  code=     392  tests\unit\service\test_app_misc.py
+     522 lines  code=     466  src\chatimport\worker.py
+     522 lines  code=     357  tests\unit\interfaces\test_sync_agents_extra.py
+     515 lines  code=     453  src\chatimport\gui\pages\search.py
+     510 lines  code=     407  tests\unit\core\test_records.py
+     507 lines  code=     405  tests\unit\worker\test_backfill.py
+     503 lines  code=     383  tests\unit\service\test_app_lifecycle.py
+     500 lines  code=     356  tests\unit\worker\test_recheck_compute.py
+     498 lines  code=     422  tests\unit\gui\search\test_search_page.py
+     479 lines  code=     328  tests\unit\maintenance\test_setroot.py
+     472 lines  code=     379  tests\unit\worker\test_worker_recovery.py
+     448 lines  code=     333  tests\unit\core\test_library_edit.py
+     446 lines  code=     373  tests\unit\gui\shell\test_service_host.py
+     443 lines  code=     377  tests\unit\gui\logic\test_chats_model.py
+     439 lines  code=     346  tests\unit\telegram\test_resolve.py
+     437 lines  code=     430  src\chatimport\gui\locales\settings.py
+     431 lines  code=     345  tests\unit\storage\test_writer_month.py
+     430 lines  code=     352  tests\unit\gui\search\test_search_page_actions.py
+     427 lines  code=     296  tests\unit\maintenance\test_offline.py
+     422 lines  code=     322  tests\unit\maintenance\test_folder_watcher.py
+     420 lines  code=     314  tests\unit\service\test_status.py
+     415 lines  code=     328  tests\unit\gui\shell\test_login_flow.py
+     409 lines  code=     328  tests\unit\storage\test_recover.py
+     404 lines  code=     318  tests\unit\storage\test_merged_export.py
+     402 lines  code=     334  tests\unit\storage\test_writer_append.py
+     396 lines  code=     347  src\chatimport\gui\login_flow.py
+     392 lines  code=     305  tests\unit\storage\test_state.py
+     383 lines  code=     337  tests\unit\gui\shell\test_widgets_interactive.py
+     381 lines  code=     301  tests\unit\gui\logic\test_log_tail.py
+     378 lines  code=     263  tests\unit\service\test_app_commands.py
+     377 lines  code=     297  tests\unit\storage\test_integrity.py
+     369 lines  code=     274  tests\unit\worker\test_recheck_schedule.py
+     368 lines  code=     321  src\chatimport\gui\main_window.py
+     367 lines  code=     330  src\chatimport\app.py
+     362 lines  code=     316  src\chatimport\worker_backfill.py
+     361 lines  code=     300  tests\unit\gui\onboarding\test_steps.py
+     356 lines  code=     305  src\chatimport\telegram\client.py
+     356 lines  code=     297  tests\unit\service\test_search_service.py
+
+--- Files >= 500 lines ---
+    1100 lines  tests\unit\interfaces\test_cli_commands.py
+    1054 lines  tests\unit\telegram\test_client.py
+     765 lines  tests\unit\storage\test_search_indexer.py
+     743 lines  tests\unit\worker\test_live.py
+     721 lines  tests\unit\maintenance\test_trim.py
+     584 lines  tests\unit\storage\test_search_index.py
+     583 lines  tests\unit\service\test_control.py
+     569 lines  tests\unit\maintenance\test_media.py
+     548 lines  tests\unit\core\test_library.py
+     541 lines  tests\unit\telegram\test_mapper.py
+     538 lines  src\chatimport\trim.py
+     534 lines  src\chatimport\gui\pages\log.py
+     531 lines  tests\unit\service\test_app_misc.py
+     522 lines  src\chatimport\worker.py
+     522 lines  tests\unit\interfaces\test_sync_agents_extra.py
+     515 lines  src\chatimport\gui\pages\search.py
+     510 lines  tests\unit\core\test_records.py
+     507 lines  tests\unit\worker\test_backfill.py
+     503 lines  tests\unit\service\test_app_lifecycle.py
+     500 lines  tests\unit\worker\test_recheck_compute.py

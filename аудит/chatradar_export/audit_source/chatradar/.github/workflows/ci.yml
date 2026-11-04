@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  push:
+    branches: [main, chatimport]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  UV_FROZEN: "1"
+  FORCE_COLOR: "1"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - name: Lock file is up to date
+        run: uv lock --check
+      - name: ruff check
+        run: uv run ruff check --output-format=github .
+      - name: ruff format
+        run: uv run ruff format --check .
+
+  typecheck:
+    name: Typecheck (pyright strict)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - run: uv sync
+      - run: uv run pyright
+
+  test:
+    name: Tests (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.14"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python }}
+      - name: Qt system libraries
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libegl1 libgl1 libxkbcommon0 libdbus-1-3 libfontconfig1 libglib2.0-0
+      - run: uv sync
+      - name: pytest
+        shell: bash
+        run: |
+          set -o pipefail
+          uv run pytest --cov --cov-report=term-missing --cov-report=xml 2>&1 | tee pytest.log
+      - name: Show test failures as annotations
+        if: failure()
+        shell: bash
+        run: |
+          grep -E "^(FAILED|ERROR)|^E  " pytest.log | head -40 | cut -c1-400 | while IFS= read -r line; do echo "::error::${line}"; done
+      - uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: coverage
+          path: coverage.xml
+          retention-days: 7
+
+  assistants:
+    name: Assistant rules and language
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - name: AGENTS.md and .codex in sync with .ai/ and .claude/
+        run: uv run python scripts/sync_agents.py --check
+      - name: English only
+        run: uv run python scripts/check_language.py
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

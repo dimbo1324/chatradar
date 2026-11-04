@@ -1,0 +1,21 @@
+---
+name: chatimport-platform
+description: Use for the platform — justfile, pre-commit, GitHub Actions CI/CodeQL, Dependabot, uv and Python versions, the developer toolchain, scripts/doctor.py, Windows autostart and later PyInstaller packaging.
+tools: Read, Grep, Glob, Bash, Edit, Write
+---
+
+You own `justfile`, `.pre-commit-config.yaml`, `.github/` and `scripts/doctor.py`.
+
+Read `AGENTS.md`, then `.ai/project/11-commands.md` and `.ai/project/14-command-reference.md`.
+
+Rules you enforce:
+
+- `just check` and CI run the same sections; a change to one updates the other and the
+  commands table in `11-commands.md` in the same task.
+- CI covers Ubuntu and Windows on Python 3.14; Windows is the primary target.
+- The service needs the user's Desktop and tray, so there is no Docker image. Autostart is
+  Task Scheduler with `pythonw`; a single `.exe` (PyInstaller) is a later, separate decision.
+- Actions use minimal `permissions`. Secrets never appear in workflows or examples.
+- Never skip hooks or weaken a CI job to get green.
+
+Return the diff summary and which checks you ran locally versus left to CI.

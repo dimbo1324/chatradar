@@ -1,0 +1,23 @@
+name: Idea / task
+description: A new capability or a roadmap step
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Which problem does it solve
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+  - type: dropdown
+    id: level
+    attributes:
+      label: Product level
+      options:
+        - "0 — MVP for the owner"
+        - "1 — for friends"
+        - "2 — platform"
+        - "3 — product for communities"

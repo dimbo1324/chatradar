@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Reports Dashboard</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7fb;
+  --fg: #1f2937;
+  --muted: #667085;
+  --card: #ffffff;
+  --border: #d9dee8;
+  --accent: #0f766e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111827;
+    --fg: #e5e7eb;
+    --muted: #a3aab8;
+    --card: #182033;
+    --border: #2b364d;
+    --accent: #5eead4;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.5;
+}
+main { max-width: 1180px; margin: 0 auto; }
+h1 { margin: 0 0 6px; font-size: 30px; }
+.meta { margin: 0 0 24px; color: var(--muted); }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; background: var(--card); }
+.label { color: var(--muted); font-size: 13px; }
+.value { margin-top: 8px; font-size: 28px; font-weight: 700; }
+.card p { margin: 8px 0 0; color: var(--muted); }
+.grid { display: grid; grid-template-columns: minmax(220px, 320px) minmax(0, 1fr); gap: 20px; }
+nav, section.panel { border: 1px solid var(--border); border-radius: 8px; padding: 18px; background: var(--card); }
+nav ul { margin: 0; padding-left: 20px; }
+nav li { margin: 7px 0; }
+nav li.hidden { display: none; }
+a { color: var(--accent); }
+pre { overflow: auto; padding: 14px; border-radius: 8px; background: rgba(127, 127, 127, 0.12); white-space: pre-wrap; }
+input[type="search"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 13px;
+}
+.explain ul.risks { margin: 8px 0 0; padding-left: 20px; }
+.explain li { margin: 5px 0; }
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+.badge.high { background: #b91c1c; color: #fff; }
+.badge.medium { background: #b45309; color: #1f2937; }
+.badge.low { background: var(--border); color: var(--fg); }
+@media (max-width: 760px) {
+  body { padding: 18px; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Project Reports Dashboard</h1>
+<p class="meta">Generated report navigation for this export.</p>
+<div class="cards">
+<section class="card"><div class="label">Project health</div><div class="value">79/100</div><p>Heuristic maintainability/AI-readiness score</p></section>
+<section class="card"><div class="label">Security findings</div><div class="value">2754</div><p>JSON + SARIF are generated</p></section>
+<section class="card"><div class="label">Potential secrets</div><div class="value">2733</div><p>Redacted secret-like lines</p></section>
+<section class="card"><div class="label">Archive strategy</div><div class="value">single</div><p>Logical ZIP planning</p></section>
+</div>
+<section class="panel explain">
+<h2 style="margin-top:0">Explain in plain words</h2>
+<p>chatradar is a backend_or_cli project (GitHub Actions, Python), scoring 79/100 on the automated health checks.</p>
+<ul class="risks"><li><span class="badge medium">medium</span>1 .env-like file(s) detected</li><li><span class="badge medium">medium</span>Security: 2 sensitive-looking filenames detected</li></ul>
+<p><a href="PROJECT_OVERVIEW.html">Open the full plain-language overview &rarr;</a></p>
+</section>
+<div class="grid">
+<nav>
+<h2>Reports</h2>
+<input type="search" id="report-filter" placeholder="Filter reports&hellip;" aria-label="Filter reports">
+<ul id="report-list">
+<li data-search="project profile"><a href="PROJECT_PROFILE.json">Project Profile</a></li>
+<li data-search="export plan"><a href="28_export_plan.md">Export Plan</a></li>
+<li data-search="archive plan"><a href="27_archive_plan.md">Archive Plan</a></li>
+<li data-search="security scan"><a href="06_security_scan.txt">Security Scan</a></li>
+<li data-search="security json"><a href="06_security_scan.json">Security JSON</a></li>
+<li data-search="security sarif"><a href="06_security_scan.sarif">Security SARIF</a></li>
+<li data-search="architecture map"><a href="24_architecture_map.md">Architecture Map</a></li>
+<li data-search="health report"><a href="22_project_health_report.md">Health Report</a></li>
+<li data-search="ai context"><a href="AI_CONTEXT/00_PROJECT_OVERVIEW.md">AI Context</a></li>
+<li data-search="custom prompt"><a href="AI_PROMPTS/CUSTOM_PROMPT.md">Custom Prompt</a></li>
+<li data-search="project overview (plain language)"><a href="PROJECT_OVERVIEW.html">Project Overview (plain language)</a></li>
+<li data-search="onboarding guide"><a href="ONBOARDING_GUIDE.md">Onboarding Guide</a></li>
+<li data-search="review checklist"><a href="REVIEW_CHECKLIST.md">Review Checklist</a></li>
+</ul>
+</nav>
+<section class="panel">
+<h2>Export plan</h2>
+<pre># Export Plan
+
+Generated: 2026-11-04 15:23:40 UTC
+
+- Project: `chatradar`
+- Profile: `full`
+- Safe mode: `full`
+- Diff mode: `all`
+- Incremental: `false`
+- Included files: 498
+- Excluded files: 0
+- Skipped directories: 32
+- Estimated selected project size: 11,554,370 bytes
+
+## Included files by group
+
+- tests: 199
+- python_source: 187
+- docs: 54
+- other: 27
+- config_and_locks: 27
+- assets_and_binary_docs: 3
+- data_and_exports: 1
+
+## Sensitive / high-risk excluded files
+
+- none
+
+## Large files
+
+- none &gt;= 100 MB
+
+## First included files
+
+- `.coverage` (1036288 bytes)
+- `.editorconfig` (272 bytes)
+- `.env` (1832 bytes)
+- `.gitattributes` (152 bytes)
+- `.gitignore` (1349 bytes)
+- `.pre-commit-config.yaml` (2032 bytes)
+- `.python-version` (5 bytes)
+- `AGENTS.md` (30380 bytes)
+- `CHANGELOG.md` (4788 bytes)
+- `chats.example.toml` (574 bytes)
+- `CLAUDE.md` (2503 bytes)
+- `config.example.toml` (2353 bytes)
+- `CONTRIBUTING.md` (2796 bytes)
+- `GEMINI.md` (239 bytes)
+- `justfile` (1441 bytes)
+- `LICENSE` (1073 bytes)
+- `pyproject.toml` (3199 bytes)
+- `README.md` (4588 bytes)
+- `SECURITY.md` (1644 bytes)
+- `task-checklist.md` (1421 bytes)
+- `uv.lock` (63763 bytes)
+- `.ai\CHANGELOG.md` (8860 bytes)
+- `.ai\README.md` (2527 bytes)
+- `.ai\project\10-project-map.md` (5200 bytes)
+- `.ai\project\11-commands.md` (2703 bytes)
+- `.ai\project\12-domain-rules.md` (4243 bytes)
+- `.ai\project\13-progress-tracking.md` (2744 bytes)
+- `.ai\project\14-command-reference.md` (5871 bytes)
+- `.ai\universal\01-workflow.md` (1929 bytes)
+- `.ai\universal\02-task-checklist.md` (1797 bytes)
+- `.ai\universal\03-scope-and-code-style.md` (1996 bytes)
+- `.ai\universal\04-architecture-boundaries.md` (1447 bytes)
+- `.ai\universal\05-security-and-secrets.md` (1625 bytes)
+- `.ai\universal\06-quality-and-testing.md` (2220 bytes)
+- `.ai\universal\07-multi-assistant.md` (1841 bytes)
+- `.ai\universal\08-rules-evolution.md` (4933 bytes)
+- `.ai\universal\09-time-and-timestamps.md` (2985 bytes)
+- `.claude\README.md` (1875 bytes)
+- `.claude\settings.json` (2149 bytes)
+- `.claude\agents\chatimport-interfaces.md` (1529 bytes)
+- `.claude\agents\chatimport-platform.md` (1113 bytes)
+- `.claude\agents\chatimport-privacy-security.md` (1720 bytes)
+- `.claude\agents\chatimport-quality-reviewer.md` (2272 bytes)
+- `.claude\agents\chatimport-repo-maintainer.md` (1395 bytes)
+- `.claude\agents\chatimport-step-planner.md` (1933 bytes)
+- `.claude\agents\chatimport-storage.md` (1947 bytes)
+- `.claude\agents\chatimport-telegram.md` (1773 bytes)
+- `.claude\skills\ci-fix\SKILL.md` (1301 bytes)
+- `.claude\skills\code-review\SKILL.md` (1824 bytes)
+- `.claude\skills\format-change\SKILL.md` (1663 bytes)
+- `.claude\skills\project-maintenance\SKILL.md` (1874 bytes)
+- `.claude\skills\rules-evolution\SKILL.md` (1657 bytes)
+- `.claude\skills\step-episode\SKILL.md` (2544 bytes)
+- `.codex\config.toml` (259 bytes)
+- `.codex\README.md` (1098 bytes)
+- `.codex\agents\chatimport-interfaces.toml` (1635 bytes)
+- `.codex\agents\chatimport-platform.toml` (1217 bytes)
+- `.codex\agents\chatimport-privacy-security.toml` (1845 bytes)
+- `.codex\agents\chatimport-quality-reviewer.toml` (2397 bytes)
+- `.codex\agents\chatimport-repo-maintainer.toml` (1506 bytes)
+- `.codex\agents\chatimport-step-planner.toml` (2054 bytes)
+- `.codex\agents\chatimport-storage.toml` (2050 bytes)
+- `.codex\agents\chatimport-telegram.toml` (1877 bytes)
+- `.codex\skills\ci-fix\SKILL.md` (1379 bytes)
+- `.codex\skills\code-review\SKILL.md` (1907 bytes)
+- `.codex\skills\format-change\SKILL.md` (1748 bytes)
+- `.codex\skills\project-maintenance\SKILL.md` (1965 bytes)
+- `.codex\skills\rules-evolution\SKILL.md` (1744 bytes)
+- `.codex\skills\step-episode\SKILL.md` (2628 bytes)
+- `.github\CODEOWNERS` (13 bytes)
+- `.github\dependabot.yml` (728 bytes)
+- `.github\pull_request_template.md` (558 bytes)
+- `.github\ISSUE_TEMPLATE\bug.yml` (609 bytes)
+- `.github\ISSUE_TEMPLATE\config.yml` (205 bytes)
+- `.github\ISSUE_TEMPLATE\feature.yml` (533 bytes)
+- `.github\workflows\ci.yml` (2942 bytes)
+- `.github\workflows\codeql.yml` (537 bytes)
+- `.vscode\extensions.json` (210 bytes)
+- `.vscode\settings.json` (410 bytes)
+- `data\chatradar.db` (1773568 bytes)
+- `data\chatradar.db-shm` (32768 bytes)
+- `data\chatradar.db-wal` (37112 bytes)
+- `data\raw\telegram\-1001800000001\20261019T223033847150Z-000000.jsonl` (433703 bytes)
+- `data\raw\telegram\-1001800000001\20261019T223151138816Z-000000.jsonl` (433703 bytes)
+- `data\raw\telegram\-1001800000001\20261019T223250574045Z-000000.jsonl` (433703 bytes)
+- `data\raw\telegram\-1001800000001\20261021T130817945548Z-000000.jsonl` (433703 bytes)
+- `data\raw\telegram\-1001800000001\chat.json` (148 bytes)
+- `data\raw\telegram\-1001800000002\20261019T223036883309Z-000000.jsonl` (228510 bytes)
+- `data\raw\telegram\-1001800000002\20261019T223153322829Z-000000.jsonl` (228510 bytes)
+- `data\raw\telegram\-1001800000002\20261019T223252651019Z-000000.jsonl` (228510 bytes)
+- `data\raw\telegram\-1001800000002\20261021T130819551506Z-000000.jsonl` (228510 bytes)
+- `data\raw\telegram\-1001800000002\chat.json` (128 bytes)
+- `data\raw\telegram\-1001800000003\20261019T223039380275Z-000000.jsonl` (151263 bytes)
+- `data\raw\telegram\-1001800000003\20261019T223155382312Z-000000.jsonl` (151263 bytes)
+- `data\raw\telegram\-1001800000003\20261019T223254644342Z-000000.jsonl` (151263 bytes)
+- `data\raw\telegram\-1001800000003\20261021T130820943775Z-000000.jsonl` (151263 bytes)
+- `data\raw\telegram\-1001800000003\chat.json` (158 bytes)
+- `data\raw\telegram\-1001800000004\20261019T223041974062Z-000000.jsonl` (175971 bytes)
+- `data\raw\telegram\-1001800000004\20261019T223157517096Z-000000.jsonl` (175971 bytes)
+- `data\raw\telegram\-1001800000004\20261019T223256639657Z-000000.jsonl` (175971 bytes)
+- `data\raw\telegram\-1001800000004\20261021T130824068342Z-000000.jsonl` (175971 bytes)
+- `data\raw\telegram\-1001800000004\chat.json` (144 bytes)
+- `design\icon-source.jpg` (1511243 bytes)
+- `docs\architecture.md` (45151 bytes)
+- `docs\b</pre>
+<h2>Project health</h2>
+<pre># Project Health Report
+
+Generated: 2026-11-04 15:23:41 UTC
+
+Overall score: **79/100**
+
+| Area | Score | Signal |
+|---|---:|---|
+| Architecture | 90/100 | `█████████░` |
+| Security | 61/100 | `██████░░░░` |
+| Maintainability | 76/100 | `████████░░` |
+| Testing | 72/100 | `███████░░░` |
+| Documentation | 100/100 | `██████████` |
+| Dependency Hygiene | 80/100 | `████████░░` |
+| AI Readiness | 79/100 | `████████░░` |
+| Export Safety | 72/100 | `███████░░░` |
+
+## Why these scores
+
+### Architecture: 90/100
+
+- src/ style source layout detected
+- separated service/core utility modules detected
+- source files are not mixed with every exported file
+
+### Security: 61/100
+
+- 2 sensitive-looking filenames detected
+- dependency lockfile(s) detected
+
+### Maintainability: 76/100
+
+- documentation files are present
+- standard config files are present
+- 3 files are relatively large
+
+### Testing: 72/100
+
+- 200 test-like files detected
+
+### Documentation: 100/100
+
+- README.md exists
+- docs/ folder exists
+
+### Dependency Hygiene: 80/100
+
+- lockfiles improve reproducibility
+
+### AI Readiness: 79/100
+
+- PROJECT_PROFILE.json is available
+- source files are included
+- sensitive-looking files reduce safe sharing readiness
+
+### Export Safety: 72/100
+
+- review sensitive-looking files before sharing
+
+## Raw signals
+
+- Files: 498
+- Total copied size: 11.02 MB (~3301249 tokens)
+
+This is a heuristic triage score, not a formal audit.
+</pre>
+</section>
+</div>
+</main>
+<script>
+// Filters the report-links list by substring match against each entry's
+// data-search attribute. No library, no network reference: this is the entire
+// interactive surface of the page.
+(function () {
+  var input = document.getElementById("report-filter");
+  var items = document.querySelectorAll("#report-list li");
+  input.addEventListener("input", function () {
+    var query = input.value.trim().toLowerCase();
+    items.forEach(function (item) {
+      var match = query === "" || item.getAttribute("data-search").indexOf(query) !== -1;
+      item.classList.toggle("hidden", !match);
+    });
+  });
+})();
+</script>
+</body>
+</html>

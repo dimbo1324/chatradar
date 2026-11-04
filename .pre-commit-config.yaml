@@ -2,6 +2,7 @@
 # Run over the whole repository: just hooks
 default_install_hook_types: [pre-commit]
 minimum_pre_commit_version: "4.0.0"
+exclude: "^\u0430\u0443\u0434\u0438\u0442/"
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks

@@ -1,0 +1,324 @@
+# Backend Report
+
+Generated: 2026-11-04 15:23:41 UTC
+
+## Backend directories
+
+### api
+- not detected
+
+### services
+- not detected
+
+### models
+- `src\chatimport\gui\models`
+
+### repositories
+- not detected
+
+### migrations
+- not detected
+
+### workers
+- `tests\unit\worker`
+
+### config
+- not detected
+
+## Go files
+
+- none detected
+
+## Database/migration files
+
+- none detected
+
+## Config/settings files
+
+- `.claude\settings.json`
+- `.codex\config.toml`
+- `.editorconfig`
+- `.github\ISSUE_TEMPLATE\config.yml`
+- `.pre-commit-config.yaml`
+- `.vscode\settings.json`
+- `config.example.toml`
+- `src\chatimport\config.py`
+- `src\chatimport\config_edit.py`
+- `src\chatimport\gui\locales\settings.py`
+- `src\chatimport\gui\pages\settings.py`
+- `src\chatimport\gui\pages\settings_appearance.py`
+- `src\chatimport\gui\pages\settings_config.py`
+- `src\chatimport\gui\pages\settings_form.py`
+- `src\chatimport\gui\pages\settings_support.py`
+- `src\chatimport\gui\pages\settings_system.py`
+- `src\chatimport\gui\pages\settings_telegram.py`
+- `src\chatimport\gui\settings.py`
+- `tests\unit\core\test_config.py`
+- `tests\unit\core\test_config_edit.py`
+- `tests\unit\core\test_config_edit_literals.py`
+- `tests\unit\core\test_config_merged.py`
+- `tests\unit\core\test_config_search.py`
+- `tests\unit\core\test_config_units.py`
+- `tests\unit\gui\logic\test_settings_zoom.py`
+- `tests\unit\gui\pages_c\test_settings_about_wizard.py`
+- `tests\unit\gui\pages_c\test_settings_appearance.py`
+- `tests\unit\gui\pages_c\test_settings_config.py`
+- `tests\unit\gui\pages_c\test_settings_form.py`
+- `tests\unit\gui\pages_c\test_settings_page.py`
+- `tests\unit\gui\pages_c\test_settings_support.py`
+- `tests\unit\gui\pages_c\test_settings_system.py`
+- `tests\unit\gui\pages_c\test_settings_telegram.py`
+- `tests\unit\gui\pages_c\test_settings_telegram_validation.py`
+
+## Python class/function candidates
+
+- `def candidate_files` — `scripts\check_language.py`
+- `def find_hits` — `scripts\check_language.py`
+- `def is_checked` — `scripts\check_language.py`
+- `def main` — `scripts\check_language.py`
+- `class Check` — `scripts\doctor.py`
+- `def main` — `scripts\doctor.py`
+- `def repo_state` — `scripts\doctor.py`
+- `def run` — `scripts\doctor.py`
+- `def build_outputs` — `scripts\sync_agents.py`
+- `def collect_modules` — `scripts\sync_agents.py`
+- `def main` — `scripts\sync_agents.py`
+- `class Module` — `scripts\sync_agents.py`
+- `def parse_frontmatter` — `scripts\sync_agents.py`
+- `def plan` — `scripts\sync_agents.py`
+- `def read` — `scripts\sync_agents.py`
+- `def render_agents_md` — `scripts\sync_agents.py`
+- `def render_codex_agent` — `scripts\sync_agents.py`
+- `def render_codex_skill` — `scripts\sync_agents.py`
+- `def size_kib` — `scripts\sync_agents.py`
+- `class SyncError` — `scripts\sync_agents.py`
+- `class ChatImportApp` — `src\chatimport\app.py`
+- `def _current_user` — `src\chatimport\autostart.py`
+- `def _failure` — `src\chatimport\autostart.py`
+- `def _is_absent` — `src\chatimport\autostart.py`
+- `def _schtasks` — `src\chatimport\autostart.py`
+- `def _text` — `src\chatimport\autostart.py`
+- `class AutostartError` — `src\chatimport\autostart.py`
+- `class AutostartState` — `src\chatimport\autostart.py`
+- `class AutostartStatus` — `src\chatimport\autostart.py`
+- `def build_task_xml` — `src\chatimport\autostart.py`
+- `def disable` — `src\chatimport\autostart.py`
+- `def enable` — `src\chatimport\autostart.py`
+- `def launcher` — `src\chatimport\autostart.py`
+- `def status` — `src\chatimport\autostart.py`
+- `def supported` — `src\chatimport\autostart.py`
+- `def task_command` — `src\chatimport\autostart.py`
+- `def _use_utf8_streams` — `src\chatimport\cli.py`
+- `def _version_callback` — `src\chatimport\cli.py`
+- `def main` — `src\chatimport\cli.py`
+- `def run` — `src\chatimport\cli.py`
+- `def chats_add` — `src\chatimport\cli_chats.py`
+- `def chats_disable` — `src\chatimport\cli_chats.py`
+- `def chats_enable` — `src\chatimport\cli_chats.py`
+- `def chats_list` — `src\chatimport\cli_chats.py`
+- `def dialogs` — `src\chatimport\cli_chats.py`
+- `def library_rows` — `src\chatimport\cli_chats.py`
+- `def login` — `src\chatimport\cli_chats.py`
+- `def records_on_disk` — `src\chatimport\cli_chats.py`
+- `def _check_pct` — `src\chatimport\cli_data.py`
+- `def _echo_trim` — `src\chatimport\cli_data.py`
+- `def _hit_line` — `src\chatimport\cli_data.py`
+- `def _one_line` — `src\chatimport\cli_data.py`
+- `def _when` — `src\chatimport\cli_data.py`
+- `def backfill` — `src\chatimport\cli_data.py`
+- `def check` — `src\chatimport\cli_data.py`
+- `def export_all` — `src\chatimport\cli_data.py`
+- `def export_json` — `src\chatimport\cli_data.py`
+- `def search` — `src\chatimport\cli_data.py`
+- `def set_root` — `src\chatimport\cli_data.py`
+- `def trim` — `src\chatimport\cli_data.py`
+- `def pause` — `src\chatimport\cli_service.py`
+- `def recheck` — `src\chatimport\cli_service.py`
+- `def resume` — `src\chatimport\cli_service.py`
+- `def run_service` — `src\chatimport\cli_service.py`
+- `def status` — `src\chatimport\cli_service.py`
+- `def tray` — `src\chatimport\cli_service.py`
+- `def window` — `src\chatimport\cli_service.py`
+- `def confirm` — `src\chatimport\cli_support.py`
+- `def fail` — `src\chatimport\cli_support.py`
+- `def handled` — `src\chatimport\cli_support.py`
+- `def instance_lock` — `src\chatimport\cli_support.py`
+- `def library_file` — `src\chatimport\cli_support.py`
+- `def load` — `src\chatimport\cli_support.py`
+- `def need_service` — `src\chatimport\cli_support.py`
+- `def refuse_second_instance` — `src\chatimport\cli_support.py`
+- `def require_telegram` — `src\chatimport\cli_support.py`
+- `def running` — `src\chatimport\cli_support.py`
+- `def send` — `src\chatimport\cli_support.py`
+- `def table` — `src\chatimport\cli_support.py`
+- `def warn` — `src\chatimport\cli_support.py`
+- `def warn_if_cloud_synced` — `src\chatimport\cli_support.py`
+- `def _chat` — `src\chatimport\commands.py`
+- `def _command` — `src\chatimport\commands.py`
+- `def _no_lock` — `src\chatimport\commands.py`
+- `def _whole_number` — `src\chatimport\commands.py`
+- `class ChatArgs` — `src\chatimport\commands.py`
+- `class CheckArgs` — `src\chatimport\commands.py`
+- `class CommandResult` — `src\chatimport\commands.py`
+- `class ExportAllArgs` — `src\chatimport\commands.py`
+- `class NoArgs` — `src\chatimport\commands.py`
+- `class RecheckArgs` — `src\chatimport\commands.py`
+- `class ServiceCommands` — `src\chatimport\commands.py`
+- `class ServiceHost` — `src\chatimport\commands.py`
+- `class SetRootArgs` — `src\chatimport\commands.py`
+- `class TrimArgs` — `src\chatimport\commands.py`
+- `def _build` — `src\chatimport\config.py`
+- `def _validate` — `src\chatimport\config.py`
+- `class BackfillConfig` — `src\chatimport\config.py`
+- `class Config` — `src\chatimport\config.py`
+- `class ConfigError` — `src\chatimport\config.py`
+- `class DiskConfig` — `src\chatimport\config.py`
+- `class EventsConfig` — `src\chatimport\config.py`
+- `class LibraryConfig` — `src\chatimport\config.py`
+- `class LiveConfig` — `src\chatimport\config.py`
+- `def load_config` — `src\chatimport\config.py`
+- `class MediaConfig` — `src\chatimport\config.py`
+- `class MergedConfig` — `src\chatimport\config.py`
+- `class OutputConfig` — `src\chatimport\config.py`
+- `def parse_config` — `src\chatimport\config.py`
+- `class RecheckConfig` — `src\chatimport\config.py`
+- `class SearchConfig` — `src\chatimport\config.py`
+- `class TelegramConfig` — `src\chatimport\config.py`
+- `class WatchConfig` — `src\chatimport\config.py`
+- `def _edited` — `src\chatimport\config_edit.py`
+- `def _header` — `src\chatimport\config_edit.py`
+- `def _literal` — `src\chatimport\config_edit.py`
+- `def _read` — `src\chatimport\config_edit.py`
+- `def _validate` — `src\chatimport\config_edit.py`
+- `def set_output_root` — `src\chatimport\config_edit.py`
+- `def update_config` — `src\chatimport\config_edit.py`
+- `def build_gateway` — `src\chatimport\context.py`
+- `def load_context` — `src\chatimport\context.py`
+- `class ServiceContext` — `src\chatimport\context.py`
+- `def _args_of` — `src\chatimport\control.py`
+- `class _BadCommand` — `src\chatimport\control.py`
+- `def _claim` — `src\chatimport\control.py`
+- `def _is_command_file` — `src\chatimport\control.py`
+- `def _load_request` — `src\chatimport\control.py`
+- `def _read_object` — `src\chatimport\control.py`
+- `def _timeout_message` — `src\chatimport\control.py`
+- `def _write_json_atomic` — `src\chatimport\control.py`
+- `def acquire_instance_lock` — `src\chatimport\control.py`
+- `class AlreadyRunning` — `src\chatimport\control.py`
+- `class ControlServer` — `src\chatimport\control.py`
+- `def send_command` — `src\chatimport\control.py`
+- `def service_running` — `src\chatimport\control.py`
+- `def default_export_path` — `src\chatimport\export.py`
+- `def export_chat_json` — `src\chatimport\export.py`
+- `def export_dict` — `src\chatimport\export.py`
+- `class FloodReporter` — `src\chatimport\flood.py`
+- `def _stopped` — `src\chatimport\guards\disk.py`
+- `class DiskGuard` — `src\chatimport\guards\disk.py`
+- `class MediaDiskGate` — `src\chatimport\guards\disk.py`
+- `class Pausable` — `src\chatimport\guards\disk.py`
+- `class FolderWatcher` — `src\chatimport\guards\folders.py`
+- `class GuiContext` — `src\chatimport\gui\context.py`
+- `class ServiceBridge` — `src\chatimport\gui\context.py`
+- `def _group_digits` — `src\chatimport\gui\format.py`
+- `def _split_age` — `src\chatimport\gui\format.py`
+- `def classify` — `src\chatimport\gui\format.py`
+- `def count_phrase` — `src\chatimport\gui\format.py`
+- `def format_ago` — `src\chatimport\gui\format.py`
+- `def format_bytes` — `src\chatimport\gui\format.py`
+- `def format_count` — `src\chatimport\gui\format.py`
+- `def format_exact` — `src\chatimport\gui\format.py`
+- `def format_percent` — `src\chatimport\gui\format.py`
+- `class Freshness` — `src\chatimport\gui\format.py`
+- `class FreshnessThresholds` — `src\chatimport\gui\format.py`
+- `def humanize_age` — `src\chatimport\gui\format.py`
+- `def zone_label` — `src\chatimport\gui\format.py`
+- `class LanguageManager` — `src\chatimport\gui\i18n.py`
+- `def plural` — `src\chatimport\gui\i18n.py`
+- `def tr` — `src\chatimport\gui\i18n.py`
+- `def _cached_pixmap` — `src\chatimport\gui\icons.py`
+- `def _pixel_density` — `src\chatimport\gui\icons.py`
+- `def _svg` — `src\chatimport\gui\icons.py`
+- `def icon` — `src\chatimport\gui\icons.py`
+- `def icon_pixmap` — `src\chatimport\gui\icons.py`
+- `class _StepRow` — `src\chatimport\gui\key_guide.py`
+- `class KeyGuideDialog` — `src\chatimport\gui\key_guide.py`
+- `def _box` — `src\chatimport\gui\key_guide_art.py`
+- `def _button` — `src\chatimport\gui\key_guide_art.py`
+- `def _code` — `src\chatimport\gui\key_guide_art.py`
+- `def _create` — `src\chatimport\gui\key_guide_art.py`
+- `def _field` — `src\chatimport\gui\key_guide_art.py`
+- `def _form` — `src\chatimport\gui\key_guide_art.py`
+- `def _keys` — `src\chatimport\gui\key_guide_art.py`
+- `def _phone` — `src\chatimport\gui\key_guide_art.py`
+- `def _site` — `src\chatimport\gui\key_guide_art.py`
+- `def _text` — `src\chatimport\gui\key_guide_art.py`
+- `def _tools` — `src\chatimport\gui\key_guide_art.py`
+- `class SchemeArt` — `src\chatimport\gui\key_guide_art.py`
+- `def validate_api_hash` — `src\chatimport\gui\key_validation.py`
+- `def validate_api_id` — `src\chatimport\gui\key_validation.py`
+- `def build_kit` — `src\chatimport\gui\kit.py`
+- `class UiKit` — `src\chatimport\gui\kit.py`
+- `def _application` — `src\chatimport\gui\launch.py`
+- `def _set_app_user_model_id` — `src\chatimport\gui\launch.py`
+- `def run_gui` — `src\chatimport\gui\launch.py`
+- `def classify_failure` — `src\chatimport\gui\login_flow.py`
+- `class Failure` — `src\chatimport\gui\login_flow.py`
+- `class LoginCancelled` — `src\chatimport\gui\login_flow.py`
+- `class LoginDialog` — `src\chatimport\gui\login_flow.py`
+- `class LoginSession` — `src\chatimport\gui\login_flow.py`
+- `class MainWindow` — `src\chatimport\gui\main_window.py`
+- `class ChatsFilterProxy` — `src\chatimport\gui\models\chats_model.py`
+- `class ChatsTableModel` — `src\chatimport\gui\models\chats_model.py`
+- `class Column` — `src\chatimport\gui\models\chats_model.py`
+- `class FilterMode` — `src\chatimport\gui\models\chats_model.py`
+- `def matches_mode` — `src\chatimport\gui\models\chats_model.py`
+- `class _Base` — `src\chatimport\gui\models\data_models.py`
+- `class IssueColumn` — `src\chatimport\gui\models\data_models.py`
+- `class IssueRow` — `src\chatimport\gui\models\data_models.py`
+- `class IssuesModel` — `src\chatimport\gui\models\data_models.py`
+- `def parse_issues` — `src\chatimport\gui\models\data_models.py`
+- `class PreviewColumn` — `src\chatimport\gui\models\data_models.py`
+- `class PreviewModel` — `src\chatimport\gui\models\data_models.py`
+- `class UsageColumn` — `src\chatimport\gui\models\data_models.py`
+- `class UsageModel` — `src\chatimport\gui\models\data_models.py`
+- `class EventFeed` — `src\chatimport\gui\models\feed.py`
+- `class FeedEvent` — `src\chatimport\gui\models\feed.py`
+- `class Column` — `src\chatimport\gui\models\log_model.py`
+- `def local_time_text` — `src\chatimport\gui\models\log_model.py`
+- `class LogFilterProxy` — `src\chatimport\gui\models\log_model.py`
+- `class LogModel` — `src\chatimport\gui\models\log_model.py`
+- `def _moment` — `src\chatimport\gui\models\log_parser.py`
+- `def _zone` — `src\chatimport\gui\models\log_parser.py`
+- `def is_record_start` — `src\chatimport\gui\models\log_parser.py`
+- `class Level` — `src\chatimport\gui\models\log_parser.py`
+- `class LogParser` — `src\chatimport\gui\models\log_parser.py`
+- `class LogRecord` — `src\chatimport\gui\models\log_parser.py`
+- `def normalize_level` — `src\chatimport\gui\models\log_parser.py`
+- `def parse_header` — `src\chatimport\gui\models\log_parser.py`
+- `def parse_text` — `src\chatimport\gui\models\log_parser.py`
+- `class LogSource` — `src\chatimport\gui\models\log_source.py`
+- `def _complete_end` — `src\chatimport\gui\models\log_tail.py`
+- `def _decode` — `src\chatimport\gui\models\log_tail.py`
+- `def _signature` — `src\chatimport\gui\models\log_tail.py`
+- `class LogTail` — `src\chatimport\gui\models\log_tail.py`
+- `class OlderBatch` — `src\chatimport\gui\models\log_tail.py`
+- `class PollResult` — `src\chatimport\gui\models\log_tail.py`
+- `def read_back` — `src\chatimport\gui\models\log_tail.py`
+- `def age_seconds` — `src\chatimport\gui\models\presentation.py`
+- `class ChipSpec` — `src\chatimport\gui\models\presentation.py`
+- `def countdown_text` — `src\chatimport\gui\models\presentation.py`
+- `def freshness_of` — `src\chatimport\gui\models\presentation.py`
+- `def history_chip` — `src\chatimport\gui\models\presentation.py`
+- `def history_detail` — `src\chatimport\gui\models\presentation.py`
+- `def history_tooltip` — `src\chatimport\gui\models\presentation.py`
+- `def last_message_text` — `src\chatimport\gui\models\presentation.py`
+- `def last_message_tooltip` — `src\chatimport\gui\models\presentation.py`
+- `def span_text` — `src\chatimport\gui\models\presentation.py`
+- `def status_chip` — `src\chatimport\gui\models\presentation.py`
+- `def status_kind` — `src\chatimport\gui\models\presentation.py`
+- `def same_search` — `src\chatimport\gui\models\search_model.py`
+- `class SearchResultsModel` — `src\chatimport\gui\models\search_model.py`
+- `def _end_of_marks` — `src\chatimport\gui\models\search_spans.py`
+- `def _fold_char` — `src\chatimport\gui\models\search_spans.py`
+- `def _fold_with_map` — `src\chatimport\gui\models\search_spans.py`
+- `def _merge` — `src\chatimport\gui\models\search_spans.py`

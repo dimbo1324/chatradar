@@ -1,0 +1,179 @@
+{
+  "app": "codepack",
+  "app_version": "2.1.0",
+  "generated_at": "2026-11-04 15:23:44",
+  "bundle_name": "chatradar_export_20261104_152340",
+  "source_root": "<chatradar>",
+  "project_name": "chatradar",
+  "cancelled": false,
+  "settings": {
+    "text_file_size_limit_enabled": false,
+    "max_text_file_mb": null,
+    "max_text_file_bytes": null,
+    "max_text_file_human": "unlimited",
+    "redact_secrets": true,
+    "keep_staging_folder": false,
+    "include_project_in_zip": true,
+    "export_profile": "full",
+    "safe_export_mode": "full",
+    "zip_part_limit_mb": 512,
+    "diff_export_mode": "all",
+    "diff_base_ref": "HEAD",
+    "diff_target_ref": "",
+    "include_git_patch": false,
+    "custom_excluded_files": [],
+    "custom_excluded_extensions": [],
+    "always_include_files": [],
+    "always_include_dirs": [],
+    "incremental_export_enabled": false,
+    "theme": "system",
+    "watch_enabled": false,
+    "watch_clipboard_auto_update": false,
+    "prompt_goals": [
+      "architecture_review",
+      "bug_hunt",
+      "write_tests"
+    ]
+  },
+  "diff_selection": {
+    "mode": "all",
+    "diff_base": "полный экспорт",
+    "limited": false,
+    "selected_paths_count": null,
+    "warning": null,
+    "files": [],
+    "deleted_files": []
+  },
+  "ignored_dirs": {
+    "defaults": [
+      ".coverage",
+      ".git",
+      ".mypy_cache",
+      ".next",
+      ".nuxt",
+      ".parcel-cache",
+      ".pytest_cache",
+      ".ruff_cache",
+      ".tox",
+      ".turbo",
+      ".venv",
+      "__pycache__",
+      "build",
+      "coverage",
+      "dist",
+      "env",
+      "node_modules",
+      "venv"
+    ],
+    "user_extras": [
+      "*.egg-info",
+      "htmlcov"
+    ],
+    "effective": [
+      "*.egg-info",
+      ".coverage",
+      ".git",
+      ".mypy_cache",
+      ".next",
+      ".nuxt",
+      ".parcel-cache",
+      ".pytest_cache",
+      ".ruff_cache",
+      ".tox",
+      ".turbo",
+      ".venv",
+      "__pycache__",
+      "build",
+      "coverage",
+      "dist",
+      "env",
+      "htmlcov",
+      "node_modules",
+      "venv"
+    ]
+  },
+  "notes": [
+    "Git data is collected from the ORIGINAL project; the .git directory is never copied into the bundle.",
+    "Safe Export mode may have removed secrets or local data during copy; check the security report before sharing externally.",
+    "All other reports describe the copied project (see the project folder inside the bundle).",
+    "Symlinks were skipped during copy to avoid accidental escape from the project tree.",
+    "If archive splitting was needed, extract every ZIP file from the archive-set folder into the same destination."
+  ],
+  "stats": {
+    "copy": {
+      "dirs_created": 61,
+      "files_copied": 498,
+      "dirs_skipped": 32,
+      "files_skipped": 0,
+      "files_skipped_by_safety": 0,
+      "files_skipped_by_diff": 0,
+      "symlinks_skipped": 0,
+      "errors": 0
+    },
+    "text_dump": {
+      "scanned": 498,
+      "written": 471,
+      "skipped_binary": 0,
+      "skipped_large": 0,
+      "skipped_decode": 0,
+      "skipped_not_text": 27
+    }
+  },
+  "archives": {
+    "split": false,
+    "archives": [
+      "\\\\?\\C:\\Users\\dimbo1324\\Desktop\\chatradar_export_20261104_152340.zip"
+    ],
+    "archive_names": [
+      "chatradar_export_20261104_152340.zip"
+    ],
+    "file_count": 556,
+    "skipped_project_files": 0,
+    "oversized_files": []
+  },
+  "layout": {
+    "project_dir": "chatradar/",
+    "project_profile": "PROJECT_PROFILE.json",
+    "reports": [
+      "PROJECT_PROFILE.json",
+      "01_summary.txt",
+      "02_file_statistics.txt",
+      "03_dependencies.txt",
+      "04_scripts.txt",
+      "05_git_deep.txt",
+      "06_security_scan.txt",
+      "06_security_scan.json",
+      "06_security_scan.sarif",
+      "07_todo_fixme.txt",
+      "08_code_metrics.txt",
+      "09_config.txt",
+      "10_docker.txt",
+      "11_routes_and_pages.txt",
+      "12_ai_context_pack.md",
+      "13_runbook.md",
+      "14_dependency_graph.md",
+      "14_dependency_graph.mmd",
+      "15_architecture_report.md",
+      "16_key_files_report.md",
+      "17_code_quality_report.md",
+      "18_api_surface_report.md",
+      "19_frontend_report.md",
+      "20_backend_report.md",
+      "21_git_timeline_report.md",
+      "22_project_health_report.md",
+      "23_refactoring_opportunities.md",
+      "24_architecture_map.md",
+      "25_large_files_report.md",
+      "26_dependency_intelligence.md",
+      "27_archive_plan.md",
+      "28_export_plan.md",
+      "29_export_comparison_report.md",
+      "REPORT_DASHBOARD.html",
+      "AI_CONTEXT/",
+      "AI_PROMPTS/",
+      "PROJECT_OVERVIEW.html",
+      "ONBOARDING_GUIDE.md",
+      "REVIEW_CHECKLIST.md"
+    ]
+  }
+}

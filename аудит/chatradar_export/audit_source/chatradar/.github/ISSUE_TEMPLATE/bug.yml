@@ -1,0 +1,26 @@
+name: Bug
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Expected versus actual. Do not paste chat messages or personal data.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      placeholder: "chatimport run --once --chat ..."
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: "chatimport --version"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      render: text

@@ -1,0 +1,111 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\.venv\Scripts\python.exe
+rootdir: C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar
+configfile: pyproject.toml
+plugins: platformdirs-4.14.0, asyncio-1.4.1, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 34 items
+
+tests/unit/gui/pages_c/test_settings_appearance.py::test_threshold_edit_picks_the_largest_exact_unit[30-s-30] PASSED [  2%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_threshold_edit_picks_the_largest_exact_unit[120-min-2] PASSED [  5%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_threshold_edit_picks_the_largest_exact_unit[7200-h-2] PASSED [  8%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_threshold_edit_picks_the_largest_exact_unit[172800-d-2] PASSED [ 11%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_threshold_edit_picks_the_largest_exact_unit[90-s-90] PASSED [ 14%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_threshold_edit_picks_the_largest_exact_unit[0-s-1] PASSED [ 17%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_threshold_edit_retranslate_keeps_the_unit PASSED [ 20%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_theme_and_language_pickers PASSED [ 23%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_zoom_controls PASSED [ 26%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_window_switches_write_the_store PASSED [ 29%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_threshold_edits_persist_and_reset PASSED [ 32%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_unordered_thresholds_are_refused PASSED [ 35%]
+tests/unit/gui/pages_c/test_settings_appearance.py::test_stored_thresholds_are_shown_and_language_retranslates FAILED [ 38%]
+tests/unit/gui/pages_c/test_settings_config.py::test_make_editor_kinds PASSED [ 41%]
+tests/unit/gui/pages_c/test_settings_config.py::test_field_spec_text_key PASSED [ 44%]
+tests/unit/gui/pages_c/test_settings_config.py::test_load_shows_config_and_is_clean PASSED [ 47%]
+tests/unit/gui/pages_c/test_settings_config.py::test_editing_enables_save_and_shows_status PASSED [ 50%]
+tests/unit/gui/pages_c/test_settings_config.py::test_save_writes_only_changed_keys PASSED [ 52%]
+tests/unit/gui/pages_c/test_settings_config.py::test_every_card_saves_a_change PASSED [ 55%]
+tests/unit/gui/pages_c/test_settings_config.py::test_disk_order_is_validated_before_writing PASSED [ 58%]
+tests/unit/gui/pages_c/test_settings_config.py::test_order_ignores_non_integers PASSED [ 61%]
+tests/unit/gui/pages_c/test_settings_config.py::test_write_failures_become_messages[error0] PASSED [ 64%]
+tests/unit/gui/pages_c/test_settings_config.py::test_write_failures_become_messages[error1] PASSED [ 67%]
+tests/unit/gui/pages_c/test_settings_config.py::test_retranslate_follows_the_language FAILED [ 70%]
+tests/unit/gui/pages_c/test_settings_page.py::test_builds_every_card_with_default_hooks PASSED [ 73%]
+tests/unit/gui/pages_c/test_settings_page.py::test_reload_reports_an_invalid_config_and_keeps_edits PASSED [ 76%]
+tests/unit/gui/pages_c/test_settings_page.py::test_show_refreshes_the_dynamic_cards PASSED [ 79%]
+tests/unit/gui/pages_c/test_settings_page.py::test_navigation_scrolls_and_follows_the_scroll PASSED [ 82%]
+tests/unit/gui/pages_c/test_settings_page.py::test_language_and_zoom_changes_are_applied FAILED [ 85%]
+tests/unit/gui/pages_c/test_settings_page.py::test_saved_while_stopped_shows_a_toast PASSED [ 88%]
+tests/unit/gui/pages_c/test_settings_page.py::test_saved_while_running_offers_a_restart PASSED [ 91%]
+tests/unit/gui/pages_c/test_settings_page.py::test_restart_without_control_only_hides_the_note PASSED [ 94%]
+tests/unit/gui/pages_c/test_settings_page.py::test_running_without_control_still_toasts PASSED [ 97%]
+tests/unit/gui/pages_c/test_settings_page.py::test_last_snapshot_is_applied_at_construction PASSED [100%]
+
+================================== FAILURES ===================================
+_________ test_stored_thresholds_are_shown_and_language_retranslates __________
+
+kit = UiKit(theme=<chatimport.gui.theme.ThemeManager(0x2532bc23660) at 0x000002532D840E40>, language=<chatimport.gui.i18n.La...ger(0x2532bc24830) at 0x000002532D860700>, zoom=<chatimport.gui.zoom.ZoomManager(0x2532bc23890) at 0x000002532D8566C0>)
+store = <chatimport.gui.settings.GuiSettingsStore object at 0x000002532D84F450>
+gui = GuiContext(service=ServiceContext(config=Config(telegram=TelegramConfig(api_id=0, api_hash='', flood_sleep_threshold=1...sStore object at 0x000002532D84F450>, bridge=<tests.unit.gui.conftest.FakeBridge(0x2532bc248d0) at 0x000002532D862980>)
+
+    def test_stored_thresholds_are_shown_and_language_retranslates(
+        kit: UiKit, store: GuiSettingsStore, gui: GuiContext
+    ) -> None:
+        store.update(freshness=FreshnessThresholds(120, 7200, 3 * DAY))
+        card = AppearanceCard(gui)
+        assert card._edits["recent_below"].seconds() == 7200
+        english = card._reset.text()
+        kit.language.set_language("ru")
+>       assert card._reset.text() != english
+E       assert '\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0446\u0432\u0435\u0442\u0430' != '\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0446\u0432\u0435\u0442\u0430'
+E        +  where '\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0446\u0432\u0435\u0442\u0430' = <built-in method text of Button object at 0x000002532D86EFC0>()
+E        +    where <built-in method text of Button object at 0x000002532D86EFC0> = <chatimport.gui.widgets.button.Button(0x2532bd52180) at 0x000002532D86EFC0>.text
+E        +      where <chatimport.gui.widgets.button.Button(0x2532bd52180) at 0x000002532D86EFC0> = <chatimport.gui.pages.settings_appearance.AppearanceCard(0x2532bc3c270, name="SettingsCard_appearance") at 0x000002532D860E80>._reset
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\pages_c\test_settings_appearance.py:106: AssertionError
+____________________ test_retranslate_follows_the_language ____________________
+
+kit = UiKit(theme=<chatimport.gui.theme.ThemeManager(0x2532de07dd0) at 0x000002532DC204C0>, language=<chatimport.gui.i18n.La...ger(0x2532bb7bdb0) at 0x000002532D86D340>, zoom=<chatimport.gui.zoom.ZoomManager(0x2532de07d80) at 0x000002532DC20A00>)
+config_file = WindowsPath('C:/Users/iv/OneDrive/Desktop/chatradar_export/audit_evidence/settings-extra-temp/test_retranslate_follows_the_l0/config.toml')
+
+    def test_retranslate_follows_the_language(kit: UiKit, config_file: Path) -> None:
+        card = card_of(kit, config_file, "media")
+        english = card._save.text()
+        kit.language.set_language("ru")
+>       assert card._save.text() != english
+E       assert '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c' != '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c'
+E        +  where '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c' = <built-in method text of Button object at 0x000002532DC2F880>()
+E        +    where <built-in method text of Button object at 0x000002532DC2F880> = <chatimport.gui.widgets.button.Button(0x2532bd35210) at 0x000002532DC2F880>.text
+E        +      where <chatimport.gui.widgets.button.Button(0x2532bd35210) at 0x000002532DC2F880> = <chatimport.gui.pages.settings_config.ConfigCard(0x2532bedcf70, name="SettingsCard_media") at 0x000002532DC11380>._save
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\pages_c\test_settings_config.py:170: AssertionError
+_________________ test_language_and_zoom_changes_are_applied __________________
+
+gui = GuiContext(service=ServiceContext(config=Config(telegram=TelegramConfig(api_id=0, api_hash='', flood_sleep_threshold=1...sStore object at 0x000002532DCD73B0>, bridge=<tests.unit.gui.conftest.FakeBridge(0x2532f19e440) at 0x000002532FD13700>)
+kit = UiKit(theme=<chatimport.gui.theme.ThemeManager(0x2532f9a5e80) at 0x000002532DC21480>, language=<chatimport.gui.i18n.La...ger(0x2532f19e210) at 0x000002532D840600>, zoom=<chatimport.gui.zoom.ZoomManager(0x2532f9a6a10) at 0x000002532FD03100>)
+
+    def test_language_and_zoom_changes_are_applied(gui: GuiContext, kit: UiKit) -> None:
+        page = SettingsPage(gui, hooks=hooks_of())
+        before = page._restart_button.text()
+        kit.language.set_language("ru")
+>       assert page._restart_button.text() != before
+E       AssertionError: assert '\u041f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441' != '\u041f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441'
+E        +  where '\u041f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441' = <built-in method text of Button object at 0x000002532DC18EC0>()
+E        +    where <built-in method text of Button object at 0x000002532DC18EC0> = <chatimport.gui.widgets.button.Button(0x2532f1f1f50) at 0x000002532DC18EC0>.text
+E        +      where <chatimport.gui.widgets.button.Button(0x2532f1f1f50) at 0x000002532DC18EC0> = <chatimport.gui.pages.settings.SettingsPage(0x2532f237c60) at 0x000002532FD13040>._restart_button
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\pages_c\test_settings_page.py:99: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/unit/gui/pages_c/test_settings_appearance.py::test_stored_thresholds_are_shown_and_language_retranslates - assert '\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0446\u0432\u0435\u0442\u0430' != '\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0446\u0432\u0435\u0442\u0430'
+ +  where '\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0446\u0432\u0435\u0442\u0430' = <built-in method text of Button object at 0x000002532D86EFC0>()
+ +    where <built-in method text of Button object at 0x000002532D86EFC0> = <chatimport.gui.widgets.button.Button(0x2532bd52180) at 0x000002532D86EFC0>.text
+ +      where <chatimport.gui.widgets.button.Button(0x2532bd52180) at 0x000002532D86EFC0> = <chatimport.gui.pages.settings_appearance.AppearanceCard(0x2532bc3c270, name="SettingsCard_appearance") at 0x000002532D860E80>._reset
+FAILED tests/unit/gui/pages_c/test_settings_config.py::test_retranslate_follows_the_language - assert '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c' != '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c'
+ +  where '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c' = <built-in method text of Button object at 0x000002532DC2F880>()
+ +    where <built-in method text of Button object at 0x000002532DC2F880> = <chatimport.gui.widgets.button.Button(0x2532bd35210) at 0x000002532DC2F880>.text
+ +      where <chatimport.gui.widgets.button.Button(0x2532bd35210) at 0x000002532DC2F880> = <chatimport.gui.pages.settings_config.ConfigCard(0x2532bedcf70, name="SettingsCard_media") at 0x000002532DC11380>._save
+FAILED tests/unit/gui/pages_c/test_settings_page.py::test_language_and_zoom_changes_are_applied - AssertionError: assert '\u041f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441' != '\u041f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441'
+ +  where '\u041f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441' = <built-in method text of Button object at 0x000002532DC18EC0>()
+ +    where <built-in method text of Button object at 0x000002532DC18EC0> = <chatimport.gui.widgets.button.Button(0x2532f1f1f50) at 0x000002532DC18EC0>.text
+ +      where <chatimport.gui.widgets.button.Button(0x2532f1f1f50) at 0x000002532DC18EC0> = <chatimport.gui.pages.settings.SettingsPage(0x2532f237c60) at 0x000002532FD13040>._restart_button
+======================== 3 failed, 31 passed in 9.69s =========================

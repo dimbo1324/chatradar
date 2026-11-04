@@ -1,0 +1,332 @@
+[
+  {
+    "filename": "00_project_profile.json",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Machine-readable project profile: stack, entrypoints, commands, risk level."
+  },
+  {
+    "filename": "01_summary.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "High-level overview: stack detection, language counts, biggest files."
+  },
+  {
+    "filename": "02_file_statistics.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "File counts by extension, deepest paths, empty / suspicious files."
+  },
+  {
+    "filename": "03_dependencies.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "Dependencies parsed from package.json / requirements*.txt / go.mod."
+  },
+  {
+    "filename": "04_scripts.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick"
+    ],
+    "description": "npm/pnpm scripts, Makefile targets, Docker convenience commands."
+  },
+  {
+    "filename": "05_git_deep.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "security"
+    ],
+    "description": "Read-only Git deep-dive: branches, remotes, diff stat, tracked/untracked files."
+  },
+  {
+    "filename": "06_security_scan.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Secret and risky-code scanner output (.txt human-readable, plus .json/.sarif siblings)."
+  },
+  {
+    "filename": "07_todo_fixme.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "TODO/FIXME/HACK/XXX/DEPRECATED markers."
+  },
+  {
+    "filename": "08_code_metrics.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "LOC, comment ratio, files over 500/1000 lines."
+  },
+  {
+    "filename": "09_config.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Detected configuration files and a capability checklist."
+  },
+  {
+    "filename": "10_docker.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "Dockerfile / Docker Compose service map."
+  },
+  {
+    "filename": "11_routes_and_pages.txt",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick"
+    ],
+    "description": "Heuristic frontend routes/pages/UI map based on folder and file names."
+  },
+  {
+    "filename": "12_ai_context_pack.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick"
+    ],
+    "description": "Drop-in summary for pasting into an AI assistant together with the export."
+  },
+  {
+    "filename": "13_runbook.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Generated setup/run/test/Docker instructions."
+  },
+  {
+    "filename": "14_dependency_graph.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick"
+    ],
+    "description": "Internal import graph (Markdown table + Mermaid diagram siblings)."
+  },
+  {
+    "filename": "15_architecture_report.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Layered architecture map (folder-name heuristics) and extension points."
+  },
+  {
+    "filename": "16_key_files_report.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Ranked important files with reasons (entrypoints, config, import fan-in, size)."
+  },
+  {
+    "filename": "17_code_quality_report.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "Large files, long Python functions, mixed-responsibility signals, duplicate filenames."
+  },
+  {
+    "filename": "18_api_surface_report.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "security"
+    ],
+    "description": "Backend route candidates and frontend HTTP call sites (regex heuristics)."
+  },
+  {
+    "filename": "19_frontend_report.md",
+    "profiles": [
+      "ai_review",
+      "full"
+    ],
+    "description": "Frontend libraries, directory roles, route/store/form files, component/hook candidates."
+  },
+  {
+    "filename": "20_backend_report.md",
+    "profiles": [
+      "ai_review",
+      "full"
+    ],
+    "description": "Backend directory roles, Go/DB/config files, Python class/function candidates."
+  },
+  {
+    "filename": "21_git_timeline_report.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "security"
+    ],
+    "description": "Recent commits, contributors, and file churn (read-only Git history)."
+  },
+  {
+    "filename": "22_project_health_report.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Heuristic health score across architecture, security, maintainability, testing, docs, AI readiness, export safety."
+  },
+  {
+    "filename": "23_refactoring_opportunities.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "Prioritized refactoring candidates derived from size, dependency fan-in/out, and TODO markers."
+  },
+  {
+    "filename": "24_architecture_map.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick"
+    ],
+    "description": "Per-file architectural layer map, plus a Mermaid dependency-direction diagram."
+  },
+  {
+    "filename": "25_large_files_report.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "Large file/folder inspector."
+  },
+  {
+    "filename": "26_dependency_intelligence.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "quick",
+      "security"
+    ],
+    "description": "Package managers, lock files, and dependency hygiene signals."
+  },
+  {
+    "filename": "AI_CONTEXT",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick"
+    ],
+    "description": "Multi-file AI context folder for a ChatGPT/Codex-style handoff."
+  },
+  {
+    "filename": "AI_PROMPTS",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "AI_PROMPTS/CUSTOM_PROMPT.md — a ready-to-paste review prompt driven by Config.prompt_goals."
+  },
+  {
+    "filename": "ONBOARDING_GUIDE.md",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "A suggested reading order through the project, ranked by importance."
+  },
+  {
+    "filename": "PROJECT_OVERVIEW.html",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Plain-language project overview for a reader with no code access: what it is, how healthy it is, where the risks are."
+  },
+  {
+    "filename": "REPORT_DASHBOARD.html",
+    "profiles": [
+      "ai_review",
+      "full",
+      "minimal",
+      "quick",
+      "security"
+    ],
+    "description": "Local HTML dashboard for navigating project health, security and export reports."
+  },
+  {
+    "filename": "REVIEW_CHECKLIST.md",
+    "profiles": [
+      "ai_review",
+      "full"
+    ],
+    "description": "Reviewer checklist and a file-level summary of what changed."
+  }
+]

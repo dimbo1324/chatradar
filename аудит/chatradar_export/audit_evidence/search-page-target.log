@@ -1,0 +1,346 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\.venv\Scripts\python.exe
+rootdir: C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar
+configfile: pyproject.toml
+plugins: platformdirs-4.14.0, asyncio-1.4.1, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 31 items
+
+tests/unit/gui/search/test_search_page.py::test_a_new_page_is_idle FAILED [  3%]
+tests/unit/gui/search/test_search_page.py::test_typing_waits_for_the_debounce_then_searches FAILED [  6%]
+tests/unit/gui/search/test_search_page.py::test_a_blank_box_clears_the_list_at_once FAILED [  9%]
+tests/unit/gui/search/test_search_page.py::test_the_counter_uses_plural_forms_and_grouping FAILED [ 12%]
+tests/unit/gui/search/test_search_page.py::test_nothing_found FAILED     [ 16%]
+tests/unit/gui/search/test_search_page.py::test_short_queries_show_a_hint PASSED [ 19%]
+tests/unit/gui/search/test_search_page.py::test_an_older_answer_never_replaces_a_newer_one PASSED [ 22%]
+tests/unit/gui/search/test_search_page.py::test_the_skeleton_shows_only_while_nothing_is_listed PASSED [ 25%]
+tests/unit/gui/search/test_search_page.py::test_a_failing_search_shows_an_error_without_the_query FAILED [ 29%]
+tests/unit/gui/search/test_search_page.py::test_without_an_index_the_page_explains FAILED [ 32%]
+tests/unit/gui/search/test_search_page.py::test_a_disabled_index_blocks_searching FAILED [ 35%]
+tests/unit/gui/search/test_search_page.py::test_a_missing_index_file_blocks_searching FAILED [ 38%]
+tests/unit/gui/search/test_search_page.py::test_a_ready_index_is_summarised_and_its_chats_listed FAILED [ 41%]
+tests/unit/gui/search/test_search_page.py::test_building_shows_progress_and_polls_while_visible FAILED [ 45%]
+tests/unit/gui/search/test_search_page.py::test_a_missing_index_is_polled_for_while_visible PASSED [ 48%]
+tests/unit/gui/search/test_search_page.py::test_polling_never_starts_on_a_hidden_page PASSED [ 51%]
+tests/unit/gui/search/test_search_page.py::test_finishing_the_index_repeats_the_query PASSED [ 54%]
+tests/unit/gui/search/test_search_page.py::test_the_idle_notice_follows_the_index FAILED [ 58%]
+tests/unit/gui/search/test_search_page.py::test_a_failing_status_read_changes_nothing PASSED [ 61%]
+tests/unit/gui/search/test_search_page.py::test_a_changed_snapshot_refreshes_the_status PASSED [ 64%]
+tests/unit/gui/search/test_search_page.py::test_results_arrive_page_by_page FAILED [ 67%]
+tests/unit/gui/search/test_search_page.py::test_a_late_extra_page_of_an_older_search_is_dropped PASSED [ 70%]
+tests/unit/gui/search/test_search_page.py::test_a_failing_extra_page_can_be_retried PASSED [ 74%]
+tests/unit/gui/search/test_search_page.py::test_unusable_extra_pages_are_refused PASSED [ 77%]
+tests/unit/gui/search/test_search_page.py::test_an_extra_page_needs_a_query PASSED [ 80%]
+tests/unit/gui/search/test_search_page.py::test_extra_pages_need_an_index PASSED [ 83%]
+tests/unit/gui/search/test_search_page.py::test_stepping_through_results PASSED [ 87%]
+tests/unit/gui/search/test_search_page.py::test_previous_from_nothing_selects_the_last_result PASSED [ 90%]
+tests/unit/gui/search/test_search_page.py::test_keys_and_buttons_step PASSED [ 93%]
+tests/unit/gui/search/test_search_page.py::test_stepping_past_the_loaded_part_fetches_the_next_page PASSED [ 96%]
+tests/unit/gui/search/test_search_page.py::test_a_failed_fetch_does_not_leave_the_page_waiting PASSED [100%]
+
+================================== FAILURES ===================================
+___________________________ test_a_new_page_is_idle ___________________________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53A98880>
+backend = FakeBackend(hits=(), chat_list=(), index_status=IndexStatus(state=<IndexState.READY: 'ready'>, indexed=10, total=10, u...alse, fail_status=False, fail_context=False, queries=[], context_calls=[], threads=set(), status_calls=0, closed=False)
+
+    def test_a_new_page_is_idle(make_page: Maker, backend: FakeBackend) -> None:
+        page = make_page()
+        assert page.title_key == "nav.search"
+>       assert tr(page.title_key) == "Search"
+E       AssertionError: assert '�����' == 'Search'
+E
+E         - Search
+E         + �����
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:58: AssertionError
+______________ test_typing_waits_for_the_debounce_then_searches _______________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53F09850>
+backend = FakeBackend(hits=[SearchHit(chat_id=1, chat_title='Chat one', msg_id=1, date=datetime.datetime(2026, 5, 1, 11, 0, tzin...s=None, since=None, until=None, limit=100, offset=0)], context_calls=[], threads={25680}, status_calls=0, closed=False)
+
+    def test_typing_waits_for_the_debounce_then_searches(
+        make_page: Maker, backend: FakeBackend
+    ) -> None:
+        backend.hits = [make_hit(1, "a review of it")]
+        page = make_page()
+        page.field.setText("rev")
+        assert page._debounce.isActive()
+        assert page._debounce.interval() == DEBOUNCE_MS == 120
+        assert backend.queries == []
+        page.run_query()
+        assert not page._debounce.isActive()
+        assert len(backend.queries) == 1
+        query = backend.queries[0]
+        assert query.text == "rev"
+        assert query.chat_ids is None
+        assert query.since is None
+        assert query.limit == DEFAULT_PAGE_SIZE
+        assert query.offset == 0
+        assert page.stack.currentIndex() == RESULTS
+        assert page.model.loaded == 1
+>       assert page.count.text() == "1 result"
+E       AssertionError: assert '1 ���������' == '1 result'
+E
+E         - 1 result
+E         + 1 ���������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:93: AssertionError
+__________________ test_a_blank_box_clears_the_list_at_once ___________________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53F0A090>
+backend = FakeBackend(hits=[SearchHit(chat_id=1, chat_title='Chat one', msg_id=0, date=datetime.datetime(2026, 5, 1, 12, 0, tzin...s=None, since=None, until=None, limit=100, offset=0)], context_calls=[], threads={25680}, status_calls=0, closed=False)
+
+    def test_a_blank_box_clears_the_list_at_once(make_page: Maker, backend: FakeBackend) -> None:
+        backend.hits = reviews(3)
+        page = make_page()
+        search_for(page, "review")
+        assert page.model.loaded == 3
+        seq = page._seq
+        page.field.setText("   ")
+        assert page._seq == seq + 1
+        assert not page._debounce.isActive()
+        assert page.model.loaded == 0
+        assert page._query is None
+        assert page.stack.currentIndex() == NOTICE
+>       assert page.notice.accessibleName() == "Search your whole archive"
+E       AssertionError: assert '����� �� ����� ������' == 'Search your whole archive'
+E
+E         - Search your whole archive
+E         + ����� �� ����� ������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:111: AssertionError
+_______________ test_the_counter_uses_plural_forms_and_grouping _______________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53F0B110>
+backend = FakeBackend(hits=[SearchHit(chat_id=1, chat_title='Chat one', msg_id=0, date=datetime.datetime(2026, 5, 1, 12, 0, tzin...s=None, since=None, until=None, limit=100, offset=0)], context_calls=[], threads={25680}, status_calls=0, closed=False)
+
+    def test_the_counter_uses_plural_forms_and_grouping(make_page: Maker, backend: FakeBackend) -> None:
+        backend.hits = reviews(1200)
+        page = make_page()
+        search_for(page, "review")
+>       assert page.count.text() == "1,200 results"
+E       AssertionError: assert '1\xa0200 �����������' == '1,200 results'
+E
+E         - 1,200 results
+E         + 1�200 �����������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:120: AssertionError
+_____________________________ test_nothing_found ______________________________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53F0BED0>
+backend = FakeBackend(hits=[SearchHit(chat_id=1, chat_title='Chat one', msg_id=0, date=datetime.datetime(2026, 5, 1, 12, 0, tzin...s=None, since=None, until=None, limit=100, offset=0)], context_calls=[], threads={25680}, status_calls=0, closed=False)
+
+    def test_nothing_found(make_page: Maker, backend: FakeBackend) -> None:
+        backend.hits = reviews(2)
+        page = make_page()
+        search_for(page, "zzz")
+        assert page.stack.currentIndex() == NOTICE
+>       assert page.notice.accessibleName() == "Nothing found"
+E       AssertionError: assert '������ �� �������' == 'Nothing found'
+E
+E         - Nothing found
+E         + ������ �� �������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:132: AssertionError
+___________ test_a_failing_search_shows_an_error_without_the_query ____________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53FC7110>
+backend = FakeBackend(hits=(), chat_list=(), index_status=IndexStatus(state=<IndexState.READY: 'ready'>, indexed=10, total=10, u...s=None, since=None, until=None, limit=100, offset=0)], context_calls=[], threads={25680}, status_calls=0, closed=False)
+caplog = <_pytest.logging.LogCaptureFixture object at 0x0000016E53B0E660>
+
+    def test_a_failing_search_shows_an_error_without_the_query(
+        make_page: Maker, backend: FakeBackend, caplog: pytest.LogCaptureFixture
+    ) -> None:
+        backend.fail_search = True
+        page = make_page()
+        with caplog.at_level(logging.WARNING):
+            search_for(page, "secretquery")
+>       assert page.notice.accessibleName() == "The search failed"
+E       AssertionError: assert '�� ������� ��������� �����' == 'The search failed'
+E
+E         - The search failed
+E         + �� ������� ��������� �����
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:190: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  chatimport.gui.pages.search:search.py:300 search failed: RuntimeError
+___________________ test_without_an_index_the_page_explains ___________________
+
+make_page = <function make_page.<locals>.build at 0x0000016E55100300>
+backend = FakeBackend(hits=(), chat_list=(), index_status=IndexStatus(state=<IndexState.READY: 'ready'>, indexed=10, total=10, u...alse, fail_status=False, fail_context=False, queries=[], context_calls=[], threads=set(), status_calls=0, closed=False)
+
+    def test_without_an_index_the_page_explains(make_page: Maker, backend: FakeBackend) -> None:
+        page = make_page(present=False)
+        search_for(page, "abc")
+        assert page._no_backend
+        assert page.state is IndexState.MISSING
+>       assert page.notice.accessibleName() == "The search index is not built yet"
+E       AssertionError: assert '������ ������ ��� �� ��������' == 'The search index is not built yet'
+E
+E         - The search index is not built yet
+E         + ������ ������ ��� �� ��������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:203: AssertionError
+___________________ test_a_disabled_index_blocks_searching ____________________
+
+make_page = <function make_page.<locals>.build at 0x0000016E55101170>
+backend = FakeBackend(hits=(), chat_list=(), index_status=IndexStatus(state=<IndexState.DISABLED: 'disabled'>, indexed=0, total=...se, fail_status=False, fail_context=False, queries=[], context_calls=[], threads={25680}, status_calls=1, closed=False)
+
+    def test_a_disabled_index_blocks_searching(make_page: Maker, backend: FakeBackend) -> None:
+        backend.index_status = IndexStatus(IndexState.DISABLED, 0, 0, None)
+        page = make_page()
+        page.refresh_status()
+        assert page.state is IndexState.DISABLED
+>       assert page.strip.label.text() == "Search is off"
+E       AssertionError: assert '����� ��������' == 'Search is off'
+E
+E         - Search is off
+E         + ����� ��������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:219: AssertionError
+_________________ test_a_missing_index_file_blocks_searching __________________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53FC5BC0>
+backend = FakeBackend(hits=(), chat_list=(), index_status=IndexStatus(state=<IndexState.MISSING: 'missing'>, indexed=0, total=0,...se, fail_status=False, fail_context=False, queries=[], context_calls=[], threads={25680}, status_calls=1, closed=False)
+
+    def test_a_missing_index_file_blocks_searching(make_page: Maker, backend: FakeBackend) -> None:
+        backend.index_status = IndexStatus(IndexState.MISSING, 0, 0, None)
+        page = make_page()
+        page.refresh_status()
+        search_for(page, "abc")
+        assert backend.queries == []
+>       assert page.notice.accessibleName() == "The search index is not built yet"
+E       AssertionError: assert '������ ������ ��� �� ��������' == 'The search index is not built yet'
+E
+E         - The search index is not built yet
+E         + ������ ������ ��� �� ��������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:232: AssertionError
+____________ test_a_ready_index_is_summarised_and_its_chats_listed ____________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53FC5E80>
+backend = FakeBackend(hits=(), chat_list=(ChatChoice(chat_id=1, title='Alpha', messages=6),), index_status=IndexStatus(state=<In...se, fail_status=False, fail_context=False, queries=[], context_calls=[], threads={25680}, status_calls=1, closed=False)
+
+    def test_a_ready_index_is_summarised_and_its_chats_listed(
+        make_page: Maker, backend: FakeBackend
+    ) -> None:
+        backend.chat_list = (ChatChoice(1, "Alpha", 6),)
+        backend.index_status = ready_status(10)
+        page = make_page()
+        page.refresh_status()
+        assert page.state is IndexState.READY
+>       assert page.strip.label.text() == "10 messages in the index"
+E       AssertionError: assert '� ������� 10 ���������' == '10 messages in the index'
+E
+E         - 10 messages in the index
+E         + � ������� 10 ���������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:243: AssertionError
+____________ test_building_shows_progress_and_polls_while_visible _____________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53FC6C40>
+backend = FakeBackend(hits=(), chat_list=(), index_status=IndexStatus(state=<IndexState.BUILDING: 'building'>, indexed=47, total...se, fail_status=False, fail_context=False, queries=[], context_calls=[], threads={25680}, status_calls=1, closed=False)
+
+    def test_building_shows_progress_and_polls_while_visible(
+        make_page: Maker, backend: FakeBackend
+    ) -> None:
+        backend.index_status = IndexStatus(IndexState.BUILDING, 47, 100, NOW)
+        page = make_page()
+        page.show()
+        assert page.state is IndexState.BUILDING
+>       assert page.strip.label.text() == "Indexing 47%"
+E       AssertionError: assert '���������� 47\xa0%' == 'Indexing 47%'
+E
+E         - Indexing 47%
+E         + ���������� 47�%
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:254: AssertionError
+___________________ test_the_idle_notice_follows_the_index ____________________
+
+make_page = <function make_page.<locals>.build at 0x0000016E53F09BC0>
+backend = FakeBackend(hits=(), chat_list=(), index_status=IndexStatus(state=<IndexState.BUILDING: 'building'>, indexed=1, total=...se, fail_status=False, fail_context=False, queries=[], context_calls=[], threads={25680}, status_calls=1, closed=False)
+
+    def test_the_idle_notice_follows_the_index(make_page: Maker, backend: FakeBackend) -> None:
+        backend.index_status = IndexStatus(IndexState.BUILDING, 1, 10, NOW)
+        page = make_page()
+        page.refresh_status()
+>       assert page.notice.accessibleName() == "Search is still indexing"
+E       AssertionError: assert '����� ��� ����������� �����' == 'Search is still indexing'
+E
+E         - Search is still indexing
+E         + ����� ��� ����������� �����
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:301: AssertionError
+______________________ test_results_arrive_page_by_page _______________________
+
+make_page = <function make_page.<locals>.build at 0x0000016E55101C70>
+backend = FakeBackend(hits=[SearchHit(chat_id=1, chat_title='Chat one', msg_id=0, date=datetime.datetime(2026, 5, 1, 12, 0, tzin...s=None, since=None, until=None, limit=100, offset=0)], context_calls=[], threads={25680}, status_calls=0, closed=False)
+
+    def test_results_arrive_page_by_page(make_page: Maker, backend: FakeBackend) -> None:
+        backend.hits = reviews(250)
+        page = make_page()
+        search_for(page, "review")
+        assert page.model.loaded == 100
+        assert page.model.total == 250
+>       assert page.count.text() == "250 results"
+E       AssertionError: assert '250 �����������' == '250 results'
+E
+E         - 250 results
+E         + 250 �����������
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\search\test_search_page.py:339: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/unit/gui/search/test_search_page.py::test_a_new_page_is_idle - AssertionError: assert '�����' == 'Search'
+
+  - Search
+  + �����
+FAILED tests/unit/gui/search/test_search_page.py::test_typing_waits_for_the_debounce_then_searches - AssertionError: assert '1 ���������' == '1 result'
+
+  - 1 result
+  + 1 ���������
+FAILED tests/unit/gui/search/test_search_page.py::test_a_blank_box_clears_the_list_at_once - AssertionError: assert '����� �� ����� ������' == 'Search your whole archive'
+
+  - Search your whole archive
+  + ����� �� ����� ������
+FAILED tests/unit/gui/search/test_search_page.py::test_the_counter_uses_plural_forms_and_grouping - AssertionError: assert '1\xa0200 �����������' == '1,200 results'
+
+  - 1,200 results
+  + 1�200 �����������
+FAILED tests/unit/gui/search/test_search_page.py::test_nothing_found - AssertionError: assert '������ �� �������' == 'Nothing found'
+
+  - Nothing found
+  + ������ �� �������
+FAILED tests/unit/gui/search/test_search_page.py::test_a_failing_search_shows_an_error_without_the_query - AssertionError: assert '�� ������� ��������� �����' == 'The search failed'
+
+  - The search failed
+  + �� ������� ��������� �����
+FAILED tests/unit/gui/search/test_search_page.py::test_without_an_index_the_page_explains - AssertionError: assert '������ ������ ��� �� ��������' == 'The search index is not built yet'
+
+  - The search index is not built yet
+  + ������ ������ ��� �� ��������
+FAILED tests/unit/gui/search/test_search_page.py::test_a_disabled_index_blocks_searching - AssertionError: assert '����� ��������' == 'Search is off'
+
+  - Search is off
+  + ����� ��������
+FAILED tests/unit/gui/search/test_search_page.py::test_a_missing_index_file_blocks_searching - AssertionError: assert '������ ������ ��� �� ��������' == 'The search index is not built yet'
+
+  - The search index is not built yet
+  + ������ ������ ��� �� ��������
+FAILED tests/unit/gui/search/test_search_page.py::test_a_ready_index_is_summarised_and_its_chats_listed - AssertionError: assert '� ������� 10 ���������' == '10 messages in the index'
+
+  - 10 messages in the index
+  + � ������� 10 ���������
+FAILED tests/unit/gui/search/test_search_page.py::test_building_shows_progress_and_polls_while_visible - AssertionError: assert '���������� 47\xa0%' == 'Indexing 47%'
+
+  - Indexing 47%
+  + ���������� 47�%
+FAILED tests/unit/gui/search/test_search_page.py::test_the_idle_notice_follows_the_index - AssertionError: assert '����� ��� ����������� �����' == 'Search is still indexing'
+
+  - Search is still indexing
+  + ����� ��� ����������� �����
+FAILED tests/unit/gui/search/test_search_page.py::test_results_arrive_page_by_page - AssertionError: assert '250 �����������' == '250 results'
+
+  - 250 results
+  + 250 �����������
+======================== 13 failed, 18 passed in 1.51s ========================

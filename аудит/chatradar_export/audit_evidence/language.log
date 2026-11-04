@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\scripts\check_language.py", line 70, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\scripts\check_language.py", line 58, in main
+    files = candidate_files(root)
+  File "C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\scripts\check_language.py", line 27, in candidate_files
+    output = subprocess.run(
+             ~~~~~~~~~~~~~~^
+        ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"],  # noqa: S607
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        check=True,
+        ^^^^^^^^^^^
+    ).stdout.decode("utf-8")
+    ^
+  File "C:\Users\iv\AppData\Local\Programs\Python\Python314\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'ls-files', '-z', '--cached', '--others', '--exclude-standard']' returned non-zero exit status 128.

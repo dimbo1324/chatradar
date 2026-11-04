@@ -1,0 +1,19 @@
+{
+  "v": 1,
+  "language": "en",
+  "theme": "system",
+  "zoom": null,
+  "sidebar_collapsed": false,
+  "close_to_tray": true,
+  "start_hidden": false,
+  "last_page": "overview",
+  "chats_absolute_time": false,
+  "setup_completed": false,
+  "geometry": null,
+  "freshness": {
+    "fresh_below": 120,
+    "recent_below": 7200,
+    "stale_below": 259200
+  },
+  "freshness_per_chat": {}
+}

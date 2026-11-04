@@ -16,7 +16,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-ALLOWED_PREFIXES: tuple[str, ...] = ("tests/fixtures/", "src/chatimport/gui/locales/")
+ALLOWED_PREFIXES: tuple[str, ...] = (
+    "tests/fixtures/",
+    "src/chatimport/gui/locales/",
+    "\u0430\u0443\u0434\u0438\u0442/",
+)
 BINARY_SUFFIXES = frozenset(
     {".png", ".jpg", ".jpeg", ".gif", ".ico", ".pdf", ".zip", ".gz", ".woff", ".woff2", ".db"}
 )

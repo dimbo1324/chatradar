@@ -1,0 +1,36 @@
+=== Frontend Routes / Pages / UI Map ===
+Generated: 2026-11-04 15:23:41 UTC
+This is a heuristic map based on folder and file names.
+====================================================================================================
+
+--- Important UI directories ---
+
+pages:
+- src\chatimport\gui\pages
+
+routes:
+- not detected
+
+app:
+- not detected
+
+features:
+- not detected
+
+components:
+- not detected
+
+widgets:
+- src\chatimport\gui\widgets
+
+layouts:
+- not detected
+
+--- Route-like files ---
+None detected.
+
+--- Page-like files ---
+None detected.
+
+--- Component-like files ---
+None detected.

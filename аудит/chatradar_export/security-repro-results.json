@@ -1,0 +1,9 @@
+{
+  "default_media_enabled": false,
+  "default_types": [],
+  "document_configuration_accepted": true,
+  "SEC1_original_suffix_left_after_failure": true,
+  "SEC1_mark_of_web_present": false,
+  "SEC2_configured_limit_bytes": 1048576,
+  "SEC2_saved_bytes": 1048577
+}

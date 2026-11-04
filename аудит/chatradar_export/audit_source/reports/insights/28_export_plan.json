@@ -1,0 +1,4047 @@
+{
+  "generated_at": "2026-11-04 15:23:40 UTC",
+  "project_name": "chatradar",
+  "source_root": "<chatradar>",
+  "profile": "full",
+  "safe_export_mode": "full",
+  "diff_export_mode": "all",
+  "incremental_enabled": false,
+  "included_files": [
+    {
+      "relative_path": ".coverage",
+      "size": 1036288,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": ".editorconfig",
+      "size": 272,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": ".env",
+      "size": 1832,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": ".gitattributes",
+      "size": 152,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": ".gitignore",
+      "size": 1349,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": ".pre-commit-config.yaml",
+      "size": 2032,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".python-version",
+      "size": 5,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "AGENTS.md",
+      "size": 30380,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "CHANGELOG.md",
+      "size": 4788,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "chats.example.toml",
+      "size": 574,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": "CLAUDE.md",
+      "size": 2503,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "config.example.toml",
+      "size": 2353,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": "CONTRIBUTING.md",
+      "size": 2796,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "GEMINI.md",
+      "size": 239,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "justfile",
+      "size": 1441,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "LICENSE",
+      "size": 1073,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "pyproject.toml",
+      "size": 3199,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": "README.md",
+      "size": 4588,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "SECURITY.md",
+      "size": 1644,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "task-checklist.md",
+      "size": 1421,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "uv.lock",
+      "size": 63763,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".ai\\CHANGELOG.md",
+      "size": 8860,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\README.md",
+      "size": 2527,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\project\\10-project-map.md",
+      "size": 5200,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\project\\11-commands.md",
+      "size": 2703,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\project\\12-domain-rules.md",
+      "size": 4243,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\project\\13-progress-tracking.md",
+      "size": 2744,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\project\\14-command-reference.md",
+      "size": 5871,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\01-workflow.md",
+      "size": 1929,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\02-task-checklist.md",
+      "size": 1797,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\03-scope-and-code-style.md",
+      "size": 1996,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\04-architecture-boundaries.md",
+      "size": 1447,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\05-security-and-secrets.md",
+      "size": 1625,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\06-quality-and-testing.md",
+      "size": 2220,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\07-multi-assistant.md",
+      "size": 1841,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\08-rules-evolution.md",
+      "size": 4933,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".ai\\universal\\09-time-and-timestamps.md",
+      "size": 2985,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\README.md",
+      "size": 1875,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\settings.json",
+      "size": 2149,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".claude\\agents\\chatimport-interfaces.md",
+      "size": 1529,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\agents\\chatimport-platform.md",
+      "size": 1113,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\agents\\chatimport-privacy-security.md",
+      "size": 1720,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\agents\\chatimport-quality-reviewer.md",
+      "size": 2272,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\agents\\chatimport-repo-maintainer.md",
+      "size": 1395,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\agents\\chatimport-step-planner.md",
+      "size": 1933,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\agents\\chatimport-storage.md",
+      "size": 1947,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\agents\\chatimport-telegram.md",
+      "size": 1773,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\skills\\ci-fix\\SKILL.md",
+      "size": 1301,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\skills\\code-review\\SKILL.md",
+      "size": 1824,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\skills\\format-change\\SKILL.md",
+      "size": 1663,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\skills\\project-maintenance\\SKILL.md",
+      "size": 1874,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\skills\\rules-evolution\\SKILL.md",
+      "size": 1657,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".claude\\skills\\step-episode\\SKILL.md",
+      "size": 2544,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".codex\\config.toml",
+      "size": 259,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\README.md",
+      "size": 1098,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".codex\\agents\\chatimport-interfaces.toml",
+      "size": 1635,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\agents\\chatimport-platform.toml",
+      "size": 1217,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\agents\\chatimport-privacy-security.toml",
+      "size": 1845,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\agents\\chatimport-quality-reviewer.toml",
+      "size": 2397,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\agents\\chatimport-repo-maintainer.toml",
+      "size": 1506,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\agents\\chatimport-step-planner.toml",
+      "size": 2054,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\agents\\chatimport-storage.toml",
+      "size": 2050,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\agents\\chatimport-telegram.toml",
+      "size": 1877,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".codex\\skills\\ci-fix\\SKILL.md",
+      "size": 1379,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".codex\\skills\\code-review\\SKILL.md",
+      "size": 1907,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".codex\\skills\\format-change\\SKILL.md",
+      "size": 1748,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".codex\\skills\\project-maintenance\\SKILL.md",
+      "size": 1965,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".codex\\skills\\rules-evolution\\SKILL.md",
+      "size": 1744,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".codex\\skills\\step-episode\\SKILL.md",
+      "size": 2628,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".github\\CODEOWNERS",
+      "size": 13,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": ".github\\dependabot.yml",
+      "size": 728,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".github\\pull_request_template.md",
+      "size": 558,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": ".github\\ISSUE_TEMPLATE\\bug.yml",
+      "size": 609,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".github\\ISSUE_TEMPLATE\\config.yml",
+      "size": 205,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".github\\ISSUE_TEMPLATE\\feature.yml",
+      "size": 533,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".github\\workflows\\ci.yml",
+      "size": 2942,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".github\\workflows\\codeql.yml",
+      "size": 537,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".vscode\\extensions.json",
+      "size": 210,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": ".vscode\\settings.json",
+      "size": 410,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": "data\\chatradar.db",
+      "size": 1773568,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "data_and_exports"
+    },
+    {
+      "relative_path": "data\\chatradar.db-shm",
+      "size": 32768,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\chatradar.db-wal",
+      "size": 37112,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000001\\20261019T223033847150Z-000000.jsonl",
+      "size": 433703,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000001\\20261019T223151138816Z-000000.jsonl",
+      "size": 433703,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000001\\20261019T223250574045Z-000000.jsonl",
+      "size": 433703,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000001\\20261021T130817945548Z-000000.jsonl",
+      "size": 433703,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000001\\chat.json",
+      "size": 148,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000002\\20261019T223036883309Z-000000.jsonl",
+      "size": 228510,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000002\\20261019T223153322829Z-000000.jsonl",
+      "size": 228510,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000002\\20261019T223252651019Z-000000.jsonl",
+      "size": 228510,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000002\\20261021T130819551506Z-000000.jsonl",
+      "size": 228510,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000002\\chat.json",
+      "size": 128,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000003\\20261019T223039380275Z-000000.jsonl",
+      "size": 151263,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000003\\20261019T223155382312Z-000000.jsonl",
+      "size": 151263,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000003\\20261019T223254644342Z-000000.jsonl",
+      "size": 151263,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000003\\20261021T130820943775Z-000000.jsonl",
+      "size": 151263,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000003\\chat.json",
+      "size": 158,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000004\\20261019T223041974062Z-000000.jsonl",
+      "size": 175971,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000004\\20261019T223157517096Z-000000.jsonl",
+      "size": 175971,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000004\\20261019T223256639657Z-000000.jsonl",
+      "size": 175971,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000004\\20261021T130824068342Z-000000.jsonl",
+      "size": 175971,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "data\\raw\\telegram\\-1001800000004\\chat.json",
+      "size": 144,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "config_and_locks"
+    },
+    {
+      "relative_path": "design\\icon-source.jpg",
+      "size": 1511243,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "assets_and_binary_docs"
+    },
+    {
+      "relative_path": "docs\\architecture.md",
+      "size": 45151,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "docs\\backlog.md",
+      "size": 2993,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "docs\\decisions.md",
+      "size": 5216,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "docs\\ROADMAP.md",
+      "size": 7258,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "docs\\vision.md",
+      "size": 1312,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "docs\\adr\\README.md",
+      "size": 317,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "docs"
+    },
+    {
+      "relative_path": "scripts\\check_language.py",
+      "size": 2260,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "scripts\\doctor.py",
+      "size": 2793,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "scripts\\sync_agents.py",
+      "size": 9036,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "scripts\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\app.py",
+      "size": 14069,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\assets.py",
+      "size": 354,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\autostart.py",
+      "size": 8044,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\cli.py",
+      "size": 1728,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\cli_chats.py",
+      "size": 6109,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\cli_data.py",
+      "size": 10685,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\cli_service.py",
+      "size": 3967,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\cli_support.py",
+      "size": 4053,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\commands.py",
+      "size": 12419,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\config.py",
+      "size": 8129,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\config_edit.py",
+      "size": 3238,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\context.py",
+      "size": 1501,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\control.py",
+      "size": 9622,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\export.py",
+      "size": 2087,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\flood.py",
+      "size": 1487,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\integrity.py",
+      "size": 8824,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\library.py",
+      "size": 9874,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\logging_setup.py",
+      "size": 3211,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\media.py",
+      "size": 9300,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\merged_export.py",
+      "size": 9646,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\merged_service.py",
+      "size": 4020,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\offline.py",
+      "size": 5827,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\paths.py",
+      "size": 3859,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\ports.py",
+      "size": 4023,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\py.typed",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "other"
+    },
+    {
+      "relative_path": "src\\chatimport\\recheck.py",
+      "size": 8899,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\records.py",
+      "size": 10477,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\refs.py",
+      "size": 3372,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\resolution.py",
+      "size": 7033,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\router.py",
+      "size": 2982,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\runtime.py",
+      "size": 7467,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\search_db.py",
+      "size": 7243,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\search_fold.py",
+      "size": 1374,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\search_index.py",
+      "size": 13025,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\search_indexer.py",
+      "size": 12257,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\search_reader.py",
+      "size": 7761,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\search_service.py",
+      "size": 4296,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\search_types.py",
+      "size": 2370,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\service_runtime.py",
+      "size": 8292,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\setroot.py",
+      "size": 4713,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\status.py",
+      "size": 8351,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\supervisor.py",
+      "size": 2994,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\textnorm.py",
+      "size": 2088,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\toml_edit.py",
+      "size": 6763,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\trim.py",
+      "size": 18404,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\usage.py",
+      "size": 5294,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\worker.py",
+      "size": 19366,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\worker_backfill.py",
+      "size": 13019,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\worker_buffer.py",
+      "size": 5898,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\worker_live.py",
+      "size": 4658,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\worker_signals.py",
+      "size": 2942,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\worker_status.py",
+      "size": 2251,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\worker_store.py",
+      "size": 4426,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\__init__.py",
+      "size": 341,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\__main__.py",
+      "size": 38,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\assets\\icon.ico",
+      "size": 94498,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "assets_and_binary_docs"
+    },
+    {
+      "relative_path": "src\\chatimport\\assets\\icon.png",
+      "size": 198279,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "assets_and_binary_docs"
+    },
+    {
+      "relative_path": "src\\chatimport\\guards\\disk.py",
+      "size": 5630,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\guards\\folders.py",
+      "size": 5155,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\guards\\__init__.py",
+      "size": 72,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\context.py",
+      "size": 1782,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\format.py",
+      "size": 5660,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\i18n.py",
+      "size": 1590,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\icons.py",
+      "size": 6346,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\key_guide.py",
+      "size": 4910,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\key_guide_art.py",
+      "size": 7063,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\key_validation.py",
+      "size": 821,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\kit.py",
+      "size": 1636,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\launch.py",
+      "size": 3921,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\login_flow.py",
+      "size": 14023,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\main_window.py",
+      "size": 13786,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\notifier.py",
+      "size": 1069,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\service_host.py",
+      "size": 10537,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\settings.py",
+      "size": 5654,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\setup_logic.py",
+      "size": 4313,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\setup_steps.py",
+      "size": 10307,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\setup_steps_data.py",
+      "size": 8049,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\setup_steps_run.py",
+      "size": 5093,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\setup_wizard.py",
+      "size": 6493,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\shell_state.py",
+      "size": 2976,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\shell_widgets.py",
+      "size": 5390,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\strings.py",
+      "size": 4750,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\stylesheet.py",
+      "size": 18040,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\style_assets.py",
+      "size": 1376,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\theme.py",
+      "size": 4968,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\tokens.py",
+      "size": 5406,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\tray.py",
+      "size": 5030,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\zoom.py",
+      "size": 4756,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\__init__.py",
+      "size": 78,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\chats.py",
+      "size": 13495,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\data.py",
+      "size": 18978,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\data_merged.py",
+      "size": 4605,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\en.py",
+      "size": 3369,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\log.py",
+      "size": 7027,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\onboarding.py",
+      "size": 16991,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\overview.py",
+      "size": 7849,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\placeholder.py",
+      "size": 1406,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\ru.py",
+      "size": 4547,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\search.py",
+      "size": 8197,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\settings.py",
+      "size": 26552,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\shell.py",
+      "size": 4742,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\locales\\__init__.py",
+      "size": 90,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\chats_model.py",
+      "size": 11358,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\data_models.py",
+      "size": 9027,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\feed.py",
+      "size": 4197,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\log_model.py",
+      "size": 7104,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\log_parser.py",
+      "size": 5185,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\log_source.py",
+      "size": 4096,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\log_tail.py",
+      "size": 8556,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\presentation.py",
+      "size": 5462,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\search_model.py",
+      "size": 3865,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\search_spans.py",
+      "size": 4629,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\snapshot.py",
+      "size": 6194,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\ticker.py",
+      "size": 2246,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\models\\__init__.py",
+      "size": 94,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\chats.py",
+      "size": 14586,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\chats_actions.py",
+      "size": 7126,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\chats_delegate.py",
+      "size": 8225,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data.py",
+      "size": 3832,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_cleanup.py",
+      "size": 8093,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_common.py",
+      "size": 9926,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_export.py",
+      "size": 7116,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_folder.py",
+      "size": 5330,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_folder_dialog.py",
+      "size": 5492,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_integrity.py",
+      "size": 6366,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_merged.py",
+      "size": 12060,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_section.py",
+      "size": 3376,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\data_storage.py",
+      "size": 7671,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\library_dialog.py",
+      "size": 7073,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\log.py",
+      "size": 21761,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\log_delegate.py",
+      "size": 7916,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\log_widgets.py",
+      "size": 4324,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\overview.py",
+      "size": 13356,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\overview_feed.py",
+      "size": 4132,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\paint.py",
+      "size": 4391,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\placeholder.py",
+      "size": 1289,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\search.py",
+      "size": 18994,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\search_actions.py",
+      "size": 1020,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\search_context.py",
+      "size": 9814,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\search_delegate.py",
+      "size": 10373,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\search_filters.py",
+      "size": 6324,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\search_parts.py",
+      "size": 5701,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\search_worker.py",
+      "size": 2863,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\settings.py",
+      "size": 9086,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\settings_appearance.py",
+      "size": 9072,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\settings_config.py",
+      "size": 10275,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\settings_form.py",
+      "size": 6825,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\settings_support.py",
+      "size": 2816,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\settings_system.py",
+      "size": 8776,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\settings_telegram.py",
+      "size": 12877,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\support.py",
+      "size": 2442,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\pages\\__init__.py",
+      "size": 909,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\base.py",
+      "size": 2067,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\button.py",
+      "size": 3423,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\callout.py",
+      "size": 2970,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\card.py",
+      "size": 2449,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\chip.py",
+      "size": 3607,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\empty_state.py",
+      "size": 2583,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\labels.py",
+      "size": 2805,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\nav_item.py",
+      "size": 6993,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\progress.py",
+      "size": 4970,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\search_field.py",
+      "size": 2496,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\segmented.py",
+      "size": 6293,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\sidebar.py",
+      "size": 9133,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\status_bar.py",
+      "size": 4295,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\stat_card.py",
+      "size": 3001,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\switch.py",
+      "size": 5959,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\table.py",
+      "size": 1433,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\toast.py",
+      "size": 6920,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\top_bar.py",
+      "size": 5131,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\gui\\widgets\\__init__.py",
+      "size": 90,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\chat_store.py",
+      "size": 4038,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\fileio.py",
+      "size": 3793,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\layout.py",
+      "size": 2723,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\media_files.py",
+      "size": 3919,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\month_commit.py",
+      "size": 4679,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\reader.py",
+      "size": 5306,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\recover.py",
+      "size": 5865,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\state.py",
+      "size": 7961,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\writer.py",
+      "size": 7860,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\storage\\__init__.py",
+      "size": 77,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\telegram\\client.py",
+      "size": 13111,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\telegram\\mapper.py",
+      "size": 6253,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\telegram\\resolve.py",
+      "size": 4708,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\telegram\\session_probe.py",
+      "size": 1803,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "src\\chatimport\\telegram\\__init__.py",
+      "size": 94,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "python_source"
+    },
+    {
+      "relative_path": "tests\\conftest.py",
+      "size": 557,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\fakes.py",
+      "size": 7300,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\integration\\test_end_to_end.py",
+      "size": 11098,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\integration\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\test_cli.py",
+      "size": 479,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\test_scripts.py",
+      "size": 3896,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_assets.py",
+      "size": 321,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_config.py",
+      "size": 11099,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_config_edit.py",
+      "size": 12616,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_config_edit_literals.py",
+      "size": 4078,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_config_merged.py",
+      "size": 1013,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_config_search.py",
+      "size": 1847,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_config_units.py",
+      "size": 936,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_gaps.py",
+      "size": 3086,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_library.py",
+      "size": 18546,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_library_edit.py",
+      "size": 14496,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_library_refs.py",
+      "size": 3453,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_logging_setup.py",
+      "size": 3540,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_paths.py",
+      "size": 6590,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_paths_cloud.py",
+      "size": 3126,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_records.py",
+      "size": 16365,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_records_lines.py",
+      "size": 1976,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_refs.py",
+      "size": 2040,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_runtime_ports.py",
+      "size": 9267,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_runtime_slots.py",
+      "size": 4908,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_textnorm.py",
+      "size": 3069,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\test_toml_edit.py",
+      "size": 3382,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\core\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\conftest.py",
+      "size": 2460,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\spy.py",
+      "size": 421,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_chats_model.py",
+      "size": 17255,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_data_models.py",
+      "size": 7616,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_format.py",
+      "size": 7101,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_log_model.py",
+      "size": 6041,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_log_parser.py",
+      "size": 4966,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_log_tail.py",
+      "size": 12271,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_settings_zoom.py",
+      "size": 10555,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_setup_logic.py",
+      "size": 7379,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_snapshot_feed.py",
+      "size": 9551,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_strings_i18n.py",
+      "size": 6412,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_theme_kit.py",
+      "size": 10065,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\test_ticker_source.py",
+      "size": 10218,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\logic\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\onboarding\\conftest.py",
+      "size": 2622,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\onboarding\\test_key_guide.py",
+      "size": 2434,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\onboarding\\test_steps.py",
+      "size": 12494,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\onboarding\\test_wizard.py",
+      "size": 6472,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\onboarding\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_a\\conftest.py",
+      "size": 3560,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_a\\test_chats.py",
+      "size": 8986,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_a\\test_chats_actions.py",
+      "size": 9471,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_a\\test_chats_delegate.py",
+      "size": 3052,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_a\\test_library_dialog.py",
+      "size": 5867,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_a\\test_overview.py",
+      "size": 6018,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_a\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\archive.py",
+      "size": 1276,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\conftest.py",
+      "size": 4280,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\test_data_cleanup.py",
+      "size": 5727,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\test_data_export.py",
+      "size": 3936,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\test_data_folder.py",
+      "size": 6531,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\test_data_integrity.py",
+      "size": 3299,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\test_data_merged.py",
+      "size": 9281,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\test_data_page.py",
+      "size": 7973,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\test_log_page.py",
+      "size": 10913,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\test_log_parts.py",
+      "size": 5179,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_b\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\conftest.py",
+      "size": 4275,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_about_wizard.py",
+      "size": 1485,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_appearance.py",
+      "size": 3595,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_config.py",
+      "size": 5914,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_form.py",
+      "size": 2932,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_page.py",
+      "size": 5909,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_support.py",
+      "size": 2952,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_system.py",
+      "size": 5623,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_telegram.py",
+      "size": 9852,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\test_settings_telegram_validation.py",
+      "size": 3078,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\pages_c\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\conftest.py",
+      "size": 2874,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\fakes.py",
+      "size": 3649,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_context.py",
+      "size": 4889,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_delegate.py",
+      "size": 6248,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_filters.py",
+      "size": 6961,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_model.py",
+      "size": 5442,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_page.py",
+      "size": 16741,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_page_actions.py",
+      "size": 14505,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_parts.py",
+      "size": 3912,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_spans.py",
+      "size": 5511,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\test_search_worker.py",
+      "size": 6055,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\search\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\conftest.py",
+      "size": 586,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_launch.py",
+      "size": 8081,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_login_flow.py",
+      "size": 13436,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_main_window.py",
+      "size": 11639,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_main_window_wizard.py",
+      "size": 2124,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_service_host.py",
+      "size": 14121,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_small_modules.py",
+      "size": 7420,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_tray.py",
+      "size": 3982,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_widgets_basic.py",
+      "size": 6129,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\test_widgets_interactive.py",
+      "size": 12011,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\gui\\shell\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\conftest.py",
+      "size": 3656,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_autostart.py",
+      "size": 11952,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_check_language_extra.py",
+      "size": 6877,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_cli_commands.py",
+      "size": 34971,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_cli_export_all.py",
+      "size": 1701,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_cli_hardening.py",
+      "size": 7483,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_cli_search.py",
+      "size": 8497,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_cli_window.py",
+      "size": 1900,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_doctor.py",
+      "size": 8473,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_entry_points.py",
+      "size": 3550,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_status_snapshot.py",
+      "size": 3160,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\test_sync_agents_extra.py",
+      "size": 16911,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\interfaces\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\helpers.py",
+      "size": 4946,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_disk_guard.py",
+      "size": 11347,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_folder_watcher.py",
+      "size": 12255,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_guards_hardening.py",
+      "size": 7222,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_media.py",
+      "size": 19529,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_media_hardening.py",
+      "size": 3673,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_offline.py",
+      "size": 14666,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_router_cap.py",
+      "size": 1745,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_setroot.py",
+      "size": 14285,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_setroot_hardening.py",
+      "size": 3869,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_trim.py",
+      "size": 24472,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_trim_hardening.py",
+      "size": 10781,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_trim_preview.py",
+      "size": 5604,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\test_usage.py",
+      "size": 7238,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\maintenance\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\harness.py",
+      "size": 7520,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\helpers.py",
+      "size": 2141,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_app_commands.py",
+      "size": 12501,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_app_edges.py",
+      "size": 6442,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_app_lifecycle.py",
+      "size": 15544,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_app_misc.py",
+      "size": 16983,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_app_service.py",
+      "size": 10120,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_app_setroot.py",
+      "size": 8005,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_commands.py",
+      "size": 5262,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_commands_logging.py",
+      "size": 2425,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_control.py",
+      "size": 18534,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_control_claims.py",
+      "size": 9956,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_integration_glue.py",
+      "size": 2238,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_merged_service.py",
+      "size": 7714,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_resolution.py",
+      "size": 4627,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_router.py",
+      "size": 5884,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_search_service.py",
+      "size": 12819,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_status.py",
+      "size": 12967,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_status_fields.py",
+      "size": 2910,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\test_supervisor.py",
+      "size": 8587,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\service\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\helpers.py",
+      "size": 2131,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\search_helpers.py",
+      "size": 3075,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_chat_store.py",
+      "size": 3129,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_export.py",
+      "size": 7173,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_export_integrity_hardening.py",
+      "size": 4685,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_fileio.py",
+      "size": 6554,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_integrity.py",
+      "size": 15234,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_layout.py",
+      "size": 9283,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_media_files.py",
+      "size": 3154,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_merged_export.py",
+      "size": 15025,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_month_commit.py",
+      "size": 7290,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_reader.py",
+      "size": 3544,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_reader_tail.py",
+      "size": 1450,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_recover.py",
+      "size": 16575,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_recover_fast.py",
+      "size": 3821,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_search_db.py",
+      "size": 8315,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_search_fold.py",
+      "size": 2033,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_search_index.py",
+      "size": 21926,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_search_indexer.py",
+      "size": 25285,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_state.py",
+      "size": 13119,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_state_hardening.py",
+      "size": 3853,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_writer_append.py",
+      "size": 15860,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_writer_hardening.py",
+      "size": 2964,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\test_writer_month.py",
+      "size": 16935,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\storage\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\telegram\\test_client.py",
+      "size": 43601,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\telegram\\test_mapper.py",
+      "size": 19306,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\telegram\\test_privacy.py",
+      "size": 4539,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\telegram\\test_resolve.py",
+      "size": 15886,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\telegram\\test_session_probe.py",
+      "size": 4645,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\telegram\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\rig.py",
+      "size": 8330,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_backfill.py",
+      "size": 16436,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_backfill_slots.py",
+      "size": 4623,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_buffer.py",
+      "size": 6085,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_errors.py",
+      "size": 9426,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_live.py",
+      "size": 23832,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_recheck_compute.py",
+      "size": 16905,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_recheck_requests.py",
+      "size": 8590,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_recheck_schedule.py",
+      "size": 12159,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_sync_once.py",
+      "size": 5586,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_worker_edges.py",
+      "size": 6616,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_worker_recovery.py",
+      "size": 16281,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_worker_status.py",
+      "size": 3661,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\test_worker_store.py",
+      "size": 3744,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\tzrules.py",
+      "size": 3234,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    },
+    {
+      "relative_path": "tests\\unit\\worker\\__init__.py",
+      "size": 0,
+      "status": "included",
+      "reason": "",
+      "severity": "info",
+      "group": "tests"
+    }
+  ],
+  "excluded_files": [],
+  "skipped_dirs": [
+    ".\\.git",
+    ".\\.pytest_cache",
+    ".\\.ruff_cache",
+    ".\\.venv",
+    ".\\scripts\\__pycache__",
+    ".\\src\\chatimport\\guards\\__pycache__",
+    ".\\src\\chatimport\\gui\\locales\\__pycache__",
+    ".\\src\\chatimport\\gui\\models\\__pycache__",
+    ".\\src\\chatimport\\gui\\pages\\__pycache__",
+    ".\\src\\chatimport\\gui\\widgets\\__pycache__",
+    ".\\src\\chatimport\\gui\\__pycache__",
+    ".\\src\\chatimport\\storage\\__pycache__",
+    ".\\src\\chatimport\\telegram\\__pycache__",
+    ".\\src\\chatimport\\__pycache__",
+    ".\\tests\\integration\\__pycache__",
+    ".\\tests\\unit\\core\\__pycache__",
+    ".\\tests\\unit\\gui\\logic\\__pycache__",
+    ".\\tests\\unit\\gui\\onboarding\\__pycache__",
+    ".\\tests\\unit\\gui\\pages_a\\__pycache__",
+    ".\\tests\\unit\\gui\\pages_b\\__pycache__",
+    ".\\tests\\unit\\gui\\pages_c\\__pycache__",
+    ".\\tests\\unit\\gui\\search\\__pycache__",
+    ".\\tests\\unit\\gui\\shell\\__pycache__",
+    ".\\tests\\unit\\gui\\__pycache__",
+    ".\\tests\\unit\\interfaces\\__pycache__",
+    ".\\tests\\unit\\maintenance\\__pycache__",
+    ".\\tests\\unit\\service\\__pycache__",
+    ".\\tests\\unit\\storage\\__pycache__",
+    ".\\tests\\unit\\telegram\\__pycache__",
+    ".\\tests\\unit\\worker\\__pycache__",
+    ".\\tests\\unit\\__pycache__",
+    ".\\tests\\__pycache__"
+  ],
+  "warnings": [],
+  "rules": {
+    "source_file": null,
+    "loaded_rules": [],
+    "excluded_dirs": [],
+    "excluded_files": [],
+    "excluded_extensions": [],
+    "always_include_files": [],
+    "always_include_dirs": []
+  },
+  "summary": {
+    "included_count": 498,
+    "excluded_count": 0,
+    "estimated_included_bytes": 11554370,
+    "estimated_included_size": "11.02 MB",
+    "skipped_dirs_count": 32
+  }
+}

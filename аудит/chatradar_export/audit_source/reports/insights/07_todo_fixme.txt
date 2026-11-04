@@ -1,0 +1,65 @@
+=== TODO / FIXME / Technical Debt Report ===
+Generated: 2026-11-04 15:23:41 UTC
+====================================================================================================
+
+--- Summary ---
+TEMP                 31
+TODO                 11
+BUG                   6
+REFACTOR              3
+HACK                  2
+
+--- Findings ---
+AGENTS.md:29: [REFACTOR] (types: `feat`, `fix`, `refactor`, `test`, `chore`, `docs`, `ci`, `perf`, `security`).
+AGENTS.md:41: [BUG] - One commit = one logically complete unit. Do not mix a bug fix, a refactor,
+AGENTS.md:95: [TEMP] - no secrets, no temp files, no accidental changes in unrelated files;
+AGENTS.md:169: [HACK] - If the architecture genuinely blocks the task, do not hack around it — propose a
+AGENTS.md:179: [TODO] - Hidden workarounds are forbidden. Do not scatter uncontrolled `TODO`/`FIXME` marks;
+AGENTS.md:515: [TEMP] (temp file, `fsync`, `os.replace`) and rebuilt from the files when missing or broken,
+.ai\project\12-domain-rules.md:38: [TEMP] (temp file, `fsync`, `os.replace`) and rebuilt from the files when missing or broken,
+.ai\project\14-command-reference.md:26: [TEMP] | `check [--repair]` | integrity of parts, `state.json`, saved media and leftover temp files; `--repair` runs recover | sent; else runs offline |
+.ai\project\14-command-reference.md:79: [TEMP] - `os.replace` is atomic only within one volume: write temp files next to the target.
+.ai\universal\01-workflow.md:12: [REFACTOR] (types: `feat`, `fix`, `refactor`, `test`, `chore`, `docs`, `ci`, `perf`, `security`).
+.ai\universal\01-workflow.md:24: [BUG] - One commit = one logically complete unit. Do not mix a bug fix, a refactor,
+.ai\universal\02-task-checklist.md:34: [TEMP] - no secrets, no temp files, no accidental changes in unrelated files;
+.ai\universal\04-architecture-boundaries.md:11: [HACK] - If the architecture genuinely blocks the task, do not hack around it — propose a
+.ai\universal\04-architecture-boundaries.md:21: [TODO] - Hidden workarounds are forbidden. Do not scatter uncontrolled `TODO`/`FIXME` marks;
+.claude\agents\chatimport-quality-reviewer.md:33: [TEMP] 10. **Leftovers.** Debug output, temp files, commented-out code, comments restating code.
+.claude\agents\chatimport-storage.md:21: [TEMP] Backfilled parts and the trimmed boundary part: temp file in the same folder, `fsync`,
+.claude\skills\code-review\SKILL.md:35: [TEMP] 11. **Leftovers.** Debug output, temp files, commented-out code.
+.codex\agents\chatimport-quality-reviewer.toml:32: [TEMP] 10. **Leftovers.** Debug output, temp files, commented-out code, comments restating code.
+.codex\agents\chatimport-storage.toml:20: [TEMP] Backfilled parts and the trimmed boundary part: temp file in the same folder, `fsync`,
+.codex\skills\code-review\SKILL.md:36: [TEMP] 11. **Leftovers.** Debug output, temp files, commented-out code.
+.github\ISSUE_TEMPLATE\bug.yml:1: [BUG] name: Bug
+.github\ISSUE_TEMPLATE\bug.yml:3: [BUG] labels: [bug]
+docs\architecture.md:303: [TEMP] retried, never rebuilt over. Writes are atomic (temp file → `fsync` → `os.replace`).
+docs\architecture.md:470: [TEMP] a temp file → `os.replace`.
+docs\architecture.md:596: [TEMP] Delete leftover temp files; finish journalled month commits and drop orphaned staged
+docs\architecture.md:612: [TEMP] - Backfilled parts and the trimmed boundary part: temp file in the same folder → `fsync` →
+docs\architecture.md:615: [TEMP] - All of this lives in `storage/fileio.py`: atomic writer (optionally a unique temp name
+docs\ROADMAP.md:82: [REFACTOR] <REDACTED_SECRET_LINE>
+src\chatimport\integrity.py:182: [TEMP] """Temp files of interrupted writes in a chat folder."""
+src\chatimport\integrity.py:186: [TEMP] found.append(CheckIssue(None, folder.name, INFO, f"{tmp.name}: leftover temp file"))
+src\chatimport\integrity.py:191: [TEMP] log.warning("cannot delete a leftover temp file", extra={"folder": folder.name})
+src\chatimport\search_indexer.py:123: [TODO] todo: list[_PartInfo]
+src\chatimport\search_indexer.py:253: [TODO] todo = [
+src\chatimport\search_indexer.py:260: [TODO] if not todo and not reconciling:
+src\chatimport\search_indexer.py:262: [TODO] return _Item(state.chat_id, todo, parts, reconciling, marks)
+src\chatimport\search_indexer.py:283: [TODO] item.todo = list(item.all_parts)
+src\chatimport\search_indexer.py:302: [TODO] while item.todo and budget > 0:
+src\chatimport\search_indexer.py:303: [TODO] cursor = self._cursor(item, item.todo[0])
+src\chatimport\search_indexer.py:311: [TODO] item.todo.pop(0)
+src\chatimport\search_indexer.py:324: [TODO] done = not item.todo
+src\chatimport\toml_edit.py:177: [TEMP] file stays as it was and no temp file is left behind."""
+src\chatimport\storage\fileio.py:1: [TEMP] """Crash-safe file primitives shared by every writer: temp file next to the target, fsync,
+src\chatimport\storage\fileio.py:63: [TEMP] """Stream into a temp file; on success it is fsynced and replaces `path` in one step."""
+src\chatimport\storage\fileio.py:83: [TEMP] """Temp file in the same folder, fsync, then `os.replace` (atomic on one volume).
+src\chatimport\storage\fileio.py:85: [TEMP] `unique` gives the temp file a random name, for writers that may race on one target;
+tests\unit\gui\pages_b\test_data_integrity.py:16: [TEMP] {"severity": "warning", "folder": "beta", "message": "stale temp"},
+tests\unit\interfaces\test_cli_commands.py:135: [BUG] raise RuntimeError("bug")
+tests\unit\service\test_app_misc.py:65: [BUG] gateway.fail["resolve"] = [KeyError("bug")]
+tests\unit\service\test_control.py:33: [TEMP] """The scratch path is deep: use the extended-length form so temp names fit MAX_PATH."""
+tests\unit\service\test_control_claims.py:37: [TEMP] """Extended-length form on Windows: request and temp names do not fit MAX_PATH here."""
+tests\unit\storage\test_integrity.py:252: [TEMP] ".2026-10_002.jsonl.tmp: leftover temp file",
+tests\unit\storage\test_integrity.py:253: [TEMP] ".state.json.tmp: leftover temp file",
+tests\unit\worker\rig.py:208: [TEMP] assert not list(folder.glob(".*.tmp")), "temp files left behind"

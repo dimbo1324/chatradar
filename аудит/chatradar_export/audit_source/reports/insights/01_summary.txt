@@ -1,0 +1,53 @@
+=== Project Summary ===
+Generated: 2026-11-04 15:23:41 UTC
+====================================================================================================
+
+Source root                     : <chatradar>
+Copied project root             : <chatradar>
+Project name                    : chatradar
+Total files                     : 498
+Total folders                   : 60
+Total copied size               : 11.02 MB
+README present                  : yes
+LICENSE present                 : yes
+Tests detected                  : yes (161 files)
+Docker detected                 : no
+CI/CD detected                  : yes (2 GitHub Actions workflows)
+.env-like files                 : 1
+
+--- Detected stack ---
+frontend: not detected
+backend: Python
+tools: not detected
+testing: not detected
+styling: not detected
+infrastructure: GitHub Actions
+package_managers: not detected
+
+--- Detected languages by file count ---
+Python                            386 files        2.49 MB
+Markdown                           53 files      198.22 KB
+TOML                               12 files       20.47 KB
+JSON                                7 files        3.27 KB
+YAML                                7 files        7.41 KB
+Just                                1 files        1.41 KB
+
+--- Largest files ---
+     1.69 MB  data\chatradar.db
+     1.44 MB  design\icon-source.jpg
+  1012.00 KB  .coverage
+   423.54 KB  data\raw\telegram\-1001800000001\20261019T223033847150Z-000000.jsonl
+   423.54 KB  data\raw\telegram\-1001800000001\20261019T223151138816Z-000000.jsonl
+   423.54 KB  data\raw\telegram\-1001800000001\20261019T223250574045Z-000000.jsonl
+   423.54 KB  data\raw\telegram\-1001800000001\20261021T130817945548Z-000000.jsonl
+   223.15 KB  data\raw\telegram\-1001800000002\20261019T223036883309Z-000000.jsonl
+   223.15 KB  data\raw\telegram\-1001800000002\20261019T223153322829Z-000000.jsonl
+   223.15 KB  data\raw\telegram\-1001800000002\20261019T223252651019Z-000000.jsonl
+   223.15 KB  data\raw\telegram\-1001800000002\20261021T130819551506Z-000000.jsonl
+   193.63 KB  src\chatimport\assets\icon.png
+   171.85 KB  data\raw\telegram\-1001800000004\20261019T223041974062Z-000000.jsonl
+   171.85 KB  data\raw\telegram\-1001800000004\20261019T223157517096Z-000000.jsonl
+   171.85 KB  data\raw\telegram\-1001800000004\20261019T223256639657Z-000000.jsonl
+
+--- Useful next checks ---
+- Review .env-like files before sharing the export.

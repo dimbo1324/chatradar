@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-04 15:23:41 UTC",
+  "project_name": "chatradar",
+  "source_root": "<chatradar>",
+  "copied_root": "<chatradar>",
+  "project_type": "backend_or_cli",
+  "detected_stack": [
+    "GitHub Actions",
+    "Python"
+  ],
+  "stack_by_group": {
+    "frontend": [],
+    "backend": [
+      "Python"
+    ],
+    "tools": [],
+    "testing": [],
+    "styling": [],
+    "infrastructure": [
+      "GitHub Actions"
+    ],
+    "package_managers": []
+  },
+  "package_managers": [],
+  "entrypoints": [],
+  "commands": {
+    "install": [
+      "python -m pip install -e ."
+    ],
+    "test": [
+      "python -m pytest"
+    ]
+  },
+  "docker_compose_files": [],
+  "npm_scripts": {},
+  "capabilities": {
+    "has_git": true,
+    "has_ci": true,
+    "has_tests": true,
+    "has_docker": false,
+    "has_env_files": true,
+    "has_readme": true,
+    "has_license": true
+  },
+  "counts": {
+    "files": 498,
+    "folders": 60,
+    "total_size_bytes": 11554370
+  },
+  "risk_level": "medium",
+  "risk_reasons": [
+    "1 .env-like file(s) detected"
+  ],
+  "important_config_files": [
+    ".\\.ai\\README.md",
+    ".\\.claude\\README.md",
+    ".\\.codex\\README.md",
+    ".\\.env",
+    ".\\.github\\workflows\\ci.yml",
+    ".\\.github\\workflows\\codeql.yml",
+    ".\\.gitignore",
+    ".\\docs\\adr\\README.md",
+    ".\\LICENSE",
+    ".\\pyproject.toml",
+    ".\\README.md"
+  ]
+}

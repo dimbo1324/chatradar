@@ -1,0 +1,221 @@
+tests.unit.gui.onboarding.test_key_guide.test_the_guide_follows_the_language: AssertionError: assert 'Введите номер вашего аккаунта Telegram в международном формате, начиная с кода страны, например +598 99 123 456.' != 'Введите номер вашего аккаунта Telegram в международном формате, начиная с кода страны, например +598 99 123 456.'
+ +  where 'Введите номер вашего аккаунта Telegram в международном формате, начиная с кода страны, например +598 99 123 456.' = <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E731E080>()
+[+2 more lines; full report in element text]
+tests.unit.gui.onboarding.test_steps.test_keys_step_reveal_guide_and_language: AssertionError: assert 'API hash — ровно 32 символа: цифры и буквы от a до f.' != 'API hash — ровно 32 символа: цифры и буквы от a до f.'
+ +  where 'API hash — ровно 32 символа: цифры и буквы от a до f.' = <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E73E8E80>()
+ +    where <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E73E8E80> = <PySide6.QtWidgets.QLabel(0x1f7d8d849d0) at 0x000001F7E73E8E80>.text
+[+1 more line; full report in element text]
+tests.unit.gui.onboarding.test_wizard.test_the_wizard_follows_the_language: assert '1. Ключи API' != '1. Ключи API'
+ +  where '1. Ключи API' = <chatimport.gui.widgets.chip.Chip(0x1f7e39b3970, name="Chip") at 0x000001F7E74F50C0>.text
+tests.unit.gui.pages_a.test_chats.test_language_and_theme_changes_rebuild_text_and_legend: AssertionError: assert 'Библиотека' != 'Библиотека'
+ +  where 'Библиотека' = <built-in method text of Button object at 0x000001F7E7A0BA40>()
+ +    where <built-in method text of Button object at 0x000001F7E7A0BA40> = <chatimport.gui.widgets.button.Button(0x1f7e3b3cac0) at 0x000001F7E7A0BA40>.text
+ +      where <chatimport.gui.widgets.button.Button(0x1f7e3b3cac0) at 0x000001F7E7A0BA40> = <chatimport.gui.pages.chats.ChatsPage(0x1f7e3c61fa0) at 0x000001F7E7512B80>.library
+tests.unit.gui.pages_a.test_library_dialog.test_language_switch_retranslates: AssertionError: assert 'Библиотека чатов' != 'Библиотека чатов'
+ +  where 'Библиотека чатов' = <built-in method windowTitle of LibraryDialog object at 0x000001F7E7692D00>()
+ +    where <built-in method windowTitle of LibraryDialog object at 0x000001F7E7692D00> = <chatimport.gui.pages.library_dialog.LibraryDialog(0x1f7d945de40) at 0x000001F7E7692D00>.windowTitle
+tests.unit.gui.pages_b.test_data_merged.test_defaults_show_a_switched_off_card_without_a_build: AssertionError: assert 'Выключено' == 'Switched off'
+  
+  - Switched off
+  + Выключено
+tests.unit.gui.pages_b.test_data_merged.test_last_build_shows_exact_moment_age_records_and_size: AssertionError: assert 'ago' in '2026-11-04 18:47:04 UTC+03:00 (5 мин назад)'
+ +  where '2026-11-04 18:47:04 UTC+03:00 (5 мин назад)' = <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E35A5000>()
+ +    where <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E35A5000> = <PySide6.QtWidgets.QLabel(0x1f7e56925c0) at 0x000001F7E35A5000>.text
+[+1 more line; full report in element text]
+tests.unit.gui.pages_b.test_data_merged.test_switching_on_saves_the_config_and_reloads_the_service: AssertionError: assert ('success', 'Сохранено') == ('success', 'Saved')
+  
+  At index 1 diff: 'Сохранено' != 'Saved'
+  Use -v to get more diff
+tests.unit.gui.pages_b.test_data_merged.test_a_service_that_cannot_reload_says_the_setting_applies_later: AssertionError: assert ('info', 'Сох...уске службы.') == ('info', 'Sav...vice starts.')
+  
+  At index 1 diff: 'Сохранено. Вступит в силу при запуске службы.' != 'Saved. It applies when the service starts.'
+  Use -v to get more diff
+tests.unit.gui.pages_b.test_data_merged.test_a_config_that_cannot_be_written_reverts_the_controls[error0]: AssertionError: assert ('danger', 'Н...ь настройку.') == ('danger', 'T...ot be saved.')
+  
+  At index 1 diff: 'Не удалось сохранить настройку.' != 'The setting could not be saved.'
+  Use -v to get more diff
+tests.unit.gui.pages_b.test_data_merged.test_a_config_that_cannot_be_written_reverts_the_controls[error1]: AssertionError: assert ('danger', 'Н...ь настройку.') == ('danger', 'T...ot be saved.')
+  
+  At index 1 diff: 'Не удалось сохранить настройку.' != 'The setting could not be saved.'
+  Use -v to get more diff
+tests.unit.gui.pages_b.test_data_merged.test_build_now_calls_the_service_and_toasts: AssertionError: assert ('success', '...в: 6 записей') == ('success', '...y: 6 records')
+  
+  At index 1 diff: 'Общий файл готов: 6 записей' != 'Combined file is ready: 6 records'
+  Use -v to get more diff
+tests.unit.gui.pages_b.test_data_merged.test_build_now_failures_toast: AssertionError: assert ('danger', 'О...л не собран.') == ('danger', 'T...s not built.')
+  
+  At index 1 diff: 'Общий файл не собран.' != 'The combined file was not built.'
+  Use -v to get more diff
+tests.unit.gui.pages_b.test_data_merged.test_the_busy_card_shows_the_working_texts: AssertionError: assert 'Собираем...' == 'Building...'
+  
+  - Building...
+  + Собираем...
+tests.unit.gui.pages_b.test_data_merged.test_snapshots_track_the_building_flag_and_new_builds: AssertionError: assert 'Собирается...' == 'Building now...'
+  
+  - Building now...
+  + Собирается...
+tests.unit.gui.pages_b.test_data_merged.test_changing_the_root_rereads_the_last_build: AssertionError: assert 'Ещё не собирался' == 'Not built yet'
+  
+  - Not built yet
+  + Ещё не собирался
+tests.unit.gui.pages_b.test_data_merged.test_language_switch_retranslates: AssertionError: assert 'Собрать сейчас' != 'Собрать сейчас'
+ +  where 'Собрать сейчас' = <built-in method text of Button object at 0x000001F7E367E880>()
+ +    where <built-in method text of Button object at 0x000001F7E367E880> = <chatimport.gui.widgets.button.Button(0x1f7e3b3a110) at 0x000001F7E367E880>.text
+ +      where <chatimport.gui.widgets.button.Button(0x1f7e3b3a110) at 0x000001F7E367E880> = <chatimport.gui.pages.data_merged.MergedCard(0x1f7e5690c70) at 0x000001F7E367FD40>.build_button
+tests.unit.gui.pages_c.test_settings_appearance.test_stored_thresholds_are_shown_and_language_retranslates: assert 'Сбросить цвета' != 'Сбросить цвета'
+ +  where 'Сбросить цвета' = <built-in method text of Button object at 0x000001F7E37A4BC0>()
+ +    where <built-in method text of Button object at 0x000001F7E37A4BC0> = <chatimport.gui.widgets.button.Button(0x1f7e4390cc0) at 0x000001F7E37A4BC0>.text
+[+1 more line; full report in element text]
+tests.unit.gui.pages_c.test_settings_config.test_retranslate_follows_the_language: assert 'Сохранить' != 'Сохранить'
+ +  where 'Сохранить' = <built-in method text of Button object at 0x000001F7E4CB5300>()
+ +    where <built-in method text of Button object at 0x000001F7E4CB5300> = <chatimport.gui.widgets.button.Button(0x1f7e5628690) at 0x000001F7E4CB5300>.text
+ +      where <chatimport.gui.widgets.button.Button(0x1f7e5628690) at 0x000001F7E4CB5300> = <chatimport.gui.pages.settings_config.ConfigCard(0x1f7dd478f30, name="SettingsCard_media") at 0x000001F7E4DA1800>._save
+tests.unit.gui.pages_c.test_settings_page.test_language_and_zoom_changes_are_applied: AssertionError: assert 'Перезапустить сейчас' != 'Перезапустить сейчас'
+ +  where 'Перезапустить сейчас' = <built-in method text of Button object at 0x000001F7E4DA0C80>()
+ +    where <built-in method text of Button object at 0x000001F7E4DA0C80> = <chatimport.gui.widgets.button.Button(0x1f7e2f83330) at 0x000001F7E4DA0C80>.text
+[+1 more line; full report in element text]
+tests.unit.gui.pages_c.test_settings_system.test_startup_retranslates: assert 'Обновить' != 'Обновить'
+ +  where 'Обновить' = <built-in method text of Button object at 0x000001F7E75D4140>()
+ +    where <built-in method text of Button object at 0x000001F7E75D4140> = <chatimport.gui.widgets.button.Button(0x1f7df0fb0c0) at 0x000001F7E75D4140>.text
+ +      where <chatimport.gui.widgets.button.Button(0x1f7df0fb0c0) at 0x000001F7E75D4140> = <chatimport.gui.pages.settings_system.StartupCard(0x1f7e9ea4c00, name="SettingsCard_startup") at 0x000001F7E7521FC0>._update
+tests.unit.gui.pages_c.test_settings_system.test_about_retranslates: AssertionError: assert 'Папка с данными' != 'Папка с данными'
+ +  where 'Папка с данными' = <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E7AB16C0>()
+ +    where <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E7AB16C0> = <PySide6.QtWidgets.QLabel(0x1f7e9ea2bf0) at 0x000001F7E7AB16C0>.text
+[+1 more line; full report in element text]
+tests.unit.gui.pages_c.test_settings_telegram.test_retranslate: assert 'Сохранить' != 'Сохранить'
+ +  where 'Сохранить' = <built-in method text of Button object at 0x000001F7E794C740>()
+ +    where <built-in method text of Button object at 0x000001F7E794C740> = <chatimport.gui.widgets.button.Button(0x1f7e9a18410) at 0x000001F7E794C740>.text
+ +      where <chatimport.gui.widgets.button.Button(0x1f7e9a18410) at 0x000001F7E794C740> = <chatimport.gui.pages.settings_telegram.TelegramCard(0x1f7eb8680b0, name="SettingsCard_telegram") at 0x000001F7E793EE00>._save
+tests.unit.gui.pages_c.test_settings_telegram_validation.test_language_change_retranslates_the_errors: assert 'API hash — ровно 32 символа: цифры и буквы от a до f.' != 'API hash — ровно 32 символа: цифры и буквы от a до f.'
+ +  where 'API hash — ровно 32 символа: цифры и буквы от a до f.' = <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E794E9C0>()
+ +    where <built-in method text of PySide6.QtWidgets.QLabel object at 0x000001F7E794E9C0> = <PySide6.QtWidgets.QLabel(0x1f7eb83a2a0) at 0x000001F7E794E9C0>.text
+[+1 more line; full report in element text]
+tests.unit.gui.search.test_search_context.test_loading_names_the_chat_and_enables_the_actions: AssertionError: assert 'Загружаем соседние сообщения' == 'Loading the ...ring messages'
+  
+  - Loading the neighbouring messages
+  + Загружаем соседние сообщения
+tests.unit.gui.search.test_search_context.test_a_hit_without_a_link_cannot_be_opened_or_linked: AssertionError: assert 'У этого сообщения нет ссылки' == 'This message has no link'
+  
+  - This message has no link
+  + У этого сообщения нет ссылки
+tests.unit.gui.search.test_search_context.test_messages_become_rows_and_the_target_is_marked: assert False
+ +  where False = any(<generator object test_messages_become_rows_and_the_target_is_marked.<locals>.<genexpr> at 0x000001F7E51CAF60>)
+tests.unit.gui.search.test_search_context.test_no_neighbours_leaves_a_note: AssertionError: assert 'Соседние соо...е недоступны.' == 'The neighbou...er available.'
+  
+  - The neighbouring messages are no longer available.
+  + Соседние сообщения больше недоступны.
+tests.unit.gui.search.test_search_delegate.test_meta_text_has_the_exact_moment_and_the_age: AssertionError: assert '2026-05-01 1...0 · 1 ч назад' == '2026-05-01 1...:00 · 1 h ago'
+  
+  - 2026-05-01 14:00:00 UTC+03:00 · 1 h ago
+  ?                                   ^^^^^
+  + 2026-05-01 14:00:00 UTC+03:00 · 1 ч назад
+  ?                                   ^^^^^^^
+tests.unit.gui.search.test_search_delegate.test_a_future_date_reads_as_just_now: AssertionError: assert False
+ +  where False = <built-in method endswith of str object at 0x000001F7E51DDA10>('just now')
+ +    where <built-in method endswith of str object at 0x000001F7E51DDA10> = '2026-05-01 17:00:00 UTC+03:00 · только что'.endswith
+ +      where '2026-05-01 17:00:00 UTC+03:00 · только что' = meta_text(SearchHit(chat_id=1, chat_title='Chat one', msg_id=2, date=datetime.datetime(2026, 5, 1, 14, 0, tzinfo=datetime.timezone.utc), text='x', edited=False, link=None))
+[+2 more lines; full report in element text]
+tests.unit.gui.search.test_search_filters.test_without_chats_the_button_is_disabled: AssertionError: assert 'Все чаты' == 'All chats'
+  
+  - All chats
+  + Все чаты
+tests.unit.gui.search.test_search_filters.test_menu_lists_every_chat_with_its_size: AssertionError: assert [('Все чаты',... (5)', False)] == [('All chats'... (5)', False)]
+  
+  At index 0 diff: ('Все чаты', True) != ('All chats', True)
+  Use -v to get more diff
+tests.unit.gui.search.test_search_filters.test_all_chats_clears_the_selection: AssertionError: assert 'Все чаты' == 'All chats'
+  
+  - All chats
+  + Все чаты
+tests.unit.gui.search.test_search_filters.test_chats_that_vanish_leave_the_selection: AssertionError: assert 'Все чаты' == 'All chats'
+  
+  - All chats
+  + Все чаты
+tests.unit.gui.search.test_search_filters.test_strip_for_a_ready_index: AssertionError: assert 'В индексе 1\xa0500 сообщений' == '1,500 messages in the index'
+  
+  - 1,500 messages in the index
+  + В индексе 1 500 сообщений
+tests.unit.gui.search.test_search_filters.test_strip_while_building: AssertionError: assert 'Индексация 47\xa0%' == 'Indexing 47%'
+  
+  - Indexing 47%
+  + Индексация 47 %
+tests.unit.gui.search.test_search_filters.test_strip_while_building_an_empty_archive: AssertionError: assert 'Индексация 0\xa0%' == 'Indexing 0%'
+  
+  - Indexing 0%
+  + Индексация 0 %
+tests.unit.gui.search.test_search_filters.test_strip_for_the_other_states: AssertionError: assert 'Поиск выключен' == 'Search is off'
+  
+  - Search is off
+  + Поиск выключен
+tests.unit.gui.search.test_search_page.test_a_new_page_is_idle: AssertionError: assert 'Поиск' == 'Search'
+  
+  - Search
+  + Поиск
+tests.unit.gui.search.test_search_page.test_typing_waits_for_the_debounce_then_searches: AssertionError: assert '1 результат' == '1 result'
+  
+  - 1 result
+  + 1 результат
+tests.unit.gui.search.test_search_page.test_a_blank_box_clears_the_list_at_once: AssertionError: assert 'Поиск по всему архиву' == 'Search your whole archive'
+  
+  - Search your whole archive
+  + Поиск по всему архиву
+tests.unit.gui.search.test_search_page.test_the_counter_uses_plural_forms_and_grouping: AssertionError: assert '1\xa0200 результатов' == '1,200 results'
+  
+  - 1,200 results
+  + 1 200 результатов
+tests.unit.gui.search.test_search_page.test_nothing_found: AssertionError: assert 'Ничего не найдено' == 'Nothing found'
+  
+  - Nothing found
+  + Ничего не найдено
+tests.unit.gui.search.test_search_page.test_a_failing_search_shows_an_error_without_the_query: AssertionError: assert 'Не удалось выполнить поиск' == 'The search failed'
+  
+  - The search failed
+  + Не удалось выполнить поиск
+tests.unit.gui.search.test_search_page.test_without_an_index_the_page_explains: AssertionError: assert 'Индекс поиск...ё не построен' == 'The search i...not built yet'
+  
+  - The search index is not built yet
+  + Индекс поиска ещё не построен
+tests.unit.gui.search.test_search_page.test_a_disabled_index_blocks_searching: AssertionError: assert 'Поиск выключен' == 'Search is off'
+  
+  - Search is off
+  + Поиск выключен
+tests.unit.gui.search.test_search_page.test_a_missing_index_file_blocks_searching: AssertionError: assert 'Индекс поиск...ё не построен' == 'The search i...not built yet'
+  
+  - The search index is not built yet
+  + Индекс поиска ещё не построен
+tests.unit.gui.search.test_search_page.test_a_ready_index_is_summarised_and_its_chats_listed: AssertionError: assert 'В индексе 10 сообщений' == '10 messages in the index'
+  
+  - 10 messages in the index
+  + В индексе 10 сообщений
+tests.unit.gui.search.test_search_page.test_building_shows_progress_and_polls_while_visible: AssertionError: assert 'Индексация 47\xa0%' == 'Indexing 47%'
+  
+  - Indexing 47%
+  + Индексация 47 %
+tests.unit.gui.search.test_search_page.test_the_idle_notice_follows_the_index: AssertionError: assert 'Поиск ещё индексирует архив' == 'Search is still indexing'
+  
+  - Search is still indexing
+  + Поиск ещё индексирует архив
+tests.unit.gui.search.test_search_page.test_results_arrive_page_by_page: AssertionError: assert '250 результатов' == '250 results'
+  
+  - 250 results
+  + 250 результатов
+tests.unit.gui.search.test_search_page_actions.test_a_failing_context_read_leaves_a_note: AssertionError: assert 'Соседние соо...е недоступны.' == 'The neighbou...er available.'
+  
+  - The neighbouring messages are no longer available.
+  + Соседние сообщения больше недоступны.
+tests.unit.gui.search.test_search_page_actions.test_the_context_needs_an_index: AssertionError: assert 'Соседние соо...е недоступны.' == 'The neighbou...er available.'
+  
+  - The neighbouring messages are no longer available.
+  + Соседние сообщения больше недоступны.
+tests.unit.gui.search.test_search_page_actions.test_copy_text_and_link: AssertionError: assert [('success', ...копирована.')] == [('success', ... is copied.')]
+  
+  At index 0 diff: ('success', 'Текст сообщения скопирован.') != ('success', 'The message text is copied.')
+  Use -v to get more diff
+tests.unit.gui.search.test_search_page_actions.test_a_link_that_does_not_open_is_reported: AssertionError: assert [('danger', '...ыть ссылку.')] == [('danger', '...n the link.')]
+  
+  At index 0 diff: ('danger', 'Не удалось открыть ссылку.') != ('danger', 'Could not open the link.')
+  Use -v to get more diff
+tests.unit.gui.search.test_search_page_actions.test_a_message_without_a_link_only_copies_its_text: AssertionError: assert [('success', ...скопирован.')] == [('success', ... is copied.')]
+  
+  At index 0 diff: ('success', 'Текст сообщения скопирован.') != ('success', 'The message text is copied.')
+  Use -v to get more diff

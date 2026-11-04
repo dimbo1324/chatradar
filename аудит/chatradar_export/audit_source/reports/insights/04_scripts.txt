@@ -1,0 +1,12 @@
+=== Scripts and Common Commands Report ===
+Generated: 2026-11-04 15:23:41 UTC
+====================================================================================================
+
+--- package.json scripts ---
+No package.json scripts detected.
+
+--- Makefile targets ---
+No Makefile detected.
+
+--- Docker convenience commands ---
+No Docker/Docker Compose files detected.

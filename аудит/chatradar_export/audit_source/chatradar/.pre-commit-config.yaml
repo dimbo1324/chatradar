@@ -1,0 +1,66 @@
+# Install: uv run pre-commit install   (or: just setup)
+# Run over the whole repository: just hooks
+default_install_hook_types: [pre-commit]
+minimum_pre_commit_version: "4.0.0"
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=512]
+      - id: detect-private-key
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.12.13
+    hooks:
+      - id: uv-lock
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.28.0
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: forbid-secrets
+        name: forbid committing secrets, real config and exported chats
+        language: fail
+        entry: "Secrets and chat data are never committed (.env, *.session, config.toml, chats.toml, ChatImport/). Unstage the file: git rm --cached <file>"
+        files: '(^|/)(\.env(\..+)?|.+\.session(-journal)?|ChatImport/.+)$|^(config|chats)\.toml$'
+
+      - id: pyright
+        name: pyright (strict)
+        language: system
+        entry: uv run --frozen pyright
+        types: [python]
+        pass_filenames: false
+
+      - id: agents-sync
+        name: AGENTS.md and .codex in sync with .ai/ and .claude/
+        language: system
+        entry: uv run --frozen python scripts/sync_agents.py --check
+        files: '^(\.ai/|\.claude/(agents|skills)/|\.codex/(agents|skills)/|AGENTS\.md$|scripts/sync_agents\.py$)'
+        pass_filenames: false
+
+      - id: language
+        name: English only
+        language: system
+        entry: uv run --frozen python scripts/check_language.py
+        pass_filenames: false
+        always_run: true

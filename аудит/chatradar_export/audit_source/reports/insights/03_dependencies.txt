@@ -1,0 +1,7 @@
+=== Dependency Report ===
+Generated: 2026-11-04 15:23:41 UTC
+====================================================================================================
+
+Detected package managers: not detected
+
+package.json: not found or unreadable.

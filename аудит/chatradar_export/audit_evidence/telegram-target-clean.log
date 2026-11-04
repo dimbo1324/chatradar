@@ -1,0 +1,55 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\.venv\Scripts\python.exe
+rootdir: C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar
+configfile: pyproject.toml
+plugins: platformdirs-4.14.0, asyncio-1.4.1, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 22 items
+
+tests/unit/gui/pages_c/test_settings_telegram.py::test_loads_nothing_from_a_missing_file PASSED [  4%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_loads_saved_credentials PASSED [  9%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_broken_config_loads_as_empty PASSED [ 13%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_credentials_saved_needs_a_positive_numeric_id PASSED [ 18%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_typing_marks_dirty PASSED [ 22%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_reveal_toggles_echo_mode PASSED [ 27%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_api_id_must_be_a_positive_number PASSED [ 31%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_api_hash_must_look_like_a_hash PASSED [ 36%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_save_writes_the_credentials PASSED [ 40%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_write_failures_become_messages[error0] PASSED [ 45%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_write_failures_become_messages[error1] PASSED [ 50%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_refresh_without_credentials PASSED [ 54%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_refresh_while_service_runs_trusts_it PASSED [ 59%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_refresh_without_a_session_file PASSED [ 63%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_probe_signed_in_signed_out_and_failure PASSED [ 68%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_probe_without_permission_does_not_run PASSED [ 72%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_fresh_context_survives_a_broken_config PASSED [ 77%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_service_state_change_refreshes_once PASSED [ 81%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_link_opens_the_apps_page PASSED [ 86%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_recheck_button_probes_again PASSED [ 90%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_sign_in_opens_the_dialog_and_reports PASSED [ 95%]
+tests/unit/gui/pages_c/test_settings_telegram.py::test_retranslate FAILED [100%]
+
+================================== FAILURES ===================================
+______________________________ test_retranslate _______________________________
+
+gui = GuiContext(service=ServiceContext(config=Config(telegram=TelegramConfig(api_id=0, api_hash='', flood_sleep_threshold=1...sStore object at 0x000001779D1DADE0>, bridge=<tests.unit.gui.conftest.FakeBridge(0x1779d675ad0) at 0x000001779D22C440>)
+probe = <tests.unit.gui.pages_c.test_settings_telegram.Probe object at 0x000001779D165400>
+kit = UiKit(theme=<chatimport.gui.theme.ThemeManager(0x1779d674540) at 0x000001779E6AA5C0>, language=<chatimport.gui.i18n.La...ger(0x1779e24a330) at 0x000001779E681F00>, zoom=<chatimport.gui.zoom.ZoomManager(0x1779d6740e0) at 0x000001779D19C340>)
+
+    def test_retranslate(gui: GuiContext, probe: Probe, kit: UiKit) -> None:
+        card = card_of(gui, probe)
+        before = card._save.text()
+        kit.language.set_language("ru")
+>       assert card._save.text() != before
+E       assert '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c' != '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c'
+E        +  where '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c' = <built-in method text of Button object at 0x000001779D213780>()
+E        +    where <built-in method text of Button object at 0x000001779D213780> = <chatimport.gui.widgets.button.Button(0x1779e2a1330) at 0x000001779D213780>.text
+E        +      where <chatimport.gui.widgets.button.Button(0x1779e2a1330) at 0x000001779D213780> = <chatimport.gui.pages.settings_telegram.TelegramCard(0x1779e279be0, name="SettingsCard_telegram") at 0x000001779E69B080>._save
+
+C:\Users\iv\OneDrive\Desktop\chatradar_export\audit_source\chatradar\tests\unit\gui\pages_c\test_settings_telegram.py:298: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/unit/gui/pages_c/test_settings_telegram.py::test_retranslate - assert '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c' != '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c'
+ +  where '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c' = <built-in method text of Button object at 0x000001779D213780>()
+ +    where <built-in method text of Button object at 0x000001779D213780> = <chatimport.gui.widgets.button.Button(0x1779e2a1330) at 0x000001779D213780>.text
+ +      where <chatimport.gui.widgets.button.Button(0x1779e2a1330) at 0x000001779D213780> = <chatimport.gui.pages.settings_telegram.TelegramCard(0x1779e279be0, name="SettingsCard_telegram") at 0x000001779E69B080>._save
+======================== 1 failed, 21 passed in 1.61s =========================

@@ -1,0 +1,9 @@
+part vanished or unreadable during the combined build
+part vanished or unreadable during the combined build
+{
+  "initial_records": 1,
+  "records_after_injected_read_failure": 0,
+  "retry_after_restored_read_skipped": true,
+  "retry_records": 0,
+  "source_part_still_exists": true
+}

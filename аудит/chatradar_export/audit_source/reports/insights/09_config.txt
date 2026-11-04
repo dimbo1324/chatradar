@@ -1,0 +1,21 @@
+=== Configuration Report ===
+Generated: 2026-11-04 15:23:41 UTC
+====================================================================================================
+
+--- Capability checklist ---
+TypeScript               no
+Vite                     no
+ESLint                   no
+Prettier                 no
+Tailwind CSS             no
+PostCSS                  no
+Docker                   no
+Docker Compose           no
+GitHub Actions           yes
+Python pyproject         yes
+Go modules               no
+Rust Cargo               no
+Environment examples     yes
+
+--- Detected configuration files ---
+2.47 KB  .ai\README.md1.83 KB  .claude\README.md1.07 KB  .codex\README.md1.79 KB  .env2.87 KB  .github\workflows\ci.yml537 B  .github\workflows\codeql.yml1.32 KB  .gitignore317 B  docs\adr\README.md1.05 KB  LICENSE3.12 KB  pyproject.toml4.48 KB  README.md

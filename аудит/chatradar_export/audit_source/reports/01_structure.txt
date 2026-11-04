@@ -1,0 +1,965 @@
+=== Relative Project Structure ===
+Project copy root name: chatradar
+Generated: 2026-11-04 15:23:40
+Ignored directories: *.egg-info, .coverage, .git, .mypy_cache, .next, .nuxt, .parcel-cache, .pytest_cache, .ruff_cache, .tox, .turbo, .venv, __pycache__, build, coverage, dist, env, htmlcov, node_modules, venv
+====================================================================================================
+
+    Directory: .
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               .ai
+d-----               04-Nov-26     15:23               .claude
+d-----               04-Nov-26     15:23               .codex
+d-----               04-Nov-26     15:23               .github
+d-----               04-Nov-26     15:23               .vscode
+d-----               04-Nov-26     15:23               data
+d-----               04-Nov-26     15:23               design
+d-----               04-Nov-26     15:23               docs
+d-----               04-Nov-26     15:23               scripts
+d-----               04-Nov-26     15:23               src
+d-----               04-Nov-26     15:23               tests
+-a----               04-Nov-26     15:23       1036288 .coverage
+-a----               04-Nov-26     15:23           272 .editorconfig
+-a----               04-Nov-26     15:23          1832 .env
+-a----               04-Nov-26     15:23           152 .gitattributes
+-a----               04-Nov-26     15:23          1349 .gitignore
+-a----               04-Nov-26     15:23          2032 .pre-commit-config.yaml
+-a----               04-Nov-26     15:23             5 .python-version
+-a----               04-Nov-26     15:23         30380 AGENTS.md
+-a----               04-Nov-26     15:23          4788 CHANGELOG.md
+-a----               04-Nov-26     15:23           574 chats.example.toml
+-a----               04-Nov-26     15:23          2503 CLAUDE.md
+-a----               04-Nov-26     15:23          2353 config.example.toml
+-a----               04-Nov-26     15:23          2796 CONTRIBUTING.md
+-a----               04-Nov-26     15:23           239 GEMINI.md
+-a----               04-Nov-26     15:23          1441 justfile
+-a----               04-Nov-26     15:23          1073 LICENSE
+-a----               04-Nov-26     15:23          3199 pyproject.toml
+-a----               04-Nov-26     15:23          4588 README.md
+-a----               04-Nov-26     15:23          1644 SECURITY.md
+-a----               04-Nov-26     15:23          1421 task-checklist.md
+-a----               04-Nov-26     15:23         63763 uv.lock
+
+
+    Directory: .\.ai
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               project
+d-----               04-Nov-26     15:23               universal
+-a----               04-Nov-26     15:23          8860 CHANGELOG.md
+-a----               04-Nov-26     15:23          2527 README.md
+
+
+    Directory: .\.ai\project
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          5200 10-project-map.md
+-a----               04-Nov-26     15:23          2703 11-commands.md
+-a----               04-Nov-26     15:23          4243 12-domain-rules.md
+-a----               04-Nov-26     15:23          2744 13-progress-tracking.md
+-a----               04-Nov-26     15:23          5871 14-command-reference.md
+
+
+    Directory: .\.ai\universal
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1929 01-workflow.md
+-a----               04-Nov-26     15:23          1797 02-task-checklist.md
+-a----               04-Nov-26     15:23          1996 03-scope-and-code-style.md
+-a----               04-Nov-26     15:23          1447 04-architecture-boundaries.md
+-a----               04-Nov-26     15:23          1625 05-security-and-secrets.md
+-a----               04-Nov-26     15:23          2220 06-quality-and-testing.md
+-a----               04-Nov-26     15:23          1841 07-multi-assistant.md
+-a----               04-Nov-26     15:23          4933 08-rules-evolution.md
+-a----               04-Nov-26     15:23          2985 09-time-and-timestamps.md
+
+
+    Directory: .\.claude
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               agents
+d-----               04-Nov-26     15:23               skills
+-a----               04-Nov-26     15:23          1875 README.md
+-a----               04-Nov-26     15:23          2149 settings.json
+
+
+    Directory: .\.claude\agents
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1529 chatimport-interfaces.md
+-a----               04-Nov-26     15:23          1113 chatimport-platform.md
+-a----               04-Nov-26     15:23          1720 chatimport-privacy-security.md
+-a----               04-Nov-26     15:23          2272 chatimport-quality-reviewer.md
+-a----               04-Nov-26     15:23          1395 chatimport-repo-maintainer.md
+-a----               04-Nov-26     15:23          1933 chatimport-step-planner.md
+-a----               04-Nov-26     15:23          1947 chatimport-storage.md
+-a----               04-Nov-26     15:23          1773 chatimport-telegram.md
+
+
+    Directory: .\.claude\skills
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               ci-fix
+d-----               04-Nov-26     15:23               code-review
+d-----               04-Nov-26     15:23               format-change
+d-----               04-Nov-26     15:23               project-maintenance
+d-----               04-Nov-26     15:23               rules-evolution
+d-----               04-Nov-26     15:23               step-episode
+
+
+    Directory: .\.claude\skills\ci-fix
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1301 SKILL.md
+
+
+    Directory: .\.claude\skills\code-review
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1824 SKILL.md
+
+
+    Directory: .\.claude\skills\format-change
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1663 SKILL.md
+
+
+    Directory: .\.claude\skills\project-maintenance
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1874 SKILL.md
+
+
+    Directory: .\.claude\skills\rules-evolution
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1657 SKILL.md
+
+
+    Directory: .\.claude\skills\step-episode
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          2544 SKILL.md
+
+
+    Directory: .\.codex
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               agents
+d-----               04-Nov-26     15:23               skills
+-a----               04-Nov-26     15:23           259 config.toml
+-a----               04-Nov-26     15:23          1098 README.md
+
+
+    Directory: .\.codex\agents
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1635 chatimport-interfaces.toml
+-a----               04-Nov-26     15:23          1217 chatimport-platform.toml
+-a----               04-Nov-26     15:23          1845 chatimport-privacy-security.toml
+-a----               04-Nov-26     15:23          2397 chatimport-quality-reviewer.toml
+-a----               04-Nov-26     15:23          1506 chatimport-repo-maintainer.toml
+-a----               04-Nov-26     15:23          2054 chatimport-step-planner.toml
+-a----               04-Nov-26     15:23          2050 chatimport-storage.toml
+-a----               04-Nov-26     15:23          1877 chatimport-telegram.toml
+
+
+    Directory: .\.codex\skills
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               ci-fix
+d-----               04-Nov-26     15:23               code-review
+d-----               04-Nov-26     15:23               format-change
+d-----               04-Nov-26     15:23               project-maintenance
+d-----               04-Nov-26     15:23               rules-evolution
+d-----               04-Nov-26     15:23               step-episode
+
+
+    Directory: .\.codex\skills\ci-fix
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1379 SKILL.md
+
+
+    Directory: .\.codex\skills\code-review
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1907 SKILL.md
+
+
+    Directory: .\.codex\skills\format-change
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1748 SKILL.md
+
+
+    Directory: .\.codex\skills\project-maintenance
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1965 SKILL.md
+
+
+    Directory: .\.codex\skills\rules-evolution
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          1744 SKILL.md
+
+
+    Directory: .\.codex\skills\step-episode
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          2628 SKILL.md
+
+
+    Directory: .\.github
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               ISSUE_TEMPLATE
+d-----               04-Nov-26     15:23               workflows
+-a----               04-Nov-26     15:23            13 CODEOWNERS
+-a----               04-Nov-26     15:23           728 dependabot.yml
+-a----               04-Nov-26     15:23           558 pull_request_template.md
+
+
+    Directory: .\.github\ISSUE_TEMPLATE
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23           609 bug.yml
+-a----               04-Nov-26     15:23           205 config.yml
+-a----               04-Nov-26     15:23           533 feature.yml
+
+
+    Directory: .\.github\workflows
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23          2942 ci.yml
+-a----               04-Nov-26     15:23           537 codeql.yml
+
+
+    Directory: .\.vscode
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23           210 extensions.json
+-a----               04-Nov-26     15:23           410 settings.json
+
+
+    Directory: .\data
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               raw
+-a----               04-Nov-26     15:23       1773568 chatradar.db
+-a----               04-Nov-26     15:23         32768 chatradar.db-shm
+-a----               04-Nov-26     15:23         37112 chatradar.db-wal
+
+
+    Directory: .\data\raw
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               telegram
+
+
+    Directory: .\data\raw\telegram
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               -1001800000001
+d-----               04-Nov-26     15:23               -1001800000002
+d-----               04-Nov-26     15:23               -1001800000003
+d-----               04-Nov-26     15:23               -1001800000004
+
+
+    Directory: .\data\raw\telegram\-1001800000001
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23        433703 20261019T223033847150Z-000000.jsonl
+-a----               04-Nov-26     15:23        433703 20261019T223151138816Z-000000.jsonl
+-a----               04-Nov-26     15:23        433703 20261019T223250574045Z-000000.jsonl
+-a----               04-Nov-26     15:23        433703 20261021T130817945548Z-000000.jsonl
+-a----               04-Nov-26     15:23           148 chat.json
+
+
+    Directory: .\data\raw\telegram\-1001800000002
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23        228510 20261019T223036883309Z-000000.jsonl
+-a----               04-Nov-26     15:23        228510 20261019T223153322829Z-000000.jsonl
+-a----               04-Nov-26     15:23        228510 20261019T223252651019Z-000000.jsonl
+-a----               04-Nov-26     15:23        228510 20261021T130819551506Z-000000.jsonl
+-a----               04-Nov-26     15:23           128 chat.json
+
+
+    Directory: .\data\raw\telegram\-1001800000003
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23        151263 20261019T223039380275Z-000000.jsonl
+-a----               04-Nov-26     15:23        151263 20261019T223155382312Z-000000.jsonl
+-a----               04-Nov-26     15:23        151263 20261019T223254644342Z-000000.jsonl
+-a----               04-Nov-26     15:23        151263 20261021T130820943775Z-000000.jsonl
+-a----               04-Nov-26     15:23           158 chat.json
+
+
+    Directory: .\data\raw\telegram\-1001800000004
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23        175971 20261019T223041974062Z-000000.jsonl
+-a----               04-Nov-26     15:23        175971 20261019T223157517096Z-000000.jsonl
+-a----               04-Nov-26     15:23        175971 20261019T223256639657Z-000000.jsonl
+-a----               04-Nov-26     15:23        175971 20261021T130824068342Z-000000.jsonl
+-a----               04-Nov-26     15:23           144 chat.json
+
+
+    Directory: .\design
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23       1511243 icon-source.jpg
+
+
+    Directory: .\docs
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               adr
+-a----               04-Nov-26     15:23         45151 architecture.md
+-a----               04-Nov-26     15:23          2993 backlog.md
+-a----               04-Nov-26     15:23          5216 decisions.md
+-a----               04-Nov-26     15:23          7258 ROADMAP.md
+-a----               04-Nov-26     15:23          1312 vision.md
+
+
+    Directory: .\docs\adr
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23           317 README.md
+
+
+    Directory: .\scripts
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          2260 check_language.py
+-a----               04-Nov-26     15:23          2793 doctor.py
+-a----               04-Nov-26     15:23          9036 sync_agents.py
+
+
+    Directory: .\src
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               chatimport
+
+
+    Directory: .\src\chatimport
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               assets
+d-----               04-Nov-26     15:23               guards
+d-----               04-Nov-26     15:23               gui
+d-----               04-Nov-26     15:23               storage
+d-----               04-Nov-26     15:23               telegram
+-a----               04-Nov-26     15:23           341 __init__.py
+-a----               04-Nov-26     15:23            38 __main__.py
+-a----               04-Nov-26     15:23         14069 app.py
+-a----               04-Nov-26     15:23           354 assets.py
+-a----               04-Nov-26     15:23          8044 autostart.py
+-a----               04-Nov-26     15:23          1728 cli.py
+-a----               04-Nov-26     15:23          6109 cli_chats.py
+-a----               04-Nov-26     15:23         10685 cli_data.py
+-a----               04-Nov-26     15:23          3967 cli_service.py
+-a----               04-Nov-26     15:23          4053 cli_support.py
+-a----               04-Nov-26     15:23         12419 commands.py
+-a----               04-Nov-26     15:23          8129 config.py
+-a----               04-Nov-26     15:23          3238 config_edit.py
+-a----               04-Nov-26     15:23          1501 context.py
+-a----               04-Nov-26     15:23          9622 control.py
+-a----               04-Nov-26     15:23          2087 export.py
+-a----               04-Nov-26     15:23          1487 flood.py
+-a----               04-Nov-26     15:23          8824 integrity.py
+-a----               04-Nov-26     15:23          9874 library.py
+-a----               04-Nov-26     15:23          3211 logging_setup.py
+-a----               04-Nov-26     15:23          9300 media.py
+-a----               04-Nov-26     15:23          9646 merged_export.py
+-a----               04-Nov-26     15:23          4020 merged_service.py
+-a----               04-Nov-26     15:23          5827 offline.py
+-a----               04-Nov-26     15:23          3859 paths.py
+-a----               04-Nov-26     15:23          4023 ports.py
+-a----               04-Nov-26     15:23             0 py.typed
+-a----               04-Nov-26     15:23          8899 recheck.py
+-a----               04-Nov-26     15:23         10477 records.py
+-a----               04-Nov-26     15:23          3372 refs.py
+-a----               04-Nov-26     15:23          7033 resolution.py
+-a----               04-Nov-26     15:23          2982 router.py
+-a----               04-Nov-26     15:23          7467 runtime.py
+-a----               04-Nov-26     15:23          7243 search_db.py
+-a----               04-Nov-26     15:23          1374 search_fold.py
+-a----               04-Nov-26     15:23         13025 search_index.py
+-a----               04-Nov-26     15:23         12257 search_indexer.py
+-a----               04-Nov-26     15:23          7761 search_reader.py
+-a----               04-Nov-26     15:23          4296 search_service.py
+-a----               04-Nov-26     15:23          2370 search_types.py
+-a----               04-Nov-26     15:23          8292 service_runtime.py
+-a----               04-Nov-26     15:23          4713 setroot.py
+-a----               04-Nov-26     15:23          8351 status.py
+-a----               04-Nov-26     15:23          2994 supervisor.py
+-a----               04-Nov-26     15:23          2088 textnorm.py
+-a----               04-Nov-26     15:23          6763 toml_edit.py
+-a----               04-Nov-26     15:23         18404 trim.py
+-a----               04-Nov-26     15:23          5294 usage.py
+-a----               04-Nov-26     15:23         19366 worker.py
+-a----               04-Nov-26     15:23         13019 worker_backfill.py
+-a----               04-Nov-26     15:23          5898 worker_buffer.py
+-a----               04-Nov-26     15:23          4658 worker_live.py
+-a----               04-Nov-26     15:23          2942 worker_signals.py
+-a----               04-Nov-26     15:23          2251 worker_status.py
+-a----               04-Nov-26     15:23          4426 worker_store.py
+
+
+    Directory: .\src\chatimport\assets
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23         94498 icon.ico
+-a----               04-Nov-26     15:23        198279 icon.png
+
+
+    Directory: .\src\chatimport\guards
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23            72 __init__.py
+-a----               04-Nov-26     15:23          5630 disk.py
+-a----               04-Nov-26     15:23          5155 folders.py
+
+
+    Directory: .\src\chatimport\gui
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               locales
+d-----               04-Nov-26     15:23               models
+d-----               04-Nov-26     15:23               pages
+d-----               04-Nov-26     15:23               widgets
+-a----               04-Nov-26     15:23            78 __init__.py
+-a----               04-Nov-26     15:23          1782 context.py
+-a----               04-Nov-26     15:23          5660 format.py
+-a----               04-Nov-26     15:23          1590 i18n.py
+-a----               04-Nov-26     15:23          6346 icons.py
+-a----               04-Nov-26     15:23          4910 key_guide.py
+-a----               04-Nov-26     15:23          7063 key_guide_art.py
+-a----               04-Nov-26     15:23           821 key_validation.py
+-a----               04-Nov-26     15:23          1636 kit.py
+-a----               04-Nov-26     15:23          3921 launch.py
+-a----               04-Nov-26     15:23         14023 login_flow.py
+-a----               04-Nov-26     15:23         13786 main_window.py
+-a----               04-Nov-26     15:23          1069 notifier.py
+-a----               04-Nov-26     15:23         10537 service_host.py
+-a----               04-Nov-26     15:23          5654 settings.py
+-a----               04-Nov-26     15:23          4313 setup_logic.py
+-a----               04-Nov-26     15:23         10307 setup_steps.py
+-a----               04-Nov-26     15:23          8049 setup_steps_data.py
+-a----               04-Nov-26     15:23          5093 setup_steps_run.py
+-a----               04-Nov-26     15:23          6493 setup_wizard.py
+-a----               04-Nov-26     15:23          2976 shell_state.py
+-a----               04-Nov-26     15:23          5390 shell_widgets.py
+-a----               04-Nov-26     15:23          4750 strings.py
+-a----               04-Nov-26     15:23          1376 style_assets.py
+-a----               04-Nov-26     15:23         18040 stylesheet.py
+-a----               04-Nov-26     15:23          4968 theme.py
+-a----               04-Nov-26     15:23          5406 tokens.py
+-a----               04-Nov-26     15:23          5030 tray.py
+-a----               04-Nov-26     15:23          4756 zoom.py
+
+
+    Directory: .\src\chatimport\gui\locales
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23            90 __init__.py
+-a----               04-Nov-26     15:23         13495 chats.py
+-a----               04-Nov-26     15:23         18978 data.py
+-a----               04-Nov-26     15:23          4605 data_merged.py
+-a----               04-Nov-26     15:23          3369 en.py
+-a----               04-Nov-26     15:23          7027 log.py
+-a----               04-Nov-26     15:23         16991 onboarding.py
+-a----               04-Nov-26     15:23          7849 overview.py
+-a----               04-Nov-26     15:23          1406 placeholder.py
+-a----               04-Nov-26     15:23          4547 ru.py
+-a----               04-Nov-26     15:23          8197 search.py
+-a----               04-Nov-26     15:23         26552 settings.py
+-a----               04-Nov-26     15:23          4742 shell.py
+
+
+    Directory: .\src\chatimport\gui\models
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23            94 __init__.py
+-a----               04-Nov-26     15:23         11358 chats_model.py
+-a----               04-Nov-26     15:23          9027 data_models.py
+-a----               04-Nov-26     15:23          4197 feed.py
+-a----               04-Nov-26     15:23          7104 log_model.py
+-a----               04-Nov-26     15:23          5185 log_parser.py
+-a----               04-Nov-26     15:23          4096 log_source.py
+-a----               04-Nov-26     15:23          8556 log_tail.py
+-a----               04-Nov-26     15:23          5462 presentation.py
+-a----               04-Nov-26     15:23          3865 search_model.py
+-a----               04-Nov-26     15:23          4629 search_spans.py
+-a----               04-Nov-26     15:23          6194 snapshot.py
+-a----               04-Nov-26     15:23          2246 ticker.py
+
+
+    Directory: .\src\chatimport\gui\pages
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23           909 __init__.py
+-a----               04-Nov-26     15:23         14586 chats.py
+-a----               04-Nov-26     15:23          7126 chats_actions.py
+-a----               04-Nov-26     15:23          8225 chats_delegate.py
+-a----               04-Nov-26     15:23          3832 data.py
+-a----               04-Nov-26     15:23          8093 data_cleanup.py
+-a----               04-Nov-26     15:23          9926 data_common.py
+-a----               04-Nov-26     15:23          7116 data_export.py
+-a----               04-Nov-26     15:23          5330 data_folder.py
+-a----               04-Nov-26     15:23          5492 data_folder_dialog.py
+-a----               04-Nov-26     15:23          6366 data_integrity.py
+-a----               04-Nov-26     15:23         12060 data_merged.py
+-a----               04-Nov-26     15:23          3376 data_section.py
+-a----               04-Nov-26     15:23          7671 data_storage.py
+-a----               04-Nov-26     15:23          7073 library_dialog.py
+-a----               04-Nov-26     15:23         21761 log.py
+-a----               04-Nov-26     15:23          7916 log_delegate.py
+-a----               04-Nov-26     15:23          4324 log_widgets.py
+-a----               04-Nov-26     15:23         13356 overview.py
+-a----               04-Nov-26     15:23          4132 overview_feed.py
+-a----               04-Nov-26     15:23          4391 paint.py
+-a----               04-Nov-26     15:23          1289 placeholder.py
+-a----               04-Nov-26     15:23         18994 search.py
+-a----               04-Nov-26     15:23          1020 search_actions.py
+-a----               04-Nov-26     15:23          9814 search_context.py
+-a----               04-Nov-26     15:23         10373 search_delegate.py
+-a----               04-Nov-26     15:23          6324 search_filters.py
+-a----               04-Nov-26     15:23          5701 search_parts.py
+-a----               04-Nov-26     15:23          2863 search_worker.py
+-a----               04-Nov-26     15:23          9086 settings.py
+-a----               04-Nov-26     15:23          9072 settings_appearance.py
+-a----               04-Nov-26     15:23         10275 settings_config.py
+-a----               04-Nov-26     15:23          6825 settings_form.py
+-a----               04-Nov-26     15:23          2816 settings_support.py
+-a----               04-Nov-26     15:23          8776 settings_system.py
+-a----               04-Nov-26     15:23         12877 settings_telegram.py
+-a----               04-Nov-26     15:23          2442 support.py
+
+
+    Directory: .\src\chatimport\gui\widgets
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23            90 __init__.py
+-a----               04-Nov-26     15:23          2067 base.py
+-a----               04-Nov-26     15:23          3423 button.py
+-a----               04-Nov-26     15:23          2970 callout.py
+-a----               04-Nov-26     15:23          2449 card.py
+-a----               04-Nov-26     15:23          3607 chip.py
+-a----               04-Nov-26     15:23          2583 empty_state.py
+-a----               04-Nov-26     15:23          2805 labels.py
+-a----               04-Nov-26     15:23          6993 nav_item.py
+-a----               04-Nov-26     15:23          4970 progress.py
+-a----               04-Nov-26     15:23          2496 search_field.py
+-a----               04-Nov-26     15:23          6293 segmented.py
+-a----               04-Nov-26     15:23          9133 sidebar.py
+-a----               04-Nov-26     15:23          3001 stat_card.py
+-a----               04-Nov-26     15:23          4295 status_bar.py
+-a----               04-Nov-26     15:23          5959 switch.py
+-a----               04-Nov-26     15:23          1433 table.py
+-a----               04-Nov-26     15:23          6920 toast.py
+-a----               04-Nov-26     15:23          5131 top_bar.py
+
+
+    Directory: .\src\chatimport\storage
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23            77 __init__.py
+-a----               04-Nov-26     15:23          4038 chat_store.py
+-a----               04-Nov-26     15:23          3793 fileio.py
+-a----               04-Nov-26     15:23          2723 layout.py
+-a----               04-Nov-26     15:23          3919 media_files.py
+-a----               04-Nov-26     15:23          4679 month_commit.py
+-a----               04-Nov-26     15:23          5306 reader.py
+-a----               04-Nov-26     15:23          5865 recover.py
+-a----               04-Nov-26     15:23          7961 state.py
+-a----               04-Nov-26     15:23          7860 writer.py
+
+
+    Directory: .\src\chatimport\telegram
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23            94 __init__.py
+-a----               04-Nov-26     15:23         13111 client.py
+-a----               04-Nov-26     15:23          6253 mapper.py
+-a----               04-Nov-26     15:23          4708 resolve.py
+-a----               04-Nov-26     15:23          1803 session_probe.py
+
+
+    Directory: .\tests
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               integration
+d-----               04-Nov-26     15:23               unit
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23           557 conftest.py
+-a----               04-Nov-26     15:23          7300 fakes.py
+
+
+    Directory: .\tests\integration
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23         11098 test_end_to_end.py
+
+
+    Directory: .\tests\unit
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               core
+d-----               04-Nov-26     15:23               gui
+d-----               04-Nov-26     15:23               interfaces
+d-----               04-Nov-26     15:23               maintenance
+d-----               04-Nov-26     15:23               service
+d-----               04-Nov-26     15:23               storage
+d-----               04-Nov-26     15:23               telegram
+d-----               04-Nov-26     15:23               worker
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23           479 test_cli.py
+-a----               04-Nov-26     15:23          3896 test_scripts.py
+
+
+    Directory: .\tests\unit\core
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23           321 test_assets.py
+-a----               04-Nov-26     15:23         11099 test_config.py
+-a----               04-Nov-26     15:23         12616 test_config_edit.py
+-a----               04-Nov-26     15:23          4078 test_config_edit_literals.py
+-a----               04-Nov-26     15:23          1013 test_config_merged.py
+-a----               04-Nov-26     15:23          1847 test_config_search.py
+-a----               04-Nov-26     15:23           936 test_config_units.py
+-a----               04-Nov-26     15:23          3086 test_gaps.py
+-a----               04-Nov-26     15:23         18546 test_library.py
+-a----               04-Nov-26     15:23         14496 test_library_edit.py
+-a----               04-Nov-26     15:23          3453 test_library_refs.py
+-a----               04-Nov-26     15:23          3540 test_logging_setup.py
+-a----               04-Nov-26     15:23          6590 test_paths.py
+-a----               04-Nov-26     15:23          3126 test_paths_cloud.py
+-a----               04-Nov-26     15:23         16365 test_records.py
+-a----               04-Nov-26     15:23          1976 test_records_lines.py
+-a----               04-Nov-26     15:23          2040 test_refs.py
+-a----               04-Nov-26     15:23          9267 test_runtime_ports.py
+-a----               04-Nov-26     15:23          4908 test_runtime_slots.py
+-a----               04-Nov-26     15:23          3069 test_textnorm.py
+-a----               04-Nov-26     15:23          3382 test_toml_edit.py
+
+
+    Directory: .\tests\unit\gui
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+d-----               04-Nov-26     15:23               logic
+d-----               04-Nov-26     15:23               onboarding
+d-----               04-Nov-26     15:23               pages_a
+d-----               04-Nov-26     15:23               pages_b
+d-----               04-Nov-26     15:23               pages_c
+d-----               04-Nov-26     15:23               search
+d-----               04-Nov-26     15:23               shell
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          2460 conftest.py
+
+
+    Directory: .\tests\unit\gui\logic
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23           421 spy.py
+-a----               04-Nov-26     15:23         17255 test_chats_model.py
+-a----               04-Nov-26     15:23          7616 test_data_models.py
+-a----               04-Nov-26     15:23          7101 test_format.py
+-a----               04-Nov-26     15:23          6041 test_log_model.py
+-a----               04-Nov-26     15:23          4966 test_log_parser.py
+-a----               04-Nov-26     15:23         12271 test_log_tail.py
+-a----               04-Nov-26     15:23         10555 test_settings_zoom.py
+-a----               04-Nov-26     15:23          7379 test_setup_logic.py
+-a----               04-Nov-26     15:23          9551 test_snapshot_feed.py
+-a----               04-Nov-26     15:23          6412 test_strings_i18n.py
+-a----               04-Nov-26     15:23         10065 test_theme_kit.py
+-a----               04-Nov-26     15:23         10218 test_ticker_source.py
+
+
+    Directory: .\tests\unit\gui\onboarding
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          2622 conftest.py
+-a----               04-Nov-26     15:23          2434 test_key_guide.py
+-a----               04-Nov-26     15:23         12494 test_steps.py
+-a----               04-Nov-26     15:23          6472 test_wizard.py
+
+
+    Directory: .\tests\unit\gui\pages_a
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          3560 conftest.py
+-a----               04-Nov-26     15:23          8986 test_chats.py
+-a----               04-Nov-26     15:23          9471 test_chats_actions.py
+-a----               04-Nov-26     15:23          3052 test_chats_delegate.py
+-a----               04-Nov-26     15:23          5867 test_library_dialog.py
+-a----               04-Nov-26     15:23          6018 test_overview.py
+
+
+    Directory: .\tests\unit\gui\pages_b
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          1276 archive.py
+-a----               04-Nov-26     15:23          4280 conftest.py
+-a----               04-Nov-26     15:23          5727 test_data_cleanup.py
+-a----               04-Nov-26     15:23          3936 test_data_export.py
+-a----               04-Nov-26     15:23          6531 test_data_folder.py
+-a----               04-Nov-26     15:23          3299 test_data_integrity.py
+-a----               04-Nov-26     15:23          9281 test_data_merged.py
+-a----               04-Nov-26     15:23          7973 test_data_page.py
+-a----               04-Nov-26     15:23         10913 test_log_page.py
+-a----               04-Nov-26     15:23          5179 test_log_parts.py
+
+
+    Directory: .\tests\unit\gui\pages_c
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          4275 conftest.py
+-a----               04-Nov-26     15:23          1485 test_settings_about_wizard.py
+-a----               04-Nov-26     15:23          3595 test_settings_appearance.py
+-a----               04-Nov-26     15:23          5914 test_settings_config.py
+-a----               04-Nov-26     15:23          2932 test_settings_form.py
+-a----               04-Nov-26     15:23          5909 test_settings_page.py
+-a----               04-Nov-26     15:23          2952 test_settings_support.py
+-a----               04-Nov-26     15:23          5623 test_settings_system.py
+-a----               04-Nov-26     15:23          9852 test_settings_telegram.py
+-a----               04-Nov-26     15:23          3078 test_settings_telegram_validation.py
+
+
+    Directory: .\tests\unit\gui\search
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          2874 conftest.py
+-a----               04-Nov-26     15:23          3649 fakes.py
+-a----               04-Nov-26     15:23          4889 test_search_context.py
+-a----               04-Nov-26     15:23          6248 test_search_delegate.py
+-a----               04-Nov-26     15:23          6961 test_search_filters.py
+-a----               04-Nov-26     15:23          5442 test_search_model.py
+-a----               04-Nov-26     15:23         16741 test_search_page.py
+-a----               04-Nov-26     15:23         14505 test_search_page_actions.py
+-a----               04-Nov-26     15:23          3912 test_search_parts.py
+-a----               04-Nov-26     15:23          5511 test_search_spans.py
+-a----               04-Nov-26     15:23          6055 test_search_worker.py
+
+
+    Directory: .\tests\unit\gui\shell
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23           586 conftest.py
+-a----               04-Nov-26     15:23          8081 test_launch.py
+-a----               04-Nov-26     15:23         13436 test_login_flow.py
+-a----               04-Nov-26     15:23         11639 test_main_window.py
+-a----               04-Nov-26     15:23          2124 test_main_window_wizard.py
+-a----               04-Nov-26     15:23         14121 test_service_host.py
+-a----               04-Nov-26     15:23          7420 test_small_modules.py
+-a----               04-Nov-26     15:23          3982 test_tray.py
+-a----               04-Nov-26     15:23          6129 test_widgets_basic.py
+-a----               04-Nov-26     15:23         12011 test_widgets_interactive.py
+
+
+    Directory: .\tests\unit\interfaces
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          3656 conftest.py
+-a----               04-Nov-26     15:23         11952 test_autostart.py
+-a----               04-Nov-26     15:23          6877 test_check_language_extra.py
+-a----               04-Nov-26     15:23         34971 test_cli_commands.py
+-a----               04-Nov-26     15:23          1701 test_cli_export_all.py
+-a----               04-Nov-26     15:23          7483 test_cli_hardening.py
+-a----               04-Nov-26     15:23          8497 test_cli_search.py
+-a----               04-Nov-26     15:23          1900 test_cli_window.py
+-a----               04-Nov-26     15:23          8473 test_doctor.py
+-a----               04-Nov-26     15:23          3550 test_entry_points.py
+-a----               04-Nov-26     15:23          3160 test_status_snapshot.py
+-a----               04-Nov-26     15:23         16911 test_sync_agents_extra.py
+
+
+    Directory: .\tests\unit\maintenance
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          4946 helpers.py
+-a----               04-Nov-26     15:23         11347 test_disk_guard.py
+-a----               04-Nov-26     15:23         12255 test_folder_watcher.py
+-a----               04-Nov-26     15:23          7222 test_guards_hardening.py
+-a----               04-Nov-26     15:23         19529 test_media.py
+-a----               04-Nov-26     15:23          3673 test_media_hardening.py
+-a----               04-Nov-26     15:23         14666 test_offline.py
+-a----               04-Nov-26     15:23          1745 test_router_cap.py
+-a----               04-Nov-26     15:23         14285 test_setroot.py
+-a----               04-Nov-26     15:23          3869 test_setroot_hardening.py
+-a----               04-Nov-26     15:23         24472 test_trim.py
+-a----               04-Nov-26     15:23         10781 test_trim_hardening.py
+-a----               04-Nov-26     15:23          5604 test_trim_preview.py
+-a----               04-Nov-26     15:23          7238 test_usage.py
+
+
+    Directory: .\tests\unit\service
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          7520 harness.py
+-a----               04-Nov-26     15:23          2141 helpers.py
+-a----               04-Nov-26     15:23         12501 test_app_commands.py
+-a----               04-Nov-26     15:23          6442 test_app_edges.py
+-a----               04-Nov-26     15:23         15544 test_app_lifecycle.py
+-a----               04-Nov-26     15:23         16983 test_app_misc.py
+-a----               04-Nov-26     15:23         10120 test_app_service.py
+-a----               04-Nov-26     15:23          8005 test_app_setroot.py
+-a----               04-Nov-26     15:23          5262 test_commands.py
+-a----               04-Nov-26     15:23          2425 test_commands_logging.py
+-a----               04-Nov-26     15:23         18534 test_control.py
+-a----               04-Nov-26     15:23          9956 test_control_claims.py
+-a----               04-Nov-26     15:23          2238 test_integration_glue.py
+-a----               04-Nov-26     15:23          7714 test_merged_service.py
+-a----               04-Nov-26     15:23          4627 test_resolution.py
+-a----               04-Nov-26     15:23          5884 test_router.py
+-a----               04-Nov-26     15:23         12819 test_search_service.py
+-a----               04-Nov-26     15:23         12967 test_status.py
+-a----               04-Nov-26     15:23          2910 test_status_fields.py
+-a----               04-Nov-26     15:23          8587 test_supervisor.py
+
+
+    Directory: .\tests\unit\storage
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          2131 helpers.py
+-a----               04-Nov-26     15:23          3075 search_helpers.py
+-a----               04-Nov-26     15:23          3129 test_chat_store.py
+-a----               04-Nov-26     15:23          7173 test_export.py
+-a----               04-Nov-26     15:23          4685 test_export_integrity_hardening.py
+-a----               04-Nov-26     15:23          6554 test_fileio.py
+-a----               04-Nov-26     15:23         15234 test_integrity.py
+-a----               04-Nov-26     15:23          9283 test_layout.py
+-a----               04-Nov-26     15:23          3154 test_media_files.py
+-a----               04-Nov-26     15:23         15025 test_merged_export.py
+-a----               04-Nov-26     15:23          7290 test_month_commit.py
+-a----               04-Nov-26     15:23          3544 test_reader.py
+-a----               04-Nov-26     15:23          1450 test_reader_tail.py
+-a----               04-Nov-26     15:23         16575 test_recover.py
+-a----               04-Nov-26     15:23          3821 test_recover_fast.py
+-a----               04-Nov-26     15:23          8315 test_search_db.py
+-a----               04-Nov-26     15:23          2033 test_search_fold.py
+-a----               04-Nov-26     15:23         21926 test_search_index.py
+-a----               04-Nov-26     15:23         25285 test_search_indexer.py
+-a----               04-Nov-26     15:23         13119 test_state.py
+-a----               04-Nov-26     15:23          3853 test_state_hardening.py
+-a----               04-Nov-26     15:23         15860 test_writer_append.py
+-a----               04-Nov-26     15:23          2964 test_writer_hardening.py
+-a----               04-Nov-26     15:23         16935 test_writer_month.py
+
+
+    Directory: .\tests\unit\telegram
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23         43601 test_client.py
+-a----               04-Nov-26     15:23         19306 test_mapper.py
+-a----               04-Nov-26     15:23          4539 test_privacy.py
+-a----               04-Nov-26     15:23         15886 test_resolve.py
+-a----               04-Nov-26     15:23          4645 test_session_probe.py
+
+
+    Directory: .\tests\unit\worker
+
+Mode                 LastWriteTime              Length Name
+----                 -------------              ------ ----
+-a----               04-Nov-26     15:23             0 __init__.py
+-a----               04-Nov-26     15:23          8330 rig.py
+-a----               04-Nov-26     15:23         16436 test_backfill.py
+-a----               04-Nov-26     15:23          4623 test_backfill_slots.py
+-a----               04-Nov-26     15:23          6085 test_buffer.py
+-a----               04-Nov-26     15:23          9426 test_errors.py
+-a----               04-Nov-26     15:23         23832 test_live.py
+-a----               04-Nov-26     15:23         16905 test_recheck_compute.py
+-a----               04-Nov-26     15:23          8590 test_recheck_requests.py
+-a----               04-Nov-26     15:23         12159 test_recheck_schedule.py
+-a----               04-Nov-26     15:23          5586 test_sync_once.py
+-a----               04-Nov-26     15:23          6616 test_worker_edges.py
+-a----               04-Nov-26     15:23         16281 test_worker_recovery.py
+-a----               04-Nov-26     15:23          3661 test_worker_status.py
+-a----               04-Nov-26     15:23          3744 test_worker_store.py
+-a----               04-Nov-26     15:23          3234 tzrules.py
+
+
